@@ -30,17 +30,20 @@ public class BasicConfig {
         return new BasicConfig(name);
     }
 
+    public static BasicConfig find(String name) throws IOException {
+        return new BasicConfig(new File(ConfigDir + "\\" + name + ".hjson"));
+    }
+
     public BasicConfig(File name) throws IOException {
         CFG_Value = JsonValue.readHjson(new FileReader(name)).asObject();
     }
 
-    public JsonValue getValue(String key, JsonObject default0) {
+    public JsonValue getValue(String key, JsonValue default0) {
         try {
-            CFG_Value.get(key).asDsf();
+            return CFG_Value.get(key);
         } catch (Exception ignore) {
             return default0;
         }
-        return CFG_Value.get(key);
     }
 
     public static class BasicConfigBuilder extends FakeConfigBuilder {
