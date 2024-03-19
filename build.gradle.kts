@@ -6,7 +6,7 @@ object Properties {
     const val MOD_NAME = "FluxAPI"
     const val MODID = "fluxapi"
     const val MAVEN_GROUP = "io.gitub.crmodders.flux"
-    const val COSMIC_REACH_VERSION = "0.1.8"
+    const val COSMIC_REACH_VERSION = "0.1.9"
     const val LOADER_VERSION = "0.15.7"
 }
 
@@ -27,6 +27,8 @@ repositories {
     maven("https://repo.spongepowered.org/maven/")
     maven("https://maven.fabricmc.net/")
 }
+
+
 
 // Required Dependencies For Fabric
 dependencies {
@@ -108,7 +110,7 @@ tasks.register("clearCache") {
         project.file("$projectDir/build/libs/${Properties.MOD_NAME}_${Properties.MOD_VERSION}-CR_${Properties.COSMIC_REACH_VERSION}-all.jar").delete()
 }
 
-tasks.register("runClient") {
+tasks.register("runClient1") {
     group = "crmodders"
 
     dependsOn("clearCache")

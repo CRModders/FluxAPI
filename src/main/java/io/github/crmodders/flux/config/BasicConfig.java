@@ -84,7 +84,7 @@ public class BasicConfig {
         public BasicConfig build() {
             try {
                 FileWriter f = new FileWriter(CFG_File.getAbsolutePath());
-                f.write(CFG_Value.toString());
+                f.write(CFG_Value.toString(Stringify.FORMATTED));
                 f.close();
                 return new BasicConfig(CFG_File);
             } catch (Exception ignore) {
