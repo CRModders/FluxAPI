@@ -5,7 +5,7 @@ object Properties {
     const val MOD_VERSION = "0.1"
     const val MOD_NAME = "FluxAPI"
     const val MODID = "fluxapi"
-    const val MAVEN_GROUP = "io.gitub.crmodders.flux"
+    const val MAVEN_GROUP = "io.github.crmodders.flux"
     const val COSMIC_REACH_VERSION = "0.1.9"
     const val LOADER_VERSION = "0.15.7"
 }
@@ -14,6 +14,7 @@ plugins {
     id("java")
     id("de.undercouch.download") version "5.6.0"
     id("com.github.johnrengelman.shadow") version "8.1.1"
+    id("maven-publish")
 }
 
 repositories {
@@ -28,12 +29,10 @@ repositories {
     maven("https://maven.fabricmc.net/")
 }
 
-
-
 // Required Dependencies For Fabric
 dependencies {
-    shadow("com.google.guava:guava:33.0.0-jre")
-    shadow("com.google.code.gson:gson:2.9.1")
+    implementation("com.google.guava:guava:33.0.0-jre")
+    implementation("com.google.code.gson:gson:2.9.1")
 
     shadow("net.fabricmc:fabric-loader:0.15.7")
     shadow("net.fabricmc:tiny-mappings-parser:0.2.2.14")
