@@ -1,4 +1,4 @@
-package io.github.crmodders.flux.mixin;
+package io.github.crmodders.flux.mixin.api;
 
 import com.badlogic.gdx.utils.Array;
 import com.llamalad7.mixinextras.sugar.Share;
@@ -9,8 +9,8 @@ import finalforeach.cosmicreach.gamestates.OptionsMenu;
 import finalforeach.cosmicreach.gamestates.WorldSelectionMenu;
 import finalforeach.cosmicreach.ui.UIElement;
 import io.github.crmodders.flux.FluxAPI;
-import io.github.crmodders.flux.fabric.modinfo.FabricModInfo;
-import io.github.crmodders.flux.fabric.modinfo.ModManager;
+import io.github.crmodders.flux.api.config.modinfo.FabricModInfo;
+import io.github.crmodders.flux.api.config.modinfo.ModManager;
 import io.github.crmodders.flux.menus.ConfigViewMenu;
 import org.hjson.JsonObject;
 import org.spongepowered.asm.mixin.Mixin;
@@ -23,7 +23,7 @@ public abstract class FluxCapacitor extends GameState {
 
     @Inject(method = "create", at = @At(value = "INVOKE", target = "Lcom/badlogic/gdx/utils/Array;add(Ljava/lang/Object;)V", ordinal = 0))
     private void injectCreateAtInvoke(CallbackInfo ci, @Share("someSharedLocal") LocalRef<String> sharedLocalRef) {
-        for (FabricModInfo modInfo : ModManager.getMods()) {
+        for (FabricModInfo modInfo : ModManager.getModsFromFiles()) {
             FluxAPI.LOGGER.info(modInfo.modID() + ":" + modInfo.version());
         }
     }

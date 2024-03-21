@@ -1,4 +1,4 @@
-package io.github.crmodders.flux.config;
+package io.github.crmodders.flux.api.config;
 
 import io.github.crmodders.flux.FluxAPI;
 import net.fabricmc.loader.impl.FabricLoaderImpl;

@@ -42,3 +42,6 @@ bin/
 .DS_Store
 
 run
+
+## HIDE KEYS
+build.gradle.kts

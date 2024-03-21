@@ -4,7 +4,10 @@
   "package": "io.github.crmodders.flux.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
-    "FluxCapacitor"
+    "api.FluxCapacitor",
+    "api.Registerer",
+    "api.ChunkShaderMixin",
+    "flux.RegisterBlocks"
   ],
   "client": [],
   "server": [],

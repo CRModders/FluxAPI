@@ -1,7 +1,6 @@
-package io.github.crmodders.flux.fabric.modinfo;
+package io.github.crmodders.flux.api.config.modinfo;
 
-import io.github.crmodders.flux.fabric.modinfo.json.Dependency;
-import io.github.crmodders.flux.fabric.modinfo.json.FabricModJson;
+import io.github.crmodders.flux.api.config.modinfo.json.Dependency;
 
 public record FabricModInfo(
         int SchemaVersion,

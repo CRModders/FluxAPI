@@ -1,4 +1,4 @@
-package io.github.crmodders.flux.fabric.modinfo.json;
+package io.github.crmodders.flux.api.config.modinfo.json;
 
 public class EntrypointsJson {
 

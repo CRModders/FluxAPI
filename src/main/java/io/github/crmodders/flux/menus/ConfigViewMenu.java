@@ -25,7 +25,7 @@ public class ConfigViewMenu extends BasicMainMenu {
     public void create() {
         super.create();
 
-        addTextElement(0, -200, 3, "Config Menu", false);
+        addTextElement(0, -200, 4, "Config Menu", false);
         addUIElement("test", new UIElement(0, 0, 100, 100));
 
     }

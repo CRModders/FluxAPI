@@ -1,4 +1,4 @@
-package io.github.crmodders.flux.fabric.modinfo;
+package io.github.crmodders.flux.api.config.modinfo;
 //
 //import org.hjson.JsonObject;
 //

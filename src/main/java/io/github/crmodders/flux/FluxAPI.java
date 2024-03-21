@@ -1,8 +1,11 @@
 package io.github.crmodders.flux;
 
-import com.badlogic.gdx.graphics.Pixmap;
-import finalforeach.cosmicreach.rendering.shaders.ChunkShader;
-import io.github.crmodders.flux.config.BasicConfig;
+import finalforeach.cosmicreach.world.blocks.Block;
+import io.github.crmodders.flux.api.blocks.ModBlock;
+import io.github.crmodders.flux.api.config.BasicConfig;
+import io.github.crmodders.flux.api.generators.data.BlockDataGen;
+import io.github.crmodders.flux.api.registries.BuiltInRegistries;
+import io.github.crmodders.flux.api.registries.Identifier;
 import net.fabricmc.api.ModInitializer;
 
 import java.io.IOException;
