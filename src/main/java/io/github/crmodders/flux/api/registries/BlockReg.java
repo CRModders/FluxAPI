@@ -3,18 +3,26 @@ package io.github.crmodders.flux.api.registries;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Json;
 import finalforeach.cosmicreach.GameAssetLoader;
+import finalforeach.cosmicreach.world.blockevents.BlockEvents;
 import finalforeach.cosmicreach.world.blocks.Block;
 import finalforeach.cosmicreach.world.blocks.BlockState;
 import io.github.crmodders.flux.FluxAPI;
 import io.github.crmodders.flux.api.blocks.ModBlock;
+import io.github.crmodders.flux.util.PrivUtils;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 public class BlockReg {
 
     public static void create(CallbackInfo ci) {
-        BuiltInRegistries.BLOCKS.freeze();
-        for (String blockID : ((BasicRegistry<ModBlock>) BuiltInRegistries.BLOCKS).OBJECTS.keySet().toArray(String[]::new)) {
-            ModBlock modBlock = ((BasicRegistry<ModBlock>) BuiltInRegistries.BLOCKS).get(Identifier.fromString(blockID));
+        BuiltInRegistries.MODDED_BLOCK_EVENTS.freeze();
+        for (String eventID : ((BasicRegistry<BlockEvents>) BuiltInRegistries.MODDED_BLOCK_EVENTS).OBJECTS.keySet().toArray(String[]::new)) {
+            BlockEvents event = ((BasicRegistry<BlockEvents>) BuiltInRegistries.MODDED_BLOCK_EVENTS).get(Identifier.fromString(eventID));
+            BlockEvents.INSTANCES.put(eventID, event);
+        }
+
+        BuiltInRegistries.MODDED_BLOCKS.freeze();
+        for (String blockID : ((BasicRegistry<ModBlock>) BuiltInRegistries.MODDED_BLOCKS).OBJECTS.keySet().toArray(String[]::new)) {
+            ModBlock modBlock = ((BasicRegistry<ModBlock>) BuiltInRegistries.MODDED_BLOCKS).get(Identifier.fromString(blockID));
             if (modBlock.block != null) {
                 Block.blocksByName.put(blockID, getBlockFromBlock(Identifier.fromString(blockID), modBlock.block));
             } else {

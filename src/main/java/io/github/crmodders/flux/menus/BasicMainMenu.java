@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ScreenUtils;
 import finalforeach.cosmicreach.RuntimeInfo;
 import finalforeach.cosmicreach.gamestates.GameState;
+import finalforeach.cosmicreach.gamestates.MainMenu;
 import finalforeach.cosmicreach.settings.Controls;
 import finalforeach.cosmicreach.ui.FontRenderer;
 import finalforeach.cosmicreach.ui.HorizontalAnchor;
@@ -14,6 +15,11 @@ import finalforeach.cosmicreach.ui.VerticalAnchor;
 import io.github.crmodders.flux.ui.TextElement;
 
 public class BasicMainMenu extends GameState {
+
+    @Override
+    public void create() {
+        super.create();
+    }
 
     public void addUIElement(String name, UIElement element) {
         element.setText(name);
@@ -27,8 +33,8 @@ public class BasicMainMenu extends GameState {
         this.uiElements.add(element);
     }
 
-    public void render() {
-        super.render();
+    public void render(float partTick) {
+        super.render(partTick);
         ScreenUtils.clear(0.0F, 0.0F, 0.0F, 1.0F, true);
         Gdx.gl.glEnable(2929);
         Gdx.gl.glDepthFunc(513);

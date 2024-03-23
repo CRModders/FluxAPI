@@ -1,4 +1,4 @@
-package io.github.crmodders.flux.mixin.flux;
+package me.zombii.mod.mixins.registers;
 
 import finalforeach.cosmicreach.BlockGame;
 import finalforeach.cosmicreach.gamestates.MainMenu;
@@ -8,6 +8,7 @@ import io.github.crmodders.flux.api.blocks.ModBlock;
 import io.github.crmodders.flux.api.generators.data.BlockDataGen;
 import io.github.crmodders.flux.api.registries.BuiltInRegistries;
 import io.github.crmodders.flux.api.registries.Identifier;
+import me.zombii.mod.blocks.TestBlock;
 import org.hjson.JsonObject;
 import org.hjson.JsonValue;
 import org.spongepowered.asm.mixin.Mixin;
@@ -30,11 +31,9 @@ public class RegisterBlocks {
 //                        )
 //        );
 
-        BuiltInRegistries.BLOCKS.register(
+        BuiltInRegistries.MODDED_BLOCKS.register(
                 new Identifier(FluxAPI.MOD_ID, "test"),
-                new ModBlock(
-                        test.Generate()
-                )
+                new TestBlock(test::Generate)
         );
     }
 

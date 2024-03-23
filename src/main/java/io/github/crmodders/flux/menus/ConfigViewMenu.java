@@ -11,7 +11,16 @@ import finalforeach.cosmicreach.ui.FontRenderer;
 import finalforeach.cosmicreach.ui.HorizontalAnchor;
 import finalforeach.cosmicreach.ui.UIElement;
 import finalforeach.cosmicreach.ui.VerticalAnchor;
+import io.github.crmodders.flux.api.config.BasicConfig;
+import io.github.crmodders.flux.api.config.modinfo.ModManager;
 import io.github.crmodders.flux.ui.TextElement;
+
+import java.awt.*;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 public class ConfigViewMenu extends BasicMainMenu {
 
@@ -26,12 +35,43 @@ public class ConfigViewMenu extends BasicMainMenu {
         super.create();
 
         addTextElement(0, -200, 4, "Config Menu", false);
-        addUIElement("test", new UIElement(0, 0, 100, 100));
+        addUIElement("Back", new UIElement(0, 0, 250, 25) {
+            @Override
+            public void onClick() {
+                super.onClick();
+                GameState.switchToGameState(lastState);
+            }
+        });
+
+        int vheight = 30;
+        for (File file : Objects.requireNonNull(new File(BasicConfig.ConfigDir).listFiles())) {
+            if (file.getName().contains(".hjson")) {
+                addUIElement(file.getName().split("\\.")[0], new UIElement(0, vheight, 250, 25) {
+                    @Override
+                    public void onClick() {
+                        super.onClick();
+                        try {
+                            if (System.getProperty("os.name").toLowerCase().contains("windows")) {
+                                String cmd = "rundll32 url.dll,FileProtocolHandler " + file.getCanonicalPath();
+                                Runtime.getRuntime().exec(cmd);
+                            }
+                            else {
+                                Desktop.getDesktop().edit(file);
+                            }
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                });
+
+                vheight += 30;
+            }
+        }
 
     }
 
-    public void render() {
-        super.render();
+    public void render(float partTick) {
+        super.render(partTick);
         ScreenUtils.clear(0.0F, 0.0F, 0.0F, 1.0F, true);
         Gdx.gl.glEnable(2929);
         Gdx.gl.glDepthFunc(513);

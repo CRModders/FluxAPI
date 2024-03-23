@@ -1,5 +1,7 @@
 package io.github.crmodders.flux.api.registries;
 
+import io.github.crmodders.flux.FluxAPI;
+
 public class Identifier {
 
     public String namespace, name;

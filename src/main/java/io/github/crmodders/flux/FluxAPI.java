@@ -17,18 +17,8 @@ public class FluxAPI implements ModInitializer {
 
     @Override
     public void onInitialize() {
-        BasicConfig.createIfNotMade("test").addConfigOption("useFluxMenu", false).build();
         LOGGER.info("Hello non Cosmic world!");
     }
-
-    public static BasicConfig getConfig() {
-        try {
-            return BasicConfig.find("test");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
 
 
 }

@@ -2,11 +2,7 @@ package io.github.crmodders.flux.mixin.api;
 
 import finalforeach.cosmicreach.gamestates.GameState;
 import finalforeach.cosmicreach.gamestates.MainMenu;
-import io.github.crmodders.flux.FluxAPI;
-import io.github.crmodders.flux.api.blocks.ModBlock;
 import io.github.crmodders.flux.api.registries.BlockReg;
-import io.github.crmodders.flux.api.registries.BuiltInRegistries;
-import io.github.crmodders.flux.api.registries.Identifier;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;

@@ -30,18 +30,6 @@ public class ChunkShaderMixin {
 
     @Shadow private static HashMap<String, float[]> storedUVs;
 
-    private static Object getPrivField(Class<?> clazz, String fieldName) throws NoSuchFieldException, IllegalAccessException {
-        Field f = clazz.getDeclaredField(fieldName);
-        f.setAccessible(true);
-        return f.get(clazz);
-    }
-
-    private static void setPrivField(Class<?> clazz, String fieldName, Object data) throws NoSuchFieldException, IllegalAccessException {
-        Field f = clazz.getDeclaredField(fieldName);
-        f.setAccessible(true);
-        f.set(clazz, data);
-    }
-
 //    @Inject(method = "addToAllBlocksTexture", at = @At("HEAD"), cancellable = true)
 /**
  * @author Zombii

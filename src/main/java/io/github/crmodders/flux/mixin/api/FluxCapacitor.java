@@ -11,6 +11,8 @@ import finalforeach.cosmicreach.ui.UIElement;
 import io.github.crmodders.flux.FluxAPI;
 import io.github.crmodders.flux.api.config.modinfo.FabricModInfo;
 import io.github.crmodders.flux.api.config.modinfo.ModManager;
+import io.github.crmodders.flux.api.registries.BuiltInRegistries;
+import io.github.crmodders.flux.api.registries.StaticRegistry;
 import io.github.crmodders.flux.menus.ConfigViewMenu;
 import org.hjson.JsonObject;
 import org.spongepowered.asm.mixin.Mixin;
@@ -30,60 +32,8 @@ public abstract class FluxCapacitor extends GameState {
 
     @Inject(method = "create", at = @At("TAIL"))
     private void injected(CallbackInfo ci) {
-        boolean UseFluxMenu = FluxAPI
-                .getConfig()
-                .getValue(
-                        "useFluxMenu",
-                        new JsonObject()
-                                .set("v", false)
-                                .get("v")
-                ).asBoolean();
-        if (UseFluxMenu) {
-            this.uiElements = new Array<>();
-
-            FluxAPI.LOGGER.info("Rebuilding UI");
-            newButton("Play", new UIElement(0, 0, 250, 50) {
-                @Override
-                public void onClick() {
-                    super.onClick();
-                    GameState.switchToGameState(new WorldSelectionMenu());
-                }
-            });
-
-            newButton("Settings", new UIElement(0, 55, 250, 50) {
-                @Override
-                public void onClick() {
-                    super.onClick();
-                    GameState.switchToGameState(new OptionsMenu(GameState.currentGameState));
-                }
-            });
-
-            newButton("Mod Configs", new UIElement(0, 110, 250, 50) {
-                @Override
-                public void onClick() {
-                    super.onClick();
-                    GameState.switchToGameState(new ConfigViewMenu(GameState.currentGameState));
-                }
-            });
-        };
-
-//        UIElement ConfigEditorBtn = new UIElement(
-//                (float) this.uiViewport.getRightGutterWidth() / 2 - (250/2),
-//                0,
-//                250.0F,
-//                50.0F) {
-//            public void onClick() {
-//                super.onClick();
-//                System.exit(0);
-//            }
-//        };
-//        ConfigEditorBtn.setText("Config Edit");
-//        ConfigEditorBtn.show();
+        BuiltInRegistries.VANILLA_BLOCKS = StaticRegistry.initBlockRegistry();
+        BuiltInRegistries.VANILLA_BLOCKS_ACTIONS = StaticRegistry.initBlockActionRegistry();
     }
 
-    public void newButton(String name, UIElement element) {
-        element.setText(name);
-        element.show();
-        this.uiElements.add(element);
-    }
 }

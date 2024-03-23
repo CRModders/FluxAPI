@@ -7,7 +7,7 @@
     "api.FluxCapacitor",
     "api.Registerer",
     "api.ChunkShaderMixin",
-    "flux.RegisterBlocks"
+    "flux.OptionsMixin"
   ],
   "client": [],
   "server": [],

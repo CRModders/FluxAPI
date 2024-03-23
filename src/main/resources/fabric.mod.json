@@ -10,11 +10,12 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "io.github.crmodders.flux.FluxAPI"
+      "me.zombii.mod.Mod"
     ]
   },
   "mixins": [
-    "fluxapi.mixins.json"
+    "fluxapi.mixins.json",
+    "mod.mixins.json"
   ],
   "depends": {
     "fabricloader": ">=${loader_version}",
