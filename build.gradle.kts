@@ -29,6 +29,27 @@ repositories {
     maven("https://maven.fabricmc.net/")
 }
 
+//publishing {
+//    publications {
+//        create<MavenPublication>("maven") {
+//            groupId = "dev.crmodder.flux"
+//            artifactId = "flux-api"
+//            version = "1.1"
+//
+//            from(components["java"])
+//        }
+//    }
+//
+//    repositories {
+//        maven("https://maven.crmodders.dev:8443/releases") {
+//            credentials {
+//                username = "publishMaven"
+//                password = "gFrqbp9Odk8J7pmH8e4QmMOI9qZCd98XkfK6V1TMO4p+dICY8aY3vKzSiVqokad2"
+//            }
+//        }
+//    }
+//}
+
 // Required Dependencies For Fabric
 dependencies {
     implementation("com.google.guava:guava:33.0.0-jre")
