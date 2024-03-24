@@ -1,4 +1,4 @@
-package io.github.crmodders.flux;
+package dev.crmodders.flux;
 
 import java.util.logging.Logger;
 
