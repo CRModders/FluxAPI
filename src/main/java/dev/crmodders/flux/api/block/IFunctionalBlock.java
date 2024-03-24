@@ -1,4 +1,4 @@
-package io.github.crmodders.flux.api.block;
+package dev.crmodders.flux.api.block;
 
 import finalforeach.cosmicreach.world.BlockPosition;
 import finalforeach.cosmicreach.world.World;

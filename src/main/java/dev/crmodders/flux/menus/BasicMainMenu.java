@@ -1,4 +1,4 @@
-package io.github.crmodders.flux.menus;
+package dev.crmodders.flux.menus;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -11,7 +11,7 @@ import finalforeach.cosmicreach.ui.FontRenderer;
 import finalforeach.cosmicreach.ui.HorizontalAnchor;
 import finalforeach.cosmicreach.ui.UIElement;
 import finalforeach.cosmicreach.ui.VerticalAnchor;
-import io.github.crmodders.flux.api.gui.TextElement;
+import dev.crmodders.flux.api.gui.TextElement;
 
 public class BasicMainMenu extends GameState {
 

@@ -1,8 +1,8 @@
-package io.github.crmodders.flux.registry.registries.impl;
+package dev.crmodders.flux.registry.registries.impl;
 
-import io.github.crmodders.flux.registry.registries.AccessableRegistry;
-import io.github.crmodders.flux.registry.registries.DynamicRegistry;
-import io.github.crmodders.flux.tags.Identifier;
+import dev.crmodders.flux.registry.registries.AccessableRegistry;
+import dev.crmodders.flux.registry.registries.DynamicRegistry;
+import dev.crmodders.flux.tags.Identifier;
 
 import java.util.HashMap;
 

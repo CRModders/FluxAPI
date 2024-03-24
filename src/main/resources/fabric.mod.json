@@ -10,7 +10,7 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "io.github.crmodders.flux.FluxAPI"
+      "dev.crmodders.flux.FluxAPI"
     ]
   },
   "mixins": [

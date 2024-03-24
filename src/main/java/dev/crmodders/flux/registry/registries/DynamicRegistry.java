@@ -1,8 +1,8 @@
-package io.github.crmodders.flux.registry.registries;
+package dev.crmodders.flux.registry.registries;
 
-import io.github.crmodders.flux.registry.registries.impl.DynamicRegistryImpl;
-import io.github.crmodders.flux.registry.registries.impl.RegistryObject;
-import io.github.crmodders.flux.tags.Identifier;
+import dev.crmodders.flux.registry.registries.impl.DynamicRegistryImpl;
+import dev.crmodders.flux.registry.registries.impl.RegistryObject;
+import dev.crmodders.flux.tags.Identifier;
 
 public interface DynamicRegistry<T> {
 

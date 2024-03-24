@@ -1,4 +1,4 @@
-package io.github.crmodders.flux.api.generators.data;
+package dev.crmodders.flux.api.generators.data;
 
 import org.hjson.JsonObject;
 

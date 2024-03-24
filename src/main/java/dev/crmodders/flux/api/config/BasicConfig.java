@@ -1,9 +1,7 @@
-package io.github.crmodders.flux.api.config;
+package dev.crmodders.flux.api.config;
 
+import dev.crmodders.flux.FluxConstants;
 import finalforeach.cosmicreach.io.SaveLocation;
-import io.github.crmodders.flux.FluxAPI;
-import io.github.crmodders.flux.FluxConstants;
-import net.fabricmc.loader.impl.FabricLoaderImpl;
 import org.hjson.JsonObject;
 import org.hjson.Stringify;
 

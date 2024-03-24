@@ -1,8 +1,8 @@
-package io.github.crmodders.flux.registry;
+package dev.crmodders.flux.registry;
 
 import finalforeach.cosmicreach.gamestates.GameState;
-import io.github.crmodders.flux.api.generators.BlockGenerator;
-import io.github.crmodders.flux.registry.registries.DynamicRegistry;
+import dev.crmodders.flux.api.generators.BlockGenerator;
+import dev.crmodders.flux.registry.registries.DynamicRegistry;
 
 public class ExperimentalRegistries {
 

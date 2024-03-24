@@ -1,4 +1,4 @@
-package io.github.crmodders.flux.api.suppliers;
+package dev.crmodders.flux.api.suppliers;
 
 @FunctionalInterface
 public interface ExecutionSupplier {

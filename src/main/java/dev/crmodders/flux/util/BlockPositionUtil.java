@@ -1,4 +1,4 @@
-package io.github.crmodders.flux.util;
+package dev.crmodders.flux.util;
 
 import com.badlogic.gdx.math.Vector3;
 import finalforeach.cosmicreach.gamestates.InGame;

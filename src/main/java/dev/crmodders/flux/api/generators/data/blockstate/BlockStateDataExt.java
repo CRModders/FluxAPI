@@ -1,6 +1,6 @@
-package io.github.crmodders.flux.api.generators.data.blockstate;
+package dev.crmodders.flux.api.generators.data.blockstate;
 
-import io.github.crmodders.flux.api.generators.data.DataJson;
+import dev.crmodders.flux.api.generators.data.DataJson;
 
 public interface BlockStateDataExt extends DataJson {
 

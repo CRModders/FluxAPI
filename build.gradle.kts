@@ -2,10 +2,10 @@ import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 import de.undercouch.gradle.tasks.download.Download
 
 object Properties {
-    const val MOD_VERSION = "0.3.0"
+    const val MOD_VERSION = "0.3.1"
     const val MOD_NAME = "FluxAPI"
     const val MODID = "fluxapi"
-    const val MAVEN_GROUP = "io.github.crmodders.flux"
+    const val MAVEN_GROUP = "dev.crmodders.flux"
     const val COSMIC_REACH_VERSION = "0.1.12"
     const val LOADER_VERSION = "0.15.7"
 }

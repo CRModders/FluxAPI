@@ -1,10 +1,9 @@
-package io.github.crmodders.flux.api.generators.data.blockstate;
+package dev.crmodders.flux.api.generators.data.blockstate;
 
-import io.github.crmodders.flux.tags.Identifier;
 import org.hjson.JsonObject;
 
 public record BlockStateData(
-        Identifier blockEventsId,
+        dev.crmodders.flux.tags.Identifier blockEventsId,
         String modelName
 ) implements BlockStateDataExt {
 

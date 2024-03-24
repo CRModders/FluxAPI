@@ -1,4 +1,4 @@
-package io.github.crmodders.flux.util;
+package dev.crmodders.flux.util;
 
 import java.lang.reflect.Field;
 

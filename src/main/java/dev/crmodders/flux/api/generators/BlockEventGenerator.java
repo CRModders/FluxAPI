@@ -1,4 +1,4 @@
-package io.github.crmodders.flux.api.generators;
+package dev.crmodders.flux.api.generators;
 
 import com.badlogic.gdx.files.FileHandle;
 import finalforeach.cosmicreach.GameAssetLoader;
@@ -9,16 +9,16 @@ import finalforeach.cosmicreach.world.blockevents.BlockEventTrigger;
 import finalforeach.cosmicreach.world.blockevents.IBlockEventAction;
 import finalforeach.cosmicreach.world.blocks.BlockState;
 import finalforeach.cosmicreach.world.entities.Player;
-import io.github.crmodders.flux.api.block.IFunctionalBlock;
-import io.github.crmodders.flux.api.generators.data.blockevent.BlockEventData;
-import io.github.crmodders.flux.api.generators.data.blockevent.BlockEventDataExt;
-import io.github.crmodders.flux.api.generators.data.blockevent.BlockEventType;
-import io.github.crmodders.flux.api.generators.data.blockevent.triggers.TriggerData;
-import io.github.crmodders.flux.api.generators.data.blockevent.triggers.TriggerEventData;
-import io.github.crmodders.flux.api.suppliers.ReturnableSupplier;
-import io.github.crmodders.flux.registry.StableRegistries;
-import io.github.crmodders.flux.tags.Identifier;
-import io.github.crmodders.flux.util.PrivUtils;
+import dev.crmodders.flux.api.block.IFunctionalBlock;
+import dev.crmodders.flux.api.generators.data.blockevent.BlockEventData;
+import dev.crmodders.flux.api.generators.data.blockevent.BlockEventDataExt;
+import dev.crmodders.flux.api.generators.data.blockevent.BlockEventType;
+import dev.crmodders.flux.api.generators.data.blockevent.triggers.TriggerData;
+import dev.crmodders.flux.api.generators.data.blockevent.triggers.TriggerEventData;
+import dev.crmodders.flux.api.suppliers.ReturnableSupplier;
+import dev.crmodders.flux.registry.StableRegistries;
+import dev.crmodders.flux.tags.Identifier;
+import dev.crmodders.flux.util.PrivUtils;
 import org.hjson.JsonObject;
 
 import java.util.*;

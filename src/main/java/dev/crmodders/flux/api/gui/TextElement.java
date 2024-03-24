@@ -1,4 +1,4 @@
-package io.github.crmodders.flux.api.gui;
+package dev.crmodders.flux.api.gui;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Pixmap;

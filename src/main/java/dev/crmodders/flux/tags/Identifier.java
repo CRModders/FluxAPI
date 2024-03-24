@@ -1,4 +1,4 @@
-package io.github.crmodders.flux.tags;
+package dev.crmodders.flux.tags;
 
 import java.util.Objects;
 

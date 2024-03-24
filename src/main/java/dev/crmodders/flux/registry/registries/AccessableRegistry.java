@@ -1,6 +1,6 @@
-package io.github.crmodders.flux.registry.registries;
+package dev.crmodders.flux.registry.registries;
 
-import io.github.crmodders.flux.tags.Identifier;
+import dev.crmodders.flux.tags.Identifier;
 
 public interface AccessableRegistry<T> {
 

@@ -1,16 +1,11 @@
-package io.github.crmodders.flux.api.generators;
+package dev.crmodders.flux.api.generators;
 
-import io.github.crmodders.flux.api.block.IFunctionalBlock;
-import io.github.crmodders.flux.api.block.IModBlock;
-import io.github.crmodders.flux.api.generators.data.blockevent.BlockEventData;
-import io.github.crmodders.flux.api.generators.data.blockevent.BlockEventDataExt;
-import io.github.crmodders.flux.api.generators.data.blockevent.BlockEventType;
-import io.github.crmodders.flux.api.generators.data.blockstate.BlockStateData;
-import io.github.crmodders.flux.api.generators.data.blockstate.BlockStateDataExt;
-import io.github.crmodders.flux.api.suppliers.ReturnableDoubleInputSupplier;
-import io.github.crmodders.flux.registry.StableRegistries;
-import io.github.crmodders.flux.tags.Identifier;
-import io.github.crmodders.flux.util.BlockBuilderUtils;
+import dev.crmodders.flux.api.block.IFunctionalBlock;
+import dev.crmodders.flux.api.generators.data.blockevent.BlockEventDataExt;
+import dev.crmodders.flux.api.generators.data.blockevent.BlockEventType;
+import dev.crmodders.flux.api.generators.data.blockstate.BlockStateData;
+import dev.crmodders.flux.registry.StableRegistries;
+import dev.crmodders.flux.tags.Identifier;
 import org.hjson.JsonObject;
 
 import java.util.HashMap;

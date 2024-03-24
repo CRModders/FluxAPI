@@ -1,11 +1,11 @@
-package io.github.crmodders.flux.util;
+package dev.crmodders.flux.util;
 
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Json;
 import finalforeach.cosmicreach.GameAssetLoader;
 import finalforeach.cosmicreach.world.blocks.Block;
 import finalforeach.cosmicreach.world.blocks.BlockState;
-import io.github.crmodders.flux.tags.Identifier;
+import dev.crmodders.flux.tags.Identifier;
 
 public class BlockBuilderUtils {
     public static Block getBlockFromBlock(Identifier id, Block b) {

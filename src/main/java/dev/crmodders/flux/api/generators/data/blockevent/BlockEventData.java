@@ -1,8 +1,8 @@
-package io.github.crmodders.flux.api.generators.data.blockevent;
+package dev.crmodders.flux.api.generators.data.blockevent;
 
-import io.github.crmodders.flux.api.generators.data.blockevent.triggers.TriggerData;
-import io.github.crmodders.flux.api.suppliers.ReturnableSupplier;
-import io.github.crmodders.flux.tags.Identifier;
+import dev.crmodders.flux.api.generators.data.blockevent.triggers.TriggerData;
+import dev.crmodders.flux.api.suppliers.ReturnableSupplier;
+import dev.crmodders.flux.tags.Identifier;
 import org.hjson.JsonObject;
 
 public record BlockEventData(
