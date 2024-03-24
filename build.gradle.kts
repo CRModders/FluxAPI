@@ -1,5 +1,6 @@
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 import de.undercouch.gradle.tasks.download.Download
+import java.net.URI
 
 object Properties {
     const val MOD_VERSION = "0.3.1"
@@ -17,11 +18,28 @@ plugins {
     id("maven-publish")
 }
 
+
 repositories {
     mavenCentral {
         content {
             excludeGroupByRegex("org.ow2.asm")
             excludeGroupByRegex("io.github.llamalad7")
+        }
+    }
+
+    ivy {
+        name = "Cosmic Reach"
+        url = URI("https://cosmic-archive.netlify.app/")
+        patternLayout {
+            artifact("/Cosmic Reach-[revision].jar")
+        }
+        // This is required in Gradle 6.0+ as metadata file (ivy.xml) is mandatory
+        metadataSources {
+            artifact()
+        }
+
+        content {
+            includeGroup("finalforeach")
         }
     }
 
@@ -46,8 +64,10 @@ dependencies {
     shadow("org.ow2.asm:asm-commons:9.6")
     shadow("io.github.llamalad7:mixinextras-fabric:0.3.5")
 
-    shadow(files("$projectDir/run/cosmic-reach.jar"))
-    shadow(files("$projectDir/run/loader.jar"))
+    runtimeOnly(files("$projectDir/run/cosmic-reach.jar"))
+    compileOnly("finalforeach:cosmicreach:${Properties.COSMIC_REACH_VERSION}")
+
+    runtimeOnly(files("$projectDir/run/loader.jar"))
 
 }
 
@@ -59,7 +79,8 @@ dependencies {
 }
 
 base {
-    archivesName = "${Properties.MOD_NAME}_${Properties.MOD_VERSION}"
+    archivesName = Properties.MOD_NAME
+    version = Properties.MOD_VERSION
 }
 
 
