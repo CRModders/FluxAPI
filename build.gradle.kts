@@ -87,13 +87,13 @@ base {
 publishing {
     publications {
         create<MavenPublication>("maven") {
-            artifactId = "lunar-api"
+            artifactId = "flux-api"
             from(components["java"])
 
                     pom {
                         name = "Flux API"
                         description = "An Extremely Capable Fabric Api Mod For Cosmic Reach"
-                        url = "https://github.com/repletsin5/lunar-api"
+                        url = "https://crmodders.dev"
 
                         licenses {
                             license {
