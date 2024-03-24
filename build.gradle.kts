@@ -64,10 +64,8 @@ dependencies {
     shadow("org.ow2.asm:asm-commons:9.6")
     shadow("io.github.llamalad7:mixinextras-fabric:0.3.5")
 
-    runtimeOnly(files("$projectDir/run/cosmic-reach.jar"))
-    compileOnly("finalforeach:cosmicreach:${Properties.COSMIC_REACH_VERSION}")
-
-    runtimeOnly(files("$projectDir/run/loader.jar"))
+    shadow("finalforeach:cosmicreach:${Properties.COSMIC_REACH_VERSION}")
+    shadow(files("$projectDir/run/loader.jar"))
 
 }
 
