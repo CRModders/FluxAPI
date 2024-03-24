@@ -59,7 +59,7 @@ dependencies {
 }
 
 base {
-    archivesName = "${Properties.MOD_NAME}_${Properties.MOD_VERSION}-CR_${Properties.COSMIC_REACH_VERSION}"
+    archivesName = "${Properties.MOD_NAME}_${Properties.MOD_VERSION}"
 }
 
 val properties = mapOf(
