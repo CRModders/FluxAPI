@@ -62,6 +62,43 @@ base {
     archivesName = "${Properties.MOD_NAME}_${Properties.MOD_VERSION}"
 }
 
+
+publishing {
+    publications {
+        create<MavenPublication>("maven") {
+            artifactId = "lunar-api"
+            from(components["java"])
+
+                    pom {
+                        name = "Flux API"
+                        description = "An Extremely Capable Fabric Api Mod For Cosmic Reach"
+                        url = "https://github.com/repletsin5/lunar-api"
+
+                        licenses {
+                            license {
+                                name = " BSD-3-Clause license"
+                                url = "https://opensource.org/license/bsd-3-clause"
+                            }
+                        }
+
+                        developers {
+                            developer {
+                                id = "MrZombii"
+                            }
+                        }
+
+                        scm {
+                            connection = "scm:git@github.com:CRModders/FluxAPI.git"
+                            developerConnection = "scm:git@github.com:CRModders/FluxAPI.git"
+                            url = "https://github.com/CRModders/FluxAPI"
+                        }
+                    }
+
+        }
+
+    }
+}
+
 val properties = mapOf(
         "version" to Properties.MOD_VERSION,
         "loader_version" to Properties.LOADER_VERSION,
