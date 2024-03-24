@@ -1,0 +1,14 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "io.github.crmodders.flux.mixins",
+  "compatibilityLevel": "JAVA_17",
+  "mixins": [
+    "RegistryRegisterer"
+  ],
+  "client": [],
+  "server": [],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
