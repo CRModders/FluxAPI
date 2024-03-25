@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+
+  "quilt_loader": {
+    "group": "dev.crmodders.flux",
+    "id": "${mod_id}",
+    "version": "${version}",
+    "intermediate_mappings":"net.fabricmc:intermediary",
+
+    "metadata": {
+      "name": "${mod_name}",
+      "description": "An Extremely Capable Fabric Api Mod For Cosmic Reach",
+      "contributors": {
+        "Your name here": "Owner"
+      },
+      "contact": {
+        "homepage": "https://crmodders.dev/",
+        "issues": "https://github.com/CRModders/FluxAPI/issues",
+        "sources": "https://github.com/CRModders/FluxAPI"
+      },
+      "icon": "assets/example_mod/icon.png"
+    },
+
+    "entrypoints": {
+      "init": "dev.crmodders.flux.FluxAPIQuilt"
+    },
+
+    "depends": [
+      {
+        "id": "cosmic_quilt",
+        "versions": "*"
+      },
+      {
+        "id": "cosmic_reach",
+        "versions": ">=${comsic_reach_version}"
+      }
+    ]
+  },
+
+  "mixin": "fluxapi.mixins.json"
+}

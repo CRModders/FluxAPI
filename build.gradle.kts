@@ -1,14 +1,14 @@
-import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 import de.undercouch.gradle.tasks.download.Download
 import java.net.URI
 
 object Properties {
-    const val MOD_VERSION = "0.3.3"
+    const val MOD_VERSION = "0.3.4"
     const val MOD_NAME = "FluxAPI"
     const val MODID = "fluxapi"
     const val MAVEN_GROUP = "dev.crmodders.flux"
     const val COSMIC_REACH_VERSION = "0.1.13"
     const val LOADER_VERSION = "0.15.7"
+    const val COSMIC_QUILT_VERSION = "0.1.5"
 }
 
 plugins {
@@ -33,7 +33,7 @@ repositories {
         patternLayout {
             artifact("/Cosmic Reach-[revision].jar")
         }
-        // This is required in Gradle 6.0+ as metadata file (ivy.xml) is mandatory
+
         metadataSources {
             artifact()
         }
@@ -43,27 +43,26 @@ repositories {
         }
     }
 
+    maven("https://jitpack.io")
     maven("https://repo.spongepowered.org/maven/")
     maven("https://maven.fabricmc.net/")
+    maven("https://maven.quiltmc.org/repository/release")
+}
+
+val quiltMod: Configuration by configurations.creating {
+    configurations.shadow.get().extendsFrom(this)
 }
 
 // Required Dependencies For Fabric
 dependencies {
-    shadow("com.google.guava:guava:33.0.0-jre")
-    shadow("com.google.code.gson:gson:2.9.1")
-
     shadow("net.fabricmc:fabric-loader:0.15.7")
     shadow("net.fabricmc:tiny-mappings-parser:0.2.2.14")
     shadow("net.fabricmc:access-widener:2.1.0")
     shadow("net.fabricmc:sponge-mixin:0.12.5+mixin.0.8.5")
 
-    shadow("org.ow2.asm:asm:9.6")
-    shadow("org.ow2.asm:asm-util:9.6")
-    shadow("org.ow2.asm:asm-tree:9.6")
-    shadow("org.ow2.asm:asm-analysis:9.6")
-    shadow("org.ow2.asm:asm-commons:9.6")
     shadow("io.github.llamalad7:mixinextras-fabric:0.3.5")
 
+    quiltMod("org.codeberg.CRModders:cosmic-quilt:1.1.5")
     shadow("finalforeach:cosmicreach:${Properties.COSMIC_REACH_VERSION}")
     shadow(files("$projectDir/run/loader.jar"))
 
