@@ -1,16 +1,14 @@
 package dev.crmodders.flux.mixins;
 
 import com.badlogic.gdx.utils.Json;
+import dev.crmodders.flux.api.resource.ResourceObject;
 import finalforeach.cosmicreach.BlockGame;
-import finalforeach.cosmicreach.gamestates.MainMenu;
-import finalforeach.cosmicreach.gamestates.WorldSelectionMenu;
+import finalforeach.cosmicreach.GameAssetLoader;
 import finalforeach.cosmicreach.world.blockevents.BlockEvents;
 import finalforeach.cosmicreach.world.blockevents.IBlockEventAction;
-import finalforeach.cosmicreach.world.blocks.Block;
 import dev.crmodders.flux.FluxConstants;
 import dev.crmodders.flux.api.block.IModBlock;
 import dev.crmodders.flux.api.generators.BlockGenerator;
-import dev.crmodders.flux.api.generators.data.blockevent.BlockEventData;
 import dev.crmodders.flux.api.generators.data.blockevent.BlockEventDataExt;
 import dev.crmodders.flux.registry.ExperimentalRegistries;
 import dev.crmodders.flux.registry.StableRegistries;
@@ -26,6 +24,9 @@ public class RegistryRegisterer {
 
     @Inject(method = "create", at = @At("TAIL"))
     private void create(CallbackInfo ci) {
+        FluxConstants.GameHasLoaded = true;
+
+        RegisterAssets((AccessableRegistry<ResourceObject>) ExperimentalRegistries.ResourceRegistry);
 
         StableRegistries.BLOCKS.freeze();
         RegisterBlocks((AccessableRegistry<IModBlock>) StableRegistries.BLOCKS);
@@ -38,6 +39,21 @@ public class RegistryRegisterer {
 
         RegisterBlockFinalizers((AccessableRegistry<BlockGenerator.FactoryFinalizer>) ExperimentalRegistries.FactoryFinalizers);
 
+    }
+
+    private static void RegisterAssets(AccessableRegistry<ResourceObject> registryAccess) {
+        for (Identifier resourceId : registryAccess.getRegisteredNames()) {
+            ResourceObject resource = registryAccess.get(resourceId);
+
+            if (resource.handle == null)
+                resource.handle = GameAssetLoader.loadAsset(
+                        resourceId.namespace
+                                + FluxConstants.ASSET_KEY
+                                + resourceId.name
+                );
+
+            FluxConstants.LOGGER.info("{ Registry }: Registered Asset: %s".formatted(resourceId));
+        }
     }
 
     private static void RegisterBlockEventActions(AccessableRegistry<IBlockEventAction> registryAccess) {

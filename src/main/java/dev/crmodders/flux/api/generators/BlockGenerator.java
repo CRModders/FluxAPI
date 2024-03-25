@@ -65,7 +65,7 @@ public class BlockGenerator {
     public ReturnableDoubleInputSupplier<IModBlock, Identifier, FactoryFinalizer> GetGeneratorFactory() {
         return (block, id) -> {
             if (!StableRegistries.BLOCKS.isFrozen()) throw new RuntimeException("CANNOT USE GENERATOR FACTORY BECAUSE REGISTRIES ARE NOT FROZEN YET");
-            if (object.get("stringId") == null) object.set("stringId", id.toString());
+            object.set("stringId", id.toString());
 
             if (block instanceof IFunctionalBlock) {
                 for (String name : object.get("blockStates").asObject().names()) {

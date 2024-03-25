@@ -3,7 +3,7 @@ import de.undercouch.gradle.tasks.download.Download
 import java.net.URI
 
 object Properties {
-    const val MOD_VERSION = "0.3.2"
+    const val MOD_VERSION = "0.3.3"
     const val MOD_NAME = "FluxAPI"
     const val MODID = "fluxapi"
     const val MAVEN_GROUP = "dev.crmodders.flux"
@@ -174,7 +174,7 @@ tasks.register("runClient1") {
     doLast{
         var betterClasspath = listOf<File>()
         betterClasspath = betterClasspath.plus(sourceSets.main.get().compileClasspath)
-        betterClasspath = betterClasspath.plus(file("$projectDir/build/libs/${Properties.MOD_NAME}_${Properties.MOD_VERSION}-CR_${Properties.COSMIC_REACH_VERSION}-all.jar"))
+        betterClasspath = betterClasspath.plus(file("$projectDir/build/libs/${Properties.MOD_NAME}-${Properties.MOD_VERSION}-all.jar"))
         System.out.println(betterClasspath)
         javaexec {
             workingDir("$projectDir/run")
