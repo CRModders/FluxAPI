@@ -5,6 +5,8 @@
   "compatibilityLevel": "JAVA_17",
   "mixins": [
     "assets.AssetLoaderMixin",
+    "assets.BlockEventsMixin",
+    "assets.BlockModelJsonMixin",
     "events.BlockSelectionMixin",
     "events.GameStateMixin",
     "gamestate.MainMenuMixin",

@@ -52,11 +52,7 @@ public class RegistryRegisterer {
             ResourceObject resource = registryAccess.get(resourceId);
 
             if (resource.handle == null)
-                resource.handle = GameAssetLoader.loadAsset(
-                        resourceId.namespace
-                                + FluxConstants.ASSET_KEY
-                                + resourceId.name
-                );
+                resource.handle = GameAssetLoader.loadAsset(resource.toString());
 
             Logger.info("%s: Registered Asset: %s".formatted(TAG, resourceId));
         }

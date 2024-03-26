@@ -1,21 +1,22 @@
 package dev.crmodders.flux.mixins.assets;
 
+import com.badlogic.gdx.Files;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import dev.crmodders.flux.FluxConstants;
+import dev.crmodders.flux.api.resource.ResourceLocation;
+import dev.crmodders.flux.tags.Identifier;
 import finalforeach.cosmicreach.GameAssetLoader;
+import finalforeach.cosmicreach.io.SaveLocation;
 import org.pmw.tinylog.Logger;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import java.io.PrintStream;
 import java.util.HashMap;
-import java.util.regex.Pattern;
 
 @Mixin(GameAssetLoader.class)
 public class AssetLoaderMixin {
@@ -24,77 +25,48 @@ public class AssetLoaderMixin {
     @Shadow @Final public static HashMap<String, FileHandle> ALL_ASSETS;
 
     /**
-     * @author replet
-     * @reason So mods can load assets
+     * @author written by replet, rewritten by Mr Zombii
+     * @reason Improves asset loading
      **/
-    @Inject(method = "loadAsset(Ljava/lang/String;Z)Lcom/badlogic/gdx/files/FileHandle;",at= @At(value = "INVOKE_ASSIGN", target = "Lcom/badlogic/gdx/Files;absolute(Ljava/lang/String;)Lcom/badlogic/gdx/files/FileHandle;",shift = At.Shift.BEFORE),cancellable = true)
-    private static void file(String fileName, boolean forceReload, CallbackInfoReturnable<FileHandle> cir) {
-        String[] arr = null;
+    @Overwrite
+    public static FileHandle loadAsset(String fileName, boolean forceReload) {
+        Identifier location = Identifier.fromString(fileName);
+        if (!forceReload && ALL_ASSETS.containsKey(location.toString())) return ALL_ASSETS.get(location.toString());
 
-        if (fileName.contains(FluxConstants.ASSET_KEY)) {
-            arr = fileName.split(Pattern.quote(FluxConstants.ASSET_KEY));
+        FileHandle modLocationFile = Gdx.files.absolute(SaveLocation.getSaveFolderLocation() + "/mods/assets/" + fileName);
+        if (modLocationFile.exists()) {
+            Logger.info("%s Loading %s from DataMods".formatted(TAG, fileName));
+            ALL_ASSETS.put(fileName, modLocationFile);
+            return modLocationFile;
         }
 
-        if (fileName.contains(FluxConstants.ASSET_KEY)) {
-            Logger.info("%s Loading %s using Flux".formatted(TAG, fileName));
-        } else {
-            if (fileName.startsWith("mods/assets"))
-                Logger.info("%s Loading %s from DataMods".formatted(TAG, fileName));
-            else
-                Logger.info("%s Loading %s from Jar".formatted(TAG, fileName));
+        FileHandle vanillaLocationFile = Gdx.files.internal(location.name);
+        if (vanillaLocationFile.exists()) {
+            Logger.info("%s Loading %s from Cosmic Reach".formatted(TAG, fileName));
+            ALL_ASSETS.put(fileName, modLocationFile);
+            return vanillaLocationFile;
         }
-        if (arr != null) {
-            if (arr.length==2) {
-                if (arr[0].equalsIgnoreCase("base")) {
-                    if (!forceReload && ALL_ASSETS.containsKey(arr[1])) {
-                        cir.setReturnValue(ALL_ASSETS.get(arr[1]));
-                    }
-                    FileHandle file = Gdx.files.classpath(arr[1]);
-                    ALL_ASSETS.put(fileName, file);
-                    cir.setReturnValue(file);
-                }
 
-                FileHandle file = Gdx.files.classpath("assets/" + arr[0] + "/" + arr[1]);
-                if (file.exists()) {
-                    Logger.info("%s Loading %s from FabricMod".formatted(TAG, fileName));
-                    ALL_ASSETS.put(fileName, file);
-                    cir.setReturnValue(file);
-                }
-            }
+        FileHandle classpathLocationFile = Gdx.files.classpath("assets/%s/%s".formatted(location.namespace, location.name));
+        if (classpathLocationFile.exists()) {
+            Logger.info("%s Loading %s from the Classpath".formatted(TAG, fileName));
+            ALL_ASSETS.put(fileName, modLocationFile);
+            return classpathLocationFile;
         }
+
+        Logger.error("%s Cannot Load %s from Classpath, CosmicReach, or DataMods".formatted(TAG, fileName));
+        return null;
     }
 
-    @Redirect(method = "loadAsset(Ljava/lang/String;Z)Lcom/badlogic/gdx/files/FileHandle;", at = @At(value = "INVOKE", target = "Ljava/io/PrintStream;print(Ljava/lang/String;)V"))
-    private static void printCapture(PrintStream instance, String s) {
-        String a = s.replace("Loading ","");
-
-        if (s.contains(FluxConstants.ASSET_KEY)) {
-            String b = a.replace(FluxConstants.ASSET_KEY,":");
-            s = "Loading " + b;
-        } else {
-            if (s.startsWith("mods/assets")) {
-                s = "Loading " + "DataMods:" + a;
-            } else {
-                s = "Loading " + "base:" + a;
-            }
+    @Redirect(method = "getSound", at = @At(value = "INVOKE", target = "Lfinalforeach/cosmicreach/GameAssetLoader;loadAsset(Ljava/lang/String;)Lcom/badlogic/gdx/files/FileHandle;"))
+    private static FileHandle getSound(String fileName) {
+        String noFolder = fileName.replace("sounds/blocks/","");
+        if (noFolder.contains(":")) {
+            Identifier id = Identifier.fromString(noFolder);
+            id.name = "sounds/blocks/" + id.name;
+            return GameAssetLoader.loadAsset(id.toString());
         }
-//        instance.print(s);
+        return GameAssetLoader.loadAsset(fileName);
     }
 
-    @Redirect(method = "loadAsset(Ljava/lang/String;Z)Lcom/badlogic/gdx/files/FileHandle;", at = @At(value = "INVOKE", target = "Ljava/io/PrintStream;println(Ljava/lang/String;)V"))
-    private static void printCapture2(PrintStream instance, String s) {
-        String a = s.replace("Loading ","");
-
-        if (s.contains(FluxConstants.ASSET_KEY)) {
-            String b = a.replace(FluxConstants.ASSET_KEY,":");
-            s = "Loading " + b;
-        } else {
-            if (s.startsWith("mods/assets")) {
-                s = "Loading " + "DataMods:" + a;
-            } else {
-                s = "Loading " + "base:" + a;
-            }
-        }
-//        instance.print(s);
-    }
 }

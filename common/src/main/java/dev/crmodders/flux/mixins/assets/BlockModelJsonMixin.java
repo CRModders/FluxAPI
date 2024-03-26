@@ -1,24 +1,24 @@
-package dev.crmodders.flux.mixins.rendering.shaders;
+package dev.crmodders.flux.mixins.assets;
 
 import com.badlogic.gdx.files.FileHandle;
 import dev.crmodders.flux.FluxConstants;
 import dev.crmodders.flux.tags.Identifier;
 import finalforeach.cosmicreach.GameAssetLoader;
-import finalforeach.cosmicreach.rendering.shaders.ChunkShader;
+import finalforeach.cosmicreach.world.blocks.BlockModelJson;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
 import java.util.regex.Pattern;
 
-@Mixin(ChunkShader.class)
-public class ChunkShaderMixin {
-    @Redirect(method = "addToAllBlocksTexture",at = @At(value = "INVOKE", target = "Lfinalforeach/cosmicreach/GameAssetLoader;loadAsset(Ljava/lang/String;)Lcom/badlogic/gdx/files/FileHandle;"))
-    private static FileHandle loadModdedBlockTextures(String fileName){
-        String noFolder = fileName.replace("textures/blocks/","");
+@Mixin(BlockModelJson.class)
+public class BlockModelJsonMixin {
+    @Redirect(method = "getInstance", at = @At(value = "INVOKE", target = "Lfinalforeach/cosmicreach/GameAssetLoader;loadAsset(Ljava/lang/String;)Lcom/badlogic/gdx/files/FileHandle;"))
+    private static FileHandle getModelFromModID(String fileName) {
+        String noFolder = fileName.replace("models/blocks/","");
         if (noFolder.contains(":")) {
             Identifier id = Identifier.fromString(noFolder);
-            id.name = "textures/blocks/" + id.name;
+            id.name = "models/blocks/" + id.name;
             return GameAssetLoader.loadAsset(id.toString());
         }
         return GameAssetLoader.loadAsset(fileName);
