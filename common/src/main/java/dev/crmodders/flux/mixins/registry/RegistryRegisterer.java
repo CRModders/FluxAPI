@@ -1,4 +1,4 @@
-package dev.crmodders.flux.mixins;
+package dev.crmodders.flux.mixins.registry;
 
 import com.badlogic.gdx.utils.Json;
 import dev.crmodders.flux.api.resource.ResourceObject;
@@ -27,17 +27,6 @@ import java.io.PrintStream;
 public class RegistryRegisterer {
 
     private static String TAG = "\u001B[35;1m{Registry}\u001B[0m\u001B[37m";
-    private static String TAG_BLOCKGAME = "\u001B[35;1m{Init}\u001B[0m\u001B[37m";
-
-    @Redirect(method = "dispose", at = @At(value = "INVOKE", target = "Ljava/io/PrintStream;println(Ljava/lang/String;)V"))
-    private void print1(PrintStream instance, String x) {
-        Logger.info("%s: %s".formatted(TAG_BLOCKGAME, x));
-    }
-
-    @Redirect(method = "create", at = @At(value = "INVOKE", target = "Ljava/io/PrintStream;println(Ljava/lang/String;)V"))
-    private void print2(PrintStream instance, String x) {
-        Logger.info("%s: %s".formatted(TAG_BLOCKGAME, x));
-    }
 
     @Inject(method = "create", at = @At("TAIL"))
     private void create(CallbackInfo ci) {

@@ -50,8 +50,8 @@ val cosmicreach: Configuration by configurations.creating {
 
 // Required Dependencies For Fabric
 dependencies {
-    shadow("com.google.guava:guava:33.0.0-jre")
-    shadow("com.google.code.gson:gson:2.9.1")
+    implementation("com.google.guava:guava:33.0.0-jre")
+    implementation("com.google.code.gson:gson:2.9.1")
 
     shadow("net.fabricmc:fabric-loader:0.15.7")
     shadow("net.fabricmc:tiny-mappings-parser:0.2.2.14")

@@ -4,10 +4,17 @@
   "package": "dev.crmodders.flux.mixins",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
-    "AssetLoaderMixin",
-    "GameStateMixin",
-    "LLwjgl3ApplicationLoggerMixin",
-    "RegistryRegisterer"
+    "assets.AssetLoaderMixin",
+    "events.BlockSelectionMixin",
+    "events.GameStateMixin",
+    "gamestate.MainMenuMixin",
+    "logging.BlockGameMixin",
+    "logging.GameShaderMixin",
+    "logging.GameStateMixin",
+    "logging.LLwjgl3ApplicationLoggerMixin",
+    "registry.RegistryRegisterer",
+    "rendering.shaders.ChunkShaderMixin",
+    "rendering.shaders.GameShaderMixin"
   ],
   "client": [],
   "server": [],

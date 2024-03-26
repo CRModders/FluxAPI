@@ -1,4 +1,4 @@
-package dev.crmodders.flux.mixins;
+package dev.crmodders.flux.mixins.logging;
 
 import com.badlogic.gdx.ApplicationLogger;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationLogger;

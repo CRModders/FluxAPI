@@ -1,4 +1,4 @@
-package dev.crmodders.flux.mixins;
+package dev.crmodders.flux.mixins.logging;
 
 import finalforeach.cosmicreach.gamestates.GameState;
 import org.pmw.tinylog.Logger;

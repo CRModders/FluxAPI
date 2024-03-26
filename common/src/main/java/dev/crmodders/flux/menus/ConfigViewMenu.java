@@ -12,6 +12,7 @@ import finalforeach.cosmicreach.ui.HorizontalAnchor;
 import finalforeach.cosmicreach.ui.UIElement;
 import finalforeach.cosmicreach.ui.VerticalAnchor;
 import dev.crmodders.flux.api.config.BasicConfig;
+import org.pmw.tinylog.Logger;
 
 import java.awt.*;
 import java.io.File;
@@ -31,15 +32,15 @@ public class ConfigViewMenu extends BasicMainMenu {
         super.create();
 
         addTextElement(0, -200, 4, "Config Menu", false);
-        addUIElement("Back", new UIElement(0, 0, 250, 25) {
+        addUIElement("Back", new UIElement(0, -100, 250, 25) {
             @Override
             public void onClick() {
                 super.onClick();
                 GameState.switchToGameState(lastState);
             }
         });
-
-        int vheight = 30;
+        Logger.info(BasicConfig.configDir);
+        int vheight = -65;
         for (File file : Objects.requireNonNull(new File(BasicConfig.configDir).listFiles())) {
             if (file.getName().contains(".hjson")) {
                 addUIElement(file.getName().split("\\.")[0], new UIElement(0, vheight, 250, 25) {

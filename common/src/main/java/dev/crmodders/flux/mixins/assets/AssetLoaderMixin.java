@@ -1,9 +1,9 @@
-package dev.crmodders.flux.mixins;
+package dev.crmodders.flux.mixins.assets;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import dev.crmodders.flux.FluxConstants;
-import finalforeach.cosmicreach.rendering.shaders.GameShader;
+import finalforeach.cosmicreach.GameAssetLoader;
 import org.pmw.tinylog.Logger;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -17,7 +17,7 @@ import java.io.PrintStream;
 import java.util.HashMap;
 import java.util.regex.Pattern;
 
-@Mixin(finalforeach.cosmicreach.GameAssetLoader.class)
+@Mixin(GameAssetLoader.class)
 public class AssetLoaderMixin {
     private static String TAG = "\u001B[35;1m{Assets}\u001B[0m\u001B[37m:";
 
