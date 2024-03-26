@@ -1,1 +1,1 @@
-rootProject.name = "FluxAPI"
+include("fabric", "quilt", "common")
