@@ -2,6 +2,7 @@ package dev.crmodders.flux.util;
 
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Json;
+import dev.crmodders.flux.mixins.accessor.BlockAccessor;
 import finalforeach.cosmicreach.GameAssetLoader;
 import finalforeach.cosmicreach.world.blocks.Block;
 import finalforeach.cosmicreach.world.blocks.BlockState;
@@ -16,6 +17,8 @@ public class BlockBuilderUtils {
             blockState = b.blockStates.get(stateKey);
             blockState.initialize(b);
             blockState.stringId = stateKey;
+
+            if (blockState.generateSlabs) BlockAccessor.generateSlabs(blockState.stringId, blockState);
 
             Block.allBlockStates.put(blockState.stringId, blockState);
         }
@@ -36,6 +39,8 @@ public class BlockBuilderUtils {
             blockState.initialize(b);
             blockState.stringId = stateKey;
 
+            if (blockState.generateSlabs) BlockAccessor.generateSlabs(blockState.stringId, blockState);
+
             Block.allBlockStates.put(blockState.stringId, blockState);
         }
 
@@ -55,7 +60,7 @@ public class BlockBuilderUtils {
             blockState.initialize(b);
             blockState.stringId = stateKey;
 
-//            if (blockState.generateSlabs) generateSlabs(blockState.stringId, blockState);
+            if (blockState.generateSlabs) BlockAccessor.generateSlabs(blockState.stringId, blockState);
 
             Block.allBlockStates.put(blockState.stringId, blockState);
         }

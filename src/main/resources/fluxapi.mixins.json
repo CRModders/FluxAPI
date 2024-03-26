@@ -4,6 +4,7 @@
   "package": "dev.crmodders.flux.mixins",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "accessor.BlockAccessor",
     "assets.AssetLoaderMixin",
     "assets.BlockEventsMixin",
     "assets.BlockModelJsonMixin",
