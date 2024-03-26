@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "id": "${modid}",
+  "version": "${version}",
+  "name": "${mod_name}",
+  "description": "An Extremely Capable Fabric Api Mod For Cosmic Reach",
+  "authors": [
+  ],
+  "license": "CC0-1.0",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "dev.crmodders.flux.FluxAPI"
+    ]
+  },
+  "mixins": [
+    "fluxapi.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "cosmic_reach": ">=${cosmic_reach_version}"
+  }
+}
