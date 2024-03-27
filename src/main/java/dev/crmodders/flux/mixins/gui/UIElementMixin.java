@@ -86,6 +86,9 @@ public abstract class UIElementMixin implements Component, UIElementInterface {
 		dirty = true;
 	}
 
+	@Inject(method = "updateText", at=@At("TAIL"))
+	private void onUpdateText(CallbackInfo ci) { dirty = true; }
+
 	@Override
 	public void update(Viewport uiViewport, float mouseX, float mouseY) {
 		if (!this.shown) {

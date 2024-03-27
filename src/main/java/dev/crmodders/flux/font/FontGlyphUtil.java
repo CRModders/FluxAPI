@@ -18,9 +18,9 @@ import com.badlogic.gdx.math.Vector2;
 public class FontGlyphUtil {
 
 	private static final AffineTransform INVERT_Y = AffineTransform.getScaleInstance(1, -1);
-	private static final double FLATNESS_FACTOR = 1200;
+	private static final double FLATNESS_FACTOR = 400;
 
-	public static Geometry read(char chr, Font font, FontRenderContext fontContext, ShapeReader reader, GeometryFactory geomFact) {
+	public static Geometry createGlyphGeometry(char chr, Font font, FontRenderContext fontContext, ShapeReader reader, GeometryFactory geomFact) {
 		GlyphVector gv = font.createGlyphVector(fontContext, String.valueOf(chr));
 		List<Geometry> polys = new ArrayList<>();
 		for (int i = 0; i < gv.getNumGlyphs(); i++) {
@@ -32,7 +32,7 @@ public class FontGlyphUtil {
 		return geomFact.buildGeometry(polys);
 	}
 
-	public static VectorGlyph getGlypth(char chr, Vector2[] vertices, Font awtFont, FontRenderContext ctx) {
+	public static VectorGlyph createGlyphMetric(char chr, Vector2[] vertices, Font awtFont, FontRenderContext ctx) {
 		Rectangle2D bounds = awtFont.getStringBounds(String.valueOf(chr), ctx);
 		LineMetrics metric = awtFont.getLineMetrics(String.valueOf(chr), ctx);
 		return new VectorGlyph(chr, vertices, metric.getAscent(), (float) bounds.getWidth());

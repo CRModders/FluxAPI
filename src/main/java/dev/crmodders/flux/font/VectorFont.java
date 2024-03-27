@@ -41,7 +41,7 @@ public class VectorFont {
 			if (!awtFont.canDisplay(c))
 				continue;
 
-			Geometry geom = FontGlyphUtil.read(c, awtFont, ctx, reader, factory);
+			Geometry geom = FontGlyphUtil.createGlyphGeometry(c, awtFont, ctx, reader, factory);
 			geom = GeometryFixer.fix(geom);
 			geom = affine.transform(geom);
 
@@ -65,11 +65,11 @@ public class VectorFont {
 			glyphs.put(c, vertices.toArray(Vector2[]::new));
 		}
 
-		VectorGlyph space = FontGlyphUtil.getGlypth(' ', glyphs.get(' '), awtFont, ctx);
+		VectorGlyph space = FontGlyphUtil.createGlyphMetric(' ', glyphs.get(' '), awtFont, ctx);
 		this.glyphs = new VectorGlyph[65536];
 		for (char c = Character.MIN_VALUE; c < Character.MAX_VALUE; c++) {
 			if (glyphs.containsKey(c)) {
-				this.glyphs[c] = FontGlyphUtil.getGlypth(c, glyphs.get(c), awtFont, ctx);
+				this.glyphs[c] = FontGlyphUtil.createGlyphMetric(c, glyphs.get(c), awtFont, ctx);
 			} else {
 				this.glyphs[c] = space;
 			}

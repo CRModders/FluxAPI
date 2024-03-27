@@ -10,8 +10,8 @@ public class FluxConstants {
     public static final String MOD_ID = "fluxapi";
     public static final String ASSET_KEY = "¬¬$^$^¬¬";
 
-    public static final ResourceLocation FontFile = new ResourceLocation(MOD_ID, "upheavtt.ttf");
-    public static final IntSetting antiAliasing = new IntSetting("msaa", 1);
+    public static final ResourceLocation FontFile = new ResourceLocation(MOD_ID, "comic_sans_ms.ttf");
+    public static final IntSetting antiAliasing = new IntSetting("msaa", 4);
     public static final BooleanSetting replaceFontRenderer = new BooleanSetting("replaceFontRenderer", false);
 
 }

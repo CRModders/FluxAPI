@@ -4,17 +4,16 @@ import dev.crmodders.flux.FluxConstants;
 import dev.crmodders.flux.api.gui.BooleanToggleElement;
 import dev.crmodders.flux.api.gui.ButtonElement;
 import dev.crmodders.flux.api.gui.SteppedIntSliderElement;
-import dev.crmodders.flux.menus.MenuState;
 import finalforeach.cosmicreach.gamestates.GameState;
 import finalforeach.cosmicreach.ui.UIElement;
 import finalforeach.cosmicreach.ui.VerticalAnchor;
 
-public class NanobassOptionMenu extends MenuState {
+public class FluxOptionMenu extends MenuState {
 
 	private int ix = 0;
 	private int iy = 0;
 
-	public NanobassOptionMenu(GameState previousState) {
+	public FluxOptionMenu(GameState previousState) {
 		super(previousState);
 		ButtonElement doneButton = new ButtonElement(0.0f, -50.0f, 250.0f, 50.0f, b -> GameState.switchToGameState(previousState));
 		doneButton.vAnchor = VerticalAnchor.BOTTOM_ALIGNED;

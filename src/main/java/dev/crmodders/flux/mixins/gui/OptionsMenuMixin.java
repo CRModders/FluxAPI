@@ -1,6 +1,6 @@
 package dev.crmodders.flux.mixins.gui;
 
-import dev.crmodders.flux.menus.NanobassOptionMenu;
+import dev.crmodders.flux.menus.FluxOptionMenu;
 import dev.crmodders.flux.api.gui.ButtonElement;
 import finalforeach.cosmicreach.gamestates.GameState;
 import finalforeach.cosmicreach.gamestates.OptionsMenu;
@@ -23,8 +23,8 @@ public abstract class OptionsMenuMixin extends GameState {
 				break;
 			}
 		}
-		ButtonElement button = new ButtonElement(0f, 100f, 250f, 50f, b -> GameState.switchToGameState(new NanobassOptionMenu((OptionsMenu) (Object) this)));
-		button.setText("Nanobass' Options");
+		ButtonElement button = new ButtonElement(0f, 100f, 250f, 50f, b -> GameState.switchToGameState(new FluxOptionMenu(this)));
+		button.setText("Flux Options");
 		button.show();
 		uiElements.add(button);
 	}

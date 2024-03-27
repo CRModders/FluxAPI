@@ -195,8 +195,8 @@ public class UIRenderer {
 					float glyphAdvance = glyph.advance * fontSizeX;
 
 					for (int j = 0; j < glyph.geom.length / 3; j++) {
-						float x1 = glyph.geom[j * 3 + 0].x * fontSizeX + x;
-						float y1 = glyph.geom[j * 3 + 0].y * fontSizeY + glyphAscent + y;
+						float x1 = glyph.geom[j * 3].x * fontSizeX + x;
+						float y1 = glyph.geom[j * 3].y * fontSizeY + glyphAscent + y;
 
 						float x2 = glyph.geom[j * 3 + 1].x * fontSizeX + x;
 						float y2 = glyph.geom[j * 3 + 1].y * fontSizeY + glyphAscent + y;
@@ -230,26 +230,16 @@ public class UIRenderer {
 		}
 	}
 
-	private Texture createTexture(int width, int height, Color color) {
-		Pixmap pixmap = new Pixmap(width, height, Pixmap.Format.RGBA8888);
-		pixmap.setColor(color);
-		pixmap.fillRectangle(0, 0, width, height);
-		Texture texture = new Texture(pixmap);
-		pixmap.dispose();
-		return texture;
-	}
-
 	public void render(ShapeBatch shapeBatch, float xStart, float yStart) {
 		for (Shape shape : shapeBatch.shapes) {
 
 			if (shape instanceof DrawRect rect) {
 				renderer.rectangle(xStart + rect.x, yStart + rect.y, rect.w, rect.h, rect.color, rect.thickness);
 			} else if (shape instanceof FillRect rect) {
-				float x1 = xStart + rect.w;
-				float y1 = yStart;
-				float x2 = xStart;
-				float y2 = yStart + rect.h;
-
+				float x1 = xStart + rect.x + rect.w;
+				float y1 = yStart + rect.y;
+				float x2 = xStart + rect.x;
+				float y2 = yStart + rect.y + rect.h;
 				renderer.filledTriangle(x1, y1, x2, y1, x2, y2, rect.color);
 				renderer.filledTriangle(x2, y2, x1, y2, x1, y1, rect.color);
 			}
