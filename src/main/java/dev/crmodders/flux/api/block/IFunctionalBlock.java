@@ -7,8 +7,8 @@ import finalforeach.cosmicreach.world.entities.Player;
 
 public interface IFunctionalBlock {
 
-    void onInteract(World world, Player player, BlockState blockState, BlockPosition position);
-    void onPlace(World world, Player player, BlockState blockState, BlockPosition position);
-    void onBreak(World world, Player player, BlockState blockState, BlockPosition position);
+    default void onInteract(World world, Player player, BlockState blockState, BlockPosition position) {}
+    default void onPlace(World world, Player player, BlockState blockState, BlockPosition position) {}
+    default void onBreak(World world, Player player, BlockState blockState, BlockPosition position) {}
 
 }
