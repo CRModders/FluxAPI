@@ -3,12 +3,21 @@ package dev.crmodders.flux.menus;
 import dev.crmodders.flux.FluxConstants;
 import dev.crmodders.flux.api.gui.BooleanToggleElement;
 import dev.crmodders.flux.api.gui.ButtonElement;
+import dev.crmodders.flux.api.gui.LanguageSelectorElement;
 import dev.crmodders.flux.api.gui.SteppedIntSliderElement;
+import dev.crmodders.flux.api.settings.LocaleSetting;
+import dev.crmodders.flux.localization.LanguageRegistry;
+import dev.crmodders.flux.localization.TranslationKey;
 import finalforeach.cosmicreach.gamestates.GameState;
 import finalforeach.cosmicreach.ui.UIElement;
 import finalforeach.cosmicreach.ui.VerticalAnchor;
 
+import java.util.List;
+import java.util.Locale;
+
 public class FluxOptionMenu extends MenuState {
+
+	public static final TranslationKey KEY_TEST = new TranslationKey("test:test");
 
 	private int ix = 0;
 	private int iy = 0;
@@ -20,11 +29,26 @@ public class FluxOptionMenu extends MenuState {
 		doneButton.setText("Done");
 		doneButton.show();
 
-		SteppedIntSliderElement msaa = new SteppedIntSliderElement(0, 0, 0, 0, 0, 16, new int[] { 0, 2, 4, 8, 16 }, FluxConstants.antiAliasing, "MSAA: %dx");
+		SteppedIntSliderElement msaa = new SteppedIntSliderElement(0, 0, 0, 0, 0, 16, new int[] { 0, 2, 4, 8, 16 }, FluxConstants.AntiAliasing, "MSAA: %dx");
 		addElement(msaa);
 
-		BooleanToggleElement font = new BooleanToggleElement(0, 0, 0, 0, FluxConstants.replaceFontRenderer, "Vector Font Renderer %s", "On", "Off");
+		BooleanToggleElement font = new BooleanToggleElement(0, 0, 0, 0, FluxConstants.ReplaceFontRenderer, "Vector Font Renderer %s", "On", "Off");
 		addElement(font);
+
+		LanguageSelectorElement locale = new LanguageSelectorElement(0,0,0,0, FluxConstants.LanguageSetting, LanguageRegistry.getLanguages()) {
+			@Override
+			public void updateLocale(Locale locale) {
+				super.updateLocale(locale);
+				LanguageRegistry.setLanguage(locale);
+			}
+
+			@Override
+			public void updateText() {
+				super.updateText();
+				// TODO: translate this
+			}
+		};
+		addElement(locale);
 
 		this.uiElements.add(doneButton);
 	}
