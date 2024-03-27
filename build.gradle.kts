@@ -6,8 +6,6 @@ object Properties {
     const val MOD_NAME = "FluxAPI"
     const val MODID = "fluxapi"
     const val MAVEN_GROUP = "dev.crmodders.flux"
-    const val COSMIC_REACH_VERSION = "0.1.14"
-    const val LOADER_VERSION = "0.15.7"
 }
 
 plugins {
@@ -48,6 +46,8 @@ val cosmicreach: Configuration by configurations.creating {
 }
 
 
+
+
 // Required Dependencies For Fabric
 dependencies {
     implementation("com.google.guava:guava:33.0.0-jre")
@@ -65,17 +65,33 @@ dependencies {
     shadow("org.ow2.asm:asm-commons:9.6")
     shadow("io.github.llamalad7:mixinextras-fabric:0.3.5")
 
-    cosmicreach("finalforeach:cosmicreach:${Properties.COSMIC_REACH_VERSION}")
+    cosmicreach("finalforeach:cosmicreach:${DependencyVersions.cosmicReachVersion}")
     shadow(files("$projectDir/run/loader.jar"))
+}
+
+object DependencyVersions {
+    const val cosmicReachVersion = "0.1.14"
+    const val fabricLoaderVersion = "0.15.7"
+
+    const val HJsonVersion = "3.1.0"
+    const val tinyLogVersion = "1.3.1"
+    const val jtsCoreVersion = "1.19.0"
+    const val shapeDrawerVersion = "2.5.0"
 }
 
 // Embedded | Project Dependencies
 dependencies {
-    shadow("net.fabricmc:sponge-mixin:0.12.5+mixin.0.8.5")
 
-    implementation("org.hjson:hjson:3.1.0")
-    implementation("org.tinylog:tinylog:1.3.1")
-    implementation("com.github.tobiasrm:tinylog-coloredconsole:1.3.1")
+    implementation("org.hjson:hjson:${DependencyVersions.HJsonVersion}")
+
+    implementation("org.tinylog:tinylog:${DependencyVersions.tinyLogVersion}")
+    implementation("com.github.tobiasrm:tinylog-coloredconsole:${DependencyVersions.tinyLogVersion}")
+
+    implementation("org.locationtech.jts:jts-core:${DependencyVersions.jtsCoreVersion}")
+    implementation("space.earlygrey:shapedrawer:${DependencyVersions.shapeDrawerVersion}") {
+        exclude( group = "com.badlogicgames.gdx" )
+    }
+
 }
 
 base {
@@ -122,8 +138,8 @@ publishing {
 
 val properties = mapOf(
         "version" to Properties.MOD_VERSION,
-        "loader_version" to Properties.LOADER_VERSION,
-        "cosmic_reach_version" to Properties.COSMIC_REACH_VERSION,
+        "loader_version" to DependencyVersions.fabricLoaderVersion,
+        "cosmic_reach_version" to DependencyVersions.cosmicReachVersion,
         "mod_name" to Properties.MOD_NAME,
         "modid" to Properties.MODID,
 )
@@ -145,7 +161,7 @@ tasks.register("SetupWorkEnviornment") {
 tasks.register<Download>("downloadLoader") {
     group = "crmodders"
 
-    src("https://github.com/GalacticLoader/GalacticLoader/releases/download/${Properties.LOADER_VERSION}/GalacticLoader-${Properties.LOADER_VERSION}.jar")
+    src("https://github.com/GalacticLoader/GalacticLoader/releases/download/${DependencyVersions.fabricLoaderVersion}/GalacticLoader-${DependencyVersions.fabricLoaderVersion}.jar")
     acceptAnyCertificate(true)
     dest("$projectDir/run/loader.jar")
 }
@@ -153,8 +169,8 @@ tasks.register<Download>("downloadLoader") {
 tasks.register("clearCache") {
     group = "crmodders"
 
-    if (project.file("$projectDir/build/libs/${Properties.MOD_NAME}_${Properties.MOD_VERSION}-CR_${Properties.COSMIC_REACH_VERSION}-all.jar").exists())
-        project.file("$projectDir/build/libs/${Properties.MOD_NAME}_${Properties.MOD_VERSION}-CR_${Properties.COSMIC_REACH_VERSION}-all.jar").delete()
+    if (project.file("$projectDir/build/libs/${Properties.MOD_NAME}_${Properties.MOD_VERSION}-all.jar").exists())
+        project.file("$projectDir/build/libs/${Properties.MOD_NAME}_${Properties.MOD_VERSION}-all.jar").delete()
 }
 
 tasks.register("runClient") {

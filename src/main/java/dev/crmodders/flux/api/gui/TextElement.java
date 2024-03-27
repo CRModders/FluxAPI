@@ -1,14 +1,12 @@
 package dev.crmodders.flux.api.gui;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.glutils.FileTextureData;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import dev.crmodders.flux.api.renderer.CustomFontRenderer;
 import finalforeach.cosmicreach.GameAssetLoader;
-import finalforeach.cosmicreach.audio.SoundManager;
 import finalforeach.cosmicreach.ui.HorizontalAnchor;
 import finalforeach.cosmicreach.ui.UIElement;
 import finalforeach.cosmicreach.ui.VerticalAnchor;

@@ -12,7 +12,7 @@ import java.util.HashMap;
 
 public class BlockStateGenerator {
 
-    JsonObject object;
+    protected JsonObject object;
 
     public static BlockStateGenerator createGenerator() {
         return new BlockStateGenerator();

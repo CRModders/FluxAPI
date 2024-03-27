@@ -255,7 +255,7 @@ public class BlockEventGenerator {
                                         List<TriggerEventData> data = new ArrayList<>();
 
                                         data.add(new TriggerEventData(
-                                                Identifier.fromString(blockEventId.toString()+"_PLACE"),
+                                                Identifier.fromString(blockEventId +"_PLACE"),
                                                 new HashMap<>()
                                         ));
 
@@ -296,7 +296,7 @@ public class BlockEventGenerator {
                                             List<TriggerEventData> data = new ArrayList<>();
 
                                             data.add(new TriggerEventData(
-                                                    Identifier.fromString(blockEventId.toString()+"_BREAK"),
+                                                    Identifier.fromString(blockEventId +"_BREAK"),
                                                     new HashMap<>()
                                             ));
 
@@ -317,12 +317,7 @@ public class BlockEventGenerator {
             );
         }
 
-        return new BlockEventDataExt() {
-            @Override
-            public JsonObject toJson() {
-                return jsonObject;
-            }
-        };
+        return () -> jsonObject;
     }
 
 }

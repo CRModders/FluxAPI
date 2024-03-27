@@ -11,7 +11,7 @@ public class TestBlock implements IModBlock, IFunctionalBlock {
     BlockGenerator generator;
 
     public TestBlock() {
-        generator = BlockGenerator.createGenerator();
+//        generator.modifyBlockState("default", );
     }
 
     @Override
@@ -31,7 +31,6 @@ public class TestBlock implements IModBlock, IFunctionalBlock {
 
     @Override
     public BlockGenerator getGenerator() {
-        return generator;
+        return null;
     }
-
 }

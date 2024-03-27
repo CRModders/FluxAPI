@@ -20,8 +20,8 @@ import java.util.HashMap;
 
 public class BlockGenerator {
 
-    JsonObject object;
-    HashMap<BlockEventType, Boolean> blockEventOverrideMap;
+    protected JsonObject object;
+    protected HashMap<BlockEventType, Boolean> blockEventOverrideMap;
 
     protected BlockGenerator() {
         blockEventOverrideMap = new HashMap<>();

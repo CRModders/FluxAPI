@@ -1,4 +1,4 @@
-package dev.crmodders.flux.api.gui;
+package dev.crmodders.flux.api.renderer;
 
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
@@ -9,8 +9,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import finalforeach.cosmicreach.ui.HorizontalAnchor;
 import finalforeach.cosmicreach.ui.VerticalAnchor;
-import dev.crmodders.flux.FluxConstants;
-import org.pmw.tinylog.Logger;
 
 public class CustomFontRenderer {
     public Texture fontTexture;
