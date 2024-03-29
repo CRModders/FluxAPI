@@ -1,5 +1,6 @@
 package dev.crmodders.flux.mixins.logging;
 
+import dev.crmodders.flux.logger.LogWrapper;
 import finalforeach.cosmicreach.rendering.shaders.GameShader;
 import org.pmw.tinylog.Logger;
 import org.spongepowered.asm.mixin.Mixin;
@@ -14,12 +15,12 @@ public class GameShaderMixin {
 
     @Redirect(method = "reload", at = @At(value = "INVOKE", target = "Ljava/io/PrintStream;println(Ljava/lang/String;)V"))
     private void print1(PrintStream instance, String x) {
-        Logger.info("%s: %s".formatted(TAG, x));
+        LogWrapper.info("%s: %s".formatted(TAG, x));
     }
 
     @Redirect(method = "reloadAllShaders", at = @At(value = "INVOKE", target = "Ljava/io/PrintStream;println(Ljava/lang/String;)V"))
     private static void print2(PrintStream instance, String x) {
-        Logger.info("%s: %s".formatted(TAG, x));
+        LogWrapper.info("%s: %s".formatted(TAG, x));
     }
 
 }

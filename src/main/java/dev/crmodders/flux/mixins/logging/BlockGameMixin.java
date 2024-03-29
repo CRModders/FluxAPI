@@ -1,5 +1,6 @@
 package dev.crmodders.flux.mixins.logging;
 
+import dev.crmodders.flux.logger.LogWrapper;
 import finalforeach.cosmicreach.BlockGame;
 import org.pmw.tinylog.Logger;
 import org.spongepowered.asm.mixin.Mixin;
@@ -15,12 +16,12 @@ public class BlockGameMixin {
 
     @Redirect(method = "dispose", at = @At(value = "INVOKE", target = "Ljava/io/PrintStream;println(Ljava/lang/String;)V"))
     private void print1(PrintStream instance, String x) {
-        Logger.info("%s: %s".formatted(TAG_BLOCKGAME, x));
+        LogWrapper.info("%s: %s".formatted(TAG_BLOCKGAME, x));
     }
 
     @Redirect(method = "create", at = @At(value = "INVOKE", target = "Ljava/io/PrintStream;println(Ljava/lang/String;)V"))
     private void print2(PrintStream instance, String x) {
-        Logger.info("%s: %s".formatted(TAG_BLOCKGAME, x));
+        LogWrapper.info("%s: %s".formatted(TAG_BLOCKGAME, x));
     }
 
 }

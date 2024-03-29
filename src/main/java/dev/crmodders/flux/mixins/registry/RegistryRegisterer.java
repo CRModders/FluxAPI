@@ -2,6 +2,7 @@ package dev.crmodders.flux.mixins.registry;
 
 import com.badlogic.gdx.utils.Json;
 import dev.crmodders.flux.api.resource.ResourceObject;
+import dev.crmodders.flux.logger.LogWrapper;
 import finalforeach.cosmicreach.BlockGame;
 import finalforeach.cosmicreach.GameAssetLoader;
 import finalforeach.cosmicreach.world.blockevents.BlockEvents;
@@ -54,7 +55,7 @@ public class RegistryRegisterer {
             if (resource.handle == null)
                 resource.handle = GameAssetLoader.loadAsset(resource.toString());
 
-            Logger.info("%s: Registered Asset: %s".formatted(TAG, resourceId));
+            LogWrapper.info("%s: Registered Asset: %s".formatted(TAG, resourceId));
         }
     }
 
@@ -63,7 +64,7 @@ public class RegistryRegisterer {
             IBlockEventAction action = registryAccess.get(actionId);
 
             BlockEvents.registerBlockEventAction(action);
-            Logger.info("%s: Registered Block Event Action %s".formatted(TAG, action.getActionId()));
+            LogWrapper.info("%s: Registered Block Event Action %s".formatted(TAG, action.getActionId()));
         }
     }
 
@@ -72,7 +73,7 @@ public class RegistryRegisterer {
             BlockEventDataExt event = registryAccess.get(eventId);
 
             BlockEvents.INSTANCES.put(eventId.toString(), new Json().fromJson(BlockEvents.class, event.toJson().toString()));
-            Logger.info("%s: Registered Block Event: %s".formatted(TAG, event));
+            LogWrapper.info("%s: Registered Block Event: %s".formatted(TAG, event));
         }
     }
 
@@ -84,7 +85,7 @@ public class RegistryRegisterer {
                     blockId,
                     modBlock.getGenerator().GetGeneratorFactory().get(modBlock, blockId)
             );
-            Logger.info("%s: Registered Block: %s".formatted(TAG, blockId));
+            LogWrapper.info("%s: Registered Block: %s".formatted(TAG, blockId));
         }
     }
 
@@ -93,7 +94,7 @@ public class RegistryRegisterer {
             BlockGenerator.FactoryFinalizer finalizer = registryAccess.get(finalizerId);
 
             finalizer.finalizeFactory();
-            Logger.info("%s: Registered Block Finalizer: %s".formatted(TAG, finalizerId));
+            LogWrapper.info("%s: Registered Block Finalizer: %s".formatted(TAG, finalizerId));
         }
     }
 
