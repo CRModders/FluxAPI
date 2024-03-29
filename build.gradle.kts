@@ -65,41 +65,31 @@ dependencies {
     shadow("org.ow2.asm:asm-commons:9.6")
     shadow("io.github.llamalad7:mixinextras-fabric:0.3.5")
 
-    cosmicreach("finalforeach:cosmicreach:${DependencyVersions.cosmicReachVersion}")
+    cosmicreach("finalforeach:cosmicreach:${getProperties().get("cosmic_reach_version")}")
     shadow(files("$projectDir/run/loader.jar"))
-}
-
-object DependencyVersions {
-    const val cosmicReachVersion = "0.1.15"
-    const val fabricLoaderVersion = "0.15.7"
-
-    const val HJsonVersion = "3.1.0"
-    const val tinyLogVersion = "1.3.1"
-    const val jtsCoreVersion = "1.19.0"
-    const val shapeDrawerVersion = "2.5.0"
-    const val gdxVersion = "1.12.0"
 }
 
 // Embedded | Project Dependencies
 dependencies {
 
-    implementation("org.hjson:hjson:${DependencyVersions.HJsonVersion}")
+    implementation("org.hjson:hjson:${getProperties().get("hjson_version")}")
 
-    implementation("org.tinylog:tinylog:${DependencyVersions.tinyLogVersion}")
-    implementation("com.github.tobiasrm:tinylog-coloredconsole:${DependencyVersions.tinyLogVersion}")
+    implementation("org.tinylog:tinylog:${getProperties().get("tiny_logger_version")}")
+    implementation("com.github.tobiasrm:tinylog-coloredconsole:${getProperties().get("tiny_logger_version")}")
 
-    implementation("space.earlygrey:shapedrawer:${DependencyVersions.shapeDrawerVersion}") {
+    implementation("org.locationtech.jts:jts-core:${getProperties().get("jts_core_version")}")
+    implementation("space.earlygrey:shapedrawer:${getProperties().get("shape_drawer_version")}") {
         exclude( group = "com.badlogicgames.gdx" )
     }
 
-    implementation("com.badlogicgames.gdx:gdx-freetype:${DependencyVersions.gdxVersion}")
-    implementation("com.badlogicgames.gdx:gdx-freetype-platform:${DependencyVersions.gdxVersion}:natives-desktop")
+    implementation("com.badlogicgames.gdx:gdx-freetype:${getProperties().get("gdx_version")}")
+    implementation("com.badlogicgames.gdx:gdx-freetype-platform:${getProperties().get("gdx_version")}:natives-desktop")
 
 }
 
 base {
-    archivesName = Properties.MOD_NAME
-    version = Properties.MOD_VERSION
+    archivesName = getProperties().get("flux_display_name").toString()
+    version = getProperties().get("flux_version").toString()
 }
 
 
@@ -140,11 +130,12 @@ publishing {
 }
 
 val properties = mapOf(
-        "version" to Properties.MOD_VERSION,
-        "loader_version" to DependencyVersions.fabricLoaderVersion,
-        "cosmic_reach_version" to DependencyVersions.cosmicReachVersion,
-        "mod_name" to Properties.MOD_NAME,
-        "modid" to Properties.MODID,
+        "version" to getProperties().get("flux_version"),
+        "loader_version" to getProperties().get("fabric_loader_version"),
+        "cosmic_reach_version" to getProperties().get("cosmic_reach_version"),
+        "mod_name" to getProperties().get("flux_display_name"),
+        "mod_id" to getProperties().get("flux_mod_id"),
+        "mod_desc" to getProperties().get("flux_description")
 )
 
 tasks.processResources {
@@ -164,7 +155,7 @@ tasks.register("SetupWorkEnviornment") {
 tasks.register<Download>("downloadLoader") {
     group = "crmodders"
 
-    src("https://github.com/GalacticLoader/GalacticLoader/releases/download/${DependencyVersions.fabricLoaderVersion}/GalacticLoader-${DependencyVersions.fabricLoaderVersion}.jar")
+    src("https://github.com/GalacticLoader/GalacticLoader/releases/download/${getProperties().get("fabric_loader_version")}/GalacticLoader-${getProperties().get("fabric_loader_version")}.jar")
     acceptAnyCertificate(true)
     dest("$projectDir/run/loader.jar")
 }
@@ -172,8 +163,8 @@ tasks.register<Download>("downloadLoader") {
 tasks.register("clearCache") {
     group = "crmodders"
 
-    if (project.file("$projectDir/build/libs/${Properties.MOD_NAME}_${Properties.MOD_VERSION}-all.jar").exists())
-        project.file("$projectDir/build/libs/${Properties.MOD_NAME}_${Properties.MOD_VERSION}-all.jar").delete()
+    if (project.file("$projectDir/build/libs/${getProperties().get("flux_display_name")}_${getProperties().get("flux_display_name")}-all.jar").exists())
+        project.file("$projectDir/build/libs/${getProperties().get("flux_display_name")}_${getProperties().get("flux_display_name")}-all.jar").delete()
 }
 
 tasks.register("runClient") {
@@ -188,7 +179,7 @@ tasks.register("runClient") {
     doLast{
         var betterClasspath = listOf<File>()
         betterClasspath = betterClasspath.plus(sourceSets.main.get().compileClasspath)
-        betterClasspath = betterClasspath.plus(file("$projectDir/build/libs/${Properties.MOD_NAME}-${Properties.MOD_VERSION}-all.jar"))
+        betterClasspath = betterClasspath.plus(file("$projectDir/build/libs/${getProperties().get("flux_display_name")}-${getProperties().get("flux_version")}-all.jar"))
         System.out.println(betterClasspath)
         javaexec {
             workingDir("$projectDir/run")

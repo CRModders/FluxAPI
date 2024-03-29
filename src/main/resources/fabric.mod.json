@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
-  "id": "${modid}",
+  "id": "${mod_id}",
   "version": "${version}",
   "name": "${mod_name}",
-  "description": "An Extremely Capable Fabric Api Mod For Cosmic Reach",
+  "description": "${mod_desc}",
   "authors": [
   ],
   "license": "CC0-1.0",

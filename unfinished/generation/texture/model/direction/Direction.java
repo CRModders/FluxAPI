@@ -376,10 +376,9 @@ class Directions {
      *
      * @static
      * @param {string} direction The direction name to capitalize.
-     * @return {string} 
-     * @memberof Directions
+     * @returns {string}
      */
-    static capitalize(Direction direction) {
+    public static String capitalize(Direction direction) {
         return direction[0].toUpperCase() + direction.slice(1);
     }
 
@@ -388,8 +387,7 @@ class Directions {
      *
      * @static
      * @param {string} direction
-     * @return {string} 
-     * @memberof Directions
+     * @returns {string}
      */
     static uncapitalize(Direction direction) {
         return direction.toLowerCase();
@@ -431,9 +429,9 @@ class Directions {
      * @static
      * @memberof Directions
      */
-    static simpleBlock = new DirectionMap([
+    public static simpleBlock = new DirectionMap({
         new Direction("front", 0, 0, 1),
         new Direction("back", 0, 0, -1),
         new Direction("side", 0, 0, 0),
-    ]);
+    });
 }
