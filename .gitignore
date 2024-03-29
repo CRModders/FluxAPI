@@ -42,4 +42,4 @@ bin/
 .DS_Store
 
 run
-src/main/java/dev/crmodders/flux/api/generation/texture/model/direction/Direction.java
+unfinished
