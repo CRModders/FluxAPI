@@ -7,6 +7,7 @@ import dev.crmodders.flux.api.renderer.shapes.ShapeBatch;
 import dev.crmodders.flux.api.renderer.shapes.ShapeBatchBuilder;
 import dev.crmodders.flux.api.renderer.text.TextBatch;
 import dev.crmodders.flux.api.renderer.text.TextBatchBuilder;
+import dev.crmodders.flux.font.Font;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -43,6 +44,15 @@ public abstract class UIElementMixin implements Component, UIElementInterface {
 	public boolean isHeld;
 
 	private boolean dirty;
+
+	private float fontSize = 18f;
+	private boolean soundEnabled = true;
+	private Font font = UIRenderer.font;
+	private boolean active = true;
+	private boolean borderEnabled = true;
+	private float borderThickness = 1f;
+	private boolean automaticSize = false;
+	private float automaticSizePadding = 16f;
 
 	private ShapeBatch background;
 	private ShapeBatch regular;
@@ -95,6 +105,9 @@ public abstract class UIElementMixin implements Component, UIElementInterface {
 			return;
 		}
 		this.background = regular;
+		if(!active) {
+			return;
+		}
 		if (this == (Object) currentlyHeldElement && Gdx.input.isButtonPressed(0)) {
 			this.isHeld = true;
 		}
@@ -130,11 +143,104 @@ public abstract class UIElementMixin implements Component, UIElementInterface {
 	}
 
 	@Override
+	public void setFontSize(float fontSize) {
+		this.fontSize = fontSize;
+	}
+
+	@Override
+	public float getFontSize() {
+		return fontSize;
+	}
+
+	@Override
+	public void setSoundEnabled(boolean soundEnabled) {
+		this.soundEnabled = soundEnabled;
+	}
+
+	@Override
+	public boolean isSoundEnabled() {
+		return soundEnabled;
+	}
+
+	@Override
+	public void setActive(boolean active) {
+		this.active = active;
+	}
+
+	@Override
+	public boolean isActive() {
+		return active;
+	}
+
+	@Override
+	public void setFont(Font font) {
+		this.font = font;
+	}
+
+	@Override
+	public Font getFont() {
+		return font;
+	}
+
+	@Override
+	public void setBorderEnabled(boolean borderEnabled) {
+		this.borderEnabled = borderEnabled;
+	}
+
+	@Override
+	public boolean isBorderEnabled() {
+		return borderEnabled;
+	}
+
+	@Override
+	public void setBorderThickness(float borderThickness) {
+		this.borderThickness = borderThickness;
+	}
+
+	@Override
+	public float getBorderThickness() {
+		return borderThickness;
+	}
+
+	@Override
+	public void setAutomaticSize(boolean automaticSize) {
+		this.automaticSize = automaticSize;
+	}
+
+	@Override
+	public boolean isAutomaticSize() {
+		return automaticSize;
+	}
+
+	@Override
+	public void setAutomaticSizePadding(float automaticSizePadding) {
+		this.automaticSizePadding = automaticSizePadding;
+	}
+
+	@Override
+	public float getAutomaticSizePadding() {
+		return automaticSizePadding;
+	}
+
+	@Override
 	public void paint(UIRenderer renderer) {
+		TextBatchBuilder foreground = renderer.buildText();
+		foreground.font(font);
+		foreground.fontSize(fontSize);
+		foreground.color(Color.WHITE);
+		foreground.style(text);
+		this.foreground = foreground.build();
+
+		if(automaticSize) {
+			this.w = this.foreground.width() + automaticSizePadding;
+			this.h = this.foreground.height() + automaticSizePadding;
+		}
+
 		ShapeBatchBuilder regular = renderer.buildShape();
 		regular.color(Color.BLACK);
 		regular.fillRect(0, 0, w, h);
 		regular.color(Color.GRAY);
+		regular.lineThickness(borderThickness);
 		regular.drawRect(0, 0, w, h);
 		this.regular = regular.build();
 
@@ -142,6 +248,7 @@ public abstract class UIElementMixin implements Component, UIElementInterface {
 		highlighted.color(Color.BLACK);
 		highlighted.fillRect(0, 0, w, h);
 		highlighted.color(Color.WHITE);
+		highlighted.lineThickness(borderThickness);
 		highlighted.drawRect(0, 0, w, h);
 		this.highlighted = highlighted.build();
 
@@ -149,13 +256,9 @@ public abstract class UIElementMixin implements Component, UIElementInterface {
 		clicked.color(Color.GRAY);
 		clicked.fillRect(0, 0, w, h);
 		clicked.color(Color.WHITE);
+		clicked.lineThickness(borderThickness);
 		clicked.drawRect(0, 0, w, h);
 		this.clicked = clicked.build();
-
-		TextBatchBuilder foreground = renderer.buildText();
-		foreground.color(Color.WHITE);
-		foreground.style(text);
-		this.foreground = foreground.build();
 	}
 
 	@Override
@@ -165,7 +268,9 @@ public abstract class UIElementMixin implements Component, UIElementInterface {
 		}
 		float x = this.getDisplayX(viewport);
 		float y = this.getDisplayY(viewport);
-		renderer.drawBatch(hoveredOver ? highlighted : background, x, y);
+		if(borderEnabled) {
+			renderer.drawBatch(hoveredOver ? highlighted : background, x, y);
+		}
 		renderer.drawBatch(foreground, x + (w - foreground.width()) / 2f, y + (h - foreground.height()) / 2f);
 	}
 

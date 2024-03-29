@@ -2,6 +2,7 @@ package dev.crmodders.flux.menus;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.ScreenUtils;
+import dev.crmodders.flux.api.gui.interfaces.UIElementInterface;
 import finalforeach.cosmicreach.gamestates.GameState;
 import finalforeach.cosmicreach.ui.UIElement;
 import dev.crmodders.flux.api.gui.TextElement;
@@ -19,8 +20,9 @@ public class BasicMainMenu extends GameState {
         this.uiElements.add(element);
     }
 
-    public void addTextElement(int x, int y, int fontSize, String name, boolean DoStripes) {
-        TextElement element = new TextElement(x, y, name, fontSize, DoStripes);
+    public void addTextElement(int x, int y, float fontSize, String name, boolean DoStripes) {
+        TextElement element = new TextElement(x, y, 0, 0, name);
+        ((UIElementInterface) element).setFontSize(fontSize);
         element.show();
         this.uiElements.add(element);
     }

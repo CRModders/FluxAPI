@@ -32,7 +32,7 @@ public class ConfigViewMenu extends BasicMainMenu {
     public void create() {
         super.create();
 
-        addTextElement(0, -200, 4, "Config Menu", false);
+        addTextElement(0, -200, 72, "Config Menu", false);
         addUIElement("Back", new UIElement(0, -100, 250, 25) {
             @Override
             public void onClick() {

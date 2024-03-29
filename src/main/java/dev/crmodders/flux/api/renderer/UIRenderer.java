@@ -1,9 +1,6 @@
 package dev.crmodders.flux.api.renderer;
 
-import java.awt.Font;
-import java.awt.FontFormatException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.lang.Character.UnicodeBlock;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +10,6 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
@@ -24,8 +20,7 @@ import dev.crmodders.flux.api.renderer.text.StyleBatch;
 import dev.crmodders.flux.api.renderer.text.TextBatch;
 import dev.crmodders.flux.api.renderer.text.TextBatchBuilder;
 import dev.crmodders.flux.api.renderer.text.TextLine;
-import dev.crmodders.flux.font.FontGlyph;
-import dev.crmodders.flux.font.TrueTypeFont;
+import dev.crmodders.flux.font.Font;
 import dev.crmodders.flux.util.text.StyleStringParser;
 import finalforeach.cosmicreach.GameAssetLoader;
 import finalforeach.cosmicreach.gamestates.GameState;
@@ -79,16 +74,12 @@ public class UIRenderer {
 
 	public static Texture white;
 	public static FileHandle fontFile;
-	public static TrueTypeFont font;
+	public static Font font;
 	public static UIRenderer uiRenderer;
 	static {
 		white = new Texture(GameAssetLoader.loadAsset("fluxapi:whitepixel.png"));
 		fontFile = GameAssetLoader.loadAsset(FluxConstants.FontFile.toString());
-		try {
-			font = new TrueTypeFont(fontFile, 36, CHARACTER_SET);
-		} catch (IOException e) {
-			throw new RuntimeException(e);
-		}
+		font = Font.generateTrueTypeFont(fontFile, 48, CHARACTER_SET);
 		uiRenderer = new UIRenderer(GameState.batch);
 	}
 
@@ -110,18 +101,18 @@ public class UIRenderer {
 		return new TextBatchBuilder(font, 18.0f);
 	}
 
-	public TextBatchBuilder buildText(TrueTypeFont font, float fontSize) {
+	public TextBatchBuilder buildText(Font font, float fontSize) {
 		return new TextBatchBuilder(font, fontSize);
 	}
 
-	public TextBatch createText(TrueTypeFont font, float fontSize, String string, Color color) {
+	public TextBatch createText(Font font, float fontSize, String string, Color color) {
 		TextBatchBuilder builder = buildText(font, fontSize);
 		builder.color(color);
 		builder.append(string);
 		return builder.build();
 	}
 
-	public TextBatch createStyledText(TrueTypeFont font, float fontSize, String string) {
+	public TextBatch createStyledText(Font font, float fontSize, String string) {
 		TextBatchBuilder builder = buildText(font, fontSize);
 		StyleStringParser.parse(builder, string);
 		return builder.build();

@@ -4,15 +4,13 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.utils.FloatArray;
 import dev.crmodders.flux.font.FontGlyph;
-import dev.crmodders.flux.font.TrueTypeFont;
-
-import java.util.Arrays;
+import dev.crmodders.flux.font.Font;
 
 public class StyleBatch {
 	public boolean fresh = true;
 	public StringBuilder chars = new StringBuilder();
 
-	public TrueTypeFont font;
+	public Font font;
 	public boolean bold;
 	public boolean italic;
 	public boolean underline;
@@ -25,7 +23,7 @@ public class StyleBatch {
 	public float[][] pageVertices;
 	public float width;
 
-	public StyleBatch(TrueTypeFont font, float fontSize) {
+	public StyleBatch(Font font, float fontSize) {
 		this.font = font;
 		this.bold = false;
 		this.italic = false;
