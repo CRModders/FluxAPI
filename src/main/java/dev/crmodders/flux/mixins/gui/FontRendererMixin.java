@@ -18,7 +18,7 @@ public class FontRendererMixin {
 
 	@Inject(method = "getTextDimensions", at = @At("HEAD"), cancellable = true)
 	private static void getTextDimensions(Viewport uiViewport, String text, Vector2 textDim, CallbackInfoReturnable<Vector2> ci) {
-		if (FluxConstants.replaceFontRenderer.getValue()) {
+		if (FluxConstants.ReplaceFontRenderer.getValue()) {
 			TextBatch textBatch = UIRenderer.uiRenderer.createStyledText(UIRenderer.font, 18, text);
 			textDim.set(textBatch.width(), textBatch.height());
 			ci.setReturnValue(textDim);
@@ -27,7 +27,7 @@ public class FontRendererMixin {
 
 	@Inject(method = "drawText(Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;Lcom/badlogic/gdx/utils/viewport/Viewport;Ljava/lang/String;FF)V", at = @At("HEAD"), cancellable = true)
 	private static void drawText(SpriteBatch batch, Viewport uiViewport, String text, float xStart, float yStart, CallbackInfo ci) {
-		if (FluxConstants.replaceFontRenderer.getValue()) {
+		if (FluxConstants.ReplaceFontRenderer.getValue()) {
 			TextBatch textBatch = UIRenderer.uiRenderer.createStyledText(UIRenderer.font, 18, text);
 			UIRenderer.uiRenderer.drawBatch(textBatch, xStart, yStart);
 			ci.cancel();

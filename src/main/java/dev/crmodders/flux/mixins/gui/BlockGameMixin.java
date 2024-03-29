@@ -1,10 +1,17 @@
 package dev.crmodders.flux.mixins.gui;
 
+import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.utils.JsonReader;
+import com.badlogic.gdx.utils.JsonValue;
 import dev.crmodders.flux.api.gui.interfaces.GameStateInterface;
 import dev.crmodders.flux.api.renderer.UIRenderer;
 import dev.crmodders.flux.api.renderer.text.TextBatchBuilder;
 import dev.crmodders.flux.api.toast.ToastManager;
 import dev.crmodders.flux.api.toast.ToastRenderable;
+import dev.crmodders.flux.localization.LanguageFile;
+import dev.crmodders.flux.localization.LanguageRegistry;
+import finalforeach.cosmicreach.GameAssetLoader;
+import org.checkerframework.checker.units.qual.A;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL13;
 import org.spongepowered.asm.mixin.Mixin;
@@ -19,8 +26,17 @@ import finalforeach.cosmicreach.BlockGame;
 import finalforeach.cosmicreach.gamestates.GameState;
 import finalforeach.cosmicreach.ui.HorizontalAnchor;
 import finalforeach.cosmicreach.ui.VerticalAnchor;
+
+import java.io.IOException;
+import java.io.InputStream;
+
 @Mixin(value = BlockGame.class, priority = 2000)
 public class BlockGameMixin {
+
+	@Inject(method="create", at=@At("TAIL"))
+	private void create(CallbackInfo ci) {
+		LanguageRegistry.discoverLanguages();
+	}
 
 	@Inject(method = "render", at = @At("TAIL"))
 	private void render(CallbackInfo ci) {

@@ -1,0 +1,24 @@
+{
+  "language_tag": "en-US",
+
+  "major_version": 0,
+  "minor_version": 0,
+
+  "ids": [ "base" ],
+
+  "base": {
+
+    "priority": 1000,
+
+    "format_templates": {
+      "flux_options_vector_font_renderer": ["on_off"]
+    },
+
+    "strings": {
+      "on": "On",
+      "off": "Off",
+      "flux_options_vector_font_renderer": "Vector Font Render: {on_off}"
+    }
+
+  }
+}
