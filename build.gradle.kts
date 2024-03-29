@@ -77,6 +77,7 @@ object DependencyVersions {
     const val tinyLogVersion = "1.3.1"
     const val jtsCoreVersion = "1.19.0"
     const val shapeDrawerVersion = "2.5.0"
+    const val gdxVersion = "1.12.0"
 }
 
 // Embedded | Project Dependencies
@@ -87,10 +88,12 @@ dependencies {
     implementation("org.tinylog:tinylog:${DependencyVersions.tinyLogVersion}")
     implementation("com.github.tobiasrm:tinylog-coloredconsole:${DependencyVersions.tinyLogVersion}")
 
-    implementation("org.locationtech.jts:jts-core:${DependencyVersions.jtsCoreVersion}")
     implementation("space.earlygrey:shapedrawer:${DependencyVersions.shapeDrawerVersion}") {
         exclude( group = "com.badlogicgames.gdx" )
     }
+
+    implementation("com.badlogicgames.gdx:gdx-freetype:${DependencyVersions.gdxVersion}")
+    implementation("com.badlogicgames.gdx:gdx-freetype-platform:${DependencyVersions.gdxVersion}:natives-desktop")
 
 }
 

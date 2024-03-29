@@ -15,6 +15,9 @@ public class TextBatch implements Batch {
 		this.width = 0f;
 		this.height = 0f;
 		for (TextLine line : lines) {
+			for(StyleBatch batch : line.batches) {
+				batch.calculateVertices();
+			}
 			width = Math.max(width, line.width());
 			height += line.height();
 		}

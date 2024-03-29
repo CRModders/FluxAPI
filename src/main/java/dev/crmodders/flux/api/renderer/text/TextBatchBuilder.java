@@ -2,7 +2,7 @@ package dev.crmodders.flux.api.renderer.text;
 
 import com.badlogic.gdx.graphics.Color;
 import dev.crmodders.flux.api.renderer.interfaces.BatchBuilder;
-import dev.crmodders.flux.font.VectorFont;
+import dev.crmodders.flux.font.TrueTypeFont;
 import dev.crmodders.flux.util.text.StyleStringParser;
 
 import java.util.ArrayList;
@@ -14,7 +14,7 @@ public class TextBatchBuilder implements BatchBuilder {
 	public TextLine line;
 	public StyleBatch batch;
 
-	public TextBatchBuilder(VectorFont font, float fontSize) {
+	public TextBatchBuilder(TrueTypeFont font, float fontSize) {
 		this.lines = new ArrayList<>();
 		this.line = new TextLine();
 		this.batch = new StyleBatch(font, fontSize);
@@ -27,7 +27,7 @@ public class TextBatchBuilder implements BatchBuilder {
 		batch = new StyleBatch(batch);
 	}
 
-	public void font(VectorFont font) {
+	public void font(TrueTypeFont font) {
 		makeFreshBatch();
 		batch.font = font;
 	}

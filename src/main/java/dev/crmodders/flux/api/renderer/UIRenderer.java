@@ -10,10 +10,10 @@ import java.util.List;
 
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
@@ -24,20 +24,17 @@ import dev.crmodders.flux.api.renderer.text.StyleBatch;
 import dev.crmodders.flux.api.renderer.text.TextBatch;
 import dev.crmodders.flux.api.renderer.text.TextBatchBuilder;
 import dev.crmodders.flux.api.renderer.text.TextLine;
-import dev.crmodders.flux.font.VectorFont;
-import dev.crmodders.flux.font.VectorGlyph;
+import dev.crmodders.flux.font.FontGlyph;
+import dev.crmodders.flux.font.TrueTypeFont;
 import dev.crmodders.flux.util.text.StyleStringParser;
 import finalforeach.cosmicreach.GameAssetLoader;
 import finalforeach.cosmicreach.gamestates.GameState;
 import finalforeach.cosmicreach.ui.HorizontalAnchor;
 import finalforeach.cosmicreach.ui.VerticalAnchor;
-import org.pmw.tinylog.Logger;
 import space.earlygrey.shapedrawer.ShapeDrawer;
 
 public class UIRenderer {
 
-	public static Texture white = new Texture(GameAssetLoader.loadAsset("fluxapi:whitepixel.png"));
-	public static UIRenderer uiRenderer = new UIRenderer(GameState.batch);
 	public static final String CHARACTER_SET;
 
 	static {
@@ -45,31 +42,31 @@ public class UIRenderer {
 
 		List<UnicodeBlock> blocks = new ArrayList<>();
 		blocks.add(UnicodeBlock.BASIC_LATIN);
-		blocks.add(UnicodeBlock.LATIN_1_SUPPLEMENT);
-		blocks.add(UnicodeBlock.LATIN_EXTENDED_A);
-		blocks.add(UnicodeBlock.LATIN_EXTENDED_ADDITIONAL);
-		blocks.add(UnicodeBlock.LATIN_EXTENDED_B);
-		blocks.add(UnicodeBlock.LATIN_EXTENDED_C);
-		blocks.add(UnicodeBlock.LATIN_EXTENDED_D);
-		blocks.add(UnicodeBlock.LATIN_EXTENDED_E);
-		blocks.add(UnicodeBlock.CYRILLIC);
-		blocks.add(UnicodeBlock.CYRILLIC_EXTENDED_A);
-		blocks.add(UnicodeBlock.CYRILLIC_EXTENDED_B);
-		blocks.add(UnicodeBlock.CYRILLIC_EXTENDED_C);
-		blocks.add(UnicodeBlock.CYRILLIC_SUPPLEMENTARY);
-		blocks.add(UnicodeBlock.KATAKANA);
-		blocks.add(UnicodeBlock.KATAKANA_PHONETIC_EXTENSIONS);
-		blocks.add(UnicodeBlock.CJK_COMPATIBILITY);
-		blocks.add(UnicodeBlock.CJK_SYMBOLS_AND_PUNCTUATION);
-		blocks.add(UnicodeBlock.CJK_STROKES);
-		blocks.add(UnicodeBlock.CJK_UNIFIED_IDEOGRAPHS);
-		blocks.add(UnicodeBlock.CJK_UNIFIED_IDEOGRAPHS_EXTENSION_A);
-		blocks.add(UnicodeBlock.CJK_UNIFIED_IDEOGRAPHS_EXTENSION_B);
-		blocks.add(UnicodeBlock.CJK_UNIFIED_IDEOGRAPHS_EXTENSION_C);
-		blocks.add(UnicodeBlock.CJK_UNIFIED_IDEOGRAPHS_EXTENSION_D);
-		blocks.add(UnicodeBlock.CJK_UNIFIED_IDEOGRAPHS_EXTENSION_E);
-		blocks.add(UnicodeBlock.CJK_UNIFIED_IDEOGRAPHS_EXTENSION_F);
-		blocks.add(UnicodeBlock.CJK_UNIFIED_IDEOGRAPHS_EXTENSION_G);
+//		blocks.add(UnicodeBlock.LATIN_1_SUPPLEMENT);
+//		blocks.add(UnicodeBlock.LATIN_EXTENDED_A);
+//		blocks.add(UnicodeBlock.LATIN_EXTENDED_ADDITIONAL);
+//		blocks.add(UnicodeBlock.LATIN_EXTENDED_B);
+//		blocks.add(UnicodeBlock.LATIN_EXTENDED_C);
+//		blocks.add(UnicodeBlock.LATIN_EXTENDED_D);
+//		blocks.add(UnicodeBlock.LATIN_EXTENDED_E);
+//		blocks.add(UnicodeBlock.CYRILLIC);
+//		blocks.add(UnicodeBlock.CYRILLIC_EXTENDED_A);
+//		blocks.add(UnicodeBlock.CYRILLIC_EXTENDED_B);
+//		blocks.add(UnicodeBlock.CYRILLIC_EXTENDED_C);
+//		blocks.add(UnicodeBlock.CYRILLIC_SUPPLEMENTARY);
+//		blocks.add(UnicodeBlock.KATAKANA);
+//		blocks.add(UnicodeBlock.KATAKANA_PHONETIC_EXTENSIONS);
+//		blocks.add(UnicodeBlock.CJK_COMPATIBILITY);
+//		blocks.add(UnicodeBlock.CJK_SYMBOLS_AND_PUNCTUATION);
+//		blocks.add(UnicodeBlock.CJK_STROKES);
+//		blocks.add(UnicodeBlock.CJK_UNIFIED_IDEOGRAPHS);
+//		blocks.add(UnicodeBlock.CJK_UNIFIED_IDEOGRAPHS_EXTENSION_A);
+//		blocks.add(UnicodeBlock.CJK_UNIFIED_IDEOGRAPHS_EXTENSION_B);
+//		blocks.add(UnicodeBlock.CJK_UNIFIED_IDEOGRAPHS_EXTENSION_C);
+//		blocks.add(UnicodeBlock.CJK_UNIFIED_IDEOGRAPHS_EXTENSION_D);
+//		blocks.add(UnicodeBlock.CJK_UNIFIED_IDEOGRAPHS_EXTENSION_E);
+//		blocks.add(UnicodeBlock.CJK_UNIFIED_IDEOGRAPHS_EXTENSION_F);
+//		blocks.add(UnicodeBlock.CJK_UNIFIED_IDEOGRAPHS_EXTENSION_G);
 
 		for (char c = Character.MIN_VALUE; c < Character.MAX_VALUE; c++) {
 			if (blocks.contains(UnicodeBlock.of(c))) {
@@ -80,16 +77,19 @@ public class UIRenderer {
 		CHARACTER_SET = chars.toString();
 	}
 
-	public static FileHandle fontFile = GameAssetLoader.loadAsset(FluxConstants.FontFile.toString());
-	public static VectorFont font;
+	public static Texture white;
+	public static FileHandle fontFile;
+	public static TrueTypeFont font;
+	public static UIRenderer uiRenderer;
 	static {
-		Font awtFont = new Font("Arial", 0, 1);
-		try (InputStream is = fontFile.read()) {
-			awtFont = Font.createFont(Font.TRUETYPE_FONT, is);
-		} catch (FontFormatException | IOException e) {
-			e.printStackTrace();
+		white = new Texture(GameAssetLoader.loadAsset("fluxapi:whitepixel.png"));
+		fontFile = GameAssetLoader.loadAsset(FluxConstants.FontFile.toString());
+		try {
+			font = new TrueTypeFont(fontFile, 36, CHARACTER_SET);
+		} catch (IOException e) {
+			throw new RuntimeException(e);
 		}
-		font = new VectorFont(awtFont, CHARACTER_SET);
+		uiRenderer = new UIRenderer(GameState.batch);
 	}
 
 	public List<DrawBatch> batches;
@@ -110,18 +110,18 @@ public class UIRenderer {
 		return new TextBatchBuilder(font, 18.0f);
 	}
 
-	public TextBatchBuilder buildText(VectorFont font, float fontSize) {
+	public TextBatchBuilder buildText(TrueTypeFont font, float fontSize) {
 		return new TextBatchBuilder(font, fontSize);
 	}
 
-	public TextBatch createText(VectorFont font, float fontSize, String string, Color color) {
+	public TextBatch createText(TrueTypeFont font, float fontSize, String string, Color color) {
 		TextBatchBuilder builder = buildText(font, fontSize);
 		builder.color(color);
 		builder.append(string);
 		return builder.build();
 	}
 
-	public TextBatch createStyledText(VectorFont font, float fontSize, String string) {
+	public TextBatch createStyledText(TrueTypeFont font, float fontSize, String string) {
 		TextBatchBuilder builder = buildText(font, fontSize);
 		StyleStringParser.parse(builder, string);
 		return builder.build();
@@ -178,56 +178,38 @@ public class UIRenderer {
 	}
 
 	public void render(TextBatch textBatch, float xStart, float yStart) {
-		float y = yStart;
+		Matrix4 matrix = new Matrix4();
 		for (TextLine line : textBatch.lines()) {
+			matrix.idt();
+			matrix.translate(xStart, yStart, 0);
 
-			float x = xStart;
 			for (StyleBatch batch : line.batches) {
-				renderer.setColor(batch.color.r, batch.color.g, batch.color.b, batch.color.a * batch.alpha);
+				this.batch.setColor(1,1,1, batch.alpha);
+				this.batch.setTransformMatrix(matrix);
 
-				float fontSizeX = batch.bold ? batch.fontSize * 1.25f : batch.fontSize;
-				float fontSizeY = batch.fontSize;
-
-				for (int i = 0; i < batch.chars.length(); i++) {
-					char chr = batch.chars.charAt(i);
-					VectorGlyph glyph = batch.font.glyph(chr);
-					float glyphAscent = glyph.ascent * fontSizeY;
-					float glyphAdvance = glyph.advance * fontSizeX;
-
-					for (int j = 0; j < glyph.geom.length / 3; j++) {
-						float x1 = glyph.geom[j * 3].x * fontSizeX + x;
-						float y1 = glyph.geom[j * 3].y * fontSizeY + glyphAscent + y;
-
-						float x2 = glyph.geom[j * 3 + 1].x * fontSizeX + x;
-						float y2 = glyph.geom[j * 3 + 1].y * fontSizeY + glyphAscent + y;
-
-						float x3 = glyph.geom[j * 3 + 2].x * fontSizeX + x;
-						float y3 = glyph.geom[j * 3 + 2].y * fontSizeY + glyphAscent + y;
-
-						if (batch.italic) {
-							x1 -= y1 * 0.25f;
-							x2 -= y2 * 0.25f;
-							x3 -= y3 * 0.25f;
-						}
-
-						renderer.filledTriangle(x1, y1, x2, y2, x3, y3);
-					}
-
-					if (batch.underline) {
-						renderer.line(x, glyphAscent, x + glyphAdvance, glyphAscent, 0.75f);
-					}
-
-					if (batch.strikethrough) {
-						renderer.line(x, glyphAscent * 3f / 4f, x + glyphAdvance, glyphAscent * 3f / 4f, 0.75f);
-					}
-
-					x += glyphAdvance;
+				for(int page = 0; page < batch.pageVertices.length; page++) {
+					TextureRegion region = batch.font.bitmapFont.getRegion(page);
+					float[] vertices = batch.pageVertices[page];
+					this.batch.draw(region.getTexture(), vertices, 0, vertices.length);
 				}
 
+				System.out.println(batch.font.ascent * batch.fontSize);
+
+				if(batch.underline) {
+					this.renderer.line(0, batch.fontSize, batch.width, batch.fontSize);
+				}
+
+				if(batch.strikethrough) {
+					this.renderer.line(0, batch.fontSize * 1/2f, batch.width, batch.fontSize * 1/2f, 2f);
+				}
+
+				matrix.translate(batch.width, 0, 0);
 			}
 
-			y += line.height();
+			yStart += line.height();
 		}
+		matrix.idt();
+		this.batch.setTransformMatrix(matrix);
 	}
 
 	public void render(ShapeBatch shapeBatch, float xStart, float yStart) {
