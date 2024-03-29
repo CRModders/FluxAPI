@@ -70,7 +70,7 @@ dependencies {
 }
 
 object DependencyVersions {
-    const val cosmicReachVersion = "0.1.14"
+    const val cosmicReachVersion = "0.1.15"
     const val fabricLoaderVersion = "0.15.7"
 
     const val HJsonVersion = "3.1.0"

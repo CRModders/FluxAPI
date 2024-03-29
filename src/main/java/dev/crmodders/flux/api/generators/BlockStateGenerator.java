@@ -32,7 +32,8 @@ public class BlockStateGenerator {
             blockEventId = Identifier.fromString(id.toString() + "_Custom_Injected_Blockstate");
             eventData = BlockEventGenerator.CreateNewBlockEvent(blockEventId, block, blockEventOverrideMap);
         } else {
-            blockEventId = Identifier.fromString(blockstate.get("blockEventsId").asString().replaceAll("\"", "")+"_Custom_Injected_Blockstate");
+            blockEventId = Identifier.fromString(blockstate.get("blockEventsId").asString().replaceAll("\"", "")+"_Custom_Injected_Blockstate_"+id.name);
+            blockEventId = Identifier.fromString(blockstate.get("blockEventsId").asString().replaceAll("\"", "")+"_Custom_Injected_Blockstate_"+id.name);
             eventData = BlockEventGenerator.InjectIntoBlockEvent(
                     Identifier.fromString(blockstate.get("blockEventsId").asString().replaceAll("\"", "")),
                     blockEventId,
