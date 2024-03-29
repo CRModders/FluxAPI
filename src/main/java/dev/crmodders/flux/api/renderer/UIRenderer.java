@@ -193,8 +193,6 @@ public class UIRenderer {
 					this.batch.draw(region.getTexture(), vertices, 0, vertices.length);
 				}
 
-				System.out.println(batch.font.ascent * batch.fontSize);
-
 				if(batch.underline) {
 					this.renderer.line(0, batch.fontSize, batch.width, batch.fontSize);
 				}
