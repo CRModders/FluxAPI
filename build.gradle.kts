@@ -2,7 +2,7 @@ import de.undercouch.gradle.tasks.download.Download
 import java.net.URI
 
 object Properties {
-    const val MOD_VERSION = "0.4.2"
+    const val MOD_VERSION = "1.0.0"
     const val MOD_NAME = "FluxAPI"
     const val MODID = "fluxapi"
     const val MAVEN_GROUP = "dev.crmodders.flux"
