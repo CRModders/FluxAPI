@@ -2,7 +2,7 @@ import de.undercouch.gradle.tasks.download.Download
 import java.net.URI
 
 object Properties {
-    const val MOD_VERSION = "0.4.1"
+    const val MOD_VERSION = "1.0.0"
     const val MOD_NAME = "FluxAPI"
     const val MODID = "fluxapi"
     const val MAVEN_GROUP = "dev.crmodders.flux"
@@ -70,7 +70,7 @@ dependencies {
 }
 
 object DependencyVersions {
-    const val cosmicReachVersion = "0.1.14"
+    const val cosmicReachVersion = "0.1.15"
     const val fabricLoaderVersion = "0.15.7"
 
     const val HJsonVersion = "3.1.0"

@@ -2,6 +2,7 @@ package dev.crmodders.flux.mixins.assets;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
+import dev.crmodders.flux.logger.LogWrapper;
 import dev.crmodders.flux.tags.Identifier;
 import finalforeach.cosmicreach.GameAssetLoader;
 import finalforeach.cosmicreach.io.SaveLocation;
@@ -32,21 +33,21 @@ public class AssetLoaderMixin {
 
         FileHandle modLocationFile = Gdx.files.absolute(SaveLocation.getSaveFolderLocation() + "/mods/assets/" + fileName);
         if (modLocationFile.exists()) {
-            Logger.info("%s Loading %s from DataMods".formatted(TAG, fileName));
+            LogWrapper.info("%s Loading %s from DataMods".formatted(TAG, fileName));
             ALL_ASSETS.put(fileName, modLocationFile);
             return modLocationFile;
         }
 
         FileHandle vanillaLocationFile = Gdx.files.internal(location.name);
         if (vanillaLocationFile.exists()) {
-            Logger.info("%s Loading %s from Cosmic Reach".formatted(TAG, fileName));
+            LogWrapper.info("%s Loading %s from Cosmic Reach".formatted(TAG, fileName));
             ALL_ASSETS.put(fileName, modLocationFile);
             return vanillaLocationFile;
         }
 
         FileHandle classpathLocationFile = Gdx.files.classpath("assets/%s/%s".formatted(location.namespace, location.name));
         if (classpathLocationFile.exists()) {
-            Logger.info("%s Loading %s from the Classpath".formatted(TAG, fileName));
+            LogWrapper.info("%s Loading %s from the Classpath".formatted(TAG, fileName));
             ALL_ASSETS.put(fileName, modLocationFile);
             return classpathLocationFile;
         }
