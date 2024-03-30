@@ -18,6 +18,7 @@ import finalforeach.cosmicreach.blockevents.BlockEvents;
 import finalforeach.cosmicreach.blockevents.IBlockEventAction;
 import finalforeach.cosmicreach.gamestates.GameState;
 import finalforeach.cosmicreach.gamestates.MainMenu;
+import org.hjson.JsonValue;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -85,10 +86,22 @@ public class RegistryRegisterer {
         for (Identifier blockId : registryAccess.getRegisteredNames()) {
             IModBlock modBlock = registryAccess.get(blockId);
 
-            FluxRegistries.BLOCK_FACTORY_FINALIZERS.register(
-                    blockId,
-                    modBlock.getGenerator().GetGeneratorFactory().get(modBlock, blockId)
-            );
+            if (modBlock.isResourceDriven()) {
+                FluxRegistries.BLOCK_FACTORY_FINALIZERS.register(
+                        blockId,
+                        new BlockGenerator.FactoryFinalizer(
+                                blockId,
+                                JsonValue.readHjson(
+                                        GameAssetLoader.loadAsset("assets/" + blockId.namespace + "/blocks/" + blockId.name + ".json").readString()
+                                ).asObject()
+                        )
+                );
+            } else {
+                FluxRegistries.BLOCK_FACTORY_FINALIZERS.register(
+                        blockId,
+                        modBlock.getGenerator().GetGeneratorFactory().get(modBlock, blockId)
+                );
+            }
             LogWrapper.info("%s: Registered Block: %s".formatted(TAG, blockId));
         }
     }

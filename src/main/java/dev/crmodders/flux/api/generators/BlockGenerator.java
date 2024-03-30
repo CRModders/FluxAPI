@@ -5,6 +5,7 @@ import dev.crmodders.flux.api.block.IModBlock;
 import dev.crmodders.flux.api.generators.data.blockevent.BlockEventType;
 import dev.crmodders.flux.api.generators.data.blockstate.BlockStateData;
 import dev.crmodders.flux.api.generators.data.blockstate.BlockStateDataExt;
+import dev.crmodders.flux.api.resource.ResourceLocation;
 import dev.crmodders.flux.api.suppliers.ReturnableDoubleInputSupplier;
 import dev.crmodders.flux.registry.FluxRegistries;
 import dev.crmodders.flux.tags.Identifier;
@@ -19,8 +20,17 @@ public class BlockGenerator {
 
     protected JsonObject object;
     protected HashMap<BlockEventType, Boolean> blockEventOverrideMap;
+    protected boolean resourceDriven;
+    protected ResourceLocation resourceId;
 
     protected BlockGenerator() {
+        this(false, null);
+    }
+
+    protected BlockGenerator(boolean resourceDriven, ResourceLocation resourceId) {
+        this.resourceDriven = resourceDriven;
+        this.resourceId = resourceId;
+
         blockEventOverrideMap = new HashMap<>();
         blockEventOverrideMap.put(BlockEventType.OnPlace, false);
         blockEventOverrideMap.put(BlockEventType.OnInteract, false);
@@ -57,6 +67,10 @@ public class BlockGenerator {
 
     public static BlockGenerator createGenerator() {
         return new BlockGenerator();
+    }
+
+    public static BlockGenerator createResourceDrivenGenerator(ResourceLocation preExistingBlockId) {
+        return new BlockGenerator(true, preExistingBlockId);
     }
 
     public ReturnableDoubleInputSupplier<IModBlock, Identifier, FactoryFinalizer> GetGeneratorFactory() {
