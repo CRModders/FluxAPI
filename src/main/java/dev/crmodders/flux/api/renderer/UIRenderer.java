@@ -123,30 +123,30 @@ public class UIRenderer {
 		float w = batch.width();
 		float h = batch.height();
 		switch (hAnchor) {
-		case LEFT_ALIGNED: {
-			xStart -= uiViewport.getWorldWidth() / 2.0f;
-			break;
-		}
-		case RIGHT_ALIGNED: {
-			xStart = xStart + uiViewport.getWorldWidth() / 2.0f - w;
-			break;
-		}
-		default: {
-			xStart -= w / 2.0f;
-		}
+			case LEFT_ALIGNED: {
+				xStart -= uiViewport.getWorldWidth() / 2.0f;
+				break;
+			}
+			case RIGHT_ALIGNED: {
+				xStart = xStart + uiViewport.getWorldWidth() / 2.0f - w;
+				break;
+			}
+			default: {
+				xStart -= w / 2.0f;
+			}
 		}
 		switch (vAnchor) {
-		case TOP_ALIGNED: {
-			yStart -= uiViewport.getWorldHeight() / 2.0f;
-			break;
-		}
-		case BOTTOM_ALIGNED: {
-			yStart = yStart + uiViewport.getWorldHeight() / 2.0f - h;
-			break;
-		}
-		default: {
-			yStart -= h / 2.0f;
-		}
+			case TOP_ALIGNED: {
+				yStart -= uiViewport.getWorldHeight() / 2.0f;
+				break;
+			}
+			case BOTTOM_ALIGNED: {
+				yStart = yStart + uiViewport.getWorldHeight() / 2.0f - h;
+				break;
+			}
+			default: {
+				yStart -= h / 2.0f;
+			}
 		}
 		drawBatch(batch, xStart, yStart);
 	}
