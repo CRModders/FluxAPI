@@ -17,6 +17,7 @@ import finalforeach.cosmicreach.GameAssetLoader;
 import finalforeach.cosmicreach.blockevents.BlockEvents;
 import finalforeach.cosmicreach.blockevents.IBlockEventAction;
 import finalforeach.cosmicreach.gamestates.GameState;
+import finalforeach.cosmicreach.gamestates.MainMenu;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -47,7 +48,7 @@ public class RegistryRegisterer {
 
         RegisterBlockFinalizers((AccessableRegistry<BlockGenerator.FactoryFinalizer>) FluxRegistries.BLOCK_FACTORY_FINALIZERS);
 
-        ((AssetLoadingMenu) GameState.currentGameState).regenerate();
+        GameState.switchToGameState(new MainMenu());
 
     }
 

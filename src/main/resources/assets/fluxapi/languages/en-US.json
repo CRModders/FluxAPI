@@ -170,9 +170,7 @@
       },
 
       "loading_menu": {
-        "waiting_title": "Loading/Building Modded Assets Please Wait",
-        "finished_title": "Asset Loading/Creation Finished",
-        "button": "Continue To Game"
+        "waiting_title": "Loading/Building Modded Assets Please Wait"
       },
 
         "flux_options": {
