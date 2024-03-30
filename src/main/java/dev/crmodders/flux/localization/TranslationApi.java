@@ -33,7 +33,10 @@ public class TranslationApi {
         List<FileHandle> discoveredFiles = new ArrayList<>();
         for (ModContainer container : FabricLoader.getInstance().getAllMods()) {
             URL url;
-            String modId = container.getMetadata().getId();
+            String modId;
+            try { // TMP fix for Cosmic Quilt
+                modId = container.getMetadata().getId();
+            } catch (Exception e) { continue; }
             if (modId.equals("fabricloader") || (url = TranslationApi.class.getResource("/assets/" + modId + "/languages/")) == null)
                 continue;
             try {
