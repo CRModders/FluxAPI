@@ -4,7 +4,7 @@ import com.badlogic.gdx.files.FileHandle;
 import dev.crmodders.flux.FluxConstants;
 import dev.crmodders.flux.FluxSettings;
 import dev.crmodders.flux.api.resource.ResourceLocation;
-import dev.crmodders.flux.registry.Registries;
+import dev.crmodders.flux.registry.ExperimentalRegistries;
 import dev.crmodders.flux.registry.registries.AccessableRegistry;
 import dev.crmodders.flux.tags.Identifier;
 import finalforeach.cosmicreach.io.SaveLocation;
@@ -28,13 +28,13 @@ public class TranslationApi {
     public static final Locale LOCALE_EN_US = Locale.forLanguageTag("en-US");
     public static final Identifier EN_US = getLocaleIdentifier(LOCALE_EN_US);
 
-    public static void discoverLANGUAGES() {
+    public static void discoverLanguages() {
 
         List<FileHandle> discoveredFiles = new ArrayList<>();
         for (ModContainer container : FabricLoader.getInstance().getAllMods()) {
             URL url;
             String modId = container.getMetadata().getId();
-            if (modId.equals("fabricloader") || (url = TranslationApi.class.getResource("/assets/" + modId + "/LANGUAGES/")) == null)
+            if (modId.equals("fabricloader") || (url = TranslationApi.class.getResource("/assets/" + modId + "/languages/")) == null)
                 continue;
             try {
                 URI uri = url.toURI();
@@ -46,7 +46,7 @@ public class TranslationApi {
                     entries.forEach(p -> {
                         String fileName = p.getFileName().toString();
                         if (fileName.endsWith(".json")) {
-                            FileHandle handle = new ResourceLocation(modId, "LANGUAGES/" + fileName).load();
+                            FileHandle handle = new ResourceLocation(modId, "languages/" + fileName).load();
                             discoveredFiles.add(handle);
                         }
                     });
@@ -56,7 +56,7 @@ public class TranslationApi {
                 throw new RuntimeException(e);
             }
         }
-        Collections.addAll(discoveredFiles, files.absolute(SaveLocation.getSaveFolderLocation() + "/mods/assets/LANGUAGES").list());
+        Collections.addAll(discoveredFiles, files.absolute(SaveLocation.getSaveFolderLocation() + "/mods/assets/languages").list());
 
         try {
             registerLanguage(LanguageFile.loadLanguageFile(FluxConstants.LanguageEnUs.load()));
@@ -71,23 +71,23 @@ public class TranslationApi {
 
     public static void registerLanguage(LanguageFile file) {
         Identifier identifier = getLocaleIdentifier(file.getLocale());
-        AccessableRegistry<LanguageFile> LANGUAGE_FILES = ((AccessableRegistry<LanguageFile>) Registries.LANGUAGE_FILES);
-        if(LANGUAGE_FILES.contains(identifier)) {
-            LanguageFile existing = LANGUAGE_FILES.get(identifier);
+        AccessableRegistry<LanguageFile> languageFiles = ((AccessableRegistry<LanguageFile>) ExperimentalRegistries.LanguageFiles);
+        if(languageFiles.contains(identifier)) {
+            LanguageFile existing = languageFiles.get(identifier);
             existing.merge(file);
         } else {
-            Registries.LANGUAGE_FILES.register(identifier, file);
+            ExperimentalRegistries.LanguageFiles.register(identifier, file);
         }
-        LanguageFile en_US = LANGUAGE_FILES.get(EN_US);
-        Registries.LANGUAGES.register(identifier, new Language(en_US, file));
+        LanguageFile en_US = languageFiles.get(EN_US);
+        ExperimentalRegistries.Languages.register(identifier, new Language(en_US, file));
     }
 
-    public static List<Locale> getLANGUAGES() {
-        return Arrays.stream(((AccessableRegistry<Language>) Registries.LANGUAGES).getRegisteredNames()).map(id -> Locale.forLanguageTag(id.name)).toList();
+    public static List<Locale> getLanguages() {
+        return Arrays.stream(((AccessableRegistry<Language>) ExperimentalRegistries.Languages).getRegisteredNames()).map(id -> Locale.forLanguageTag(id.name)).toList();
     }
 
     public static void setLanguage(Locale locale){
-        FluxSettings.SelectedLanguage = ((AccessableRegistry<Language>) Registries.LANGUAGES).get(getLocaleIdentifier(locale));
+        FluxSettings.SelectedLanguage = ((AccessableRegistry<Language>) ExperimentalRegistries.Languages).get(getLocaleIdentifier(locale));
     }
 
 }

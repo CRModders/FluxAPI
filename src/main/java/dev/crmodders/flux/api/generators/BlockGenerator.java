@@ -6,7 +6,7 @@ import dev.crmodders.flux.api.generators.data.blockevent.BlockEventType;
 import dev.crmodders.flux.api.generators.data.blockstate.BlockStateData;
 import dev.crmodders.flux.api.generators.data.blockstate.BlockStateDataExt;
 import dev.crmodders.flux.api.suppliers.ReturnableDoubleInputSupplier;
-import dev.crmodders.flux.registry.Registries;
+import dev.crmodders.flux.registry.StableRegistries;
 import dev.crmodders.flux.tags.Identifier;
 import dev.crmodders.flux.util.BlockBuilderUtils;
 import finalforeach.cosmicreach.world.blocks.Block;
@@ -61,7 +61,7 @@ public class BlockGenerator {
 
     public ReturnableDoubleInputSupplier<IModBlock, Identifier, FactoryFinalizer> GetGeneratorFactory() {
         return (block, id) -> {
-            if (!Registries.BLOCKS.isFrozen()) throw new RuntimeException("CANNOT USE GENERATOR FACTORY BECAUSE REGISTRIES ARE NOT FROZEN YET");
+            if (!StableRegistries.BLOCKS.isFrozen()) throw new RuntimeException("CANNOT USE GENERATOR FACTORY BECAUSE REGISTRIES ARE NOT FROZEN YET");
             object.set("stringId", id.toString());
 
             if (block instanceof IFunctionalBlock) {

@@ -4,7 +4,7 @@ import dev.crmodders.flux.api.block.IFunctionalBlock;
 import dev.crmodders.flux.api.generators.data.blockevent.BlockEventDataExt;
 import dev.crmodders.flux.api.generators.data.blockevent.BlockEventType;
 import dev.crmodders.flux.api.generators.data.blockstate.BlockStateData;
-import dev.crmodders.flux.registry.Registries;
+import dev.crmodders.flux.registry.StableRegistries;
 import dev.crmodders.flux.tags.Identifier;
 import org.hjson.JsonObject;
 
@@ -42,7 +42,7 @@ public class BlockStateGenerator {
             );
         }
         blockstate.set("blockEventsId", blockEventId.toString());
-        Registries.BLOCK_EVENTS.register(blockEventId, eventData);
+        StableRegistries.BLOCK_EVENTS.register(blockEventId, eventData);
         return blockstate;
     }
 
