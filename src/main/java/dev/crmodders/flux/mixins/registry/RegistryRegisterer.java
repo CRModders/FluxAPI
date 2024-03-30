@@ -9,8 +9,7 @@ import dev.crmodders.flux.api.resource.ResourceObject;
 import dev.crmodders.flux.localization.TranslationApi;
 import dev.crmodders.flux.logging.LogWrapper;
 import dev.crmodders.flux.menus.AssetLoadingMenu;
-import dev.crmodders.flux.registry.ExperimentalRegistries;
-import dev.crmodders.flux.registry.StableRegistries;
+import dev.crmodders.flux.registry.FluxRegistries;
 import dev.crmodders.flux.registry.registries.AccessableRegistry;
 import dev.crmodders.flux.tags.Identifier;
 import finalforeach.cosmicreach.BlockGame;
@@ -35,18 +34,18 @@ public class RegistryRegisterer {
 
         GameState.switchToGameState(new AssetLoadingMenu());
 
-        RegisterAssets((AccessableRegistry<ResourceObject>) ExperimentalRegistries.ResourceRegistry);
+        RegisterAssets((AccessableRegistry<ResourceObject>) FluxRegistries.GAME_RESOURCES);
 
-        StableRegistries.BLOCKS.freeze();
-        RegisterBlocks((AccessableRegistry<IModBlock>) StableRegistries.BLOCKS);
+        FluxRegistries.BLOCKS.freeze();
+        RegisterBlocks((AccessableRegistry<IModBlock>) FluxRegistries.BLOCKS);
 
-        StableRegistries.BLOCK_EVENT_ACTIONS.freeze();
-        RegisterBlockEventActions((AccessableRegistry<IBlockEventAction>) StableRegistries.BLOCK_EVENT_ACTIONS);
+        FluxRegistries.BLOCK_EVENT_ACTIONS.freeze();
+        RegisterBlockEventActions((AccessableRegistry<IBlockEventAction>) FluxRegistries.BLOCK_EVENT_ACTIONS);
 
-        StableRegistries.BLOCK_EVENTS.freeze();
-        RegisterBlockEvents((AccessableRegistry<BlockEventDataExt>) StableRegistries.BLOCK_EVENTS);
+        FluxRegistries.BLOCK_EVENTS.freeze();
+        RegisterBlockEvents((AccessableRegistry<BlockEventDataExt>) FluxRegistries.BLOCK_EVENTS);
 
-        RegisterBlockFinalizers((AccessableRegistry<BlockGenerator.FactoryFinalizer>) StableRegistries.BLOCK_FACTORY_FINALIZERS);
+        RegisterBlockFinalizers((AccessableRegistry<BlockGenerator.FactoryFinalizer>) FluxRegistries.BLOCK_FACTORY_FINALIZERS);
 
         ((AssetLoadingMenu) GameState.currentGameState).regenerate();
 
@@ -85,7 +84,7 @@ public class RegistryRegisterer {
         for (Identifier blockId : registryAccess.getRegisteredNames()) {
             IModBlock modBlock = registryAccess.get(blockId);
 
-            StableRegistries.BLOCK_FACTORY_FINALIZERS.register(
+            FluxRegistries.BLOCK_FACTORY_FINALIZERS.register(
                     blockId,
                     modBlock.getGenerator().GetGeneratorFactory().get(modBlock, blockId)
             );

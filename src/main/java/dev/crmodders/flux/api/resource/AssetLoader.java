@@ -1,7 +1,7 @@
 package dev.crmodders.flux.api.resource;
 
 import dev.crmodders.flux.FluxConstants;
-import dev.crmodders.flux.registry.ExperimentalRegistries;
+import dev.crmodders.flux.registry.FluxRegistries;
 import dev.crmodders.flux.registry.registries.impl.RegistryObject;
 import finalforeach.cosmicreach.GameAssetLoader;
 
@@ -17,7 +17,7 @@ public class AssetLoader {
         if (FluxConstants.GameHasLoaded)
             resourceObject.handle = GameAssetLoader.loadAsset(key.toString());
 
-        return ExperimentalRegistries.ResourceRegistry.register(
+        return FluxRegistries.GAME_RESOURCES.register(
                 key,
                 resourceObject
         );

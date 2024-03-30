@@ -4,7 +4,7 @@ import com.badlogic.gdx.files.FileHandle;
 import dev.crmodders.flux.FluxConstants;
 import dev.crmodders.flux.FluxSettings;
 import dev.crmodders.flux.api.resource.ResourceLocation;
-import dev.crmodders.flux.registry.ExperimentalRegistries;
+import dev.crmodders.flux.registry.FluxRegistries;
 import dev.crmodders.flux.registry.registries.AccessableRegistry;
 import dev.crmodders.flux.tags.Identifier;
 import finalforeach.cosmicreach.io.SaveLocation;
@@ -71,23 +71,23 @@ public class TranslationApi {
 
     public static void registerLanguage(LanguageFile file) {
         Identifier identifier = getLocaleIdentifier(file.getLocale());
-        AccessableRegistry<LanguageFile> languageFiles = ((AccessableRegistry<LanguageFile>) ExperimentalRegistries.LanguageFiles);
+        AccessableRegistry<LanguageFile> languageFiles = ((AccessableRegistry<LanguageFile>) FluxRegistries.LANGUAGE_FILES);
         if(languageFiles.contains(identifier)) {
             LanguageFile existing = languageFiles.get(identifier);
             existing.merge(file);
         } else {
-            ExperimentalRegistries.LanguageFiles.register(identifier, file);
+            FluxRegistries.LANGUAGE_FILES.register(identifier, file);
         }
         LanguageFile en_US = languageFiles.get(EN_US);
-        ExperimentalRegistries.Languages.register(identifier, new Language(en_US, file));
+        FluxRegistries.LANGUAGES.register(identifier, new Language(en_US, file));
     }
 
     public static List<Locale> getLanguages() {
-        return Arrays.stream(((AccessableRegistry<Language>) ExperimentalRegistries.Languages).getRegisteredNames()).map(id -> Locale.forLanguageTag(id.name)).toList();
+        return Arrays.stream(((AccessableRegistry<Language>) FluxRegistries.LANGUAGES).getRegisteredNames()).map(id -> Locale.forLanguageTag(id.name)).toList();
     }
 
     public static void setLanguage(Locale locale){
-        FluxSettings.SelectedLanguage = ((AccessableRegistry<Language>) ExperimentalRegistries.Languages).get(getLocaleIdentifier(locale));
+        FluxSettings.SelectedLanguage = ((AccessableRegistry<Language>) FluxRegistries.LANGUAGES).get(getLocaleIdentifier(locale));
     }
 
 }
