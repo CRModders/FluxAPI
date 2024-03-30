@@ -8,6 +8,7 @@ import java.util.List;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Matrix4;
@@ -77,9 +78,9 @@ public class UIRenderer {
 	public static Font font;
 	public static UIRenderer uiRenderer;
 	static {
-		white = new Texture(GameAssetLoader.loadAsset("fluxapi:whitepixel.png"));
+		white = new Texture(GameAssetLoader.loadAsset(FluxConstants.WhitePixel.toString()));
 		fontFile = GameAssetLoader.loadAsset(FluxConstants.FontFile.toString());
-		font = Font.generateTrueTypeFont(fontFile, 48, CHARACTER_SET);
+		font = Font.generate(fontFile, 48, CHARACTER_SET);
 		uiRenderer = new UIRenderer(GameState.batch);
 	}
 

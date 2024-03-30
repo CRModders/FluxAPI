@@ -4,10 +4,20 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.Objects;
 
 public class Font {
+
+    public static Font generate(FileHandle file, int resolution, String characters) {
+        return switch (file.extension()) {
+            case "fnt" -> generateBitmapFont(file);
+            case "ttf" -> generateTrueTypeFont(file, resolution, characters);
+            default -> throw new RuntimeException(file + " is not a Font");
+        };
+    }
 
     public static Font generateTrueTypeFont(FileHandle ttf, int resolution, String characters) {
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(ttf);
@@ -16,6 +26,19 @@ public class Font {
         parameter.characters = characters;
         parameter.flip = true;
         return new Font(generator.generateFont(parameter), resolution);
+    }
+
+    public static Font generateBitmapFont(FileHandle fnt) {
+        BitmapFont bm = new BitmapFont(fnt, true);
+        try(BufferedReader reader = new BufferedReader(fnt.reader())) {
+            String line = reader.readLine();
+            int sizeStart = line.indexOf("size=");
+            int sizeEnd = line.indexOf(" ", sizeStart);
+            String size = line.substring(sizeStart + 5, sizeEnd);
+            return new Font(bm, Integer.parseInt(size));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public final BitmapFont bitmapFont;

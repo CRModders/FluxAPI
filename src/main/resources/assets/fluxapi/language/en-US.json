@@ -1,23 +1,33 @@
 {
   "language_tag": "en-US",
 
-  "major_version": 0,
+  "major_version": 1,
   "minor_version": 0,
 
-  "ids": [ "base" ],
+  "ids": [ "fluxapi" ],
 
-  "base": {
+  "fluxapi": {
 
     "priority": 1000,
 
     "format_templates": {
-      "flux_options_vector_font_renderer": ["on_off"]
+      "options": {
+        "flux_options": {
+          "vector_font_renderer": ["on_off"],
+          "language": ["language"]
+        }
+      }
     },
 
     "strings": {
       "on": "On",
       "off": "Off",
-      "flux_options_vector_font_renderer": "Vector Font Render: {on_off}"
+      "options": {
+        "flux_options": {
+          "vector_font_renderer": "Vector Font Render: {on_off}",
+          "language": "Language: {language}"
+        }
+      }
     }
 
   }

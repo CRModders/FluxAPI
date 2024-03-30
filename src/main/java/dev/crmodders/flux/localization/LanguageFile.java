@@ -21,7 +21,7 @@ public class LanguageFile extends HashMap<TranslationKey, TranslationEntry> {
         }
     }
 
-    public static final int MAJOR_VERSION = 0;
+    public static final int MAJOR_VERSION = 1;
     public static final int MINOR_VERSION = 0;
 
     private final Locale locale;
@@ -68,18 +68,60 @@ public class LanguageFile extends HashMap<TranslationKey, TranslationEntry> {
         return parseStrings(id, strings, format_templates);
     }
 
+    private List<String> getStringTree(JsonValue strings, JsonValue string) {
+        List<String> walk = new ArrayList<>();
+        JsonValue parent = string;
+        do {
+            walk.add(parent.name);
+            parent = parent.parent;
+        } while(parent != strings);
+        Collections.reverse(walk);
+        return walk;
+    }
+
+    private JsonValue getFormatTemplateForStringTree(JsonValue strings, JsonValue format_templates, List<String> walk) {
+        JsonValue child = format_templates;
+        for(String name : walk) {
+            if(child == null) {
+                return null;
+            }
+            child = child.get(name);
+        }
+        return child;
+    }
+
     private Map<TranslationKey, TranslationEntry> parseStrings(JsonValue id, JsonValue strings, JsonValue format_templates) {
         Map<TranslationKey, TranslationEntry> entries = new HashMap<>();
-        for(int i = 0; i < strings.size; i++) {
-            JsonValue string = strings.get(i);
-            JsonValue format_template = format_templates.get(string.name);
-            entries.put(parseKey(id, string), parseEntry(string, format_template));
+
+        List<JsonValue> list = new ArrayList<>();
+        Stack<JsonValue> stack = new Stack<>();
+        stack.add(strings);
+        while(!stack.isEmpty()) {
+            JsonValue child = stack.pop();
+            if(child.isObject()) {
+                for(int i = 0; i < child.size; i++) {
+                    stack.add(child.get(i));
+                }
+            } else {
+                list.add(child);
+            }
+        }
+
+        for(JsonValue string : list) {
+            List<String> walk = getStringTree(strings, string);
+            JsonValue format_template = getFormatTemplateForStringTree(strings, format_templates, walk);
+            entries.put(parseKey(id, walk), parseEntry(string, format_template));
         }
         return entries;
     }
 
-    private TranslationKey parseKey(JsonValue id, JsonValue string) {
-        return new TranslationKey(new Identifier(id.name, string.name));
+    private TranslationKey parseKey(JsonValue id, List<String> walk) {
+        StringBuilder builder = new StringBuilder();
+        for(String name : walk) {
+            builder.append(name).append(".");
+        }
+        builder.deleteCharAt(builder.length() - 1);
+        return new TranslationKey(new Identifier(id.name, builder.toString()));
     }
 
     private TranslationEntry parseEntry(JsonValue string, JsonValue format_template) {

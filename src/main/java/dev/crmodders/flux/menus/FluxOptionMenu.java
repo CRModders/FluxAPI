@@ -1,23 +1,24 @@
 package dev.crmodders.flux.menus;
 
 import dev.crmodders.flux.FluxConstants;
+import dev.crmodders.flux.FluxSettings;
 import dev.crmodders.flux.api.gui.BooleanToggleElement;
 import dev.crmodders.flux.api.gui.ButtonElement;
 import dev.crmodders.flux.api.gui.LanguageSelectorElement;
 import dev.crmodders.flux.api.gui.SteppedIntSliderElement;
-import dev.crmodders.flux.api.settings.LocaleSetting;
-import dev.crmodders.flux.localization.LanguageRegistry;
+import dev.crmodders.flux.localization.TranslationApi;
 import dev.crmodders.flux.localization.TranslationKey;
+import dev.crmodders.flux.localization.TranslationString;
 import finalforeach.cosmicreach.gamestates.GameState;
 import finalforeach.cosmicreach.ui.UIElement;
 import finalforeach.cosmicreach.ui.VerticalAnchor;
 
-import java.util.List;
 import java.util.Locale;
 
 public class FluxOptionMenu extends MenuState {
 
-	public static final TranslationKey KEY_TEST = new TranslationKey("test:test");
+	public static final TranslationKey KEY_VECTOR_FONT_RENDERER = new TranslationKey("fluxapi:options.flux_options.vector_font_renderer");
+	public static final TranslationKey KEY_LANGUAGE = new TranslationKey("fluxapi:options.flux_options.language");
 
 	private int ix = 0;
 	private int iy = 0;
@@ -29,23 +30,24 @@ public class FluxOptionMenu extends MenuState {
 		doneButton.setText("Done");
 		doneButton.show();
 
-		SteppedIntSliderElement msaa = new SteppedIntSliderElement(0, 0, 0, 0, 0, 16, new int[] { 0, 2, 4, 8, 16 }, FluxConstants.AntiAliasing, "MSAA: %dx");
+		SteppedIntSliderElement msaa = new SteppedIntSliderElement(0, 0, 0, 0, 0, 16, new int[] { 0, 2, 4, 8, 16 }, FluxSettings.AntiAliasing, "MSAA: %dx");
 		addElement(msaa);
 
-		BooleanToggleElement font = new BooleanToggleElement(0, 0, 0, 0, FluxConstants.ReplaceFontRenderer, "Vector Font Renderer %s", "On", "Off");
+		BooleanToggleElement font = new BooleanToggleElement(0, 0, 0, 0, FluxSettings.ReplaceFontRenderer, "Vector Font Renderer %s", "On", "Off");
 		addElement(font);
 
-		LanguageSelectorElement locale = new LanguageSelectorElement(0,0,0,0, FluxConstants.LanguageSetting, LanguageRegistry.getLanguages()) {
+		LanguageSelectorElement locale = new LanguageSelectorElement(0,0,0,0, FluxSettings.LanguageSetting, TranslationApi.getLanguages()) {
 			@Override
 			public void updateLocale(Locale locale) {
 				super.updateLocale(locale);
-				LanguageRegistry.setLanguage(locale);
+				TranslationApi.setLanguage(locale);
 			}
 
 			@Override
 			public void updateText() {
-				super.updateText();
-				// TODO: translate this
+				Locale selected = getSelected();
+				TranslationString string = FluxSettings.SelectedLanguage.getTranslatedString(KEY_LANGUAGE);
+				setText(string.format(selected.getDisplayName()));
 			}
 		};
 		addElement(locale);

@@ -15,10 +15,7 @@ public class FluxConstants {
     public static final String MOD_ID = "fluxapi";
     public static final String ASSET_KEY = "¬¬$^$^¬¬";
 
-    public static final ResourceLocation FontFile = new ResourceLocation(MOD_ID, "upheavtt.ttf");
-
-    public static final IntSetting AntiAliasing = new IntSetting("msaa", 4);
-    public static final BooleanSetting ReplaceFontRenderer = new BooleanSetting("replaceFontRenderer", false);
-    public static final LocaleSetting LanguageSetting = new LocaleSetting("language", Locale.forLanguageTag("en-US"));
+    public static final ResourceLocation FontFile = new ResourceLocation(MOD_ID, "fonts/cosmic_reach.fnt");
+    public static final ResourceLocation WhitePixel = new ResourceLocation(MOD_ID, "whitepixel.png");
 
 }

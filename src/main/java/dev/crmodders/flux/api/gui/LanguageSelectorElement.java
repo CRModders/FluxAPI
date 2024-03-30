@@ -29,13 +29,17 @@ public class LanguageSelectorElement extends UIElement {
 		updateText();
 	}
 
+	public Locale getSelected() {
+		return this.languages.get(this.selected);
+	}
+
 	public void updateLocale(Locale locale) {
 	}
 
 	@Override
 	public void updateText() {
 		super.updateText();
-		Locale selected = this.languages.get(this.selected);
+		Locale selected = getSelected();
 		setText(selected.getDisplayName());
 	}
 

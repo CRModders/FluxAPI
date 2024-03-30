@@ -1,0 +1,37 @@
+FluxAPI Language File Specification 1.0
+
+File Name:
+the file can have any name, but it's recommended to use the IETF Language Tag as the filename
+
+Header:
+
+language_tag: the IETF Language Tag of this files language
+major_version: major file version / does break old files
+minor_version: minor file version / doesn't break old files
+
+ids: an array of strings dictating what namespaces are defined in this file
+
+Content:
+
+<id>: content for this language
+{
+	priority: files with higher priority will override other files
+
+	format_templates: used for indexing the format parameters, the order depends on the java code that drives it
+	{
+		<group>: keys can be nested and can be accessed with 'id:group.key'
+		{
+			<key>: an array of format parameter names
+		}
+
+	}
+
+	strings:
+	{
+		<group>: keys can be nested and can be accessed with 'id:group.key'
+		{
+			<key>: the actual translation, format parameters can now be accessed with {parameter} inside text, using { is not allowed yet
+			<list>: strings can be lists that can reference any of the specified format parameter
+		}
+	}
+}
