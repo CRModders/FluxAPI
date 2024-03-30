@@ -14,7 +14,7 @@ public class Lwjgl3LauncherMixin {
 	@Inject(method = "getDefaultConfiguration", at = @At("RETURN"), cancellable = true)
 	private static void setupAntiAliasing(CallbackInfoReturnable<Lwjgl3ApplicationConfiguration> ci) {
 		Lwjgl3ApplicationConfiguration config = ci.getReturnValue();
-		config.setBackBufferConfig(8, 8, 8, 8, 16, 0, FluxSettings.AntiAliasing.getValue()); // 8, 8, 8, 8, 16, 0 are default values
+		config.setBackBufferConfig(8, 8, 8, 8, 24, 8, FluxSettings.AntiAliasing.getValue()); // 8, 8, 8, 8, 24, 8 are default values
 		ci.setReturnValue(config);
 	}
 
