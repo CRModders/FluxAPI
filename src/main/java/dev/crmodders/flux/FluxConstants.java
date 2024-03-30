@@ -9,7 +9,7 @@ public class FluxConstants {
     public static final String MOD_ID = "fluxapi";
     public static final String ASSET_KEY = "¬¬$^$^¬¬";
 
-    public static final ResourceLocation LanguageEnUs = new ResourceLocation(MOD_ID, "languages/en-US.json");
+    public static final ResourceLocation LanguageEnUs = new ResourceLocation(MOD_ID, "LANGUAGES/en-US.json");
     public static final ResourceLocation FontFile = new ResourceLocation(MOD_ID, "fonts/cosmic_reach.fnt");
     public static final ResourceLocation WhitePixel = new ResourceLocation(MOD_ID, "whitepixel.png");
 

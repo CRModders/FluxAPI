@@ -9,7 +9,7 @@ import java.util.Locale;
 public class FluxSettings {
 
     public static final IntSetting AntiAliasing = new IntSetting("msaa", 4);
-    public static final LocaleSetting LanguageSetting = new LocaleSetting("language", Locale.forLanguageTag("en-US"));
+    public static final LocaleSetting LANGUAGESetting = new LocaleSetting("language", Locale.forLanguageTag("en-US"));
     public static Language SelectedLanguage = null;
 
 }

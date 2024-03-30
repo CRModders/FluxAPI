@@ -8,7 +8,7 @@ import dev.crmodders.flux.api.generators.data.blockevent.BlockEventType;
 import dev.crmodders.flux.api.generators.data.blockevent.triggers.TriggerData;
 import dev.crmodders.flux.api.generators.data.blockevent.triggers.TriggerEventData;
 import dev.crmodders.flux.api.suppliers.ReturnableSupplier;
-import dev.crmodders.flux.registry.StableRegistries;
+import dev.crmodders.flux.registry.Registries;
 import dev.crmodders.flux.tags.Identifier;
 import dev.crmodders.flux.util.PrivUtils;
 import finalforeach.cosmicreach.GameAssetLoader;
@@ -26,7 +26,7 @@ import java.util.*;
 public class BlockEventGenerator {
 
     public static void RegisterBlockEventActions(Identifier id, IFunctionalBlock block) {
-        StableRegistries.BLOCK_EVENT_ACTIONS.register(Identifier.fromString(id.toString() + "_INTERACT"), new IBlockEventAction() {
+        Registries.BLOCK_EVENT_ACTIONS.register(Identifier.fromString(id.toString() + "_INTERACT"), new IBlockEventAction() {
             @Override
             public String getActionId() {
                 return id + "_INTERACT";
@@ -47,7 +47,7 @@ public class BlockEventGenerator {
             }
         });
 
-        StableRegistries.BLOCK_EVENT_ACTIONS.register(Identifier.fromString(id.toString()+"_PLACE"), new IBlockEventAction() {
+        Registries.BLOCK_EVENT_ACTIONS.register(Identifier.fromString(id.toString()+"_PLACE"), new IBlockEventAction() {
             @Override
             public String getActionId() {
                 return id+"_PLACE";
@@ -68,7 +68,7 @@ public class BlockEventGenerator {
             }
         });
 
-        StableRegistries.BLOCK_EVENT_ACTIONS.register(Identifier.fromString(id.toString()+"_BREAK"), new IBlockEventAction() {
+        Registries.BLOCK_EVENT_ACTIONS.register(Identifier.fromString(id.toString()+"_BREAK"), new IBlockEventAction() {
             @Override
             public String getActionId() {
                 return id+"_BREAK";

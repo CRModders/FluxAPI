@@ -10,21 +10,21 @@ import finalforeach.cosmicreach.ui.UIElement;
 import java.util.List;
 import java.util.Locale;
 
-public class LanguageSelectorElement extends UIElement {
+public class LANGUAGESelectorElement extends UIElement {
 
 	private final LocaleSetting setting;
-	private final List<Locale> languages;
+	private final List<Locale> LANGUAGES;
 	private int selected;
 
-	public LanguageSelectorElement(LocaleSetting setting, List<Locale> languages, TranslationKey textKey) {
-		this(0, 0, 0, 0, setting, languages, textKey);
+	public LANGUAGESelectorElement(LocaleSetting setting, List<Locale> LANGUAGES, TranslationKey textKey) {
+		this(0, 0, 0, 0, setting, LANGUAGES, textKey);
 	}
 
-	public LanguageSelectorElement(float x, float y, float w, float h, LocaleSetting setting, List<Locale> languages, TranslationKey textKey) {
+	public LANGUAGESelectorElement(float x, float y, float w, float h, LocaleSetting setting, List<Locale> LANGUAGES, TranslationKey textKey) {
 		super(x, y, w, h, false);
 		((UIElementInterface) this).setTextKey(textKey);
-		this.languages = languages;
-		this.selected = this.languages.indexOf(setting.getValue());
+		this.LANGUAGES = LANGUAGES;
+		this.selected = this.LANGUAGES.indexOf(setting.getValue());
 		this.setting = setting;
 		onCreate();
 		updateText();
@@ -34,14 +34,14 @@ public class LanguageSelectorElement extends UIElement {
 	public void onClick() {
 		super.onClick();
 		selected++;
-		selected %= languages.size();
-		setting.setValue(languages.get(selected));
-		updateLocale(languages.get(selected));
+		selected %= LANGUAGES.size();
+		setting.setValue(LANGUAGES.get(selected));
+		updateLocale(LANGUAGES.get(selected));
 		updateText();
 	}
 
 	public Locale getSelected() {
-		return this.languages.get(this.selected);
+		return this.LANGUAGES.get(this.selected);
 	}
 
 	public void updateLocale(Locale locale) {
