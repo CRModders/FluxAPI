@@ -82,8 +82,8 @@ dependencies {
         exclude( group = "com.badlogicgames.gdx" )
     }
 
-    implementation("com.badlogicgames.gdx:gdx-freetype:${getProperties().get("gdx_version")}")
-    implementation("com.badlogicgames.gdx:gdx-freetype-platform:${getProperties().get("gdx_version")}:natives-desktop")
+    implementation("com.badlogicgames.gdx:gdx-freetype:${getProperties().get("gdx_version")}") { exclude("com.badlogicgames.gdx") }
+    implementation("com.badlogicgames.gdx:gdx-freetype-platform:${getProperties().get("gdx_version")}:natives-desktop") { exclude("com.badlogicgames.gdx") }
 
 }
 
