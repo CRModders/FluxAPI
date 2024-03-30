@@ -47,21 +47,21 @@ public abstract class UIElementMixin implements Component, UIElementInterface {
 
 	private boolean dirty;
 
-	private float fontSize = 18f;
-	private boolean soundEnabled = true;
-	private Font font = UIRenderer.font;
-	private boolean active = true;
-	private boolean borderEnabled = true;
-	private float borderThickness = 1f;
-	private boolean automaticSize = false;
-	private float automaticSizePadding = 16f;
-	private TranslationKey textKey;
+	protected float fontSize = 18f;
+	protected boolean soundEnabled = true;
+	protected Font font = UIRenderer.font;
+	protected boolean active = true;
+	protected boolean borderEnabled = true;
+	protected float borderThickness = 1f;
+	protected boolean automaticSize = false;
+	protected float automaticSizePadding = 16f;
+	protected TranslationKey textKey;
 
-	private ShapeBatch background;
-	private ShapeBatch regular;
-	private ShapeBatch highlighted;
-	private ShapeBatch clicked;
-	private TextBatch foreground;
+	protected ShapeBatch background;
+	protected ShapeBatch regular;
+	protected ShapeBatch highlighted;
+	protected ShapeBatch clicked;
+	protected TextBatch foreground;
 
 	@Shadow
 	abstract float getDisplayX(Viewport uiViewport);

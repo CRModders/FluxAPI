@@ -50,13 +50,21 @@ public abstract class UISliderMixin extends UIElementMixin {
 
 	@Override
 	public void draw(UIRenderer renderer, Viewport viewport) {
-		super.draw(renderer, viewport);
-		float x = ((UIElementInterface) this).displayX(viewport);
-		float y = ((UIElementInterface) this).displayY(viewport);
+		if (!this.shown) {
+			return;
+		}
+		float x = this.getDisplayX(viewport);
+		float y = this.getDisplayY(viewport);
+		if(borderEnabled) {
+			renderer.drawBatch(hoveredOver ? highlighted : background, x, y);
+		}
+
 		float ratio = (this.currentValue - this.min) / (this.max - this.min);
 		float knobX = x + ratio * this.w - 10.0f / 2.0f;
 		float knobY = y - 4.0f;
 		renderer.drawBatch(knob, knobX, knobY);
+
+		renderer.drawBatch(foreground, x + (w - foreground.width()) / 2f, y + (h - foreground.height()) / 2f);
 	}
 
 }
