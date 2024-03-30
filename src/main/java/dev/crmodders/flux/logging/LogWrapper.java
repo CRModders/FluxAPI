@@ -16,7 +16,7 @@ public class LogWrapper {
             LogWrapper.class.getClassLoader().loadClass("org.quiltmc.loader.impl.launch.knot.Knot");
             isQuilt = true;
         } catch (Exception ignore) {
-            isQuilt = true;
+            isQuilt = false;
             info("%s: Quilt Detected, Switching Loggers".formatted(TAG));
         }
     }

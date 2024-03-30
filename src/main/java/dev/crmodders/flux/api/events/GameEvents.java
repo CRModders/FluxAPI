@@ -2,10 +2,11 @@ package dev.crmodders.flux.api.events;
 
 import dev.crmodders.flux.api.events.system.Event;
 import dev.crmodders.flux.api.events.system.EventFactory;
+import finalforeach.cosmicreach.blocks.BlockPosition;
+import finalforeach.cosmicreach.blocks.BlockState;
 import finalforeach.cosmicreach.gamestates.GameState;
-import finalforeach.cosmicreach.world.BlockPosition;
 import finalforeach.cosmicreach.world.World;
-import finalforeach.cosmicreach.world.blocks.BlockState;
+import finalforeach.cosmicreach.world.Zone;
 
 public class GameEvents {
 
@@ -80,12 +81,12 @@ public class GameEvents {
         // Block Triggers
         @FunctionalInterface
         public interface OnBlockBrokenTrigger {
-            void onBlockBroken(World world, BlockPosition blockPos, double timeSinceLastInteract);
+            void onBlockBroken(Zone zone, BlockPosition blockPos, double timeSinceLastInteract);
         }
 
         @FunctionalInterface
         public interface OnBlockPlacedTrigger {
-            void onBlockPlaced(World world, BlockState targetBlockState, BlockPosition blockPos, double timeSinceLastInteract);
+            void onBlockPlaced(Zone zone, BlockState targetBlockState, BlockPosition blockPos, double timeSinceLastInteract);
         }
 
         // Game State Triggers

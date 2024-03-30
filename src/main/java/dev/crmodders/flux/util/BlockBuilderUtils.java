@@ -5,8 +5,8 @@ import com.badlogic.gdx.utils.Json;
 import dev.crmodders.flux.mixins.accessor.BlockAccessor;
 import dev.crmodders.flux.tags.Identifier;
 import finalforeach.cosmicreach.GameAssetLoader;
-import finalforeach.cosmicreach.world.blocks.Block;
-import finalforeach.cosmicreach.world.blocks.BlockState;
+import finalforeach.cosmicreach.blocks.Block;
+import finalforeach.cosmicreach.blocks.BlockState;
 
 public class BlockBuilderUtils {
     public static Block getBlockFromBlock(Identifier id, Block b) {

@@ -9,7 +9,7 @@ import dev.crmodders.flux.api.suppliers.ReturnableDoubleInputSupplier;
 import dev.crmodders.flux.registry.FluxRegistries;
 import dev.crmodders.flux.tags.Identifier;
 import dev.crmodders.flux.util.BlockBuilderUtils;
-import finalforeach.cosmicreach.world.blocks.Block;
+import finalforeach.cosmicreach.blocks.Block;
 import org.hjson.JsonObject;
 import org.hjson.JsonValue;
 

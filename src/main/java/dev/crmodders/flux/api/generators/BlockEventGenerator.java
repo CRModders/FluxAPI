@@ -12,13 +12,13 @@ import dev.crmodders.flux.registry.FluxRegistries;
 import dev.crmodders.flux.tags.Identifier;
 import dev.crmodders.flux.util.PrivUtils;
 import finalforeach.cosmicreach.GameAssetLoader;
+import finalforeach.cosmicreach.blockevents.BlockEventTrigger;
+import finalforeach.cosmicreach.blockevents.IBlockEventAction;
+import finalforeach.cosmicreach.blocks.BlockPosition;
+import finalforeach.cosmicreach.blocks.BlockState;
+import finalforeach.cosmicreach.entities.Player;
 import finalforeach.cosmicreach.gamestates.InGame;
-import finalforeach.cosmicreach.world.BlockPosition;
-import finalforeach.cosmicreach.world.World;
-import finalforeach.cosmicreach.world.blockevents.BlockEventTrigger;
-import finalforeach.cosmicreach.world.blockevents.IBlockEventAction;
-import finalforeach.cosmicreach.world.blocks.BlockState;
-import finalforeach.cosmicreach.world.entities.Player;
+import finalforeach.cosmicreach.world.Zone;
 import org.hjson.JsonObject;
 
 import java.util.*;
@@ -33,10 +33,10 @@ public class BlockEventGenerator {
             }
 
             @Override
-            public void act(BlockState blockState, BlockEventTrigger blockEventTrigger, World world, Map<String, Object> map) {
+            public void act(BlockState blockState, BlockEventTrigger blockEventTrigger, Zone zone, Map<String, Object> map) {
                 try {
                     block.onInteract(
-                            world,
+                            zone,
                             (Player) PrivUtils.getPrivField(InGame.class, "player"),
                             blockState,
                             (BlockPosition) map.get("blockPos")
@@ -54,10 +54,10 @@ public class BlockEventGenerator {
             }
 
             @Override
-            public void act(BlockState blockState, BlockEventTrigger blockEventTrigger, World world, Map<String, Object> map) {
+            public void act(BlockState blockState, BlockEventTrigger blockEventTrigger, Zone zone, Map<String, Object> map) {
                 try {
                     block.onPlace(
-                            world,
+                            zone,
                             (Player) PrivUtils.getPrivField(InGame.class, "player"),
                             blockState,
                             (BlockPosition) map.get("blockPos")
@@ -75,10 +75,10 @@ public class BlockEventGenerator {
             }
 
             @Override
-            public void act(BlockState blockState, BlockEventTrigger blockEventTrigger, World world, Map<String, Object> map) {
+            public void act(BlockState blockState, BlockEventTrigger blockEventTrigger, Zone zone, Map<String, Object> map) {
                 try {
                     block.onBreak(
-                            world,
+                            zone,
                             (Player) PrivUtils.getPrivField(InGame.class, "player"),
                             blockState,
                             (BlockPosition) map.get("blockPos")

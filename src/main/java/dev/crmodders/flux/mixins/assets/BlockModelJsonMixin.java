@@ -3,7 +3,7 @@ package dev.crmodders.flux.mixins.assets;
 import com.badlogic.gdx.files.FileHandle;
 import dev.crmodders.flux.tags.Identifier;
 import finalforeach.cosmicreach.GameAssetLoader;
-import finalforeach.cosmicreach.world.blocks.BlockModelJson;
+import finalforeach.cosmicreach.rendering.blockmodels.BlockModelJson;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;

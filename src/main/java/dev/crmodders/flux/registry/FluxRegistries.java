@@ -8,7 +8,7 @@ import dev.crmodders.flux.localization.Language;
 import dev.crmodders.flux.localization.LanguageFile;
 import dev.crmodders.flux.registry.registries.DynamicRegistry;
 import dev.crmodders.flux.registry.registries.FreezingRegistry;
-import finalforeach.cosmicreach.world.blockevents.IBlockEventAction;
+import finalforeach.cosmicreach.blockevents.IBlockEventAction;
 
 public class FluxRegistries {
     public static FreezingRegistry<IModBlock> BLOCKS = FreezingRegistry.create();

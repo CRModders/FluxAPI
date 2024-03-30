@@ -1,14 +1,14 @@
 package dev.crmodders.flux.api.block;
 
-import finalforeach.cosmicreach.world.BlockPosition;
-import finalforeach.cosmicreach.world.World;
-import finalforeach.cosmicreach.world.blocks.BlockState;
-import finalforeach.cosmicreach.world.entities.Player;
+import finalforeach.cosmicreach.blocks.BlockPosition;
+import finalforeach.cosmicreach.blocks.BlockState;
+import finalforeach.cosmicreach.entities.Player;
+import finalforeach.cosmicreach.world.Zone;
 
 public interface IFunctionalBlock {
 
-    default void onInteract(World world, Player player, BlockState blockState, BlockPosition position) {}
-    default void onPlace(World world, Player player, BlockState blockState, BlockPosition position) {}
-    default void onBreak(World world, Player player, BlockState blockState, BlockPosition position) {}
+    default void onInteract(Zone zone, Player player, BlockState blockState, BlockPosition position) {}
+    default void onPlace(Zone zone, Player player, BlockState blockState, BlockPosition position) {}
+    default void onBreak(Zone zone, Player player, BlockState blockState, BlockPosition position) {}
 
 }
