@@ -1,8 +1,7 @@
 package dev.crmodders.flux.mixins.logging;
 
-import dev.crmodders.flux.logger.LogWrapper;
+import dev.crmodders.flux.logging.LogWrapper;
 import finalforeach.cosmicreach.BlockGame;
-import org.pmw.tinylog.Logger;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;

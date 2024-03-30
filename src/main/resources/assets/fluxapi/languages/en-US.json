@@ -55,6 +55,12 @@
         "button": "{name}"
       },
 
+      "loading_menu": {
+        "waiting_title": "Loading/Building Modded Assets Please Wait",
+        "finished_title": "Asset Loading/Creation Finished",
+        "button": "Continue To Game"
+      },
+
       "flux_options": {
         "name": "Flux Options",
         "msaa": "MSAA {msaa}x",

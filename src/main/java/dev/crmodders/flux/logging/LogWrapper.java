@@ -1,4 +1,4 @@
-package dev.crmodders.flux.logger;
+package dev.crmodders.flux.logging;
 
 import org.pmw.tinylog.Logger;
 import java.util.logging.Level;
@@ -10,12 +10,12 @@ public class LogWrapper {
     static java.util.logging.Logger logger;
 
     public static void init() {
+        logger = java.util.logging.Logger.getLogger("FluxAPI");
         try {
             LogWrapper.class.getClassLoader().loadClass("org.quiltmc.loader.impl.launch.knot.Knot");
             isQuilt = true;
-            logger = java.util.logging.Logger.getLogger("FluxAPI");
         } catch (Exception ignore) {
-            isQuilt = false;
+            isQuilt = true;
             info("%s: Quilt Detected, Switching Loggers".formatted(TAG));
         }
     }

@@ -2,14 +2,8 @@ package dev.crmodders.flux.mixins.logging;
 
 import com.badlogic.gdx.ApplicationLogger;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationLogger;
-import dev.crmodders.flux.logger.LogWrapper;
-import org.pmw.tinylog.Logger;
+import dev.crmodders.flux.logging.LogWrapper;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Overwrite;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Redirect;
-
-import java.io.PrintStream;
 
 @Mixin(Lwjgl3ApplicationLogger.class)
 public class LLwjgl3ApplicationLoggerMixin implements ApplicationLogger {

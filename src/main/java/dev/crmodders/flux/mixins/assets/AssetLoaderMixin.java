@@ -2,7 +2,7 @@ package dev.crmodders.flux.mixins.assets;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
-import dev.crmodders.flux.logger.LogWrapper;
+import dev.crmodders.flux.logging.LogWrapper;
 import dev.crmodders.flux.tags.Identifier;
 import finalforeach.cosmicreach.GameAssetLoader;
 import finalforeach.cosmicreach.io.SaveLocation;

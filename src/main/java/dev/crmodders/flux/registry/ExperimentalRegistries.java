@@ -10,7 +10,6 @@ import dev.crmodders.flux.registry.registries.DynamicRegistry;
 public class ExperimentalRegistries {
 
     public static DynamicRegistry<GameState> DynamicGameStateRegistry = DynamicRegistry.create();
-    public static DynamicRegistry<BlockGenerator.FactoryFinalizer> FactoryFinalizers = DynamicRegistry.create();
     public static DynamicRegistry<ResourceObject> ResourceRegistry = DynamicRegistry.create();
     public static DynamicRegistry<LanguageFile> LanguageFiles = DynamicRegistry.create();
     public static DynamicRegistry<Language> Languages = DynamicRegistry.create();

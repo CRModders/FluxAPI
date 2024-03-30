@@ -1,6 +1,6 @@
 package dev.crmodders.flux.mixins.logging;
 
-import dev.crmodders.flux.logger.LogWrapper;
+import dev.crmodders.flux.logging.LogWrapper;
 import finalforeach.cosmicreach.gamestates.GameState;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;

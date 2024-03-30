@@ -24,11 +24,6 @@ import finalforeach.cosmicreach.ui.VerticalAnchor;
 @Mixin(value = BlockGame.class, priority = 2000)
 public class BlockGameMixin {
 
-	@Inject(method="create", at=@At("TAIL"))
-	private void create(CallbackInfo ci) {
-		TranslationApi.discoverLanguages();
-	}
-
 	@Inject(method = "render", at = @At("TAIL"))
 	private void render(CallbackInfo ci) {
 		TextBatchBuilder batch = UIRenderer.uiRenderer.buildText(UIRenderer.font, 18);
