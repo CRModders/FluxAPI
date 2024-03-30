@@ -4,26 +4,63 @@
   "major_version": 1,
   "minor_version": 0,
 
-  "ids": [ "fluxapi" ],
+  "ids": [ "base","fluxapi" ],
+
+  "base": {
+
+    "priority": 1000,
+
+    "format_templates": {
+    },
+
+    "strings": {
+
+      "menu": {
+        "on": "On",
+        "off": "Off",
+        "cancel": "Cancel",
+        "back": "Back",
+        "save": "Save",
+        "ok": "Ok",
+        "done": "Done",
+        "returnToMainMenu": "Return to Main Menu",
+        "returnToGame": "Return to Game"
+      }
+
+    }
+
+  },
 
   "fluxapi": {
 
     "priority": 1000,
 
     "format_templates": {
-      "options": {
-        "flux_options": {
-          "language": ["language"]
-        }
+
+      "config_menu": {
+        "button": ["name"]
+      },
+
+      "flux_options": {
+        "msaa": ["msaa"],
+        "language": ["language"]
       }
+
     },
 
     "strings": {
-      "options": {
-        "flux_options": {
-          "language": "Language: {language}"
-        }
+
+      "config_menu": {
+        "title": "Config Menu",
+        "button": "{name}"
+      },
+
+      "flux_options": {
+        "name": "Flux Options",
+        "msaa": "MSAA {msaa}x",
+        "language": "Language: {language}"
       }
+
     }
 
   }

@@ -1,16 +1,23 @@
 package dev.crmodders.flux.api.gui;
 
+import dev.crmodders.flux.FluxSettings;
+import dev.crmodders.flux.api.gui.interfaces.UIElementInterface;
+import dev.crmodders.flux.localization.TranslationKey;
+import dev.crmodders.flux.localization.TranslationString;
 import finalforeach.cosmicreach.settings.FloatSetting;
 import finalforeach.cosmicreach.ui.UISlider;
 
 public class FloatSliderElement extends UISlider {
 
-	private String format;
 	private FloatSetting setting;
 
-	public FloatSliderElement(float x, float y, float w, float h, float min, float max, FloatSetting setting, String format) {
+	public FloatSliderElement(float min, float max, FloatSetting setting, TranslationKey textKey) {
+		this(0, 0, 0, 0, min, max, setting, textKey);
+	}
+
+	public FloatSliderElement(float x, float y, float w, float h, float min, float max, FloatSetting setting, TranslationKey textKey) {
 		super(min, max, setting.getValue(), x, y, w, h);
-		this.format = format;
+		((UIElementInterface) this).setTextKey(textKey);
 		this.setting = setting;
 		updateText();
 	}
@@ -44,8 +51,10 @@ public class FloatSliderElement extends UISlider {
 	@Override
 	public void updateText() {
 		super.updateText();
-		if(format!=null) {
-			super.setText(String.format(format, currentValue));
+		TranslationKey textKey = ((UIElementInterface) this).getTextKey();
+		if(textKey!=null) {
+			TranslationString text = FluxSettings.SelectedLanguage.getTranslatedString(textKey);
+			setText(text.format(String.valueOf(currentValue)));
 		}
 	}
 

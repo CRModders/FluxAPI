@@ -1,5 +1,9 @@
 package dev.crmodders.flux.api.gui;
 
+import dev.crmodders.flux.FluxSettings;
+import dev.crmodders.flux.api.gui.interfaces.UIElementInterface;
+import dev.crmodders.flux.localization.TranslationKey;
+import dev.crmodders.flux.localization.TranslationString;
 import finalforeach.cosmicreach.settings.IntSetting;
 import finalforeach.cosmicreach.ui.UISlider;
 
@@ -9,13 +13,16 @@ import java.util.NoSuchElementException;
 
 public class SteppedIntSliderElement extends UISlider {
 
-	private String format;
 	private IntSetting setting;
 	private int[] values;
 
-	public SteppedIntSliderElement(float x, float y, float w, float h, int min, int max, int[] values, IntSetting setting, String format) {
+	public SteppedIntSliderElement(int min, int max, int[] values, IntSetting setting, TranslationKey textKey) {
+		this(0, 0, 0, 0, min, max, values, setting, textKey);
+	}
+
+	public SteppedIntSliderElement(float x, float y, float w, float h, int min, int max, int[] values, IntSetting setting, TranslationKey textKey) {
 		super(min, max, setting.getValue(), x, y, w, h);
-		this.format = format;
+		((UIElementInterface) this).setTextKey(textKey);
 		this.setting = setting;
 		this.values = values;
 		updateText();
@@ -53,8 +60,10 @@ public class SteppedIntSliderElement extends UISlider {
 	@Override
 	public void updateText() {
 		super.updateText();
-		if (format != null) {
-			super.setText(String.format(format, (int) currentValue));
+		TranslationKey textKey = ((UIElementInterface) this).getTextKey();
+		if (textKey != null) {
+			TranslationString text = FluxSettings.SelectedLanguage.getTranslatedString(textKey);
+			setText(text.format(String.valueOf((int)currentValue)));
 		}
 	}
 

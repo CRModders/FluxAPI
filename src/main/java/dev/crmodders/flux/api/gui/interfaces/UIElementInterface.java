@@ -2,6 +2,7 @@ package dev.crmodders.flux.api.gui.interfaces;
 
 import com.badlogic.gdx.utils.viewport.Viewport;
 import dev.crmodders.flux.font.Font;
+import dev.crmodders.flux.localization.TranslationKey;
 
 public interface UIElementInterface {
 
@@ -42,5 +43,9 @@ public interface UIElementInterface {
 	void setAutomaticSizePadding(float padding);
 
 	float getAutomaticSizePadding();
+
+	TranslationKey getTextKey();
+
+	void setTextKey(TranslationKey textKey);
 
 }

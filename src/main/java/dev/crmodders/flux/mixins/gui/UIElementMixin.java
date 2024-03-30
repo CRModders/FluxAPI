@@ -8,7 +8,9 @@ import dev.crmodders.flux.api.renderer.shapes.ShapeBatchBuilder;
 import dev.crmodders.flux.api.renderer.text.TextBatch;
 import dev.crmodders.flux.api.renderer.text.TextBatchBuilder;
 import dev.crmodders.flux.font.Font;
+import dev.crmodders.flux.localization.TranslationKey;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -53,6 +55,7 @@ public abstract class UIElementMixin implements Component, UIElementInterface {
 	private float borderThickness = 1f;
 	private boolean automaticSize = false;
 	private float automaticSizePadding = 16f;
+	private TranslationKey textKey;
 
 	private ShapeBatch background;
 	private ShapeBatch regular;
@@ -80,7 +83,12 @@ public abstract class UIElementMixin implements Component, UIElementInterface {
 	protected abstract boolean isHoveredOver(Viewport viewport, float x, float y);
 
 	@Shadow
-	protected abstract void onCreate();
+	protected abstract void updateText();
+
+	@Overwrite
+	public void onCreate() {
+		updateText();
+	}
 
 	@Shadow
 	protected abstract void onClick();
@@ -220,6 +228,16 @@ public abstract class UIElementMixin implements Component, UIElementInterface {
 	@Override
 	public float getAutomaticSizePadding() {
 		return automaticSizePadding;
+	}
+
+	@Override
+	public void setTextKey(TranslationKey textKey) {
+		this.textKey = textKey;
+	}
+
+	@Override
+	public TranslationKey getTextKey() {
+		return textKey;
 	}
 
 	@Override

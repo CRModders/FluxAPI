@@ -1,19 +1,21 @@
 package dev.crmodders.flux.api.gui;
 
+import dev.crmodders.flux.FluxConstants;
+import dev.crmodders.flux.FluxSettings;
+import dev.crmodders.flux.localization.TranslationKey;
+import dev.crmodders.flux.localization.TranslationString;
 import finalforeach.cosmicreach.settings.BooleanSetting;
-import org.pmw.tinylog.Logger;
 
 public class BooleanToggleElement extends ToggleElement {
 
 	private BooleanSetting setting;
-	private String format, on, off;
 
-	public BooleanToggleElement(float x, float y, float w, float h, BooleanSetting setting, String format, String on, String off) {
-		super(x, y, w, h, setting.getValue(), false);
+	public BooleanToggleElement(BooleanSetting setting, TranslationKey format) {
+		this(0, 0,0,0,setting,format);
+	}
+	public BooleanToggleElement(float x, float y, float w, float h, BooleanSetting setting, TranslationKey textKey) {
+		super(x, y, w, h, setting.getValue(), false, textKey);
 		this.setting = setting;
-		this.format = format;
-		this.on = on;
-		this.off = off;
 		onCreate();
 	}
 
@@ -29,14 +31,6 @@ public class BooleanToggleElement extends ToggleElement {
 		super.onClick();
 		setting.setValue(value);
 		super.updateText();
-	}
-
-	@Override
-	public void updateText() {
-		super.updateText();
-		if (format != null) {
-			super.setText(String.format(format, value ? on : off));
-		}
 	}
 
 }
