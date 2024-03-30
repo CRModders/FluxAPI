@@ -19,7 +19,6 @@
     "gui.OptionsMenuMixin",
     "gui.UIElementMixin",
     "gui.UISliderMixin",
-    "localization.BlockGameMixin",
     "localization.MainMenuMixin",
     "localization.PrealphaPreambleMixin",
     "localization.OptionsMenuMixin",
