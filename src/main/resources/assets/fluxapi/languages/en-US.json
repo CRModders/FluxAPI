@@ -13,18 +13,14 @@
     "format_templates": {
       "options": {
         "flux_options": {
-          "vector_font_renderer": ["on_off"],
           "language": ["language"]
         }
       }
     },
 
     "strings": {
-      "on": "On",
-      "off": "Off",
       "options": {
         "flux_options": {
-          "vector_font_renderer": "Vector Font Render: {on_off}",
           "language": "Language: {language}"
         }
       }

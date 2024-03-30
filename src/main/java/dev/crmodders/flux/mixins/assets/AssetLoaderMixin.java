@@ -29,7 +29,8 @@ public class AssetLoaderMixin {
     @Overwrite
     public static FileHandle loadAsset(String fileName, boolean forceReload) {
         Identifier location = Identifier.fromString(fileName);
-        if (!forceReload && ALL_ASSETS.containsKey(location.toString())) return ALL_ASSETS.get(location.toString());
+        if (!forceReload && ALL_ASSETS.containsKey(location.toString()))
+            return ALL_ASSETS.get(location.toString());
 
         FileHandle modLocationFile = Gdx.files.absolute(SaveLocation.getSaveFolderLocation() + "/mods/assets/" + fileName);
         if (modLocationFile.exists()) {
@@ -41,14 +42,14 @@ public class AssetLoaderMixin {
         FileHandle vanillaLocationFile = Gdx.files.internal(location.name);
         if (vanillaLocationFile.exists()) {
             LogWrapper.info("%s Loading %s from Cosmic Reach".formatted(TAG, fileName));
-            ALL_ASSETS.put(fileName, modLocationFile);
+            ALL_ASSETS.put(fileName, vanillaLocationFile);
             return vanillaLocationFile;
         }
 
         FileHandle classpathLocationFile = Gdx.files.classpath("assets/%s/%s".formatted(location.namespace, location.name));
         if (classpathLocationFile.exists()) {
             LogWrapper.info("%s Loading %s from the Classpath".formatted(TAG, fileName));
-            ALL_ASSETS.put(fileName, modLocationFile);
+            ALL_ASSETS.put(fileName, classpathLocationFile);
             return classpathLocationFile;
         }
 

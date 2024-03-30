@@ -78,8 +78,8 @@ public class UIRenderer {
 	public static Font font;
 	public static UIRenderer uiRenderer;
 	static {
-		white = new Texture(GameAssetLoader.loadAsset(FluxConstants.WhitePixel.toString()));
-		fontFile = GameAssetLoader.loadAsset(FluxConstants.FontFile.toString());
+		white = new Texture(FluxConstants.WhitePixel.load());
+		fontFile = FluxConstants.FontFile.load();
 		font = Font.generate(fontFile, 48, CHARACTER_SET);
 		uiRenderer = new UIRenderer(GameState.batch);
 	}

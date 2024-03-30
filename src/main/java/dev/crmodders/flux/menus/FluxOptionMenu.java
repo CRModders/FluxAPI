@@ -17,7 +17,6 @@ import java.util.Locale;
 
 public class FluxOptionMenu extends MenuState {
 
-	public static final TranslationKey KEY_VECTOR_FONT_RENDERER = new TranslationKey("fluxapi:options.flux_options.vector_font_renderer");
 	public static final TranslationKey KEY_LANGUAGE = new TranslationKey("fluxapi:options.flux_options.language");
 
 	private int ix = 0;
@@ -32,9 +31,6 @@ public class FluxOptionMenu extends MenuState {
 
 		SteppedIntSliderElement msaa = new SteppedIntSliderElement(0, 0, 0, 0, 0, 16, new int[] { 0, 2, 4, 8, 16 }, FluxSettings.AntiAliasing, "MSAA: %dx");
 		addElement(msaa);
-
-		BooleanToggleElement font = new BooleanToggleElement(0, 0, 0, 0, FluxSettings.ReplaceFontRenderer, "Vector Font Renderer %s", "On", "Off");
-		addElement(font);
 
 		LanguageSelectorElement locale = new LanguageSelectorElement(0,0,0,0, FluxSettings.LanguageSetting, TranslationApi.getLanguages()) {
 			@Override
