@@ -1,6 +1,5 @@
 package dev.crmodders.flux.localization;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import dev.crmodders.flux.FluxConstants;
 import dev.crmodders.flux.FluxSettings;
@@ -8,9 +7,7 @@ import dev.crmodders.flux.api.resource.ResourceLocation;
 import dev.crmodders.flux.registry.ExperimentalRegistries;
 import dev.crmodders.flux.registry.registries.AccessableRegistry;
 import dev.crmodders.flux.tags.Identifier;
-import finalforeach.cosmicreach.GameAssetLoader;
 import finalforeach.cosmicreach.io.SaveLocation;
-import jdk.jfr.Experimental;
 import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.ModContainer;
 

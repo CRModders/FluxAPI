@@ -1,5 +1,8 @@
 package dev.crmodders.flux.mixins.gui;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import dev.crmodders.flux.api.gui.interfaces.UIElementInterface;
 import dev.crmodders.flux.api.renderer.UIRenderer;
 import dev.crmodders.flux.api.renderer.interfaces.Component;
@@ -9,19 +12,13 @@ import dev.crmodders.flux.api.renderer.text.TextBatch;
 import dev.crmodders.flux.api.renderer.text.TextBatchBuilder;
 import dev.crmodders.flux.font.Font;
 import dev.crmodders.flux.localization.TranslationKey;
+import finalforeach.cosmicreach.audio.SoundManager;
+import finalforeach.cosmicreach.ui.UIElement;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.utils.viewport.Viewport;
-
-import finalforeach.cosmicreach.audio.SoundManager;
-import finalforeach.cosmicreach.ui.UIElement;
 
 @Mixin(UIElement.class)
 public abstract class UIElementMixin implements Component, UIElementInterface {

@@ -1,10 +1,6 @@
 package dev.crmodders.flux.localization;
 
-import net.fabricmc.loader.api.LanguageAdapter;
-
 import java.util.List;
-import java.util.Locale;
-import java.util.Map;
 
 public class Language implements Translation {
     private LanguageFile fallback;

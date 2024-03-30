@@ -1,7 +1,10 @@
 package dev.crmodders.flux.mixins.localization;
 
+import com.badlogic.gdx.math.MathUtils;
 import dev.crmodders.flux.localization.TranslationKey;
 import dev.crmodders.flux.localization.TranslationString;
+import finalforeach.cosmicreach.gamestates.GameState;
+import finalforeach.cosmicreach.gamestates.LoadingGame;
 import finalforeach.cosmicreach.settings.ControlSettings;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -9,11 +12,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-
-import com.badlogic.gdx.math.MathUtils;
-
-import finalforeach.cosmicreach.gamestates.GameState;
-import finalforeach.cosmicreach.gamestates.LoadingGame;
 
 import java.util.List;
 

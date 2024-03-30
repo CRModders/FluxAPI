@@ -1,22 +1,20 @@
 package dev.crmodders.flux.mixins.gui;
 
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import dev.crmodders.flux.api.gui.interfaces.GameStateInterface;
 import dev.crmodders.flux.api.gui.interfaces.UIElementInterface;
 import dev.crmodders.flux.api.renderer.UIRenderer;
 import dev.crmodders.flux.api.renderer.interfaces.Component;
+import finalforeach.cosmicreach.gamestates.GameState;
+import finalforeach.cosmicreach.ui.UIElement;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.viewport.Viewport;
-
-import finalforeach.cosmicreach.gamestates.GameState;
-import finalforeach.cosmicreach.ui.UIElement;
 
 @Mixin(GameState.class)
 public abstract class GameStateMixin implements GameStateInterface {

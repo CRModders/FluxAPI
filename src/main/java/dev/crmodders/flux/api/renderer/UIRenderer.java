@@ -1,19 +1,12 @@
 package dev.crmodders.flux.api.renderer;
 
-import java.io.IOException;
-import java.lang.Character.UnicodeBlock;
-import java.util.ArrayList;
-import java.util.List;
-
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.utils.viewport.Viewport;
-
 import dev.crmodders.flux.FluxConstants;
 import dev.crmodders.flux.api.renderer.interfaces.Batch;
 import dev.crmodders.flux.api.renderer.shapes.*;
@@ -23,11 +16,14 @@ import dev.crmodders.flux.api.renderer.text.TextBatchBuilder;
 import dev.crmodders.flux.api.renderer.text.TextLine;
 import dev.crmodders.flux.font.Font;
 import dev.crmodders.flux.util.text.StyleStringParser;
-import finalforeach.cosmicreach.GameAssetLoader;
 import finalforeach.cosmicreach.gamestates.GameState;
 import finalforeach.cosmicreach.ui.HorizontalAnchor;
 import finalforeach.cosmicreach.ui.VerticalAnchor;
 import space.earlygrey.shapedrawer.ShapeDrawer;
+
+import java.lang.Character.UnicodeBlock;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UIRenderer {
 

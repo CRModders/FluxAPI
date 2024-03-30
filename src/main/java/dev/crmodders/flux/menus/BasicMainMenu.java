@@ -2,11 +2,11 @@ package dev.crmodders.flux.menus;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.ScreenUtils;
+import dev.crmodders.flux.api.gui.TextElement;
 import dev.crmodders.flux.api.gui.interfaces.UIElementInterface;
 import dev.crmodders.flux.localization.TranslationKey;
 import finalforeach.cosmicreach.gamestates.GameState;
 import finalforeach.cosmicreach.ui.UIElement;
-import dev.crmodders.flux.api.gui.TextElement;
 
 public class BasicMainMenu extends GameState {
 

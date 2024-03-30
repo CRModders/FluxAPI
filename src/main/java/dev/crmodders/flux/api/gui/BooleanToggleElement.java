@@ -1,9 +1,6 @@
 package dev.crmodders.flux.api.gui;
 
-import dev.crmodders.flux.FluxConstants;
-import dev.crmodders.flux.FluxSettings;
 import dev.crmodders.flux.localization.TranslationKey;
-import dev.crmodders.flux.localization.TranslationString;
 import finalforeach.cosmicreach.settings.BooleanSetting;
 
 public class BooleanToggleElement extends ToggleElement {

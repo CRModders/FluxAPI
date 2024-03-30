@@ -3,7 +3,6 @@ package dev.crmodders.flux.mixins.gui;
 import dev.crmodders.flux.api.gui.SwitchGameStateButtonElement;
 import dev.crmodders.flux.localization.TranslationKey;
 import dev.crmodders.flux.menus.FluxOptionMenu;
-import dev.crmodders.flux.api.gui.ButtonElement;
 import finalforeach.cosmicreach.gamestates.GameState;
 import finalforeach.cosmicreach.gamestates.OptionsMenu;
 import finalforeach.cosmicreach.ui.UIElement;

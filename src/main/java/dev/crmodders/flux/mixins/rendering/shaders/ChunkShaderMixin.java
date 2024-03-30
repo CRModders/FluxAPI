@@ -1,15 +1,12 @@
 package dev.crmodders.flux.mixins.rendering.shaders;
 
 import com.badlogic.gdx.files.FileHandle;
-import dev.crmodders.flux.FluxConstants;
 import dev.crmodders.flux.tags.Identifier;
 import finalforeach.cosmicreach.GameAssetLoader;
 import finalforeach.cosmicreach.rendering.shaders.ChunkShader;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
-
-import java.util.regex.Pattern;
 
 @Mixin(ChunkShader.class)
 public class ChunkShaderMixin {

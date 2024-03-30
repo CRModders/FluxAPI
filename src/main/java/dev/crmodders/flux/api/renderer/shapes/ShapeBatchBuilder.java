@@ -1,10 +1,10 @@
 package dev.crmodders.flux.api.renderer.shapes;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.badlogic.gdx.graphics.Color;
 import dev.crmodders.flux.api.renderer.interfaces.BatchBuilder;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ShapeBatchBuilder implements BatchBuilder {
 

@@ -1,16 +1,15 @@
 package dev.crmodders.flux.mixins.localization;
 
 import dev.crmodders.flux.localization.TranslationKey;
+import finalforeach.cosmicreach.RuntimeInfo;
+import finalforeach.cosmicreach.gamestates.GameState;
+import finalforeach.cosmicreach.gamestates.MainMenu;
+import finalforeach.cosmicreach.settings.Controls;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
-
-import finalforeach.cosmicreach.RuntimeInfo;
-import finalforeach.cosmicreach.gamestates.GameState;
-import finalforeach.cosmicreach.gamestates.MainMenu;
-import finalforeach.cosmicreach.settings.Controls;
 
 @Mixin(value = MainMenu.class, priority = 2000)
 abstract public class MainMenuMixin extends GameState {

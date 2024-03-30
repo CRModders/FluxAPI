@@ -1,15 +1,14 @@
 package dev.crmodders.flux.mixins.localization;
 
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
-
 import dev.crmodders.flux.localization.TranslationKey;
+import finalforeach.cosmicreach.gamestates.OptionsMenu;
+import finalforeach.cosmicreach.ui.UISlider;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 
-import finalforeach.cosmicreach.gamestates.OptionsMenu;
-import finalforeach.cosmicreach.ui.UISlider;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 
 @Mixin(targets = "finalforeach.cosmicreach.gamestates.OptionsMenu$4", priority = 2000)
 public abstract class OptionsMenu$4Mixin extends UISlider {

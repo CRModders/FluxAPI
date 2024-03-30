@@ -1,7 +1,6 @@
 package dev.crmodders.flux.font;
 
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class FontGlyph {
 

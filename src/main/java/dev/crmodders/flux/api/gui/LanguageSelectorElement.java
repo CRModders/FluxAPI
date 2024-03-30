@@ -1,14 +1,14 @@
 package dev.crmodders.flux.api.gui;
 
-import java.util.List;
-import java.util.Locale;
-
 import dev.crmodders.flux.FluxSettings;
 import dev.crmodders.flux.api.gui.interfaces.UIElementInterface;
 import dev.crmodders.flux.api.settings.LocaleSetting;
 import dev.crmodders.flux.localization.TranslationKey;
 import dev.crmodders.flux.localization.TranslationString;
 import finalforeach.cosmicreach.ui.UIElement;
+
+import java.util.List;
+import java.util.Locale;
 
 public class LanguageSelectorElement extends UIElement {
 

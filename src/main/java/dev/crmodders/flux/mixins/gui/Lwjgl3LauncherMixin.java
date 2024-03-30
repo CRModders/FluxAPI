@@ -1,7 +1,6 @@
 package dev.crmodders.flux.mixins.gui;
 
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
-import dev.crmodders.flux.FluxConstants;
 import dev.crmodders.flux.FluxSettings;
 import finalforeach.cosmicreach.lwjgl3.Lwjgl3Launcher;
 import org.spongepowered.asm.mixin.Mixin;

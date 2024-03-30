@@ -3,8 +3,6 @@ package dev.crmodders.flux.mixins.gui;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import dev.crmodders.flux.FluxConstants;
-import dev.crmodders.flux.FluxSettings;
 import dev.crmodders.flux.api.renderer.UIRenderer;
 import dev.crmodders.flux.api.renderer.text.TextBatch;
 import finalforeach.cosmicreach.ui.FontRenderer;

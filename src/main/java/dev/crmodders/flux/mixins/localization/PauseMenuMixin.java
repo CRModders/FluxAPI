@@ -2,13 +2,12 @@ package dev.crmodders.flux.mixins.localization;
 
 import dev.crmodders.flux.FluxConstants;
 import dev.crmodders.flux.localization.TranslationKey;
+import finalforeach.cosmicreach.gamestates.PauseMenu;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
-
-import finalforeach.cosmicreach.gamestates.PauseMenu;
 
 @Mixin(value = PauseMenu.class, priority = 2000)
 public class PauseMenuMixin {

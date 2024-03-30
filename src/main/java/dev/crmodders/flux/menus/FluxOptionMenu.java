@@ -2,7 +2,9 @@ package dev.crmodders.flux.menus;
 
 import dev.crmodders.flux.FluxConstants;
 import dev.crmodders.flux.FluxSettings;
-import dev.crmodders.flux.api.gui.*;
+import dev.crmodders.flux.api.gui.LanguageSelectorElement;
+import dev.crmodders.flux.api.gui.SteppedIntSliderElement;
+import dev.crmodders.flux.api.gui.SwitchGameStateButtonElement;
 import dev.crmodders.flux.localization.TranslationApi;
 import dev.crmodders.flux.localization.TranslationKey;
 import finalforeach.cosmicreach.gamestates.GameState;

@@ -1,10 +1,7 @@
 package dev.crmodders.flux.api.generators;
 
-import dev.crmodders.flux.api.generators.BlockStateGenerator;
-import finalforeach.cosmicreach.world.blocks.Block;
-import dev.crmodders.flux.FluxConstants;
-import dev.crmodders.flux.api.block.IModBlock;
 import dev.crmodders.flux.api.block.IFunctionalBlock;
+import dev.crmodders.flux.api.block.IModBlock;
 import dev.crmodders.flux.api.generators.data.blockevent.BlockEventType;
 import dev.crmodders.flux.api.generators.data.blockstate.BlockStateData;
 import dev.crmodders.flux.api.generators.data.blockstate.BlockStateDataExt;
@@ -12,9 +9,9 @@ import dev.crmodders.flux.api.suppliers.ReturnableDoubleInputSupplier;
 import dev.crmodders.flux.registry.StableRegistries;
 import dev.crmodders.flux.tags.Identifier;
 import dev.crmodders.flux.util.BlockBuilderUtils;
+import finalforeach.cosmicreach.world.blocks.Block;
 import org.hjson.JsonObject;
 import org.hjson.JsonValue;
-import org.hjson.Stringify;
 
 import java.util.HashMap;
 

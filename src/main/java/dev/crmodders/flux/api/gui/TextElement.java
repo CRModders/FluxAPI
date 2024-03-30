@@ -1,19 +1,10 @@
 package dev.crmodders.flux.api.gui;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.utils.viewport.Viewport;
 import dev.crmodders.flux.FluxSettings;
 import dev.crmodders.flux.api.gui.interfaces.UIElementInterface;
-import dev.crmodders.flux.api.renderer.CustomFontRenderer;
 import dev.crmodders.flux.localization.TranslationKey;
 import dev.crmodders.flux.localization.TranslationString;
-import finalforeach.cosmicreach.GameAssetLoader;
-import finalforeach.cosmicreach.ui.HorizontalAnchor;
 import finalforeach.cosmicreach.ui.UIElement;
-import finalforeach.cosmicreach.ui.VerticalAnchor;
 
 public class TextElement extends UIElement {
 

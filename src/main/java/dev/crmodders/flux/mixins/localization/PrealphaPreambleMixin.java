@@ -1,13 +1,12 @@
 package dev.crmodders.flux.mixins.localization;
 
 import dev.crmodders.flux.localization.TranslationKey;
+import finalforeach.cosmicreach.gamestates.GameState;
+import finalforeach.cosmicreach.gamestates.PrealphaPreamble;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
-
-import finalforeach.cosmicreach.gamestates.GameState;
-import finalforeach.cosmicreach.gamestates.PrealphaPreamble;
 
 @Mixin(value = PrealphaPreamble.class, priority = 2000)
 abstract public class PrealphaPreambleMixin extends GameState {

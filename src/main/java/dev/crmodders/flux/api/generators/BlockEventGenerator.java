@@ -1,14 +1,6 @@
 package dev.crmodders.flux.api.generators;
 
 import com.badlogic.gdx.files.FileHandle;
-import finalforeach.cosmicreach.GameAssetLoader;
-import finalforeach.cosmicreach.gamestates.InGame;
-import finalforeach.cosmicreach.world.BlockPosition;
-import finalforeach.cosmicreach.world.World;
-import finalforeach.cosmicreach.world.blockevents.BlockEventTrigger;
-import finalforeach.cosmicreach.world.blockevents.IBlockEventAction;
-import finalforeach.cosmicreach.world.blocks.BlockState;
-import finalforeach.cosmicreach.world.entities.Player;
 import dev.crmodders.flux.api.block.IFunctionalBlock;
 import dev.crmodders.flux.api.generators.data.blockevent.BlockEventData;
 import dev.crmodders.flux.api.generators.data.blockevent.BlockEventDataExt;
@@ -19,8 +11,15 @@ import dev.crmodders.flux.api.suppliers.ReturnableSupplier;
 import dev.crmodders.flux.registry.StableRegistries;
 import dev.crmodders.flux.tags.Identifier;
 import dev.crmodders.flux.util.PrivUtils;
+import finalforeach.cosmicreach.GameAssetLoader;
+import finalforeach.cosmicreach.gamestates.InGame;
+import finalforeach.cosmicreach.world.BlockPosition;
+import finalforeach.cosmicreach.world.World;
+import finalforeach.cosmicreach.world.blockevents.BlockEventTrigger;
+import finalforeach.cosmicreach.world.blockevents.IBlockEventAction;
+import finalforeach.cosmicreach.world.blocks.BlockState;
+import finalforeach.cosmicreach.world.entities.Player;
 import org.hjson.JsonObject;
-import org.pmw.tinylog.Logger;
 
 import java.util.*;
 

@@ -1,10 +1,10 @@
 package dev.crmodders.flux.menus;
 
-import dev.crmodders.flux.api.gui.SwitchGameStateButtonElement;
+import dev.crmodders.flux.api.config.BasicConfig;
 import dev.crmodders.flux.api.gui.CustomButtonElement;
+import dev.crmodders.flux.api.gui.SwitchGameStateButtonElement;
 import dev.crmodders.flux.localization.TranslationKey;
 import finalforeach.cosmicreach.gamestates.GameState;
-import dev.crmodders.flux.api.config.BasicConfig;
 
 import java.awt.*;
 import java.io.File;

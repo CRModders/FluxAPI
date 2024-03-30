@@ -1,12 +1,10 @@
 package dev.crmodders.flux.api.gui;
 
-import com.badlogic.gdx.Gdx;
 import dev.crmodders.flux.FluxConstants;
 import dev.crmodders.flux.FluxSettings;
 import dev.crmodders.flux.api.gui.interfaces.UIElementInterface;
 import dev.crmodders.flux.localization.TranslationKey;
 import dev.crmodders.flux.localization.TranslationString;
-import finalforeach.cosmicreach.settings.GraphicsSettings;
 import finalforeach.cosmicreach.ui.UIElement;
 
 public class ToggleElement extends UIElement {

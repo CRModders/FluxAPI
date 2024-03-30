@@ -2,13 +2,11 @@ package dev.crmodders.flux.mixins.localization;
 
 import dev.crmodders.flux.FluxConstants;
 import dev.crmodders.flux.localization.TranslationKey;
-import finalforeach.cosmicreach.settings.GraphicsSettings;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Unique;
-
 import finalforeach.cosmicreach.gamestates.OptionsMenu;
 import finalforeach.cosmicreach.settings.ControlSettings;
 import finalforeach.cosmicreach.ui.UIElement;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 
 @Mixin(targets = "finalforeach.cosmicreach.gamestates.OptionsMenu$3", priority = 2000)
 public abstract class OptionsMenu$3Mixin extends UIElement {

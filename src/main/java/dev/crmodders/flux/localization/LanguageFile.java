@@ -1,11 +1,9 @@
 package dev.crmodders.flux.localization;
 
 import com.badlogic.gdx.files.FileHandle;
-import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
 import dev.crmodders.flux.tags.Identifier;
-import org.hjson.JsonArray;
 
 import java.io.IOException;
 import java.io.InputStream;

@@ -1,12 +1,14 @@
 package dev.crmodders.flux.api.config;
 
-import dev.crmodders.flux.FluxConstants;
 import finalforeach.cosmicreach.io.SaveLocation;
 import org.hjson.JsonObject;
 import org.hjson.Stringify;
 import org.pmw.tinylog.Logger;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class BasicConfig {
 

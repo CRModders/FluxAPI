@@ -1,6 +1,7 @@
 package dev.crmodders.flux.logging;
 
 import org.pmw.tinylog.Logger;
+
 import java.util.logging.Level;
 
 public class LogWrapper {

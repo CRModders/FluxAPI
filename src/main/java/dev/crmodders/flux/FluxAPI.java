@@ -1,6 +1,5 @@
 package dev.crmodders.flux;
 
-import dev.crmodders.flux.localization.TranslationApi;
 import dev.crmodders.flux.logging.LogWrapper;
 import net.fabricmc.api.ModInitializer;
 

@@ -1,14 +1,7 @@
 package dev.crmodders.flux;
 
 import dev.crmodders.flux.api.resource.ResourceLocation;
-import dev.crmodders.flux.api.settings.LocaleSetting;
-import dev.crmodders.flux.localization.Language;
-import dev.crmodders.flux.localization.LanguageFile;
 import dev.crmodders.flux.localization.TranslationKey;
-import finalforeach.cosmicreach.settings.BooleanSetting;
-import finalforeach.cosmicreach.settings.IntSetting;
-
-import java.util.Locale;
 
 public class FluxConstants {
     public static boolean GameHasLoaded;

@@ -1,8 +1,8 @@
 package dev.crmodders.flux.api.renderer.shapes;
 
-import java.util.List;
-
 import dev.crmodders.flux.api.renderer.interfaces.Batch;
+
+import java.util.List;
 
 public class ShapeBatch implements Batch {
 

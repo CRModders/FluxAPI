@@ -2,7 +2,6 @@ package dev.crmodders.flux;
 
 import dev.crmodders.flux.api.settings.LocaleSetting;
 import dev.crmodders.flux.localization.Language;
-import finalforeach.cosmicreach.settings.BooleanSetting;
 import finalforeach.cosmicreach.settings.IntSetting;
 
 import java.util.Locale;

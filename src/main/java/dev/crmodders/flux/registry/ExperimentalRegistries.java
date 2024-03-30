@@ -3,9 +3,8 @@ package dev.crmodders.flux.registry;
 import dev.crmodders.flux.api.resource.ResourceObject;
 import dev.crmodders.flux.localization.Language;
 import dev.crmodders.flux.localization.LanguageFile;
-import finalforeach.cosmicreach.gamestates.GameState;
-import dev.crmodders.flux.api.generators.BlockGenerator;
 import dev.crmodders.flux.registry.registries.DynamicRegistry;
+import finalforeach.cosmicreach.gamestates.GameState;
 
 public class ExperimentalRegistries {
 

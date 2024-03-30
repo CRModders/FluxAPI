@@ -3,8 +3,8 @@ package dev.crmodders.flux.api.renderer.text;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.utils.FloatArray;
-import dev.crmodders.flux.font.FontGlyph;
 import dev.crmodders.flux.font.Font;
+import dev.crmodders.flux.font.FontGlyph;
 
 public class StyleBatch {
 	public boolean fresh = true;

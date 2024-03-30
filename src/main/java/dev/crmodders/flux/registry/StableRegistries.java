@@ -1,11 +1,11 @@
 package dev.crmodders.flux.registry;
 
-import dev.crmodders.flux.api.generators.BlockGenerator;
-import dev.crmodders.flux.registry.registries.DynamicRegistry;
-import finalforeach.cosmicreach.world.blockevents.IBlockEventAction;
 import dev.crmodders.flux.api.block.IModBlock;
+import dev.crmodders.flux.api.generators.BlockGenerator;
 import dev.crmodders.flux.api.generators.data.blockevent.BlockEventDataExt;
+import dev.crmodders.flux.registry.registries.DynamicRegistry;
 import dev.crmodders.flux.registry.registries.FreezingRegistry;
+import finalforeach.cosmicreach.world.blockevents.IBlockEventAction;
 
 public class StableRegistries {
 

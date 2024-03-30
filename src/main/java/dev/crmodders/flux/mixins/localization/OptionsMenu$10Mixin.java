@@ -3,7 +3,6 @@ package dev.crmodders.flux.mixins.localization;
 import dev.crmodders.flux.localization.TranslationKey;
 import finalforeach.cosmicreach.gamestates.OptionsMenu;
 import finalforeach.cosmicreach.ui.UIElement;
-import finalforeach.cosmicreach.ui.UISlider;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 
