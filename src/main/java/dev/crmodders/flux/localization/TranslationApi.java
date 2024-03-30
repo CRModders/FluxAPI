@@ -64,6 +64,7 @@ public class TranslationApi {
             for(FileHandle discovered : discoveredFiles) {
                 registerLanguage(LanguageFile.loadLanguageFile(discovered));
             }
+            setLanguage(FluxSettings.LanguageSetting.getValue());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -87,7 +88,11 @@ public class TranslationApi {
     }
 
     public static void setLanguage(Locale locale){
+        Language old = FluxSettings.SelectedLanguage;
         FluxSettings.SelectedLanguage = ((AccessableRegistry<Language>) FluxRegistries.LANGUAGES).get(getLocaleIdentifier(locale));
+        if(FluxSettings.SelectedLanguage == null) {
+            FluxSettings.SelectedLanguage = old;
+        }
     }
 
 }
