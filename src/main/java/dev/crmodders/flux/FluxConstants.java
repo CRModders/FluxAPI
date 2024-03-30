@@ -27,8 +27,8 @@ public class FluxConstants {
     public static final TranslationKey TextSave = new TranslationKey("base:menu.save");
     public static final TranslationKey TextOk = new TranslationKey("base:menu.ok");
     public static final TranslationKey TextDone = new TranslationKey("base:menu.done");
-    public static final TranslationKey TextReturnToMain = new TranslationKey("base:menu.returnToMainMenu");
-    public static final TranslationKey TextReturnToGame = new TranslationKey("base:menu.returnToGame");
+    public static final TranslationKey TextReturnToMain = new TranslationKey("base:menu.return_to_main_menu");
+    public static final TranslationKey TextReturnToGame = new TranslationKey("base:menu.return_to_game");
 
 
 

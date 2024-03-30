@@ -27,6 +27,7 @@ public class LanguageSelectorElement extends UIElement {
 		this.selected = this.languages.indexOf(setting.getValue());
 		this.setting = setting;
 		onCreate();
+		updateText();
 	}
 
 	@Override

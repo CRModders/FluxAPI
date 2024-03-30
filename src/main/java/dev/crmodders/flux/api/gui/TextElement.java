@@ -31,6 +31,7 @@ public class TextElement extends UIElement {
         uiInterface.setActive(false);
         uiInterface.setBorderEnabled(false);
         onCreate();
+        updateText();
     }
 
     @Override

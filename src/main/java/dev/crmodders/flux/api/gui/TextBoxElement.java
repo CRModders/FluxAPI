@@ -28,6 +28,7 @@ public class TextBoxElement extends UIElement {
         this.active = false;
         this.editor = new TextEditor();
         onCreate();
+        updateText();
     }
 
     @Override

@@ -85,10 +85,8 @@ public abstract class UIElementMixin implements Component, UIElementInterface {
 	@Shadow
 	protected abstract void updateText();
 
-	@Overwrite
-	public void onCreate() {
-		updateText();
-	}
+	@Shadow
+	protected abstract void onCreate();
 
 	@Shadow
 	protected abstract void onClick();

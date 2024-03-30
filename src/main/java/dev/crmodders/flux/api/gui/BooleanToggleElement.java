@@ -17,6 +17,7 @@ public class BooleanToggleElement extends ToggleElement {
 		super(x, y, w, h, setting.getValue(), false, textKey);
 		this.setting = setting;
 		onCreate();
+		updateText();
 	}
 
 	@Override

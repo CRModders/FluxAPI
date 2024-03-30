@@ -1,6 +1,9 @@
 package dev.crmodders.flux.localization;
 
+import dev.crmodders.flux.FluxSettings;
 import dev.crmodders.flux.tags.Identifier;
+
+import java.util.List;
 
 public class TranslationKey {
 
@@ -29,6 +32,14 @@ public class TranslationKey {
 
     public Identifier getIdentifier() {
         return identifier;
+    }
+
+    public TranslationString getTranslated() {
+        return FluxSettings.SelectedLanguage.getTranslatedString(this);
+    }
+
+    public List<TranslationString> getTranslatedList() {
+        return FluxSettings.SelectedLanguage.getTranslatedStrings(this);
     }
 
     @Override

@@ -22,6 +22,7 @@ public class ButtonElement extends UIElement {
 		((UIElementInterface) this).setTextKey(textKey);
 		this.listener = listener;
 		onCreate();
+		updateText();
 	}
 
 	@Override
