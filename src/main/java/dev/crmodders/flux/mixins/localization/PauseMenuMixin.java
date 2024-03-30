@@ -36,7 +36,7 @@ public class PauseMenuMixin {
 
 	@ModifyArg(method = "create", at = @At(value = "INVOKE", target = "Lfinalforeach/cosmicreach/ui/UIElement;setText(Ljava/lang/String;)V", ordinal = 3), index = 0)
 	private String returnToMainMenu(String text) {
-		return FluxConstants.TextReturnToMainMenu.getTranslated().string();
+		return FluxConstants.TextReturnToMain.getTranslated().string();
 	}
 
 	@ModifyVariable(method = "render", at = @At("STORE"), ordinal = 0)

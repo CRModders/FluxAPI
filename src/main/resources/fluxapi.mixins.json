@@ -34,7 +34,6 @@
     "localization.KeybindsMenuMixin",
     "localization.LoadingGameMixin",
     "localization.InGameMixin",
-    "localization.WorldSelectionMenuMixin",
     "logging.BlockGameMixin",
     "logging.GameShaderMixin",
     "logging.GameStateMixin",
