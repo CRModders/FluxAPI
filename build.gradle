@@ -63,7 +63,7 @@ configurations {
     cosmicreach // Config to provide the Cosmic Reach project
     compileOnly.extendsFrom(cosmicreach) // Allows cosmic reach to be used in the codebase
 
-    gameMod // Config to be able to load Quilt Mods
+    gameMod // Config to be able to load Fabric Mods (Quilt loads mods from the classpath)
     implementation.extendsFrom(gameMod)
 
     shadowMe // Allows specifying which stuff gets shadowed
@@ -125,7 +125,7 @@ processResources {
 }
 
 
-// Sets up all the mods
+// Sets up all the fabric mods (quilt's mods are gotten through the classpath)
 static def String getModLocations(Configuration config) {
     StringBuilder sb = new StringBuilder()
     for (obj in config.allDependencies) {
@@ -154,11 +154,8 @@ tasks.register("runQuilt", JavaExec) {
 
 
     jvmArgs = [
-            "-Dloader.skipMcProvider=true", // Stops Quilt from attempting to find mappings, and all the other Minecraft stuff
+            "-Dloader.development=true", // Allows stuff to be found through the classpath
             "-Dloader.gameJarPath=" + configurations.cosmicreach.asPath, // Defines path to Cosmic Reach
-            "-Dloader.addMods=" +
-                    jar.archiveFile.get().asFile + // Add the jar of this project (unshadowed)
-                    getModLocations(configurations.gameMod) // Adds the jars of any Quilt or Fabric mods added
     ]
 
     setCurWorkingDir(tasks.runQuilt)
@@ -193,7 +190,7 @@ tasks.register("runFabric", JavaExec) {
             "-Dfabric.gameJarPath=" + configurations.cosmicreach.asPath, // Defines path to Cosmic Reach
             "-Dfabric.addMods=" +
                     shadowJar.archiveFile.get().asFile + // Add the jar of this project (using shadow on Fabric)
-                    getModLocations(configurations.gameMod) // Adds the jars of any Quilt or Fabric mods added
+                    getModLocations(configurations.gameMod) // Adds the jars of any Quilt or Fabric mods added (only needed for Fabric as it doesnt load stuff from classpath)
     ]
 
     setCurWorkingDir(tasks.runFabric)
