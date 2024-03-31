@@ -72,6 +72,8 @@ configurations {
 
 shadowJar {
     configurations = [project.configurations.shadowMe]
+
+    mainClassName = "dev.crmodders.flux.FluxAPI"
 }
 
 
@@ -81,7 +83,8 @@ dependencies {
 
     // Fabric Loader (for accessing its stuff in the code)
     compileOnly("net.fabricmc:fabric-loader:${fabric_loader_version}") // Include the base Fabric Loader so we can only use classes from that
-
+    compileOnly("net.fabricmc:sponge-mixin:0.12.5+mixin.0.8.5")
+    compileOnly("io.github.llamalad7:mixinextras-fabric:0.3.5")
 
     // Json stuff
     shadowMe("com.google.guava:guava:33.0.0-jre")
