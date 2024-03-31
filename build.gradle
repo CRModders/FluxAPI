@@ -161,6 +161,7 @@ publishing {
         maven(MavenPublication) {
             groupId = flux_maven_group
             artifactId = flux_mod_id
+            version = flux_version
 
             from components.java
         }
