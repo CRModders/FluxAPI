@@ -37,7 +37,7 @@ public class TranslationApi {
             try { // Fix for Cosmic Quilt from versions 1.2.0 to 1.2.2
                 modId = container.getMetadata().getId();
             } catch (Exception e) { continue; }
-            if ((url = TranslationApi.class.getResource("/assets/" + modId + "/languages/")) == null)
+            if (modId.equals("fabricloader") || (url = TranslationApi.class.getResource("/assets/" + modId + "/languages/")) == null)
                 continue;
             try {
                 URI uri = url.toURI();
