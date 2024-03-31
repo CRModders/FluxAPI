@@ -111,44 +111,49 @@ public abstract class UIElementMixin implements Component, UIElementInterface {
 
 	@Override
 	public void update(Viewport uiViewport, float mouseX, float mouseY) {
-		if (!this.shown) {
-			return;
-		}
-		this.background = regular;
-		if(!active) {
-			return;
-		}
-		if (this == (Object) currentlyHeldElement && Gdx.input.isButtonPressed(0)) {
-			this.isHeld = true;
-		}
-		if (this.isHeld && !Gdx.input.isButtonPressed(0)) {
-			this.isHeld = false;
-			this.onMouseUp();
-		}
-		if (this.isHoveredOver(uiViewport, mouseX, mouseY)) {
-			if (!this.hoveredOver) {
-				SoundManager.playSound(UIElement.onHoverSound);
-				this.hoveredOver = true;
-				this.background = highlighted;
+		if (this.shown) {
+			if (equals(currentlyHeldElement) && Gdx.input.isButtonPressed(0)) {
+				this.isHeld = true;
 			}
-			if (Gdx.input.isButtonJustPressed(0)) {
-				currentlyHeldElement = (UIElement) (Object) this;
-				this.onMouseDown();
+
+			if (this.isHeld && !Gdx.input.isButtonPressed(0)) {
+				this.isHeld = false;
+				this.onMouseUp();
+				this.background = hoveredOver ? highlighted : regular;
 			}
-			if ((Object) currentlyHeldElement == this) {
+
+			if (this.isHoveredOver(uiViewport, mouseX, mouseY)) {
+				if (!this.hoveredOver) {
+					SoundManager.playSound(UIElement.onHoverSound);
+					this.hoveredOver = true;
+					this.background = highlighted;
+				}
+
+				if (Gdx.input.isButtonJustPressed(0)) {
+					currentlyHeldElement = (UIElement) (Object) this;
+					this.background = clicked;
+					this.onMouseDown();
+				}
+
+				if (equals(currentlyHeldElement)) {
+					this.background = clicked;
+				}
+			} else {
+				this.hoveredOver = false;
+				if(!isHeld)
+					this.background = regular;
+				if (equals(currentlyHeldElement) && !Gdx.input.isButtonPressed(0)) {
+					currentlyHeldElement = null;
+				}
+			}
+
+			if (equals(currentlyHeldElement) && !Gdx.input.isButtonPressed(0)) {
 				this.background = clicked;
-			}
-		} else {
-			this.hoveredOver = false;
-			if ((Object) currentlyHeldElement == this && !Gdx.input.isButtonPressed(0)) {
 				currentlyHeldElement = null;
+				this.onClick();
+				SoundManager.playSound(UIElement.onClickSound);
 			}
-		}
-		if ((Object) currentlyHeldElement == this && !Gdx.input.isButtonPressed(0)) {
-			this.background = clicked;
-			currentlyHeldElement = null;
-			this.onClick();
-			SoundManager.playSound(UIElement.onClickSound);
+
 		}
 	}
 
@@ -289,7 +294,7 @@ public abstract class UIElementMixin implements Component, UIElementInterface {
 		float x = this.getDisplayX(viewport);
 		float y = this.getDisplayY(viewport);
 		if(borderEnabled) {
-			renderer.drawBatch(hoveredOver ? highlighted : background, x, y);
+			renderer.drawBatch(background, x, y);
 		}
 		renderer.drawBatch(foreground, x + (w - foreground.width()) / 2f, y + (h - foreground.height()) / 2f);
 	}
