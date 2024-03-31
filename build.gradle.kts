@@ -101,6 +101,7 @@ publishing {
 
             pom {
                 name = "Flux API"
+                groupId = "dev.crmodders"
                 description = "An Extremely Capable Fabric Api Mod For Cosmic Reach"
                 url = "https://crmodders.dev"
 
