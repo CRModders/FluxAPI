@@ -2,10 +2,10 @@ package dev.crmodders.flux.api.events;
 
 import dev.crmodders.flux.api.events.system.Event;
 import dev.crmodders.flux.api.events.system.EventFactory;
+import dev.crmodders.flux.logging.LogWrapper;
 import finalforeach.cosmicreach.blocks.BlockPosition;
 import finalforeach.cosmicreach.blocks.BlockState;
 import finalforeach.cosmicreach.gamestates.GameState;
-import finalforeach.cosmicreach.world.World;
 import finalforeach.cosmicreach.world.Zone;
 
 public class GameEvents {
@@ -13,6 +13,7 @@ public class GameEvents {
     // Game Flow Events
     public static final Event<GameEventTriggers.OnGameTickedTrigger> AFTER_GAME_IS_TICKED = EventFactory.createArrayBacked(GameEventTriggers.OnGameTickedTrigger.class, callbacks -> () -> {
         for (GameEventTriggers.OnGameTickedTrigger callback : callbacks) {
+            LogWrapper.info("EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE");
             if (callback != null)
                 callback.onTick();
         }
@@ -22,6 +23,13 @@ public class GameEvents {
         for (GameEventTriggers.OnGameTickedTrigger callback : callbacks) {
             if (callback != null)
                 callback.onTick();
+        }
+    });
+
+    public static final Event<GameEventTriggers.GameInitializationEvent> ON_GAME_INITIALIZED = EventFactory.createArrayBacked(GameEventTriggers.GameInitializationEvent.class, callbacks -> () -> {
+        for (var callback : callbacks) {
+            if (callback != null)
+                callback.onInitialized();
         }
     });
 
@@ -70,12 +78,18 @@ public class GameEvents {
         }
     });
 
+
     public static class GameEventTriggers {
 
         // Game Flow Triggers
         @FunctionalInterface
         public interface OnGameTickedTrigger {
             void onTick();
+        }
+
+        @FunctionalInterface
+        public interface GameInitializationEvent {
+            void onInitialized();
         }
 
         // Block Triggers
@@ -94,6 +108,7 @@ public class GameEvents {
         public interface StateChangedTrigger {
             void onStateChanged(GameState gameState);
         }
+
     }
 
 }

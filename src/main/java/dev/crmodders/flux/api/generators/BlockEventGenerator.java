@@ -1,7 +1,7 @@
 package dev.crmodders.flux.api.generators;
 
 import com.badlogic.gdx.files.FileHandle;
-import dev.crmodders.flux.api.block.IFunctionalBlock;
+import dev.crmodders.flux.api.block.IModBlock;
 import dev.crmodders.flux.api.generators.data.blockevent.BlockEventData;
 import dev.crmodders.flux.api.generators.data.blockevent.BlockEventDataExt;
 import dev.crmodders.flux.api.generators.data.blockevent.BlockEventType;
@@ -20,13 +20,15 @@ import finalforeach.cosmicreach.entities.Player;
 import finalforeach.cosmicreach.gamestates.InGame;
 import finalforeach.cosmicreach.world.Zone;
 import org.hjson.JsonObject;
+import org.hjson.Stringify;
+import org.pmw.tinylog.Logger;
 
 import java.util.*;
 
 public class BlockEventGenerator {
 
-    public static void RegisterBlockEventActions(Identifier id, IFunctionalBlock block) {
-        FluxRegistries.BLOCK_EVENT_ACTIONS.register(Identifier.fromString(id.toString() + "_INTERACT"), new IBlockEventAction() {
+    public static void RegisterBlockEventActions(Identifier id, IModBlock block) {
+        FluxRegistries.BLOCK_EVENT_ACTIONS.register(Identifier.fromString(id + "_INTERACT"), new IBlockEventAction() {
             @Override
             public String getActionId() {
                 return id + "_INTERACT";
@@ -47,7 +49,7 @@ public class BlockEventGenerator {
             }
         });
 
-        FluxRegistries.BLOCK_EVENT_ACTIONS.register(Identifier.fromString(id.toString()+"_PLACE"), new IBlockEventAction() {
+        FluxRegistries.BLOCK_EVENT_ACTIONS.register(Identifier.fromString(id +"_PLACE"), new IBlockEventAction() {
             @Override
             public String getActionId() {
                 return id+"_PLACE";
@@ -68,7 +70,7 @@ public class BlockEventGenerator {
             }
         });
 
-        FluxRegistries.BLOCK_EVENT_ACTIONS.register(Identifier.fromString(id.toString()+"_BREAK"), new IBlockEventAction() {
+        FluxRegistries.BLOCK_EVENT_ACTIONS.register(Identifier.fromString(id +"_BREAK"), new IBlockEventAction() {
             @Override
             public String getActionId() {
                 return id+"_BREAK";
@@ -90,7 +92,9 @@ public class BlockEventGenerator {
         });
     }
 
-    public static BlockEventData CreateNewBlockEvent(Identifier blockEventId, IFunctionalBlock block, HashMap<BlockEventType, Boolean> blockEventOverrideMap) {
+    public static BlockEventData CreateNewBlockEvent(Identifier blockEventId, IModBlock block) {
+        BlockGenerator generator = block.getGenerator();
+
         RegisterBlockEventActions(blockEventId, block);
 
         HashMap<String, Object> onPlaceParams_0 = new HashMap<>();
@@ -125,7 +129,7 @@ public class BlockEventGenerator {
                                 "onInteract",
                                 new TriggerEventData[]{
                                         new TriggerEventData(
-                                                Identifier.fromString(blockEventId.toString()+"_INTERACT"),
+                                                Identifier.fromString(blockEventId +"_INTERACT"),
                                                 new HashMap<>()
                                         )
                                 }
@@ -136,11 +140,11 @@ public class BlockEventGenerator {
                                     List<TriggerEventData> data = new ArrayList<>();
 
                                     data.add(new TriggerEventData(
-                                            Identifier.fromString(blockEventId.toString()+"_PLACE"),
+                                            Identifier.fromString(blockEventId +"_PLACE"),
                                             new HashMap<>()
                                     ));
 
-                                    if (!blockEventOverrideMap.get(BlockEventType.OnPlace)) {
+                                    if (!generator.overridesEvent(BlockEventType.OnPlace)) {
                                         data.add(new TriggerEventData(
                                                         Identifier.fromString("base:replace_block_state"),
                                                         onPlaceParams_0
@@ -159,11 +163,11 @@ public class BlockEventGenerator {
                                     List<TriggerEventData> data = new ArrayList<>();
 
                                     data.add(new TriggerEventData(
-                                            Identifier.fromString(blockEventId.toString()+"_BREAK"),
+                                            Identifier.fromString(blockEventId +"_BREAK"),
                                             new HashMap<>()
                                     ));
 
-                                    if (!blockEventOverrideMap.get(BlockEventType.OnBreak)) {
+                                    if (!generator.overridesEvent(BlockEventType.OnBreak)) {
                                         data.add(new TriggerEventData(
                                                 Identifier.fromString("base:replace_block_state"),
                                                 onBreakParams_0
@@ -180,10 +184,12 @@ public class BlockEventGenerator {
         );
     }
 
-    public static BlockEventDataExt InjectIntoBlockEvent(Identifier oldId, Identifier blockEventId, IFunctionalBlock block, HashMap<BlockEventType, Boolean> blockEventOverrideMap) {
+    public static BlockEventDataExt InjectIntoBlockEvent(Identifier oldId, Identifier blockEventId, IModBlock block) {
+        BlockGenerator generator = block.getGenerator();
+
         RegisterBlockEventActions(blockEventId, block);
 
-        FileHandle f = GameAssetLoader.loadAsset("block_events/" + oldId.name + ".json");
+        FileHandle f = GameAssetLoader.loadAsset(oldId.namespace + ":block_events/" + oldId.name + ".json");
         JsonObject jsonObject = JsonObject.readJSON(f.readString()).asObject();
         if (jsonObject.get("triggers") == null) jsonObject.set("triggers", new JsonObject());
 
@@ -193,7 +199,7 @@ public class BlockEventGenerator {
 
         for (String s : jsonObject.get("triggers").asObject().names()) {
             if (Objects.equals(s, "onInteract")) {
-                if (!blockEventOverrideMap.get(BlockEventType.OnInteract)) {
+                if (!generator.overridesEvent(BlockEventType.OnInteract)) {
                     LazyInjected_Interact = true;
                     jsonObject.set("triggers", jsonObject.get("triggers").asObject()
                             .set(s, jsonObject.get("triggers").asObject().get(s).asArray().add(
@@ -201,8 +207,9 @@ public class BlockEventGenerator {
                             )));
                 }
             }
+
             if (Objects.equals(s, "onPlace")) {
-                if (!blockEventOverrideMap.get(BlockEventType.OnPlace)) {
+                if (!generator.overridesEvent(BlockEventType.OnPlace)) {
                     LazyInjected_Place = true;
                     jsonObject.set("triggers", jsonObject.get("triggers").asObject()
                             .set(s, jsonObject.get("triggers").asObject().get(s).asArray().add(
@@ -210,8 +217,9 @@ public class BlockEventGenerator {
                             )));
                 }
             }
+
             if (Objects.equals(s, "onBreak")) {
-                if (!blockEventOverrideMap.get(BlockEventType.OnBreak)) {
+                if (!generator.overridesEvent(BlockEventType.OnBreak)) {
                     LazyInjected_Break = true;
                     jsonObject.set("triggers", jsonObject.get("triggers").asObject()
                             .set(s, jsonObject.get("triggers").asObject().get(s).asArray().add(
@@ -236,13 +244,13 @@ public class BlockEventGenerator {
         }
 
         if (!LazyInjected_Place) {
-            HashMap<String, Object> onPlaceParams_0 = new HashMap<>();
+            Map<String, Object> onPlaceParams_0 = new HashMap<>();
             onPlaceParams_0.put("xOff", 0);
             onPlaceParams_0.put("yOff", 0);
             onPlaceParams_0.put("zOff", 0);
             onPlaceParams_0.put("blockStateId", "self");
 
-            HashMap<String, Object> onPlaceParams_1 = new HashMap<>();
+            Map<String, Object> onPlaceParams_1 = new HashMap<>();
             onPlaceParams_1.put("sound", "block-place.ogg");
             onPlaceParams_1.put("volume", 1);
             onPlaceParams_1.put("pitch", 1);
@@ -259,7 +267,7 @@ public class BlockEventGenerator {
                                                 new HashMap<>()
                                         ));
 
-                                        if (!blockEventOverrideMap.get(BlockEventType.OnPlace)) {
+                                        if (!generator.overridesEvent(BlockEventType.OnPlace)) {
                                             data.add(new TriggerEventData(
                                                     Identifier.fromString("base:replace_block_state"),
                                                     onPlaceParams_0
@@ -277,13 +285,13 @@ public class BlockEventGenerator {
         }
 
         if (!LazyInjected_Break) {
-            HashMap<String, Object> onBreakParams_0 = new HashMap<>();
+            Map<String, Object> onBreakParams_0 = new HashMap<>();
             onBreakParams_0.put("xOff", 0);
             onBreakParams_0.put("yOff", 0);
             onBreakParams_0.put("zOff", 0);
             onBreakParams_0.put("blockStateId", "base:air[default]");
 
-            HashMap<String, Object> onBreakParams_1 = new HashMap<>();
+            Map<String, Object> onBreakParams_1 = new HashMap<>();
             onBreakParams_1.put("sound", "block-break.ogg");
             onBreakParams_1.put("volume", 1);
             onBreakParams_1.put("pitch", 1);
@@ -300,7 +308,7 @@ public class BlockEventGenerator {
                                                     new HashMap<>()
                                             ));
 
-                                            if (!blockEventOverrideMap.get(BlockEventType.OnBreak)) {
+                                            if (!generator.overridesEvent(BlockEventType.OnBreak)) {
                                                 data.add(new TriggerEventData(
                                                         Identifier.fromString("base:replace_block_state"),
                                                         onBreakParams_0
@@ -316,7 +324,6 @@ public class BlockEventGenerator {
                     )
             );
         }
-
         return () -> jsonObject;
     }
 
