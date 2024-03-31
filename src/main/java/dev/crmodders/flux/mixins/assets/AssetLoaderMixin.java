@@ -53,7 +53,7 @@ public class AssetLoaderMixin {
             return classpathLocationFile;
         }
 
-        Logger.error("%s Cannot Load %s from Classpath, CosmicReach, or DataMods".formatted(TAG, fileName));
+        Logger.error("%s Cannot Load %s from Classpath, CosmicReach, or DataMods | ASSET_ID: %s".formatted(TAG, fileName, location));
         return null;
     }
 

@@ -4,9 +4,9 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Json;
 import dev.crmodders.flux.api.block.IModBlock;
 import dev.crmodders.flux.api.generators.BlockGenerator;
+import dev.crmodders.flux.api.resource.ResourceLocation;
 import dev.crmodders.flux.mixins.accessor.BlockAccessor;
 import dev.crmodders.flux.registry.FluxRegistries;
-import dev.crmodders.flux.registry.registries.impl.RegistryObject;
 import dev.crmodders.flux.tags.Identifier;
 import finalforeach.cosmicreach.GameAssetLoader;
 import finalforeach.cosmicreach.blocks.Block;
@@ -59,12 +59,9 @@ public class BlockBuilderUtils {
                 new IModBlock() {
                     @Override
                     public BlockGenerator getGenerator() {
-                        return BlockGenerator.createGenerator();
+                        return BlockGenerator.createResourceDrivenGenerator(new ResourceLocation(id.namespace, id.name));
                     }
 
-                    public boolean isResourceDriven() {
-                        return true;
-                    }
                 }
         );
         return null;

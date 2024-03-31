@@ -3,7 +3,9 @@ package dev.crmodders.flux.mixins.registry;
 import com.badlogic.gdx.utils.Json;
 import dev.crmodders.flux.FluxConstants;
 import dev.crmodders.flux.api.block.IModBlock;
+import dev.crmodders.flux.api.events.GameEvents;
 import dev.crmodders.flux.api.generators.BlockGenerator;
+import dev.crmodders.flux.api.generators.FactoryFinalizer;
 import dev.crmodders.flux.api.generators.data.blockevent.BlockEventDataExt;
 import dev.crmodders.flux.api.resource.ResourceObject;
 import dev.crmodders.flux.localization.TranslationApi;
@@ -12,6 +14,7 @@ import dev.crmodders.flux.menus.AssetLoadingMenu;
 import dev.crmodders.flux.registry.FluxRegistries;
 import dev.crmodders.flux.registry.registries.AccessableRegistry;
 import dev.crmodders.flux.tags.Identifier;
+import dev.crmodders.flux.util.BlockBuilderUtils;
 import finalforeach.cosmicreach.BlockGame;
 import finalforeach.cosmicreach.GameAssetLoader;
 import finalforeach.cosmicreach.blockevents.BlockEvents;
@@ -25,6 +28,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(BlockGame.class)
+@SuppressWarnings("unchecked")
 public class RegistryRegisterer {
 
     private static String TAG = "\u001B[35;1m{Registry}\u001B[0m\u001B[37m";
@@ -38,6 +42,8 @@ public class RegistryRegisterer {
 
         RegisterAssets((AccessableRegistry<ResourceObject>) FluxRegistries.GAME_RESOURCES);
 
+        GameEvents.ON_GAME_INITIALIZED.invoker().onInitialized();
+
         FluxRegistries.BLOCKS.freeze();
         RegisterBlocks((AccessableRegistry<IModBlock>) FluxRegistries.BLOCKS);
 
@@ -47,7 +53,7 @@ public class RegistryRegisterer {
         FluxRegistries.BLOCK_EVENTS.freeze();
         RegisterBlockEvents((AccessableRegistry<BlockEventDataExt>) FluxRegistries.BLOCK_EVENTS);
 
-        RegisterBlockFinalizers((AccessableRegistry<BlockGenerator.FactoryFinalizer>) FluxRegistries.BLOCK_FACTORY_FINALIZERS);
+        RegisterBlockFinalizers((AccessableRegistry<FactoryFinalizer<?>>) FluxRegistries.FACTORY_FINALIZERS);
 
         GameState.switchToGameState(new MainMenu());
 
@@ -78,7 +84,7 @@ public class RegistryRegisterer {
             BlockEventDataExt event = registryAccess.get(eventId);
 
             BlockEvents.INSTANCES.put(eventId.toString(), new Json().fromJson(BlockEvents.class, event.toJson().toString()));
-            LogWrapper.info("%s: Registered Block Event: %s".formatted(TAG, event));
+            LogWrapper.info("%s: Registered Block Event: %s".formatted(TAG, event.toJson().get("stringId")));
         }
     }
 
@@ -86,29 +92,18 @@ public class RegistryRegisterer {
         for (Identifier blockId : registryAccess.getRegisteredNames()) {
             IModBlock modBlock = registryAccess.get(blockId);
 
-            if (modBlock.isResourceDriven()) {
-                FluxRegistries.BLOCK_FACTORY_FINALIZERS.register(
-                        blockId,
-                        new BlockGenerator.FactoryFinalizer(
-                                blockId,
-                                JsonValue.readHjson(
-                                        GameAssetLoader.loadAsset("assets/" + blockId.namespace + "/blocks/" + blockId.name + ".json").readString()
-                                ).asObject()
-                        )
-                );
-            } else {
-                FluxRegistries.BLOCK_FACTORY_FINALIZERS.register(
-                        blockId,
-                        modBlock.getGenerator().GetGeneratorFactory().get(modBlock, blockId)
-                );
-            }
+            FluxRegistries.FACTORY_FINALIZERS.register(
+                    blockId,
+                    modBlock.getGenerator().GetGeneratorFactory().get(modBlock, blockId)
+            );
+
             LogWrapper.info("%s: Registered Block: %s".formatted(TAG, blockId));
         }
     }
 
-    private static void RegisterBlockFinalizers(AccessableRegistry<BlockGenerator.FactoryFinalizer> registryAccess) {
+    private static void RegisterBlockFinalizers(AccessableRegistry<FactoryFinalizer<?>> registryAccess) {
         for (Identifier finalizerId : registryAccess.getRegisteredNames()) {
-            BlockGenerator.FactoryFinalizer finalizer = registryAccess.get(finalizerId);
+            FactoryFinalizer<?> finalizer = registryAccess.get(finalizerId);
 
             finalizer.finalizeFactory();
             LogWrapper.info("%s: Registered Block Finalizer: %s".formatted(TAG, finalizerId));

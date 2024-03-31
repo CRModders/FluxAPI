@@ -23,4 +23,18 @@ public class AssetLoader {
         );
 
     }
+
+    public static ResourceObject unsafeLoadAsset(ResourceLocation key) {
+
+        ResourceObject resourceObject = new ResourceObject(
+                key,
+                null
+        );
+
+        if (FluxConstants.GameHasLoaded)
+            resourceObject.handle = GameAssetLoader.loadAsset(key.toString());
+
+        return resourceObject;
+
+    }
 }
