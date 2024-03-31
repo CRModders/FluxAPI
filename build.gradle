@@ -1,5 +1,5 @@
 plugins {
-    id "application"
+    id "application" // TODO: Remove this plugin
     id "maven-publish"
     id "java-library"
     id "com.github.johnrengelman.shadow" version "8.1.1"
@@ -72,7 +72,6 @@ configurations {
 
 shadowJar {
     configurations = [project.configurations.shadowMe]
-
     mainClassName = "dev.crmodders.flux.FluxAPI"
 }
 
@@ -126,8 +125,8 @@ processResources {
 }
 
 
-// Sets up all the Quilt Mods
-def String getQuiltModLocations(Configuration config) {
+// Sets up all the mods
+static def String getModLocations(Configuration config) {
     StringBuilder sb = new StringBuilder()
     for (obj in config.allDependencies) {
         sb.append(File.pathSeparator + config.files(obj)[0])
@@ -135,45 +134,41 @@ def String getQuiltModLocations(Configuration config) {
     return sb.toString()
 }
 
+// Sets the current working path
+static def void setCurWorkingDir(Task curTask) {
+    // Change the run directory
+    File runningDir = new File("run/")
+    if (!runningDir.exists())
+        runningDir.mkdirs()
+    curTask.workingDir = runningDir
+}
 
-tasks.register("runQuilt") {
-    // Sets the task's group
-    group = "runs"
-
-    applicationDefaultJvmArgs = [
-            "-Dloader.skipMcProvider=true", // Stops Quilt from attempting to find mappings, and all the other Minecraft stuff
-            "-Dloader.gameJarPath=" + configurations.cosmicreach.asPath, // Defines path to Cosmic Reach
-            "-Dloader.addMods=" +
-                    jar.archiveFile.get().asFile + // Add the jar of this project
-                    getQuiltModLocations(configurations.gameMod) // Adds the jars of any Quilt or Fabric mods added
-    ]
+tasks.register("runQuilt", JavaExec) {
+    group = "runs" // Sets the task's group
+    dependsOn "jar" // To run this project in the game, depend on the creation of jar task
 
     dependencies {
         // Cosmic Quilt
         implementation("org.codeberg.CRModders:cosmic-quilt:${cosmic_quilt_version}")
     }
 
-    application {
-        mainClass = "org.quiltmc.loader.impl.launch.knot.KnotClient" // Quilt's main class
-    }
 
-    finalizedBy run // The base run task
+    jvmArgs = [
+            "-Dloader.skipMcProvider=true", // Stops Quilt from attempting to find mappings, and all the other Minecraft stuff
+            "-Dloader.gameJarPath=" + configurations.cosmicreach.asPath, // Defines path to Cosmic Reach
+            "-Dloader.addMods=" +
+                    jar.archiveFile.get().asFile + // Add the jar of this project (unshadowed)
+                    getModLocations(configurations.gameMod) // Adds the jars of any Quilt or Fabric mods added
+    ]
+
+    setCurWorkingDir(tasks.runQuilt)
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = "org.quiltmc.loader.impl.launch.knot.KnotClient" // Quilt's main class
 }
 
-tasks.register("runFabric") {
-    // Sets the task's group
-    group = "runs"
-
-    // Fabric doesnt search classpaths correctly, so this is needed
-    dependsOn "shadowJar"
-
-    applicationDefaultJvmArgs = [
-            "-Dfabric.skipMcProvider=true", // Stops Fabric from attempting to find mappings, and all the other Minecraft stuff
-            "-Dfabric.gameJarPath=" + configurations.cosmicreach.asPath, // Defines path to Cosmic Reach
-            "-Dfabric.addMods=" +
-                    shadowJar.archiveFile.get().asFile + // Add the jar of this project
-                    getQuiltModLocations(configurations.gameMod) // Adds the jars of any Quilt or Fabric mods added
-    ]
+tasks.register("runFabric", JavaExec) {
+    group = "runs" // Sets the task's group
+    dependsOn "shadowJar" // Fabric doesnt search classpaths correctly, so we use the shadowed jar
 
     dependencies {
         // Galactic Loader
@@ -192,23 +187,18 @@ tasks.register("runFabric") {
         implementation("io.github.llamalad7:mixinextras-fabric:0.3.5")
     }
 
-    application {
-        mainClass = "net.fabricmc.loader.impl.launch.knot.KnotClient" // Fabric's main class
-    }
 
-    finalizedBy run // The base run task
-}
+    jvmArgs = [
+            "-Dfabric.skipMcProvider=true", // Stops Fabric from attempting to find mappings, and all the other Minecraft stuff
+            "-Dfabric.gameJarPath=" + configurations.cosmicreach.asPath, // Defines path to Cosmic Reach
+            "-Dfabric.addMods=" +
+                    shadowJar.archiveFile.get().asFile + // Add the jar of this project (using shadow on Fabric)
+                    getModLocations(configurations.gameMod) // Adds the jars of any Quilt or Fabric mods added
+    ]
 
-
-run {
-    // To run this project in the game, depend on the creation of jar task
-    dependsOn "jar"
-
-    // Change the run directory
-    File runningDir = new File("run/")
-    if (!runningDir.exists())
-        runningDir.mkdirs()
-    tasks.run.workingDir = runningDir
+    setCurWorkingDir(tasks.runFabric)
+    classpath = sourceSets.main.runtimeClasspath // Loads all the classpaths
+    mainClass = "net.fabricmc.loader.impl.launch.knot.KnotClient" // Fabric's main class
 }
 
 
@@ -231,9 +221,5 @@ publishing {
 
             from components.java
         }
-    }
-
-    repositories {
-
     }
 }
