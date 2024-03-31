@@ -34,10 +34,10 @@ public class TranslationApi {
         for (ModContainer container : FabricLoader.getInstance().getAllMods()) {
             URL url;
             String modId;
-            try { // TMP fix for Cosmic Quilt
+            try { // Fix for Cosmic Quilt from versions 1.2.0 to 1.2.2
                 modId = container.getMetadata().getId();
             } catch (Exception e) { continue; }
-            if (modId.equals("fabricloader") || (url = TranslationApi.class.getResource("/assets/" + modId + "/languages/")) == null)
+            if ((url = TranslationApi.class.getResource("/assets/" + modId + "/languages/")) == null)
                 continue;
             try {
                 URI uri = url.toURI();
