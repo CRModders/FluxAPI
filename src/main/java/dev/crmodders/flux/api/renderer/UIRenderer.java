@@ -18,8 +18,8 @@ import dev.crmodders.flux.font.Font;
 import dev.crmodders.flux.util.text.StyleStringParser;
 import finalforeach.cosmicreach.gamestates.GameState;
 import finalforeach.cosmicreach.ui.HorizontalAnchor;
+import finalforeach.cosmicreach.ui.UIElement;
 import finalforeach.cosmicreach.ui.VerticalAnchor;
-import space.earlygrey.shapedrawer.ShapeDrawer;
 
 import java.lang.Character.UnicodeBlock;
 import java.util.ArrayList;
@@ -82,12 +82,10 @@ public class UIRenderer {
 
 	public List<DrawBatch> batches;
 	public SpriteBatch batch;
-	public ShapeDrawer renderer;
 
 	public UIRenderer(SpriteBatch batch) {
 		this.batches = new ArrayList<>();
 		this.batch = batch;
-		this.renderer = new ShapeDrawer(batch, new TextureRegion(white));
 	}
 
 	public ShapeBatchBuilder buildShape() {
@@ -181,13 +179,15 @@ public class UIRenderer {
 					this.batch.draw(region.getTexture(), vertices, 0, vertices.length);
 				}
 
-				if(batch.underline) {
-					this.renderer.line(0, batch.fontSize, batch.width, batch.fontSize);
-				}
+				// TODO: Text underline and strikethrough
+//				if(batch.underline) {
+//					this.renderer.line(0, batch.fontSize, batch.width, batch.fontSize);
+//				}
+//
+//				if(batch.strikethrough) {
+//					this.renderer.line(0, batch.fontSize * 1/2f, batch.width, batch.fontSize * 1/2f, 2f);
+//				}
 
-				if(batch.strikethrough) {
-					this.renderer.line(0, batch.fontSize * 1/2f, batch.width, batch.fontSize * 1/2f, 2f);
-				}
 
 				matrix.translate(batch.width, 0, 0);
 			}
@@ -202,14 +202,41 @@ public class UIRenderer {
 		for (Shape shape : shapeBatch.shapes) {
 
 			if (shape instanceof DrawRect rect) {
-				renderer.rectangle(xStart + rect.x, yStart + rect.y, rect.w, rect.h, rect.color, rect.thickness);
+//				renderer.rectangle(xStart + rect.x, yStart + rect.y, rect.w, rect.h, rect.color, rect.thickness);
+
+				batch.draw(
+						(rect.color == Color.WHITE ? UIElement.uiPanelHoverBoundsTex : UIElement.uiPanelBoundsTex),
+						xStart - rect.thickness,
+						yStart - rect.thickness,
+						0.0F, 0.0F,
+						rect.w + (2*rect.thickness), rect.h + (2*rect.thickness),
+						1.0F, 1.0F,
+						0.0F,
+						0, 0,
+						1, 1,
+						false, true
+				);
+
+				batch.draw(
+						UIElement.uiPanelTex,
+						xStart,
+						yStart,
+						0.0F, 0.0F,
+						rect.w, rect.h,
+						1.0F, 1.0F,
+						0.0F,
+						0, 0,
+						1, 1,
+						false, true
+				);
 			} else if (shape instanceof FillRect rect) {
 				float x1 = xStart + rect.x + rect.w;
 				float y1 = yStart + rect.y;
 				float x2 = xStart + rect.x;
 				float y2 = yStart + rect.y + rect.h;
-				renderer.filledTriangle(x1, y1, x2, y1, x2, y2, rect.color);
-				renderer.filledTriangle(x2, y2, x1, y2, x1, y1, rect.color);
+
+//				renderer.filledTriangle(x1, y1, x2, y1, x2, y2, rect.color);
+//				renderer.filledTriangle(x2, y2, x1, y2, x1, y1, rect.color);
 			}
 		}
 	}

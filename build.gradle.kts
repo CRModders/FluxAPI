@@ -78,9 +78,6 @@ dependencies {
     implementation("com.github.tobiasrm:tinylog-coloredconsole:${getProperties().get("tiny_logger_version")}")
 
     implementation("org.locationtech.jts:jts-core:${getProperties().get("jts_core_version")}")
-    implementation("space.earlygrey:shapedrawer:${getProperties().get("shape_drawer_version")}") {
-        exclude( group = "com.badlogicgames.gdx" )
-    }
 
     implementation("com.badlogicgames.gdx:gdx-freetype:${getProperties().get("gdx_version")}") { exclude("com.badlogicgames.gdx") }
     implementation("com.badlogicgames.gdx:gdx-freetype-platform:${getProperties().get("gdx_version")}:natives-desktop") { exclude("com.badlogicgames.gdx") }
