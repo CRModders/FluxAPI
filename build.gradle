@@ -21,6 +21,22 @@ repositories {
             includeGroup "finalforeach"
         }
     }
+    ivy {
+        // The game provider for Fabric (equivalent of Cosmic Quilt for Fabric)
+        name "Galactic Loader"
+        url "https://github.com/GalacticLoader/GalacticLoader/releases/download/"
+        patternLayout {
+            artifact "/[revision]/GalacticLoader-[revision].jar"
+        }
+        // This is required in Gradle 6.0+ as metadata file (ivy.xml) is mandatory
+        metadataSources {
+            artifact()
+        }
+
+        content {
+            includeGroup "galacticloader"
+        }
+    }
 
     maven {
         name "JitPack"
@@ -47,8 +63,8 @@ configurations {
     cosmicreach // Config to provide the Cosmic Reach project
     compileOnly.extendsFrom(cosmicreach) // Allows cosmic reach to be used in the codebase
 
-    quiltMod // Config to be able to load Quilt Mods
-    implementation.extendsFrom(quiltMod)
+    gameMod // Config to be able to load Quilt Mods
+    implementation.extendsFrom(gameMod)
 
     shadowMe // Allows specifying which stuff gets shadowed
     api.extendsFrom(shadowMe)
@@ -63,14 +79,8 @@ dependencies {
     // Cosmic Reach jar
     cosmicreach("finalforeach:cosmicreach:${cosmic_reach_version}")
 
-    // Cosmic Quilt
-    implementation("org.codeberg.CRModders:cosmic-quilt:${cosmic_quilt_version}") {
-        exclude group: "org.quiltmc", module: "quilt-loader" // Exclude the Quilt Loader so we cannot accidentally use it's stuff
-    }
-    // Fabric Loader
+    // Fabric Loader (for accessing its stuff in the code)
     compileOnly("net.fabricmc:fabric-loader:${fabric_loader_version}") // Include the base Fabric Loader so we can only use classes from that
-    // Quilt Loader
-    runtimeOnly("org.quiltmc:quilt-loader:${quilt_loader_version}")
 
 
     // Json stuff
@@ -113,11 +123,6 @@ processResources {
 }
 
 
-application {
-    // As Quilt is our loader, use its main class at:
-    mainClass = "org.quiltmc.loader.impl.launch.knot.KnotClient"
-}
-
 // Sets up all the Quilt Mods
 def String getQuiltModLocations(Configuration config) {
     StringBuilder sb = new StringBuilder()
@@ -127,13 +132,70 @@ def String getQuiltModLocations(Configuration config) {
     return sb.toString()
 }
 
-applicationDefaultJvmArgs = [
-        "-Dloader.skipMcProvider=true", // Stops Quilt from attempting to find mappings, and all the other Minecraft stuff
-        "-Dloader.gameJarPath=" + configurations.cosmicreach.asPath, // Defines path to Cosmic Reach
-        "-Dloader.addMods=" +
-                jar.archiveFile.get().asFile + // Add the jar of this project
-                getQuiltModLocations(configurations.quiltMod) // Adds the jars of any Quilt mods added
-]
+
+tasks.register("runQuilt") {
+    // Sets the task's group
+    group = "runs"
+
+    applicationDefaultJvmArgs = [
+            "-Dloader.skipMcProvider=true", // Stops Quilt from attempting to find mappings, and all the other Minecraft stuff
+            "-Dloader.gameJarPath=" + configurations.cosmicreach.asPath, // Defines path to Cosmic Reach
+            "-Dloader.addMods=" +
+                    jar.archiveFile.get().asFile + // Add the jar of this project
+                    getQuiltModLocations(configurations.gameMod) // Adds the jars of any Quilt or Fabric mods added
+    ]
+
+    dependencies {
+        // Cosmic Quilt
+        implementation("org.codeberg.CRModders:cosmic-quilt:${cosmic_quilt_version}")
+    }
+
+    application {
+        mainClass = "org.quiltmc.loader.impl.launch.knot.KnotClient" // Quilt's main class
+    }
+
+    dependsOn run // The base run task
+}
+
+tasks.register("runFabric") {
+    // Sets the task's group
+    group = "runs"
+
+    // Fabric doesnt search classpaths correctly, so this is needed
+    dependsOn "shadowJar"
+
+    applicationDefaultJvmArgs = [
+            "-Dfabric.skipMcProvider=true", // Stops Fabric from attempting to find mappings, and all the other Minecraft stuff
+            "-Dfabric.gameJarPath=" + configurations.cosmicreach.asPath, // Defines path to Cosmic Reach
+            "-Dfabric.addMods=" +
+                    shadowJar.archiveFile.get().asFile + // Add the jar of this project
+                    getQuiltModLocations(configurations.gameMod) // Adds the jars of any Quilt or Fabric mods added
+    ]
+
+    dependencies {
+        // Galactic Loader
+        implementation("galacticloader:galacticloader:${fabric_loader_version}")
+
+        // Fabric Loader and its stuff
+        implementation("net.fabricmc:fabric-loader:${fabric_loader_version}")
+        implementation("net.fabricmc:tiny-mappings-parser:0.2.2.14")
+        implementation("net.fabricmc:access-widener:2.1.0")
+        implementation("net.fabricmc:sponge-mixin:0.12.5+mixin.0.8.5")
+        implementation("org.ow2.asm:asm:9.6")
+        implementation("org.ow2.asm:asm-util:9.6")
+        implementation("org.ow2.asm:asm-tree:9.6")
+        implementation("org.ow2.asm:asm-analysis:9.6")
+        implementation("org.ow2.asm:asm-commons:9.6")
+        implementation("io.github.llamalad7:mixinextras-fabric:0.3.5")
+    }
+
+    application {
+        mainClass = "net.fabricmc.loader.impl.launch.knot.KnotClient" // Fabric's main class
+    }
+
+    dependsOn run // The base run task
+}
+
 
 run {
     // To run this project in the game, depend on the creation of jar task
