@@ -2,36 +2,66 @@
     "language_tag": "en-US",
     "major_version": 1,
     "minor_version": 0,
-    "ids": [ "base","fluxapi" ],
-
+    "ids": [
+        "base",
+        "fluxapi"
+    ],
     "base": {
         "priority": 1000,
         "format_templates": {
             "main_menu": {
-                "game_version": ["game_version"],
-                "controller_info": ["number_of_controllers", "controller_noun"]
+                "game_version": [
+                    "game_version"
+                ],
+                "controller_info": [
+                    "number_of_controllers",
+                    "controller_noun"
+                ]
             },
             "options_menu": {
-                "vsync": ["vsync_on"],
-                "render_distance": ["render_distance"],
-                "inverted_mouse": ["inverted_mouse"],
-                "mouse_sensitivity": ["mouse_sensitivity"],
-                "sound": ["sound_on"],
-                "fov": ["fov"],
-                "max_fps": ["fps"]
+                "vsync": [
+                    "vsync_on"
+                ],
+                "render_distance": [
+                    "render_distance"
+                ],
+                "inverted_mouse": [
+                    "inverted_mouse"
+                ],
+                "mouse_sensitivity": [
+                    "mouse_sensitivity"
+                ],
+                "sound": [
+                    "sound_on"
+                ],
+                "fov": [
+                    "fov"
+                ],
+                "max_fps": [
+                    "fps"
+                ]
             },
-			"pause_menu": {
-				"lighting": ["lighting"]
-			},
+            "pause_menu": {
+                "lighting": [
+                    "lighting"
+                ]
+            },
             "in_game": {
-                "screenshot_saved_to": ["file"]
+                "screenshot_saved_to": [
+                    "file"
+                ]
             },
-			"loading_menu": {
-                "tips": ["hide_ui_key", "screenshot_key", "show_debug_key", "drop_key", "inventory_key"]
+            "loading_menu": {
+                "tips": [
+                    "hide_ui_key",
+                    "screenshot_key",
+                    "show_debug_key",
+                    "drop_key",
+                    "inventory_key"
+                ]
             }
-		},
+        },
         "strings": {
-
             "menu": {
                 "on": "On",
                 "off": "Off",
@@ -99,7 +129,7 @@
             "in_game": {
                 "screenshot_saved_to": "Saved screenshot to {file}"
             },
-            "loading_menu":{
+            "loading_menu": {
                 "loading": "Loading",
                 "tips": [
                     "Reticulating splines...",
@@ -148,37 +178,41 @@
             }
         }
     },
-
     "fluxapi": {
         "priority": 1000,
         "format_templates": {
-
             "config_menu": {
-                "button": ["name"]
+                "button": [
+                    "name"
+                ]
             },
             "flux_options": {
-                "msaa": ["msaa"],
-                "language": ["language"]
+                "msaa": [
+                    "msaa"
+                ],
+                "language": [
+                    "language"
+                ]
             }
-
         },
         "strings": {
-
-      "config_menu": {
-        "title": "Config Menu",
-        "button": "{name}"
-      },
-
-      "loading_menu": {
-        "waiting_title": "Loading/Building Modded Assets Please Wait"
-      },
-
-        "flux_options": {
-            "name": "Flux Options",
-            "msaa": "MSAA {msaa}x",
-            "language": "Language: {language}"
-        }
-
+            "config_menu": {
+                "title": "Config Menu",
+                "button": "{name}"
+            },
+            "main_menu": {
+                "config_menu": "Mod Configs"
+            },
+            "loading_menu": {
+                "waiting_title": "Loading/Building Modded Assets Please Wait",
+                "finished_title": "Asset Loading/Creation Finished",
+                "button": "Continue To Game"
+            },
+            "flux_options": {
+                "name": "Flux Options",
+                "msaa": "MSAA {msaa}x",
+                "language": "Language: {language}"
+            }
         }
     }
 }

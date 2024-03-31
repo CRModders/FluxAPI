@@ -1,5 +1,12 @@
 package dev.crmodders.flux.api.config;
 
+import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.utils.JsonReader;
+import com.badlogic.gdx.utils.JsonValue;
+import com.badlogic.gdx.utils.JsonWriter;
+import com.google.gson.JsonStreamParser;
+import dev.crmodders.flux.tags.Identifier;
 import finalforeach.cosmicreach.io.SaveLocation;
 import org.hjson.JsonObject;
 import org.hjson.Stringify;
@@ -9,96 +16,70 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.List;
 
 public class BasicConfig {
 
-    public static String configDir;
+    public static File ConfigDirectory = new File(SaveLocation.getSaveFolderLocation(), "configs");
 
     static {
-        configDir = SaveLocation.getSaveFolderLocation() + "/configs";
-
-        if (!new File(configDir).exists())
-            new File(configDir).mkdir();
+        if(!ConfigDirectory.exists()) {
+            ConfigDirectory.mkdir();
+        }
     }
 
-    private static Builder makeIfNotExists(String name) {
-        File file = new File(configDir + "\\" + name + ".hjson");
-        return new Builder(file);
+    public static File getConfigLocation(Identifier config) {
+        File location = Path.of(ConfigDirectory.getAbsolutePath(), config.namespace, config.name).toFile();
+        if(!location.exists()) {
+            File parent = location.getParentFile();
+            parent.mkdir();
+        }
+        return location;
     }
 
-    private static BasicConfig find(String name) {
-        File file = new File(configDir + "\\" + name + ".hjson");
-        if (file.exists()) return new BasicConfig(file);
-        return null;
+    private final Identifier id;
+    private final String friendlyName;
+    private JsonValue value;
+
+    public BasicConfig(Identifier id, String friendlyName) {
+        this.id = id;
+        this.friendlyName = friendlyName;
+        this.value = new JsonValue(JsonValue.ValueType.object);
     }
 
-    private final JsonObject value;
-
-    protected BasicConfig(File file) {
-        try {
-            value = JsonObject.readJSON(new FileReader(file)).asObject();
+    public void load() {
+        File file = getConfigLocation(id);
+        if(!file.exists()) {
+            save();
+            return;
+        }
+        try (FileReader reader = new FileReader(file)) {
+            JsonReader json = new JsonReader();
+            value = json.parse(reader);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public <T> T getValue(String key, T _default) {
-        if (value.get(key) != null)
-            return switch (_default.getClass().getName()) {
-                case "Integer" -> (T) Integer.valueOf(value.get(key).asInt());
-                case "Long" -> (T) Long.valueOf(value.get(key).asLong());
-                case "Double" -> (T) Double.valueOf(value.get(key).asDouble());
-                case "Float" -> (T) Float.valueOf(value.get(key).asFloat());
-                case "String" -> (T) String.valueOf(value.get(key).asString());
-                case "Boolean" -> (T) Boolean.valueOf(value.get(key).asBoolean());
-                default -> _default;
-            };
-        return _default;
+    public void save() {
+        try(FileWriter writer = new FileWriter(getConfigLocation(id))) {
+            value.prettyPrint(JsonWriter.OutputType.json, writer);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    public static class Builder {
-
-        private final File file;
-        private final JsonObject jsonObject;
-        private boolean exists;
-
-        private Builder(File file) {
-            this.file = file;
-            this.jsonObject = new JsonObject();
-            this.exists = file.exists();
-        }
-
-        public <T> Builder addOption(String key, T value) {
-            if (exists) return this;
-
-            switch (value.getClass().getName()) {
-                case "Integer": jsonObject.set(key, (Integer) value);
-                case "Long": jsonObject.set(key, (Integer) value);
-                case "Double": jsonObject.set(key, (Integer) value);
-                case "Float": jsonObject.set(key, (Integer) value);
-                case "String": jsonObject.set(key, (Integer) value);
-                case "Boolean": jsonObject.set(key, (Boolean) value);
-                default:
-                    Logger.warn("CANNOT SET KEY \"%s\" WITH TYPE \"%s\"".formatted(key, value.getClass().getName()));
-            }
-            return this;
-        }
-
-        public BasicConfig build() {
-            if (exists) return new BasicConfig(file);
-
-            try {
-                FileWriter f = new FileWriter(file.getAbsolutePath());
-                f.write(jsonObject.toString(Stringify.FORMATTED));
-                f.close();
-                return new BasicConfig(file);
-            } catch (Exception ignore) {
-                Logger.warn("COULD NOT BUILD \""+file+"\"");
-                return null;
-            }
-        }
-
-
+    public Identifier getId() {
+        return id;
     }
 
+    public String getFriendlyName() {
+        return friendlyName;
+    }
+
+    public JsonValue getValue() {
+        return value;
+    }
 }

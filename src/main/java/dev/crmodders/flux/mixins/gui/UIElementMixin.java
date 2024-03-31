@@ -12,9 +12,11 @@ import dev.crmodders.flux.api.renderer.text.TextBatch;
 import dev.crmodders.flux.api.renderer.text.TextBatchBuilder;
 import dev.crmodders.flux.font.Font;
 import dev.crmodders.flux.localization.TranslationKey;
+import dev.crmodders.flux.menus.ConfigViewMenu;
 import finalforeach.cosmicreach.audio.SoundManager;
 import finalforeach.cosmicreach.ui.UIElement;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -93,6 +95,11 @@ public abstract class UIElementMixin implements Component, UIElementInterface {
 
 	@Shadow
 	protected abstract void onMouseUp();
+
+	@Inject(method="show", at=@At("TAIL"))
+	private void onShow(CallbackInfo ci) {
+		dirty = true;
+	}
 
 	@Inject(method = "setText", at = @At("TAIL"))
 	private void onSetText(CallbackInfo ci) {

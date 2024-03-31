@@ -32,8 +32,20 @@ public class TextBoxElement extends UIElement {
     }
 
     @Override
+    public void onCreate() {
+        super.onCreate();
+        onLoadString();
+    }
+
+    @Override
     public void onClick() {
         setActive(true);
+    }
+
+    protected void onLoadString() {
+    }
+
+    protected void onSaveString() {
     }
 
     public void updateText() {
@@ -75,7 +87,9 @@ public class TextBoxElement extends UIElement {
             prev = Gdx.input.getInputProcessor();
             current = this;
             Gdx.input.setInputProcessor(this);
+            onLoadString();
         } else {
+            onSaveString();
             // return input processor, set current to null
             Gdx.input.setInputProcessor(prev);
             prev = null;

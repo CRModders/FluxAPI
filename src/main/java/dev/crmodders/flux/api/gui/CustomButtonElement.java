@@ -11,19 +11,18 @@ public class CustomButtonElement extends ButtonElement {
 
     public CustomButtonElement(ButtonListener listener, TranslationKey textKey) {
         super(listener, textKey);
-        this.text = "";
-        updateText();
+        setText("");
     }
 
     public CustomButtonElement(float x, float y, float w, float h, ButtonListener listener, TranslationKey textKey) {
         super(x, y, w, h, listener, textKey);
-        this.text = "";
-        updateText();
+        setText("");
     }
 
     @Override
     public void setText(String text) {
         this.text = text;
+        updateText();
     }
 
     public String getText() {
@@ -35,7 +34,7 @@ public class CustomButtonElement extends ButtonElement {
         TranslationKey textKey = ((UIElementInterface) this).getTextKey();
         if(textKey != null) {
             TranslationString text = FluxSettings.SelectedLanguage.getTranslatedString(textKey);
-            setText(text.format(text));
+            super.setText(text.format(this.text));
         }
     }
 }

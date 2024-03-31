@@ -4,6 +4,9 @@ import dev.crmodders.flux.api.config.BasicConfig;
 import dev.crmodders.flux.api.gui.CustomButtonElement;
 import dev.crmodders.flux.api.gui.SwitchGameStateButtonElement;
 import dev.crmodders.flux.localization.TranslationKey;
+import dev.crmodders.flux.registry.FluxRegistries;
+import dev.crmodders.flux.registry.registries.AccessableRegistry;
+import dev.crmodders.flux.tags.Identifier;
 import finalforeach.cosmicreach.gamestates.GameState;
 
 import java.awt.*;
@@ -11,7 +14,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
 
-public class ConfigViewMenu extends BasicMainMenu {
+public class ConfigViewMenu extends BasicMenu {
 
     public static final TranslationKey TEXT_TITLE = new TranslationKey("fluxapi:config_menu.title");
     public static final TranslationKey TEXT_BUTTON = new TranslationKey("fluxapi:config_menu.button");
@@ -19,38 +22,24 @@ public class ConfigViewMenu extends BasicMainMenu {
     GameState lastState;
 
     public ConfigViewMenu(GameState lastState) {
-        this.lastState = lastState;
-    }
-
-    @Override
-    public void create() {
-        super.create();
+        super(lastState);
 
         addTextElement(0, -200, 72, TEXT_TITLE);
-        addUIElement(new SwitchGameStateButtonElement(0, -100, 250, 25, () -> lastState));
-        if (!new File(BasicConfig.configDir).exists()) new File(BasicConfig.configDir).mkdirs();
+        addDoneButton();
 
-        int vheight = -65;
-        for (File file : Objects.requireNonNull(new File(BasicConfig.configDir).listFiles())) {
-            if (file.getName().contains(".hjson")) {
+        AccessableRegistry<BasicConfig> configs = (AccessableRegistry<BasicConfig>) FluxRegistries.MOD_CONFIGS;
 
-                CustomButtonElement button = new CustomButtonElement(0, vheight, 250, 25, b -> {
-                    try {
-                        if (System.getProperty("os.name").toLowerCase().contains("windows")) {
-                            String cmd = "rundll32 url.dll,FileProtocolHandler " + file.getCanonicalPath();
-                            Runtime.getRuntime().exec(cmd);
-                        }
-                        else {
-                            Desktop.getDesktop().edit(file);
-                        }
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                }, TEXT_BUTTON);
-                button.setText(file.getName().split("\\.")[0]);
-                vheight += 30;
-            }
+        int vheight = -100;
+        for(Identifier id : configs.getRegisteredNames()) {
+            BasicConfig config = configs.get(id);
+            CustomButtonElement button = new CustomButtonElement(0, vheight, 250, 25, b -> {
+                switchToGameState(new EditConfigMenu(ConfigViewMenu.this, config));
+            }, TEXT_BUTTON);
+            button.setText(config.getFriendlyName());
+            addUIElement(button);
+            vheight += 30;
         }
 
     }
+
 }
