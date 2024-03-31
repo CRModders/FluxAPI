@@ -1,0 +1,154 @@
+plugins {
+    id "application"
+    id "maven-publish"
+}
+
+repositories {
+    ivy {
+        name "Cosmic Reach"
+        url "https://cosmic-archive.netlify.app/"
+        patternLayout {
+            artifact "/Cosmic Reach-[revision].jar"
+        }
+        // This is required in Gradle 6.0+ as metadata file (ivy.xml) is mandatory
+        metadataSources {
+            artifact()
+        }
+
+        content {
+            includeGroup "finalforeach"
+        }
+    }
+
+    maven {
+        name "JitPack"
+        url "https://jitpack.io"
+    }
+    maven {
+        name "Quilt"
+        url "https://maven.quiltmc.org/repository/release"
+    }
+    maven {
+        name "Fabric"
+        url "https://maven.fabricmc.net/"
+    }
+    maven {
+        name "Sponge"
+        url "https://repo.spongepowered.org/maven/"
+    }
+
+    mavenCentral()
+}
+
+
+configurations {
+    cosmicreach // Config to provide the Cosmic Reach project
+    compileOnly.extendsFrom(cosmicreach) // Allows cosmic reach to be used in the codebase
+
+    quiltMod // Config to be able to load Quilt Mods
+    implementation.extendsFrom(quiltMod)
+}
+
+
+dependencies {
+    // Cosmic Reach jar
+    cosmicreach "finalforeach:cosmicreach:${cosmic_reach_version}"
+
+    // Cosmic Quilt
+    implementation "org.codeberg.CRModders:cosmic-quilt:${cosmic_quilt_version}"
+
+
+    implementation("com.google.guava:guava:33.0.0-jre")
+    implementation("com.google.code.gson:gson:2.9.1")
+    implementation("org.hjson:hjson:${hjson_version}")
+
+    implementation("org.tinylog:tinylog:${tiny_logger_version}")
+    implementation("com.github.tobiasrm:tinylog-coloredconsole:${tiny_logger_version}")
+
+    implementation("org.locationtech.jts:jts-core:${jts_core_version}")
+
+    implementation("com.badlogicgames.gdx:gdx-freetype:${gdx_version}") { exclude group: "com.badlogicgames.gdx" }
+    implementation("com.badlogicgames.gdx:gdx-freetype-platform:${gdx_version}:natives-desktop") { exclude group: "com.badlogicgames.gdx" }
+}
+
+processResources {
+    def resourceTargets = [ // Locations of where to inject the properties
+                            "fabric.mod.json"
+    ]
+
+    // Left item is the name in the target, right is the varuable name
+    def replaceProperties = [
+            "mod_version"     : flux_version,
+            "mod_name"        : flux_display_name,
+            "mod_id"          : flux_mod_id,
+            "mod_desc"        : flux_description,
+            "cosmic_reach_version"        : cosmic_reach_version,
+    ]
+
+
+    inputs.properties replaceProperties
+    replaceProperties.put "project", project
+    filesMatching(resourceTargets) {
+        expand replaceProperties
+    }
+}
+
+
+application {
+    // As Quilt is our loader, use its main class at:
+    mainClass = "org.quiltmc.loader.impl.launch.knot.KnotClient"
+}
+
+// Sets up all the Quilt Mods
+def String getQuiltModLocations(Configuration config) {
+    StringBuilder sb = new StringBuilder()
+    for (obj in config.allDependencies) {
+        sb.append(File.pathSeparator + config.files(obj)[0])
+    }
+    return sb.toString()
+}
+
+applicationDefaultJvmArgs = [
+        "-Dloader.skipMcProvider=true", // Stops Quilt from attempting to find mappings, and all the other Minecraft stuff
+        "-Dloader.gameJarPath=" + configurations.cosmicreach.asPath, // Defines path to Cosmic Reach
+        "-Dloader.addMods=" +
+                jar.archiveFile.get().asFile + // Add the jar of this project
+                getQuiltModLocations(configurations.quiltMod) // Adds the jars of any Quilt mods added
+]
+
+run {
+    // To run this project in the game, depend on the creation of jar task
+    dependsOn "jar"
+
+    // Change the run directory
+    File runningDir = new File("run/")
+    if (!runningDir.exists())
+        runningDir.mkdirs()
+    tasks.run.workingDir = runningDir
+}
+
+
+
+java {
+    withSourcesJar()
+    // withJavadocJar() // If docs are included with the project, this line can be un-commented
+
+    // Sets the Java version
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId = flux_maven_group
+            artifactId = flux_mod_id
+
+            from components.java
+        }
+    }
+
+    repositories {
+
+    }
+}
