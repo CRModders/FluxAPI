@@ -12,6 +12,12 @@ public class ResourceLocation extends Identifier {
         this.name = path;
     }
 
+    public static ResourceLocation fromString(String id) {
+        if (!id.contains(":")) id = "base:"+id;
+        String[] splitId = id.split(":");
+        return new ResourceLocation(splitId[0], splitId[1]);
+    }
+
     public FileHandle load(boolean forceReload) {
         return GameAssetLoader.loadAsset(toString(), forceReload);
     }
