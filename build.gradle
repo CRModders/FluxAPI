@@ -52,21 +52,30 @@ configurations {
 
 dependencies {
     // Cosmic Reach jar
-    cosmicreach "finalforeach:cosmicreach:${cosmic_reach_version}"
+    cosmicreach("finalforeach:cosmicreach:${cosmic_reach_version}")
 
     // Cosmic Quilt
-    implementation "org.codeberg.CRModders:cosmic-quilt:${cosmic_quilt_version}"
+    implementation("org.codeberg.CRModders:cosmic-quilt:${cosmic_quilt_version}") {
+        exclude group: "org.quiltmc", module: "quilt-loader" // Exclude the Quilt Loader so we cannot accidentally use it's stuff
+    }
+    // Fabric Loader
+    compileOnly("net.fabricmc:fabric-loader:${fabric_loader_version}") // Include the base Fabric Loader so we can only use classes from that
+    // Quilt Loader
+    runtimeOnly("org.quiltmc:quilt-loader:${quilt_loader_version}")
 
 
+    // Json stuff
     implementation("com.google.guava:guava:33.0.0-jre")
     implementation("com.google.code.gson:gson:2.9.1")
     implementation("org.hjson:hjson:${hjson_version}")
 
+    // Logging
     implementation("org.tinylog:tinylog:${tiny_logger_version}")
     implementation("com.github.tobiasrm:tinylog-coloredconsole:${tiny_logger_version}")
 
     implementation("org.locationtech.jts:jts-core:${jts_core_version}")
 
+    // GDX stuff not included in Cosmic Reach
     implementation("com.badlogicgames.gdx:gdx-freetype:${gdx_version}") { exclude group: "com.badlogicgames.gdx" }
     implementation("com.badlogicgames.gdx:gdx-freetype-platform:${gdx_version}:natives-desktop") { exclude group: "com.badlogicgames.gdx" }
 }
