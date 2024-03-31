@@ -157,7 +157,7 @@ tasks.register("runQuilt") {
         mainClass = "org.quiltmc.loader.impl.launch.knot.KnotClient" // Quilt's main class
     }
 
-    dependsOn run // The base run task
+    finalizedBy run // The base run task
 }
 
 tasks.register("runFabric") {
@@ -196,7 +196,7 @@ tasks.register("runFabric") {
         mainClass = "net.fabricmc.loader.impl.launch.knot.KnotClient" // Fabric's main class
     }
 
-    dependsOn run // The base run task
+    finalizedBy run // The base run task
 }
 
 
