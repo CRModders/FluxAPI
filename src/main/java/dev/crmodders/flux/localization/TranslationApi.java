@@ -7,6 +7,7 @@ import dev.crmodders.flux.api.resource.ResourceLocation;
 import dev.crmodders.flux.registry.FluxRegistries;
 import dev.crmodders.flux.registry.registries.AccessableRegistry;
 import dev.crmodders.flux.tags.Identifier;
+import finalforeach.cosmicreach.GameAssetLoader;
 import finalforeach.cosmicreach.io.SaveLocation;
 import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.ModContainer;
@@ -43,7 +44,10 @@ public class TranslationApi {
                 URI uri = url.toURI();
                 HashMap<String, String> env = new HashMap<String, String>();
                 env.put("create", "true");
-                FileSystem zipfs = FileSystems.newFileSystem(uri, env);
+                FileSystem zipfs = null;
+                try {
+                    zipfs = FileSystems.newFileSystem(uri, env);
+                } catch (Exception ignored) {}
                 Path path = Paths.get(url.toURI());
                 try (Stream<Path> entries = Files.walk(path, 5)) {
                     entries.forEach(p -> {
@@ -54,7 +58,8 @@ public class TranslationApi {
                         }
                     });
                 }
-                zipfs.close();
+                if (zipfs != null)
+                    zipfs.close();
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
