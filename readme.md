@@ -20,5 +20,5 @@ implementation "com.github.tobiasrm:tinylog-coloredconsole:1.3.1"
 implementation "com.badlogicgames.gdx:gdx-freetype:1.12.0" 
 implementation "com.badlogicgames.gdx:gdx-freetype-platform:1.12.0:natives-desktop" 
 
-implementation "dev.crmodders:FluxAPI:0.5.0"
+implementation "dev.crmodders:FluxAPI:0.5.4"
 ```
