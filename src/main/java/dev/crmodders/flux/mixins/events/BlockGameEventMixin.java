@@ -9,7 +9,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(BlockGame.class)
 public class BlockGameEventMixin {
-    @Inject(method = "runTicks", at= @At(value = "INVOKE", target = "Lfinalforeach/cosmicreach/blockevents/ScheduledTrigger;runScheduledTriggers()V", shift = At.Shift.AFTER))
+    @Inject(method = "runTicks", at = @At("TAIL"))
     private void afterGameTick(CallbackInfo ci) {
         GameEvents.AFTER_GAME_IS_TICKED.invoker().onTick();
     }
