@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+
+  "quilt_loader": {
+    "group": "${mod_group}",
+    "id": "${mod_id}",
+    "version": "${mod_version}",
+
+    "intermediate_mappings":"net.fabricmc:intermediary",
+
+    "metadata": {
+      "name": "${mod_name}",
+      "description": "${mod_desc}",
+      "contributors": {
+        "Zombii": "Owner",
+        "nanobass": "Developer",
+        "coolGi": "Developer"
+      }
+    },
+
+    "entrypoints": {
+      "main": "dev.crmodders.flux.FluxAPI"
+    },
+
+    "depends": [
+      {
+        "id": "cosmicquilt",
+        "versions": "*"
+      },
+      {
+        "id": "cosmicreach",
+        "versions": ">=${cosmic_reach_version}"
+      }
+    ]
+  },
+
+  "mixin": "fluxapi.mixins.json"
+}

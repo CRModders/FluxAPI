@@ -104,7 +104,8 @@ dependencies {
 
 processResources {
     def resourceTargets = [ // Locations of where to inject the properties
-                            "fabric.mod.json"
+                            "fabric.mod.json",
+                            "quilt.mod.json"
     ]
 
     // Left item is the name in the target, right is the varuable name
@@ -113,6 +114,7 @@ processResources {
             "mod_name"        : flux_display_name,
             "mod_id"          : flux_mod_id,
             "mod_desc"        : flux_description,
+            "mod_group"       : flux_maven_group,
             "cosmic_reach_version"        : cosmic_reach_version,
     ]
 
