@@ -5,6 +5,7 @@ import finalforeach.cosmicreach.blocks.BlockState;
 import finalforeach.cosmicreach.entities.Player;
 import finalforeach.cosmicreach.world.Zone;
 
+@Deprecated
 public interface IFunctionalBlock extends IModBlock {
 
     default void onInteract(Zone zone, Player player, BlockState blockState, BlockPosition position) {}
