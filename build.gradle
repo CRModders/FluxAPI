@@ -94,9 +94,6 @@ dependencies {
     shadowMe("org.tinylog:tinylog:${tiny_logger_version}")
     shadowMe("com.github.tobiasrm:tinylog-coloredconsole:${tiny_logger_version}")
 
-    // Jts
-    shadowMe("org.locationtech.jts:jts-core:${jts_core_version}")
-
     // GDX stuff not included in Cosmic Reach
     shadowMe("com.badlogicgames.gdx:gdx-freetype:${gdx_version}") { exclude group: "com.badlogicgames.gdx" }
     shadowMe("com.badlogicgames.gdx:gdx-freetype-platform:${gdx_version}:natives-desktop") { exclude group: "com.badlogicgames.gdx" }
