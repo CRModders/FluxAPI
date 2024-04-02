@@ -5,7 +5,6 @@ import finalforeach.cosmicreach.blockevents.BlockEventTrigger;
 import finalforeach.cosmicreach.blocks.BlockPosition;
 import finalforeach.cosmicreach.blocks.BlockState;
 import finalforeach.cosmicreach.world.BlockSelection;
-import finalforeach.cosmicreach.world.World;
 import finalforeach.cosmicreach.world.Zone;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;

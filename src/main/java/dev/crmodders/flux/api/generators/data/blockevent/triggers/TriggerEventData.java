@@ -4,11 +4,9 @@ import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 import dev.crmodders.flux.api.generators.data.DataJson;
 import dev.crmodders.flux.api.suppliers.ReturnableSupplier;
-import dev.crmodders.flux.logging.LogWrapper;
 import dev.crmodders.flux.tags.Identifier;
 import org.hjson.JsonObject;
 import org.hjson.JsonValue;
-import org.pmw.tinylog.Logger;
 
 import java.lang.reflect.Type;
 import java.util.HashMap;

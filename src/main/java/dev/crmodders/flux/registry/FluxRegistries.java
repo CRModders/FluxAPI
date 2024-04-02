@@ -1,9 +1,8 @@
 package dev.crmodders.flux.registry;
 
 import dev.crmodders.flux.api.block.IModBlock;
-import dev.crmodders.flux.api.generators.FactoryFinalizer;
 import dev.crmodders.flux.api.config.BasicConfig;
-import dev.crmodders.flux.api.generators.BlockGenerator;
+import dev.crmodders.flux.api.generators.FactoryFinalizer;
 import dev.crmodders.flux.api.generators.data.blockevent.BlockEventDataExt;
 import dev.crmodders.flux.api.resource.ResourceObject;
 import dev.crmodders.flux.localization.Language;

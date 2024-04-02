@@ -2,13 +2,10 @@ package dev.crmodders.flux.api.generators;
 
 import dev.crmodders.flux.api.block.IModBlock;
 import dev.crmodders.flux.api.generators.data.blockevent.BlockEventDataExt;
-import dev.crmodders.flux.api.generators.data.blockevent.BlockEventType;
 import dev.crmodders.flux.api.generators.data.blockstate.BlockStateData;
 import dev.crmodders.flux.registry.FluxRegistries;
 import dev.crmodders.flux.tags.Identifier;
 import org.hjson.JsonObject;
-
-import java.util.HashMap;
 
 public class BlockStateGenerator {
 

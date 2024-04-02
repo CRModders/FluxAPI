@@ -1,6 +1,5 @@
 package dev.crmodders.flux.mixins.gui;
 
-import dev.crmodders.flux.api.gui.interfaces.UIElementInterface;
 import dev.crmodders.flux.api.renderer.UIRenderer;
 import finalforeach.cosmicreach.ui.UITextInput;
 import org.spongepowered.asm.mixin.Mixin;

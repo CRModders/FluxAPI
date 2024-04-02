@@ -1,17 +1,8 @@
 package dev.crmodders.flux.api.gui;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.InputProcessor;
-import dev.crmodders.flux.FluxSettings;
 import dev.crmodders.flux.api.gui.interfaces.UIElementInterface;
 import dev.crmodders.flux.localization.TranslationKey;
-import dev.crmodders.flux.localization.TranslationString;
-import dev.crmodders.flux.util.text.TextEditor;
-import finalforeach.cosmicreach.gamestates.WorldCreationMenu;
-import finalforeach.cosmicreach.ui.UIElement;
 import finalforeach.cosmicreach.ui.UITextInput;
-import finalforeach.cosmicreach.world.World;
 
 public class TextBoxElement extends UITextInput {
 

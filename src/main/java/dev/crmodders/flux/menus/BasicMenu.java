@@ -5,16 +5,12 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.utils.ScreenUtils;
 import dev.crmodders.flux.FluxConstants;
 import dev.crmodders.flux.api.gui.ButtonElement;
-import dev.crmodders.flux.api.gui.SwitchGameStateButtonElement;
 import dev.crmodders.flux.api.gui.TextElement;
 import dev.crmodders.flux.api.gui.interfaces.UIElementInterface;
 import dev.crmodders.flux.localization.TranslationKey;
 import finalforeach.cosmicreach.gamestates.GameState;
-import finalforeach.cosmicreach.gamestates.OptionsMenu;
 import finalforeach.cosmicreach.ui.UIElement;
 import finalforeach.cosmicreach.ui.VerticalAnchor;
-
-import java.awt.*;
 
 public class BasicMenu extends GameState {
 	protected GameState previousState;

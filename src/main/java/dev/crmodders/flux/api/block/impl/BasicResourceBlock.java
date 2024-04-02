@@ -2,7 +2,6 @@ package dev.crmodders.flux.api.block.impl;
 
 import dev.crmodders.flux.api.block.IModBlock;
 import dev.crmodders.flux.api.generators.BlockGenerator;
-import dev.crmodders.flux.api.generators.data.blockevent.BlockEventType;
 import dev.crmodders.flux.api.resource.ResourceLocation;
 import dev.crmodders.flux.tags.Identifier;
 import finalforeach.cosmicreach.blocks.BlockPosition;

@@ -1,10 +1,7 @@
 package dev.crmodders.flux;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.files.FileHandle;
 import dev.crmodders.flux.api.resource.ResourceLocation;
 import dev.crmodders.flux.localization.TranslationKey;
-import finalforeach.cosmicreach.io.SaveLocation;
 
 public class FluxConstants {
     public static boolean GameHasLoaded;

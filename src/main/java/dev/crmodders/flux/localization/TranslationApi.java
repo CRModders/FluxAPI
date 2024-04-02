@@ -7,7 +7,6 @@ import dev.crmodders.flux.api.resource.ResourceLocation;
 import dev.crmodders.flux.registry.FluxRegistries;
 import dev.crmodders.flux.registry.registries.AccessableRegistry;
 import dev.crmodders.flux.tags.Identifier;
-import finalforeach.cosmicreach.GameAssetLoader;
 import finalforeach.cosmicreach.io.SaveLocation;
 import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.ModContainer;
