@@ -42,11 +42,11 @@ public abstract class GameStateMixin implements GameStateInterface {
 	private void drawCustomUIElements(CallbackInfo ci) {
 
 		for (UIElement uiElement : uiElements) {
-			((UIElementInterface) uiElement).update(uiViewport, this.mouse.x, this.mouse.y);
 			Component component = (Component) uiElement;
 			if (component.isDirty()) {
 				component.paint(UIRenderer.uiRenderer);
 			}
+			((UIElementInterface) uiElement).update(uiViewport, this.mouse.x, this.mouse.y);
 			component.draw(UIRenderer.uiRenderer, uiViewport);
 		}
 		ci.cancel();
