@@ -66,7 +66,7 @@ abstract public class MainMenuMixin extends GameState {
 		return x;
 	}
 
-	@ModifyVariable(method = "render", at = @At("STORE"), ordinal = 1)
+	@ModifyVariable(method = "render", at = @At("STORE"), ordinal = 2)
 	private String controller(String x) {
 		String controller = TEXT_CONTROLLER.getTranslated().string();
 		String controllers = TEXT_CONTROLLERS.getTranslated().string();;
