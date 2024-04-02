@@ -1,8 +1,10 @@
 package dev.crmodders.flux.menus;
 
+import dev.crmodders.flux.FluxConstants;
 import dev.crmodders.flux.api.config.BasicConfig;
 import dev.crmodders.flux.api.gui.CustomButtonElement;
 import dev.crmodders.flux.api.gui.SwitchGameStateButtonElement;
+import dev.crmodders.flux.api.gui.TextBoxElement;
 import dev.crmodders.flux.localization.TranslationKey;
 import dev.crmodders.flux.registry.FluxRegistries;
 import dev.crmodders.flux.registry.registries.AccessableRegistry;

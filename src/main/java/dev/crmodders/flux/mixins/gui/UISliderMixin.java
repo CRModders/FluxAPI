@@ -56,7 +56,7 @@ public abstract class UISliderMixin extends UIElementMixin {
 		float x = this.getDisplayX(viewport);
 		float y = this.getDisplayY(viewport);
 		if(borderEnabled) {
-			renderer.drawBatch(hoveredOver ? highlighted : background, x, y);
+			renderer.drawBatch(background, x, y);
 		}
 
 		float ratio = (this.currentValue - this.min) / (this.max - this.min);

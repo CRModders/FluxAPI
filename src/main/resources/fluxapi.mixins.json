@@ -19,6 +19,7 @@
     "gui.OptionsMenuMixin",
     "gui.UIElementMixin",
     "gui.UISliderMixin",
+    "gui.UITextInputMixin",
     "localization.InGameMixin",
     "localization.KeybindsMenuMixin",
     "localization.LoadingGameMixin",

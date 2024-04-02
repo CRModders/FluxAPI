@@ -44,6 +44,10 @@ public interface UIElementInterface {
 
 	float getAutomaticSizePadding();
 
+	void setStyleEnabled(boolean on);
+
+	boolean isStyleEnabled();
+
 	TranslationKey getTextKey();
 
 	void setTextKey(TranslationKey textKey);

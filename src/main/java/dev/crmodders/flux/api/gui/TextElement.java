@@ -4,6 +4,7 @@ import dev.crmodders.flux.FluxSettings;
 import dev.crmodders.flux.api.gui.interfaces.UIElementInterface;
 import dev.crmodders.flux.localization.TranslationKey;
 import dev.crmodders.flux.localization.TranslationString;
+import finalforeach.cosmicreach.gamestates.WorldCreationMenu;
 import finalforeach.cosmicreach.ui.UIElement;
 
 public class TextElement extends UIElement {

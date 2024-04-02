@@ -109,7 +109,7 @@ public class UIRenderer {
 
 	public TextBatch createStyledText(Font font, float fontSize, String string) {
 		TextBatchBuilder builder = buildText(font, fontSize);
-		StyleStringParser.parse(builder, string);
+		StyleStringParser.parse(builder, string, true);
 		return builder.build();
 	}
 

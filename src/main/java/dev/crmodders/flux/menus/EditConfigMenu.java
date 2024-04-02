@@ -23,19 +23,6 @@ public class EditConfigMenu extends LayoutMenu {
         config.save();
     }
 
-    private void addTextField(String key) {
-        System.out.println(key);
-        addUIElement(new TextBoxElement(TEXT_EMPTY) {
-            @Override
-            protected void onLoadString() {
-            }
-
-            @Override
-            protected void onSaveString() {
-            }
-        });
-    }
-
     @Override
     protected void onCancel() {
         config.load();
