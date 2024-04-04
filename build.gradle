@@ -105,13 +105,13 @@ processResources {
                             "quilt.mod.json"
     ]
 
-    // Left item is the name in the target, right is the varuable name
+    // Left item is the name in the target, right is the variable name
     def replaceProperties = [
-            "mod_version"     : flux_version,
-            "mod_name"        : flux_display_name,
-            "mod_id"          : flux_mod_id,
-            "mod_desc"        : flux_description,
-            "mod_group"       : flux_maven_group,
+            "mod_version"     : project.version,
+            "mod_name"        : project.name,
+            "mod_id"          : id,
+            "mod_desc"        : description,
+            "mod_group"       : project.group,
             "cosmic_reach_version"        : cosmic_reach_version,
     ]
 
@@ -211,10 +211,6 @@ java {
 publishing {
     publications {
         maven(MavenPublication) {
-            groupId = flux_maven_group
-            artifactId = flux_mod_id
-            version = flux_version
-
             from components.java
         }
     }
