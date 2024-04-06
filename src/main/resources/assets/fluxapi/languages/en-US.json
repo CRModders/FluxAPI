@@ -178,7 +178,7 @@
             },
             "debug_menu": {
                 "fps": "FPS: %s",
-                "position": "Position: %s, %s, %s",
+                "position": "Position: %%3X: %s%%f, %%4Y: %s%%f, %%2Z: %s%%f",
                 "chunk_title": "Chunk:",
                 "current_chunk": "Current Chunk:",
                 "looking_at": "Looking at: %s",
