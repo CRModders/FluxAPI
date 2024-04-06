@@ -10,30 +10,13 @@ import dev.crmodders.flux.api.renderer.text.TextBatchBuilder;
 import dev.crmodders.flux.localization.TranslationKey;
 import finalforeach.cosmicreach.ui.UIElement;
 
-public class BaseSlider extends BaseElement {
+public class BaseSlider extends BaseText {
 
     protected float value;
     protected float min, max;
-
-    public String font = UIRenderer.DEFAULT_FONT;
-    public float fontSize = 18f;
-
-    public boolean soundEnabled = true;
-    public boolean backgroundEnabled = true;
-    public float borderThickness = 1f;
-    public boolean automaticSize = false;
-    public float automaticSizePadding = 16f;
-
-
-    public String text = "Slider";
-    public TranslationKey translation;
-
-
-    protected ShapeBatch background;
     protected ShapeBatch regular;
     protected ShapeBatch highlighted;
     protected ShapeBatch clicked;
-    protected TextBatch foreground;
     protected ShapeBatch knob;
 
     public BaseSlider(float min, float max) {
@@ -43,14 +26,11 @@ public class BaseSlider extends BaseElement {
     }
 
     public String updateTranslation(TranslationKey key) {
-        return key.getTranslated().format(String.valueOf(value));
-    }
-
-    public void updateText() {
-        if(translation != null) {
-            this.text = updateTranslation(translation);
+        if(key == null) {
+            return String.valueOf(value);
+        } else {
+            return key.getTranslated().format(String.valueOf(value));
         }
-        repaint();
     }
 
     public float validate(float value) {
@@ -66,25 +46,8 @@ public class BaseSlider extends BaseElement {
     @Override
     public void paint(UIRenderer renderer) {
         super.paint(renderer);
-        TextBatchBuilder foreground = renderer.buildText();
-        foreground.font(UIRenderer.font);
-        foreground.fontSize(fontSize);
-        foreground.color(Color.WHITE);
-        foreground.style(text, true);
-        this.foreground = foreground.build();
 
-        if(automaticSize) {
-            this.width = this.foreground.width() + automaticSizePadding;
-            this.height = this.foreground.height() + automaticSizePadding;
-        }
-
-        ShapeBatchBuilder regular = renderer.buildShape();
-        regular.color(Color.BLACK);
-        regular.fillRect(0, 0, width, height);
-        regular.color(Color.GRAY);
-        regular.lineThickness(borderThickness);
-        regular.drawRect(0, 0, width, height);
-        this.regular = regular.build();
+        this.regular = super.background;
 
         ShapeBatchBuilder highlighted = renderer.buildShape();
         highlighted.color(Color.BLACK);
@@ -102,6 +65,8 @@ public class BaseSlider extends BaseElement {
         clicked.drawRect(0, 0, width, height);
         this.clicked = clicked.build();
 
+        this.background = this.regular;
+
         ShapeBatchBuilder knob = renderer.buildShape();
         knob.color(Color.BLACK);
         knob.fillRect(0, 0, 10.0f, this.height + 8.0f);
@@ -109,12 +74,10 @@ public class BaseSlider extends BaseElement {
         knob.drawRect(0, 0, 10.0f, this.height + 8.0f);
         this.knob = knob.build();
 
-        this.background = this.regular;
     }
 
     @Override
     public void draw(UIRenderer renderer, Viewport viewport) {
-        super.draw(renderer, viewport);
         if (!this.visible) {
             return;
         }

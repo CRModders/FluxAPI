@@ -21,7 +21,7 @@ public class BaseText extends BaseElement{
     public float automaticSizePadding = 16f;
 
 
-    public String text = "Text";
+    public String text = "";
     public TranslationKey translation;
 
 
@@ -29,13 +29,15 @@ public class BaseText extends BaseElement{
     protected TextBatch foreground;
 
     public String updateTranslation(TranslationKey key) {
-        return key.getTranslated().string();
+        if(key == null) {
+            return text;
+        } else {
+            return key.getTranslated().string();
+        }
     }
 
     public void updateText() {
-        if(translation != null) {
-            this.text = updateTranslation(translation);
-        }
+        this.text = updateTranslation(translation);
         repaint();
     }
 

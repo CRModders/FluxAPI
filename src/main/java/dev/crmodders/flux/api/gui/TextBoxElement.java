@@ -1,15 +1,17 @@
 package dev.crmodders.flux.api.gui;
 
 import dev.crmodders.flux.api.gui.base.BaseText;
+import dev.crmodders.flux.api.gui.base.BaseTextInput;
 
-public class TextBoxElement extends BaseText {
+public class TextBoxElement extends BaseTextInput {
 
-    protected String defaultText;
-
-    public TextBoxElement(String defaultText) {
-        this.defaultText = defaultText;
+    public void setContent(String content) {
+        super.editor.setText(content);
     }
 
+    public String getContent() {
+        return super.editor.toString();
+    }
 
 
 }

@@ -60,14 +60,17 @@ public class TextEditor implements CharSequence {
 		return false;
 	}
 
-	public boolean append(char c) {
-		switch (c) {
-		case 8:
-			return backspace();
-		default:
-			return type(c);
-		}
+	public void setText(String text) {
+		clear();
+		builder.append(text);
 	}
+
+	public boolean append(char c) {
+        if (c == 8) {
+            return backspace();
+        }
+        return type(c);
+    }
 
 	@Override
 	public int length() {
