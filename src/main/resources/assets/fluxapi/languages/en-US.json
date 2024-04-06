@@ -175,6 +175,29 @@
                     "News: Players claim to feel watched...",
                     "Creating Black Holes..."
                 ]
+            },
+            "debug_menu": {
+                "fps": "FPS: %s",
+                "position": "Position: %s, %s, %s",
+                "chunk_title": "Chunk:",
+                "current_chunk": "Current Chunk:",
+                "looking_at": "Looking at: %s",
+                "lighting_title": "Lighting:",
+                "sky_lighting": "SkyLight: %s",
+                "block_lighting_title": "BlockLighting:",
+                "block_light_red": "Red: %s",
+                "block_light_green": "Green: %s",
+                "block_light_blue": "Blue: %s",
+                "runtime": "Cosmic Reach version: %s",
+                "memory_usage": "Memory Usage:",
+                "java_heap": "Java Heap: %s",
+                "native_heap": "Native Heap: %s",
+                "layer_type": "LayerType: %s",
+                "palette_size": "Palette Size: %s",
+                "regions_loaded": "Regions loaded: %s",
+                "chunks_loaded": "Chunks loaded: %s",
+                "world_seed": "World Seed: %s",
+                "zone_seed": "Zone Seed: %s"
             }
         }
     },

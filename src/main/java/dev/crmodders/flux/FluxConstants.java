@@ -24,5 +24,4 @@ public class FluxConstants {
     public static final TranslationKey TextReturnToGame = new TranslationKey("base:menu.return_to_game");
 
 
-
 }
