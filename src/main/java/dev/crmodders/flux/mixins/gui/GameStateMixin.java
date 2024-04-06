@@ -5,7 +5,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import dev.crmodders.flux.api.gui.interfaces.GameStateInterface;
-import dev.crmodders.flux.api.gui.interfaces.UIElementInterface;
 import dev.crmodders.flux.api.renderer.UIRenderer;
 import dev.crmodders.flux.api.renderer.interfaces.Component;
 import finalforeach.cosmicreach.gamestates.GameState;
@@ -16,6 +15,9 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Mixin(GameState.class)
 public abstract class GameStateMixin implements GameStateInterface {
 
@@ -24,9 +26,8 @@ public abstract class GameStateMixin implements GameStateInterface {
 	@Shadow
 	protected OrthographicCamera uiCamera;
 	@Shadow
-	public Array<UIElement> uiElements;
-	@Shadow
 	Vector2 mouse;
+	private List<Component> components = new ArrayList<>();
 
 	@Override
 	public Viewport getViewport() {
@@ -38,18 +39,20 @@ public abstract class GameStateMixin implements GameStateInterface {
 		return uiCamera;
 	}
 
-	@Inject(method = "drawUIElements", at = @At(value = "INVOKE", target = "Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;setProjectionMatrix(Lcom/badlogic/gdx/math/Matrix4;)V"), cancellable = true)
-	private void drawCustomUIElements(CallbackInfo ci) {
+	@Override
+	public List<Component> getComponents() {
+		return components;
+	}
 
-		for (UIElement uiElement : uiElements) {
-			Component component = (Component) uiElement;
+	@Inject(method = "drawUIElements", at = @At(value = "INVOKE", target = "Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;setProjectionMatrix(Lcom/badlogic/gdx/math/Matrix4;)V"))
+	private void drawCustomUIElements(CallbackInfo ci) {
+		for (Component component : components) {
+			component.update(UIRenderer.uiRenderer, uiViewport, mouse);
 			if (component.isDirty()) {
 				component.paint(UIRenderer.uiRenderer);
 			}
-			((UIElementInterface) uiElement).update(uiViewport, this.mouse.x, this.mouse.y);
 			component.draw(UIRenderer.uiRenderer, uiViewport);
 		}
-		ci.cancel();
 	}
 
 }

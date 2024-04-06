@@ -1,38 +1,27 @@
 package dev.crmodders.flux.api.gui;
 
-import dev.crmodders.flux.FluxSettings;
-import dev.crmodders.flux.api.gui.interfaces.UIElementInterface;
+import dev.crmodders.flux.api.gui.base.BaseButton;
 import dev.crmodders.flux.api.settings.LocaleSetting;
 import dev.crmodders.flux.localization.TranslationKey;
-import dev.crmodders.flux.localization.TranslationString;
-import finalforeach.cosmicreach.ui.UIElement;
 
 import java.util.List;
 import java.util.Locale;
 
-public class LanguageSelectorElement extends UIElement {
+public class LanguageSelectorElement extends BaseButton {
 
 	private final LocaleSetting setting;
 	private final List<Locale> languages;
 	private int selected;
 
-	public LanguageSelectorElement(LocaleSetting setting, List<Locale> languages, TranslationKey textKey) {
-		this(0, 0, 0, 0, setting, languages, textKey);
-	}
-
-	public LanguageSelectorElement(float x, float y, float w, float h, LocaleSetting setting, List<Locale> languages, TranslationKey textKey) {
-		super(x, y, w, h, false);
-		((UIElementInterface) this).setTextKey(textKey);
-		this.languages = languages;
-		this.selected = this.languages.indexOf(setting.getValue());
+	public LanguageSelectorElement(LocaleSetting setting, List<Locale> languages) {
 		this.setting = setting;
-		onCreate();
-		updateText();
+		this.languages = languages;
+		this.selected = languages.indexOf(setting.getValue());
 	}
 
 	@Override
-	public void onClick() {
-		super.onClick();
+	public void onMouseReleased() {
+		super.onMouseReleased();
 		selected++;
 		selected %= languages.size();
 		setting.setValue(languages.get(selected));
@@ -40,22 +29,24 @@ public class LanguageSelectorElement extends UIElement {
 		updateText();
 	}
 
-	public Locale getSelected() {
-		return this.languages.get(this.selected);
+	@Override
+	public String updateTranslation(TranslationKey key) {
+		Locale selected = getSelected();
+		if(key == null) {
+			return selected.getDisplayName();
+		} else {
+			return key.getTranslated().format(selected.getDisplayName());
+		}
 	}
 
 	public void updateLocale(Locale locale) {
 	}
+	public Locale getSelected() {
+		return this.languages.get(this.selected);
+	}
 
-	@Override
-	public void updateText() {
-		super.updateText();
-		Locale selected = getSelected();
-		TranslationKey textKey = ((UIElementInterface) this).getTextKey();
-		if (textKey != null) {
-			TranslationString text = FluxSettings.SelectedLanguage.getTranslatedString(textKey);
-			setText(text.format(selected.getDisplayName()));
-		}
+	public void setSelected(Locale locale) {
+		this.selected = languages.indexOf(locale);
 	}
 
 }

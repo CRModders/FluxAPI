@@ -1,6 +1,9 @@
 package dev.crmodders.flux.menus;
 
+import dev.crmodders.flux.FluxConstants;
 import dev.crmodders.flux.FluxSettings;
+import dev.crmodders.flux.api.gui.FloatSliderElement;
+import dev.crmodders.flux.api.gui.IntSliderElement;
 import dev.crmodders.flux.api.gui.LanguageSelectorElement;
 import dev.crmodders.flux.api.gui.SteppedIntSliderElement;
 import dev.crmodders.flux.localization.TranslationApi;
@@ -18,17 +21,21 @@ public class FluxOptionMenu extends LayoutMenu {
 	public FluxOptionMenu(GameState previousState) {
 		super(previousState);
 
-		SteppedIntSliderElement msaa = new SteppedIntSliderElement(0, 16, MSAA_STEPS, FluxSettings.AntiAliasing, TEXT_MSAA);
-		addUIElement(msaa);
+		SteppedIntSliderElement msaa = new SteppedIntSliderElement(MSAA_STEPS, FluxSettings.AntiAliasing);
+		msaa.translation = TEXT_MSAA;
+		msaa.updateText();
+		addFluxElement(msaa);
 
-		LanguageSelectorElement locale = new LanguageSelectorElement(FluxSettings.LanguageSetting, TranslationApi.getLanguages(), TEXT_LANGUAGE) {
+		LanguageSelectorElement locale = new LanguageSelectorElement(FluxSettings.LanguageSetting, TranslationApi.getLanguages()) {
 			@Override
 			public void updateLocale(Locale locale) {
 				super.updateLocale(locale);
 				TranslationApi.setLanguage(locale);
 			}
 		};
-		addUIElement(locale);
+		locale.translation = TEXT_LANGUAGE;
+		locale.updateText();
+		addFluxElement(locale);
 
 		setLayoutEnabled(false);
 		addDoneButton();
