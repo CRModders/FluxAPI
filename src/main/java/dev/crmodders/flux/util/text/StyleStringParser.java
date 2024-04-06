@@ -28,15 +28,20 @@ public class StyleStringParser {
 		colors.put('f', new Color(1.0f, 1.0f, 1.0f, 1.0f));
 	}
 
-	public static void parse(TextBatchBuilder batch, String text) {
+	public static void parse(TextBatchBuilder batch, String text, boolean removeStyleChars) {
 		for (int i = 0; i < text.length(); i++) {
-			if (text.charAt(i) == '%' && i + 1 < text.length()) {
+			char curr = text.charAt(i);
+			if (curr == '%' && i + 1 < text.length()) {
 
 				char next = text.charAt(i + 1);
 				if (next == '%') {
-					batch.append('%');
+					//batch.append('%');
 					i++;
 					continue;
+				}
+				if(!removeStyleChars) {
+					//batch.append(curr);
+					//batch.append(next);
 				}
 				if (next == 'U') {
 					batch.underline(true);
@@ -81,6 +86,9 @@ public class StyleStringParser {
 				if (next == '#' && i + 8 < text.length()) {
 					try {
 						String hex = text.substring(i + 2, i + 8);
+						if(!removeStyleChars) {
+							//batch.append(hex);
+						}
 						float r = Integer.parseInt(hex.substring(0, 2), 16) / 255f;
 						float g = Integer.parseInt(hex.substring(2, 4), 16) / 255f;
 						float b = Integer.parseInt(hex.substring(4, 6), 16) / 255f;
@@ -96,6 +104,7 @@ public class StyleStringParser {
 					i++;
 					continue;
 				}
+
 			}
 			batch.append(text.charAt(i));
 		}

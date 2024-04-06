@@ -1,9 +1,6 @@
 package dev.crmodders.flux.menus;
 
-import com.badlogic.gdx.utils.Array;
-import dev.crmodders.flux.api.gui.SwitchGameStateButtonElement;
 import dev.crmodders.flux.localization.TranslationKey;
-import finalforeach.cosmicreach.gamestates.MainMenu;
 
 public class AssetLoadingMenu extends BasicMenu {
 

@@ -37,4 +37,12 @@ public class TextLine {
 		return height;
 	}
 
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		for(StyleBatch batch : batches) {
+			sb.append(batch.chars);
+		}
+		return sb.toString();
+	}
 }

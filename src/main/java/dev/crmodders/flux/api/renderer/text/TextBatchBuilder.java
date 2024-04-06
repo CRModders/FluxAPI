@@ -75,7 +75,11 @@ public class TextBatchBuilder implements BatchBuilder {
 	}
 
 	public void style(String style) {
-		StyleStringParser.parse(this, style);
+		StyleStringParser.parse(this, style, true);
+	}
+
+	public void style(String style, boolean removeStyleChars) {
+		StyleStringParser.parse(this, style, removeStyleChars);
 	}
 
 	public void append(CharSequence seq) {

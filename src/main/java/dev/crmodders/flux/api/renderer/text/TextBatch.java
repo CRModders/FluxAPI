@@ -43,4 +43,12 @@ public class TextBatch implements Batch {
 		return height;
 	}
 
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		for(TextLine line : lines) {
+			sb.append(line.toString()).append('\n');
+		}
+		return sb.toString();
+	}
 }

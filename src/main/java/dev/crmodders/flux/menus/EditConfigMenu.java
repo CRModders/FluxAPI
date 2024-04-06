@@ -1,9 +1,6 @@
 package dev.crmodders.flux.menus;
 
-import com.badlogic.gdx.files.FileHandle;
-import com.badlogic.gdx.utils.JsonValue;
 import dev.crmodders.flux.api.config.BasicConfig;
-import dev.crmodders.flux.api.gui.TextBoxElement;
 import dev.crmodders.flux.localization.TranslationKey;
 import finalforeach.cosmicreach.gamestates.GameState;
 
@@ -21,19 +18,6 @@ public class EditConfigMenu extends LayoutMenu {
         addCancelButton();
         addSaveButton();
         config.save();
-    }
-
-    private void addTextField(String key) {
-        System.out.println(key);
-        addUIElement(new TextBoxElement(TEXT_EMPTY) {
-            @Override
-            protected void onLoadString() {
-            }
-
-            @Override
-            protected void onSaveString() {
-            }
-        });
     }
 
     @Override

@@ -12,11 +12,9 @@ import dev.crmodders.flux.api.renderer.text.TextBatch;
 import dev.crmodders.flux.api.renderer.text.TextBatchBuilder;
 import dev.crmodders.flux.font.Font;
 import dev.crmodders.flux.localization.TranslationKey;
-import dev.crmodders.flux.menus.ConfigViewMenu;
 import finalforeach.cosmicreach.audio.SoundManager;
 import finalforeach.cosmicreach.ui.UIElement;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -54,6 +52,7 @@ public abstract class UIElementMixin implements Component, UIElementInterface {
 	protected float borderThickness = 1f;
 	protected boolean automaticSize = false;
 	protected float automaticSizePadding = 16f;
+	protected boolean styleEnabled;
 	protected TranslationKey textKey;
 
 	protected ShapeBatch background;
@@ -102,7 +101,7 @@ public abstract class UIElementMixin implements Component, UIElementInterface {
 	}
 
 	@Inject(method = "setText", at = @At("TAIL"))
-	private void onSetText(CallbackInfo ci) {
+	private void onSetText(String text, CallbackInfo ci) {
 		dirty = true;
 	}
 
@@ -156,6 +155,68 @@ public abstract class UIElementMixin implements Component, UIElementInterface {
 
 		}
 	}
+
+
+
+	@Override
+	public void paint(UIRenderer renderer) {
+		TextBatchBuilder foreground = renderer.buildText();
+		foreground.font(font);
+		foreground.fontSize(fontSize);
+		foreground.color(Color.WHITE);
+		foreground.style(text, styleEnabled);
+		this.foreground = foreground.build();
+
+		if(automaticSize) {
+			this.w = this.foreground.width() + automaticSizePadding;
+			this.h = this.foreground.height() + automaticSizePadding;
+		}
+
+		ShapeBatchBuilder regular = renderer.buildShape();
+		regular.color(Color.BLACK);
+		regular.fillRect(0, 0, w, h);
+		regular.color(Color.GRAY);
+		regular.lineThickness(borderThickness);
+		regular.drawRect(0, 0, w, h);
+		this.regular = regular.build();
+
+		ShapeBatchBuilder highlighted = renderer.buildShape();
+		highlighted.color(Color.BLACK);
+		highlighted.fillRect(0, 0, w, h);
+		highlighted.color(Color.WHITE);
+		highlighted.lineThickness(borderThickness);
+		highlighted.drawRect(0, 0, w, h);
+		this.highlighted = highlighted.build();
+
+		ShapeBatchBuilder clicked = renderer.buildShape();
+		clicked.color(Color.GRAY);
+		clicked.fillRect(0, 0, w, h);
+		clicked.color(Color.WHITE);
+		clicked.lineThickness(borderThickness);
+		clicked.drawRect(0, 0, w, h);
+		this.clicked = clicked.build();
+	}
+
+	@Override
+	public void draw(UIRenderer renderer, Viewport viewport) {
+		if (!this.shown) {
+			return;
+		}
+		float x = this.getDisplayX(viewport);
+		float y = this.getDisplayY(viewport);
+		if(borderEnabled) {
+			renderer.drawBatch(background, x, y);
+		}
+		renderer.drawBatch(foreground, x + (w - foreground.width()) / 2f, y + (h - foreground.height()) / 2f);
+	}
+
+	@Override
+	public boolean isDirty() {
+		return dirty;
+	}
+
+
+
 
 	@Override
 	public void setFontSize(float fontSize) {
@@ -238,6 +299,16 @@ public abstract class UIElementMixin implements Component, UIElementInterface {
 	}
 
 	@Override
+	public void setStyleEnabled(boolean styleEnabled) {
+		this.styleEnabled = styleEnabled;
+	}
+
+	@Override
+	public boolean isStyleEnabled() {
+		return styleEnabled;
+	}
+
+	@Override
 	public void setTextKey(TranslationKey textKey) {
 		this.textKey = textKey;
 	}
@@ -245,63 +316,6 @@ public abstract class UIElementMixin implements Component, UIElementInterface {
 	@Override
 	public TranslationKey getTextKey() {
 		return textKey;
-	}
-
-	@Override
-	public void paint(UIRenderer renderer) {
-		TextBatchBuilder foreground = renderer.buildText();
-		foreground.font(font);
-		foreground.fontSize(fontSize);
-		foreground.color(Color.WHITE);
-		foreground.style(text);
-		this.foreground = foreground.build();
-
-		if(automaticSize) {
-			this.w = this.foreground.width() + automaticSizePadding;
-			this.h = this.foreground.height() + automaticSizePadding;
-		}
-
-		ShapeBatchBuilder regular = renderer.buildShape();
-		regular.color(Color.BLACK);
-		regular.fillRect(0, 0, w, h);
-		regular.color(Color.GRAY);
-		regular.lineThickness(borderThickness);
-		regular.drawRect(0, 0, w, h);
-		this.regular = regular.build();
-
-		ShapeBatchBuilder highlighted = renderer.buildShape();
-		highlighted.color(Color.BLACK);
-		highlighted.fillRect(0, 0, w, h);
-		highlighted.color(Color.WHITE);
-		highlighted.lineThickness(borderThickness);
-		highlighted.drawRect(0, 0, w, h);
-		this.highlighted = highlighted.build();
-
-		ShapeBatchBuilder clicked = renderer.buildShape();
-		clicked.color(Color.GRAY);
-		clicked.fillRect(0, 0, w, h);
-		clicked.color(Color.WHITE);
-		clicked.lineThickness(borderThickness);
-		clicked.drawRect(0, 0, w, h);
-		this.clicked = clicked.build();
-	}
-
-	@Override
-	public void draw(UIRenderer renderer, Viewport viewport) {
-		if (!this.shown) {
-			return;
-		}
-		float x = this.getDisplayX(viewport);
-		float y = this.getDisplayY(viewport);
-		if(borderEnabled) {
-			renderer.drawBatch(background, x, y);
-		}
-		renderer.drawBatch(foreground, x + (w - foreground.width()) / 2f, y + (h - foreground.height()) / 2f);
-	}
-
-	@Override
-	public boolean isDirty() {
-		return dirty;
 	}
 
 }
