@@ -211,6 +211,7 @@ java {
 publishing {
     publications {
         maven(MavenPublication) {
+            groupId = group
             //DO NOT REMOVE; THIS IS NEEDED FOR JITPACK
             artifactId = id
             
