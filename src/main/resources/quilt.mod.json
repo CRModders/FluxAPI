@@ -15,6 +15,11 @@
         "Zombii": "Owner",
         "nanobass": "Developer",
         "coolGi": "Developer"
+      },
+
+      "contact": {
+        "issues": "https://github.com/CRModders/FluxAPI/issues",
+        "sources": "https://github.com/CRModders/FluxAPI"
       }
     },
 

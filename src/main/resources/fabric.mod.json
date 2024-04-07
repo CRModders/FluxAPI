@@ -9,7 +9,10 @@
     "nanobass",
     "coolGi"
   ],
-  "license": "CC0-1.0",
+  "contact": {
+    "issues": "https://github.com/CRModders/FluxAPI/issues",
+    "sources": "https://github.com/CRModders/FluxAPI"
+  },
   "environment": "*",
   "entrypoints": {
     "main": [
