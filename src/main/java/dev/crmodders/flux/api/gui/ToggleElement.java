@@ -2,42 +2,35 @@ package dev.crmodders.flux.api.gui;
 
 import dev.crmodders.flux.FluxConstants;
 import dev.crmodders.flux.FluxSettings;
-import dev.crmodders.flux.api.gui.interfaces.UIElementInterface;
+import dev.crmodders.flux.api.gui.base.BaseButton;
 import dev.crmodders.flux.localization.TranslationKey;
 import dev.crmodders.flux.localization.TranslationString;
-import finalforeach.cosmicreach.ui.UIElement;
 
-public class ToggleElement extends UIElement {
+public class ToggleElement extends BaseButton {
 
 	protected boolean value;
 
-	public ToggleElement(float x, float y, float w, float h, boolean defaultValue, TranslationKey textKey) {
-		this(x,y,w,h,defaultValue,true,textKey);
+	public ToggleElement() {
+		this(false);
 	}
 
-	public ToggleElement(float x, float y, float w, float h, boolean defaultValue, boolean triggerOnCreate, TranslationKey textKey) {
-		super(x, y, w, h, triggerOnCreate);
-		((UIElementInterface) this).setTextKey(textKey);
-		this.value = defaultValue;
-	}
-
-	@Override
-	public void onClick() {
-		super.onClick();
-		value = !value;
-		this.updateText();
+	public ToggleElement(boolean value) {
+		this.value = value;
 	}
 
 	@Override
-	public void updateText() {
+	public void onMouseReleased() {
+		super.onMouseReleased();
+		this.value = !value;
 		super.updateText();
-		TranslationKey textKey = ((UIElementInterface) this).getTextKey();
-		if (textKey != null) {
-			TranslationString text = FluxSettings.SelectedLanguage.getTranslatedString(textKey);
-			TranslationString on = FluxSettings.SelectedLanguage.getTranslatedString(FluxConstants.TextOn);
-			TranslationString off = FluxSettings.SelectedLanguage.getTranslatedString(FluxConstants.TextOff);
-			setText(text.format(value ? on : off));
-		}
+	}
+
+	@Override
+	public String updateTranslation(TranslationKey key) {
+		TranslationString text = FluxSettings.SelectedLanguage.getTranslatedString(key);
+		TranslationString on = FluxSettings.SelectedLanguage.getTranslatedString(FluxConstants.TextOn);
+		TranslationString off = FluxSettings.SelectedLanguage.getTranslatedString(FluxConstants.TextOff);
+		return text.format(value ? on : off);
 	}
 
 }

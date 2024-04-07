@@ -1,70 +1,40 @@
 package dev.crmodders.flux.api.gui;
 
-import dev.crmodders.flux.FluxSettings;
-import dev.crmodders.flux.api.gui.interfaces.UIElementInterface;
-import dev.crmodders.flux.localization.TranslationKey;
-import dev.crmodders.flux.localization.TranslationString;
 import finalforeach.cosmicreach.settings.IntSetting;
-import finalforeach.cosmicreach.ui.UISlider;
 
 import java.util.Arrays;
 import java.util.Comparator;
-import java.util.NoSuchElementException;
 
-public class SteppedIntSliderElement extends UISlider {
+public class SteppedIntSliderElement extends IntSliderElement {
 
-	private IntSetting setting;
-	private int[] values;
-
-	public SteppedIntSliderElement(int min, int max, int[] values, IntSetting setting, TranslationKey textKey) {
-		this(0, 0, 0, 0, min, max, values, setting, textKey);
-	}
-
-	public SteppedIntSliderElement(float x, float y, float w, float h, int min, int max, int[] values, IntSetting setting, TranslationKey textKey) {
-		super(min, max, setting.getValue(), x, y, w, h);
-		((UIElementInterface) this).setTextKey(textKey);
-		this.setting = setting;
-		this.values = values;
-		updateText();
-	}
-
-	@Override
-	public void onCreate() {
-		super.onCreate();
-		this.updateText();
-	}
-
-	@Override
-	public void onMouseDown() {
-		super.onMouseDown();
-		this.currentValue = setting.getValue();
-		this.updateText();
-	}
-
-	@Override
-	public void onMouseUp() {
-		super.onMouseUp();
-		setting.setValue((int) currentValue);
-		this.updateText();
-	}
-
-	@Override
-	public void validate() {
-		super.validate();
-		int n = (int) this.currentValue;
-		int c = Arrays.stream(values).boxed().min(Comparator.comparingInt(i -> Math.abs(i - n))).orElseThrow(() -> new NoSuchElementException("No value present"));
-		this.currentValue = c;
-		this.updateText();
-	}
-
-	@Override
-	public void updateText() {
-		super.updateText();
-		TranslationKey textKey = ((UIElementInterface) this).getTextKey();
-		if (textKey != null) {
-			TranslationString text = FluxSettings.SelectedLanguage.getTranslatedString(textKey);
-			setText(text.format(String.valueOf((int)currentValue)));
+	private static int min(int[] values) {
+		int min = Integer.MAX_VALUE;
+		for(int i = 0; i < values.length; i++) {
+			min = Math.min(min, values[i]);
 		}
+		return min;
+	}
+
+	private static int max(int[] values) {
+		int max = Integer.MIN_VALUE;
+		for(int i = 0; i < values.length; i++) {
+			max = Math.max(max, values[i]);
+		}
+		return max;
+	}
+
+	private final int[] values;
+
+	public SteppedIntSliderElement(int[] values, IntSetting setting) {
+		super(min(values), max(values), setting);
+		this.values = values;
+	}
+
+
+	@Override
+	public float validate(float value) {
+		int n = (int) super.validate(value);
+		return Arrays.stream(values).boxed().min(Comparator.comparingInt(i -> Math.abs(i - n))).orElse((int)min);
 	}
 
 }

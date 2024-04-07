@@ -6,9 +6,11 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import dev.crmodders.flux.FluxConstants;
 import dev.crmodders.flux.api.gui.ButtonElement;
 import dev.crmodders.flux.api.gui.TextElement;
-import dev.crmodders.flux.api.gui.interfaces.UIElementInterface;
+import dev.crmodders.flux.api.gui.base.BaseElement;
+import dev.crmodders.flux.api.gui.interfaces.GameStateInterface;
 import dev.crmodders.flux.localization.TranslationKey;
 import finalforeach.cosmicreach.gamestates.GameState;
+import finalforeach.cosmicreach.ui.HorizontalAnchor;
 import finalforeach.cosmicreach.ui.UIElement;
 import finalforeach.cosmicreach.ui.VerticalAnchor;
 
@@ -24,14 +26,22 @@ public class BasicMenu extends GameState {
 		this.uiElements.add(element);
 	}
 
+	protected void addFluxElement(BaseElement element) {
+		element.visible = true;
+		((GameStateInterface) this).getComponents().add(element);
+	}
+
 	protected void onBack() {
 		switchToGameState(previousState);
 	}
 
 	protected void addBackButton() {
-		ButtonElement button = new ButtonElement(0.0f, -50.0f, 250.0f, 50.0f, b -> onBack(), FluxConstants.TextBack);
-		button.vAnchor = VerticalAnchor.BOTTOM_ALIGNED;
-		addUIElement(button);
+		ButtonElement button = new ButtonElement(this::onBack);
+		button.setBounds(0.0f, -50.0f, 250.0f, 50.0f);
+		button.translation = FluxConstants.TextBack;
+		button.setAnchors(HorizontalAnchor.CENTERED, VerticalAnchor.BOTTOM_ALIGNED);
+		button.updateText();
+		addFluxElement(button);
 	}
 
 	protected void onDone() {
@@ -39,9 +49,12 @@ public class BasicMenu extends GameState {
 	}
 
 	protected void addDoneButton() {
-		ButtonElement button = new ButtonElement(0.0f, -50.0f, 250.0f, 50.0f, b -> onDone(), FluxConstants.TextDone);
-		button.vAnchor = VerticalAnchor.BOTTOM_ALIGNED;
-		addUIElement(button);
+		ButtonElement button = new ButtonElement(this::onDone);
+		button.setBounds(0.0f, -50.0f, 250.0f, 50.0f);
+		button.translation = FluxConstants.TextDone;
+		button.setAnchors(HorizontalAnchor.CENTERED, VerticalAnchor.BOTTOM_ALIGNED);
+		button.updateText();
+		addFluxElement(button);
 	}
 
 	protected void onCancel() {
@@ -49,9 +62,12 @@ public class BasicMenu extends GameState {
 	}
 
 	protected void addCancelButton() {
-		ButtonElement button = new ButtonElement(-150.0f, -50.0f, 250.0f, 50.0f, b -> onCancel(), FluxConstants.TextCancel);
-		button.vAnchor = VerticalAnchor.BOTTOM_ALIGNED;
-		addUIElement(button);
+		ButtonElement button = new ButtonElement(this::onCancel);
+		button.setBounds(-150.0f, -50.0f, 250.0f, 50.0f);
+		button.translation = FluxConstants.TextCancel;
+		button.setAnchors(HorizontalAnchor.CENTERED, VerticalAnchor.BOTTOM_ALIGNED);
+		button.updateText();
+		addFluxElement(button);
 	}
 
 	protected void onSave() {
@@ -59,20 +75,16 @@ public class BasicMenu extends GameState {
 	}
 
 	protected void addSaveButton() {
-		ButtonElement button = new ButtonElement(150.0f, -50.0f, 250.0f, 50.0f, b -> onSave(), FluxConstants.TextSave);
-		button.vAnchor = VerticalAnchor.BOTTOM_ALIGNED;
-		addUIElement(button);
+		ButtonElement button = new ButtonElement(this::onSave);
+		button.setBounds(150.0f, -50.0f, 250.0f, 50.0f);
+		button.translation = FluxConstants.TextSave;
+		button.setAnchors(HorizontalAnchor.CENTERED, VerticalAnchor.BOTTOM_ALIGNED);
+		button.updateText();
+		addFluxElement(button);
 	}
 
 	protected void onEscape() {
 		switchToGameState(previousState);
-	}
-
-	protected void addTextElement(int x, int y, float fontSize, TranslationKey textKey) {
-		TextElement element = new TextElement(x, y, 0, 0, textKey);
-		((UIElementInterface) element).setFontSize(fontSize);
-		element.show();
-		this.uiElements.add(element);
 	}
 
 	@Override

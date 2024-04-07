@@ -1,7 +1,8 @@
 package dev.crmodders.flux.menus;
 
 import dev.crmodders.flux.api.config.BasicConfig;
-import dev.crmodders.flux.api.gui.CustomButtonElement;
+import dev.crmodders.flux.api.gui.ButtonElement;
+import dev.crmodders.flux.api.gui.TextElement;
 import dev.crmodders.flux.localization.TranslationKey;
 import dev.crmodders.flux.registry.FluxRegistries;
 import dev.crmodders.flux.registry.registries.AccessableRegistry;
@@ -18,7 +19,13 @@ public class ConfigViewMenu extends BasicMenu {
     public ConfigViewMenu(GameState lastState) {
         super(lastState);
 
-        addTextElement(0, -200, 72, TEXT_TITLE);
+        TextElement title = new TextElement(TEXT_TITLE);
+        title.setPosition(0, -200);
+        title.automaticSize = true;
+        title.automaticSizePadding = 4f;
+        title.fontSize = 72;
+        title.backgroundEnabled = false;
+        addFluxElement(title);
         addDoneButton();
 
         AccessableRegistry<BasicConfig> configs = (AccessableRegistry<BasicConfig>) FluxRegistries.MOD_CONFIGS;
@@ -26,11 +33,16 @@ public class ConfigViewMenu extends BasicMenu {
         int vheight = -100;
         for(Identifier id : configs.getRegisteredNames()) {
             BasicConfig config = configs.get(id);
-            CustomButtonElement button = new CustomButtonElement(0, vheight, 250, 25, b -> {
-                switchToGameState(new EditConfigMenu(ConfigViewMenu.this, config));
-            }, TEXT_BUTTON);
-            button.setText(config.getFriendlyName());
-            addUIElement(button);
+
+            ButtonElement button = new ButtonElement(() -> switchToGameState(new EditConfigMenu(ConfigViewMenu.this, config))) {
+                @Override
+                public String updateTranslation(TranslationKey key) {
+                    return key.getTranslated().format(config.getFriendlyName());
+                }
+            };
+            button.setBounds(0, vheight, 250, 25);
+            button.translation = TEXT_BUTTON;
+            addFluxElement(button);
             vheight += 30;
         }
 

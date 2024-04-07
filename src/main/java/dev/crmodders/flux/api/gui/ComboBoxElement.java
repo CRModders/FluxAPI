@@ -1,55 +1,48 @@
 package dev.crmodders.flux.api.gui;
 
-import dev.crmodders.flux.FluxSettings;
-import dev.crmodders.flux.api.gui.interfaces.UIElementInterface;
+import dev.crmodders.flux.api.gui.base.BaseButton;
 import dev.crmodders.flux.localization.TranslationKey;
-import dev.crmodders.flux.localization.TranslationString;
-import finalforeach.cosmicreach.ui.UIElement;
 
 import java.util.List;
 
-public class ComboBoxElement<T> extends UIElement {
+public class ComboBoxElement<T> extends BaseButton {
 
     private final List<T> elements;
     private int selected;
 
-    public ComboBoxElement(T defaultValue, List<T> elements, TranslationKey textKey) {
-        this(0, 0, 0, 0, defaultValue, elements, textKey);
-    }
-
-    public ComboBoxElement(float x, float y, float w, float h, T defaultValue, List<T> elements, TranslationKey textKey) {
-        super(x, y, w, h, false);
-        ((UIElementInterface) this).setTextKey(textKey);
+    public ComboBoxElement(List<T> elements, T defaultValue) {
         this.elements = elements;
-        this.selected = this.elements.indexOf(defaultValue);
-        onCreate();
+        this.selected = elements.indexOf(defaultValue);
         updateText();
     }
 
     @Override
-    public void onClick() {
-        super.onClick();
+    public void onMouseReleased() {
+        super.onMouseReleased();
         selected++;
         selected %= elements.size();
         updateText();
     }
 
-    public void setSelected(T t) {
-        selected = elements.indexOf(t);
-    }
-    public T getSelected() {
-        return elements.get(selected);
+    public String toString(T value) {
+        return value.toString();
     }
 
     @Override
-    public void updateText() {
-        super.updateText();
+    public String updateTranslation(TranslationKey key) {
         T selected = getSelected();
-        TranslationKey textKey = ((UIElementInterface) this).getTextKey();
-        if (textKey != null) {
-            TranslationString text = FluxSettings.SelectedLanguage.getTranslatedString(textKey);
-            setText(text.format(selected));
+        if(key == null) {
+            return toString(selected);
         }
+        return key.getTranslated().format(toString(selected));
+    }
+
+    public void setSelected(T t) {
+        selected = elements.indexOf(t);
+        updateText();
+    }
+    public T getSelected() {
+        return elements.get(selected);
     }
 
 }

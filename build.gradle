@@ -211,6 +211,9 @@ java {
 publishing {
     publications {
         maven(MavenPublication) {
+            //DO NOT REMOVE; THIS IS NEEDED FOR JITPACK
+            artifactId = id
+            
             from components.java
         }
     }

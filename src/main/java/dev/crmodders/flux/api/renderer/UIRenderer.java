@@ -28,6 +28,7 @@ import java.util.List;
 public class UIRenderer {
 
 	public static final String CHARACTER_SET;
+	public static final String DEFAULT_FONT = "cosmic-reach";
 
 	static {
 		StringBuilder chars = new StringBuilder();

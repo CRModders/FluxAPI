@@ -131,7 +131,7 @@ public class F3MenuMixin {
             Zone zone = player.getZone(world);
             if (zone != null && zone.zoneGenerator != null) {
                 debugText.append("\n\t").append(getTranslatedString("debug_menu.world_seed")
-                        .formatted(numChunks));
+                        .formatted(world.worldSeed));
             }
 
             if (zone != null && zone.zoneGenerator != null) {

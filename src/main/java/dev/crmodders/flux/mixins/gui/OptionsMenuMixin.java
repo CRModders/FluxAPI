@@ -1,6 +1,7 @@
 package dev.crmodders.flux.mixins.gui;
 
 import dev.crmodders.flux.api.gui.SwitchGameStateButtonElement;
+import dev.crmodders.flux.api.gui.interfaces.GameStateInterface;
 import dev.crmodders.flux.localization.TranslationKey;
 import dev.crmodders.flux.menus.FluxOptionMenu;
 import finalforeach.cosmicreach.gamestates.GameState;
@@ -26,9 +27,13 @@ public abstract class OptionsMenuMixin extends GameState {
 				break;
 			}
 		}
-		SwitchGameStateButtonElement button = new SwitchGameStateButtonElement(0f, 100f, 250f, 50f, () -> new FluxOptionMenu(this), TEXT_FLUX_OPTIONS);
-		button.show();
-		uiElements.add(button);
+
+		SwitchGameStateButtonElement button = new SwitchGameStateButtonElement(() -> new FluxOptionMenu(this));
+		button.setBounds(0f, 100f, 250f, 50f);
+		button.translation = TEXT_FLUX_OPTIONS;
+		button.visible = true;
+		button.updateText();
+		((GameStateInterface)this).getComponents().add(button);
 	}
 
 }

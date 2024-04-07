@@ -1,5 +1,6 @@
 package dev.crmodders.flux.menus;
 
+import dev.crmodders.flux.api.gui.TextElement;
 import dev.crmodders.flux.localization.TranslationKey;
 
 public class AssetLoadingMenu extends BasicMenu {
@@ -14,7 +15,14 @@ public class AssetLoadingMenu extends BasicMenu {
     public void create() {
         super.create();
 
-        addTextElement(0, 0, 42, WAITING_TEXT_TITLE);
+        TextElement element = new TextElement(WAITING_TEXT_TITLE);
+        element.setPosition(0, 0);
+        element.automaticSize = true;
+        element.automaticSizePadding = 4f;
+        element.fontSize = 42;
+        element.backgroundEnabled = false;
+        addFluxElement(element);
+
     }
 
 }
