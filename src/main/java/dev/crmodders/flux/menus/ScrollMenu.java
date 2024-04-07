@@ -107,6 +107,7 @@ public class ScrollMenu extends BasicMenu implements InputProcessor {
     @Override
     public boolean scrolled(float x, float y) {
         targetIndex += y;
+        targetIndex = (int) targetIndex;
         targetIndex = Math.max(targetIndex, 0);
         targetIndex = Math.min(targetIndex, elements.size() - 1);
         return true;
