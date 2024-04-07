@@ -43,13 +43,17 @@ public class LanguagePickerMenu extends ScrollMenu{
         addCancelButton();
         addSaveButton();
 
+        List<Locale> languages = TranslationApi.getLanguages();
+
         this.locale = FluxSettings.LanguageSetting.getValue();
 
-        for(Locale locale : TranslationApi.getLanguages()) {
+        for(Locale locale : languages) {
             LanguageButton button = new LanguageButton(locale);
             button.translation = TEXT_LANGUAGE;
             addScrollElement(button);
         }
+
+        this.setSelectedIndex(languages.indexOf(this.locale));
 
     }
 
@@ -73,6 +77,7 @@ public class LanguagePickerMenu extends ScrollMenu{
     @Override
     protected void onSave() {
         FluxSettings.LanguageSetting.setValue(locale);
+        TranslationApi.setLanguage(locale);
         super.onSave();
     }
 

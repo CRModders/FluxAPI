@@ -29,6 +29,11 @@ public class ScrollMenu extends BasicMenu implements InputProcessor {
         return MathUtils.clamp((int)currentIndex, 0, elements.size()-1);
     }
 
+    public void setSelectedIndex(int index) {
+        targetIndex = MathUtils.clamp(index, 0, elements.size()-1);
+        currentIndex = targetIndex;
+    }
+
     public void addScrollElement(BaseText element) {
         elements.add(element);
         addFluxElement(element);
