@@ -25,8 +25,6 @@ import java.util.Locale;
 
 public class LanguagePickerMenu extends ScrollMenu{
 
-    public static final TranslationKey TEXT_LANGUAGE = new TranslationKey("fluxapi:flux_options.language");
-
     private class LanguageButton extends BaseText {
         public Locale locale;
 
@@ -36,7 +34,7 @@ public class LanguagePickerMenu extends ScrollMenu{
 
         @Override
         public String updateTranslation(TranslationKey key) {
-            String text = key.getTranslated().format(locale.getDisplayName());
+            String text = locale.getDisplayName();
             if(LanguagePickerMenu.this.locale == locale) {
                 return "%6" + text;
             }
@@ -83,7 +81,7 @@ public class LanguagePickerMenu extends ScrollMenu{
         this.locale = FluxSettings.LanguageSetting.getValue();
         for(Locale locale : languages) {
             LanguageButton button = new LanguageButton(locale);
-            button.translation = TEXT_LANGUAGE;
+            button.backgroundEnabled = false;
             addScrollElement(button);
         }
 
