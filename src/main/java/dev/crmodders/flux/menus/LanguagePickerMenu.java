@@ -6,6 +6,7 @@ import dev.crmodders.flux.FluxSettings;
 import dev.crmodders.flux.api.gui.ButtonElement;
 import dev.crmodders.flux.api.gui.TextElement;
 import dev.crmodders.flux.api.gui.base.BaseButton;
+import dev.crmodders.flux.api.gui.base.BaseElement;
 import dev.crmodders.flux.api.gui.base.BaseText;
 import dev.crmodders.flux.api.resource.ResourceLocation;
 import dev.crmodders.flux.localization.TranslationApi;
@@ -18,6 +19,7 @@ import finalforeach.cosmicreach.ui.VerticalAnchor;
 import org.pmw.tinylog.Logger;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -47,6 +49,8 @@ public class LanguagePickerMenu extends ScrollMenu{
 
     private Locale locale;
 
+    private boolean reload;
+
     public LanguagePickerMenu(GameState previousState) {
         super(previousState);
 
@@ -73,7 +77,8 @@ public class LanguagePickerMenu extends ScrollMenu{
     private void reloadButtons() {
         List<Locale> languages = TranslationApi.getLanguages();
 
-        elements.forEach(this::removeScrollElement);
+        List<BaseText> copy = new ArrayList<>(elements);
+        copy.forEach(this::removeScrollElement);
 
         this.locale = FluxSettings.LanguageSetting.getValue();
         for(Locale locale : languages) {
@@ -96,6 +101,7 @@ public class LanguagePickerMenu extends ScrollMenu{
 
     public void reloadLanguages() {
         TranslationApi.discoverLanguages();
+        reload = true;
     }
 
     @Override
@@ -104,6 +110,10 @@ public class LanguagePickerMenu extends ScrollMenu{
         List<Locale> languages = TranslationApi.getLanguages();
         locale = languages.get(getSelectedIndex());
         elements.forEach(BaseText::updateText);
+        if(reload) {
+            reloadButtons();
+            reload = false;
+        }
     }
 
     @Override
