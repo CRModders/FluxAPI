@@ -8,6 +8,9 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import dev.crmodders.flux.FluxConstants;
+import dev.crmodders.flux.api.renderer.image.Image;
+import dev.crmodders.flux.api.renderer.image.ImageBatch;
+import dev.crmodders.flux.api.renderer.image.ImageBatchBuilder;
 import dev.crmodders.flux.api.renderer.interfaces.Batch;
 import dev.crmodders.flux.api.renderer.shapes.*;
 import dev.crmodders.flux.api.renderer.text.StyleBatch;
@@ -97,6 +100,10 @@ public class UIRenderer {
 		return new TextBatchBuilder(font, 18.0f);
 	}
 
+	public ImageBatchBuilder buildImage() {
+		return new ImageBatchBuilder();
+	}
+
 	public TextBatchBuilder buildText(Font font, float fontSize) {
 		return new TextBatchBuilder(font, fontSize);
 	}
@@ -112,6 +119,12 @@ public class UIRenderer {
 		TextBatchBuilder builder = buildText(font, fontSize);
 		StyleStringParser.parse(builder, string, true);
 		return builder.build();
+	}
+
+	public ImageBatch createImage(Texture texture, float x, float y, float w, float h) {
+		ImageBatchBuilder b = buildImage();
+		b.drawImage(texture, x, y, w, h);
+		return b.build();
 	}
 
 	public void drawBatch(Batch batch, float x, float y) {
@@ -158,6 +171,8 @@ public class UIRenderer {
 				render(textBatch, batch.x, batch.y);
 			} else if (batch.batch instanceof ShapeBatch shapeBatch) {
 				render(shapeBatch, batch.x, batch.y);
+			} else if (batch.batch instanceof  ImageBatch imageBatch) {
+				render(imageBatch, batch.x, batch.y);
 			}
 		}
 		batches.clear();
@@ -239,6 +254,12 @@ public class UIRenderer {
 //				renderer.filledTriangle(x1, y1, x2, y1, x2, y2, rect.color);
 //				renderer.filledTriangle(x2, y2, x1, y2, x1, y1, rect.color);
 			}
+		}
+	}
+
+	public void render(ImageBatch imageBatch, float xStart, float yStart) {
+		for (Image image : imageBatch.images) {
+			this.batch.draw(image.texture, image.x + xStart, image.y + yStart, image.width, image.height, 0, 0, 1, 1);
 		}
 	}
 

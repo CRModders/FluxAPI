@@ -11,6 +11,7 @@ import finalforeach.cosmicreach.io.SaveLocation;
 import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.ModContainer;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URL;
@@ -21,6 +22,9 @@ import java.util.stream.Stream;
 import static com.badlogic.gdx.Gdx.files;
 
 public class TranslationApi {
+
+    public static final File LANGUAGE_FOLDER = new File(SaveLocation.getSaveFolderLocation(), "mods/assets/languages");
+
     public static Identifier getLocaleIdentifier(Locale locale) {
         return new Identifier(FluxConstants.MOD_ID, locale.toString().replace("_","-"));
     }
@@ -101,5 +105,4 @@ public class TranslationApi {
             FluxSettings.SelectedLanguage = old;
         }
     }
-
 }

@@ -25,10 +25,19 @@ public class BasicMenu extends GameState {
 		element.show();
 		this.uiElements.add(element);
 	}
+	protected void removeUIElement(UIElement element) {
+		element.hide();
+		this.uiElements.removeValue(element, true);
+	}
 
 	protected void addFluxElement(BaseElement element) {
 		element.visible = true;
 		((GameStateInterface) this).getComponents().add(element);
+	}
+
+	protected void removeFluxElement(BaseElement element) {
+		element.visible = false;
+		((GameStateInterface) this).getComponents().remove(element);
 	}
 
 	protected void onBack() {

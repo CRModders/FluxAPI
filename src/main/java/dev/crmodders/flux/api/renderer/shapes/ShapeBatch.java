@@ -15,11 +15,11 @@ public class ShapeBatch implements Batch {
 	@Override
 	public float width() {
 		return 0;
-	}
+	} // TODO
 
 	@Override
 	public float height() {
 		return 0;
-	}
+	} // TODO
 
 }
