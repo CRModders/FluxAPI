@@ -12,6 +12,7 @@ import dev.crmodders.flux.api.renderer.shapes.ShapeBatchBuilder;
 import dev.crmodders.flux.api.renderer.text.TextBatch;
 import dev.crmodders.flux.api.renderer.text.TextBatchBuilder;
 import dev.crmodders.flux.localization.TranslationKey;
+import finalforeach.cosmicreach.settings.SoundSettings;
 import finalforeach.cosmicreach.ui.UIElement;
 
 public class BaseButton extends BaseText {
@@ -99,7 +100,7 @@ public class BaseButton extends BaseText {
     public void onMouseEnter() {
         super.onMouseEnter();
         this.background = highlighted;
-        if(soundEnabled) {
+        if(soundEnabled && SoundSettings.isSoundEnabled()) {
             UIElement.onHoverSound.play();
         }
     }
@@ -120,7 +121,7 @@ public class BaseButton extends BaseText {
     public void onMouseReleased() {
         super.onMouseReleased();
         this.background = regular;
-        if(soundEnabled) {
+        if(soundEnabled && SoundSettings.isSoundEnabled()) {
             UIElement.onClickSound.play();
         }
     }
