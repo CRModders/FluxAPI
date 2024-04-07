@@ -20,7 +20,7 @@ public class LocaleSetting extends GameSetting {
     }
 
     private void save() {
-        setSetting(this.key, this.value.toString().replace("_", "-"));
+        setSetting(this.key, this.value.toLanguageTag());
         saveSettings();
     }
 
