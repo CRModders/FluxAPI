@@ -12,7 +12,8 @@ import java.util.Locale;
 public class FluxOptionMenu extends LayoutMenu {
 
 	public static final TranslationKey TEXT_MSAA = new TranslationKey("fluxapi:flux_options.msaa");
-	public static final TranslationKey TEXT_LANGUAGE = new TranslationKey("fluxapi:flux_options.language");
+	public static final TranslationKey TEXT_LANGUAGES = new TranslationKey("fluxapi:flux_options.languages");
+
 	private static final int[] MSAA_STEPS = {0, 2, 4, 8, 16};
 
 	public FluxOptionMenu(GameState previousState) {
@@ -23,16 +24,10 @@ public class FluxOptionMenu extends LayoutMenu {
 		msaa.updateText();
 		addFluxElement(msaa);
 
-		LanguageSelectorElement locale = new LanguageSelectorElement(FluxSettings.LanguageSetting, TranslationApi.getLanguages()) {
-			@Override
-			public void updateLocale(Locale locale) {
-				super.updateLocale(locale);
-				TranslationApi.setLanguage(locale);
-			}
-		};
-		locale.translation = TEXT_LANGUAGE;
-		locale.updateText();
-		addFluxElement(locale);
+		SwitchGameStateButtonElement language = new SwitchGameStateButtonElement(() -> new LanguagePickerMenu(GameState.currentGameState));
+		language.translation = TEXT_LANGUAGES;
+		language.updateText();
+		addFluxElement(language);
 
 		setLayoutEnabled(false);
 		addDoneButton();
