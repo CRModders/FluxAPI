@@ -15,6 +15,7 @@ public class LayoutMenu extends BasicMenu {
     public LayoutMenu(GameState previousState) {
         super(previousState);
     }
+    public LayoutMenu() {}
 
     protected void setLayoutEnabled(boolean layout) {
         this.layout = layout;

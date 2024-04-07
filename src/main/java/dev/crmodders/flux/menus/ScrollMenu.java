@@ -32,6 +32,10 @@ public class ScrollMenu extends BasicMenu implements InputProcessor {
         targetIndex = 0;
     }
 
+    public ScrollMenu() {
+        this(null);
+    }
+
     public int getSelectedIndex() {
         float distance = targetIndex - currentIndex;
         if(Math.abs(distance) < 0.5) {
