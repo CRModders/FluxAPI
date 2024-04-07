@@ -17,17 +17,11 @@ public class LanguagePickerMenu extends ScrollMenu{
     public static final TranslationKey TEXT_TITLE = new TranslationKey("fluxapi:flux_options.language");
     public static final TranslationKey TEXT_LANGUAGE = new TranslationKey("fluxapi:flux_options.language");
 
-    private class LanguageButton extends  BaseButton {
+    private class LanguageButton extends BaseText {
         public Locale locale;
 
         public LanguageButton(Locale locale) {
             this.locale = locale;
-        }
-
-        @Override
-        public void onMouseReleased() {
-            super.onMouseReleased();
-            selectLanguage(locale);
         }
 
         @Override
