@@ -38,7 +38,7 @@ public class TranslationApi {
         return new Identifier(FluxConstants.MOD_ID, locale.toLanguageTag());
     }
 
-    public static void registerLanguage(LanguageFile file) {
+    public static void registerLanguageFile(LanguageFile file) {
         Identifier identifier = getLocaleIdentifier(file.getLocale());
         AccessableRegistry<LanguageFile> languageFiles = ((AccessableRegistry<LanguageFile>) FluxRegistries.LANGUAGE_FILES);
         if(languageFiles.contains(identifier)) {
@@ -46,8 +46,16 @@ public class TranslationApi {
             existing.merge(file);
         } else {
             FluxRegistries.LANGUAGE_FILES.register(identifier, file);
-            FluxRegistries.LANGUAGES.register(identifier, new Language(file));
-            Logger.info("Language registered: {} ({})", file.getLocale().getDisplayName(Locale.ENGLISH), file.getLocale().toLanguageTag());
+        }
+    }
+
+    public static void registerLanguages() {
+        AccessableRegistry<LanguageFile> languageFiles = ((AccessableRegistry<LanguageFile>) FluxRegistries.LANGUAGE_FILES);
+        LanguageFile enUs = languageFiles.get(getLocaleIdentifier(LOCALE_EN_US));
+        for(Identifier identifier : languageFiles.getRegisteredNames()) {
+            LanguageFile file = languageFiles.get(identifier);
+            FluxRegistries.LANGUAGES.register(identifier, new Language(file, enUs));
+            Logger.info("LanguageFile registered: {} ({})", file.getLocale().getDisplayName(Locale.ENGLISH), file.getLocale().toLanguageTag());
         }
     }
 

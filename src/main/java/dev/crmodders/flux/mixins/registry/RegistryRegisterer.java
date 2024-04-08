@@ -45,6 +45,7 @@ public class RegistryRegisterer {
         try {
             FindLanguages();
             GameEvents.ON_REGISTER_LANGUAGE.invoker().onRegisterLanguage();
+            TranslationApi.registerLanguages();
             TranslationApi.setLanguage(FluxSettings.LanguageSetting.getValue());
         } catch (Exception ignored) {}
 
@@ -84,7 +85,7 @@ public class RegistryRegisterer {
         }
         for(FileHandle lang : found) {
             GameEvents.ON_REGISTER_LANGUAGE.register(() -> {
-                TranslationApi.registerLanguage(LanguageFile.loadLanguageFile(lang));
+                TranslationApi.registerLanguageFile(LanguageFile.loadLanguageFile(lang));
             });
         }
     }

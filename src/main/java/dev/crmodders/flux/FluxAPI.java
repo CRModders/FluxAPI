@@ -15,7 +15,7 @@ public class FluxAPI implements ModInitializer, PreLaunchEntrypoint {
     public void onPreLaunch() {
         GameEvents.ON_REGISTER_LANGUAGE.register(() -> {
             LanguageFile lang = LanguageFile.loadLanguageFile(FluxConstants.LanguageEnUs.load());
-            TranslationApi.registerLanguage(lang);
+            TranslationApi.registerLanguageFile(lang);
         });
     }
 

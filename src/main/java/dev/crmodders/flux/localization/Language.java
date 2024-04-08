@@ -5,13 +5,19 @@ import java.util.List;
 public class Language implements Translation {
     private final LanguageFile locale;
 
-    public Language(LanguageFile locale) {
+    private final LanguageFile enUs;
+
+    public Language(LanguageFile locale, LanguageFile enUs) {
         this.locale = locale;
+        this.enUs = enUs;
     }
 
     private TranslationEntry getEntry(TranslationKey key){
         if(locale.containsKey(key)) {
             return locale.get(key);
+        }
+        if(enUs.containsKey(key)) {
+            return enUs.get(key);
         }
         return UNDEFINED;
     }
