@@ -6,7 +6,7 @@ Step 1: Add [Jitpack](https://docs.jitpack.io/) in your build.gradle at the end 
 Here is an example `repositories` section
 ```
 repositories {
-	maven { url 'https://jitpack.io' }
+	maven { url 'https://maven.crmodders.dev' }
 	
 	mavenCentral()
 }
@@ -14,7 +14,7 @@ repositories {
 
 Step 2: Add Flux to your dependencies using the text below
 ```
-implementation "dev.crmodders:FluxAPI:0.5.4"
+implementation "dev.crmodders:FluxAPI:0.5.6"
 ```
 
 ### Dev Commands (for contributors)
