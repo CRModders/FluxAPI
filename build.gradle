@@ -98,6 +98,7 @@ dependencies {
 
     // Modmenu
     internal("org.codeberg.CRModders:modmenu:${modmenu_version}")
+            { transitive = false } // This will be fixed on the modmenu side soon (to not have to use this line)
 
     // Json stuff
     shadowMe("com.google.guava:guava:33.0.0-jre")
