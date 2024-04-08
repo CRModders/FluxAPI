@@ -2,7 +2,7 @@
 
 ### Using flux in your projects
 
-Step 1: Add [Jitpack](https://docs.jitpack.io/) in your build.gradle at the end of your repositories tag.\
+Step 1: Add [CRModder's Maven](https://maven.crmodders.dev/) in your build.gradle at the end of your repositories tag.\
 Here is an example `repositories` section
 ```
 repositories {
