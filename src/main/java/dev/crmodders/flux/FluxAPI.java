@@ -9,19 +9,16 @@ import finalforeach.cosmicreach.GameAssetLoader;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.loader.api.entrypoint.PreLaunchEntrypoint;
 
-public class FluxAPI implements ModInitializer, PreLaunchEntrypoint {
-
-    @Override
-    public void onPreLaunch() {
-        GameEvents.ON_REGISTER_LANGUAGE.register(() -> {
-            LanguageFile lang = LanguageFile.loadLanguageFile(FluxConstants.LanguageEnUs.load());
-            TranslationApi.registerLanguageFile(lang);
-        });
-    }
+public class FluxAPI implements ModInitializer {
 
     @Override
     public void onInitialize() {
         LogWrapper.init();
         LogWrapper.info("Flux Fabric Initialized");
+
+        GameEvents.ON_REGISTER_LANGUAGE.register(() -> {
+            LanguageFile lang = LanguageFile.loadLanguageFile(FluxConstants.LanguageEnUs.load());
+            TranslationApi.registerLanguageFile(lang);
+        });
     }
 }

@@ -24,7 +24,6 @@
     },
 
     "entrypoints": {
-      "preLaunch": "dev.crmodders.flux.FluxAPI",
       "main": "dev.crmodders.flux.FluxAPI",
       "modmenu": "dev.crmodders.flux.menus.FluxModmenuConfig"
     },
