@@ -39,6 +39,11 @@ repositories {
     }
 
     maven {
+        name "crmoddersRepoReleases"
+        url "https://maven.crmodders.dev/releases"
+    }
+
+    maven {
         name "JitPack"
         url "https://jitpack.io"
     }
@@ -224,10 +229,29 @@ java {
 }
 
 publishing {
+    repositories {
+        maven {
+            name = "crmoddersRepoReleases"
+            url = "https://maven.crmodders.dev/releases"
+            credentials(PasswordCredentials)
+            authentication {
+                basic(BasicAuthentication)
+            }
+        }
+
+        maven {
+            name = "crmoddersRepoSnapshots"
+            url = "https://maven.crmodders.dev/snapshots"
+            credentials(PasswordCredentials)
+            authentication {
+                basic(BasicAuthentication)
+            }
+        }
+    }
+
     publications {
         maven(MavenPublication) {
             groupId = group
-            //DO NOT REMOVE; THIS IS NEEDED FOR JITPACK
             artifactId = id
             
             from components.java
