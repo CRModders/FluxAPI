@@ -212,9 +212,6 @@
             "flux_options": {
                 "msaa": [
                     "msaa"
-                ],
-                "language": [
-                    "language"
                 ]
             }
         },
@@ -234,8 +231,7 @@
             "flux_options": {
                 "name": "Flux Options",
                 "msaa": "MSAA {msaa}x",
-                "languages": "Languages",
-                "language": "Language: {language}"
+                "languages": "Languages"
             }
         }
     }

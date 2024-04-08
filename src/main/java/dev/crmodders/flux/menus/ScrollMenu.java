@@ -1,11 +1,16 @@
 package dev.crmodders.flux.menus;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.MathUtils;
 import dev.crmodders.flux.api.gui.TextElement;
 import dev.crmodders.flux.api.gui.base.BaseText;
 import finalforeach.cosmicreach.gamestates.GameState;
+import finalforeach.cosmicreach.gamestates.MainMenu;
+import finalforeach.cosmicreach.settings.SoundSettings;
+import finalforeach.cosmicreach.ui.UIElement;
 import org.lwjgl.system.MathUtil;
 
 import java.util.ArrayList;
@@ -16,6 +21,8 @@ public class ScrollMenu extends BasicMenu implements InputProcessor {
     protected final List<BaseText> elements;
     private float currentIndex;
     private float targetIndex;
+    public boolean playSound = true;
+    private int lastIndex;
 
     public ScrollMenu(GameState previousState) {
         super(previousState);
@@ -25,8 +32,16 @@ public class ScrollMenu extends BasicMenu implements InputProcessor {
         targetIndex = 0;
     }
 
+    public ScrollMenu() {
+        this(null);
+    }
+
     public int getSelectedIndex() {
-        return MathUtils.clamp((int)currentIndex, 0, elements.size()-1);
+        float distance = targetIndex - currentIndex;
+        if(Math.abs(distance) < 0.5) {
+            return (int) targetIndex;
+        }
+        return MathUtils.clamp(Math.round(currentIndex), 0, elements.size()-1);
     }
 
     public void setSelectedIndex(int index) {
@@ -39,10 +54,15 @@ public class ScrollMenu extends BasicMenu implements InputProcessor {
         addFluxElement(element);
     }
 
+    public void removeScrollElement(BaseText element) {
+        elements.remove(element);
+        removeFluxElement(element);
+    }
+
     @Override
     public void render(float partTime) {
         float distance = targetIndex - currentIndex;
-        float increment = distance * partTime * 0.05f;
+        float increment = distance *  0.05f;
         if(Math.abs(increment) < 0.001) {
             currentIndex = targetIndex;
         } else {
@@ -63,14 +83,27 @@ public class ScrollMenu extends BasicMenu implements InputProcessor {
             button.width = 250f * size;
             button.height = 50f * size;
             button.fontSize = 18f * size;
-            button.visible = Math.abs(distance2) < 3.6f;
+            button.visible = Math.abs(distance2) < 3.25f;
             button.updateText();
+        }
+        int index = getSelectedIndex();
+        if(index != lastIndex) {
+            if(playSound && SoundSettings.isSoundEnabled()) {
+                UIElement.onHoverSound.play();
+            }
+            lastIndex = index;
         }
         super.render(partTime);
     }
 
     @Override
     public boolean keyDown(int i) {
+        if(i == Input.Keys.DOWN) {
+            return scrolled(0, 1);
+        }
+        if(i == Input.Keys.UP) {
+            return scrolled(0, -1);
+        }
         return false;
     }
 

@@ -21,3 +21,6 @@ implementation "dev.crmodders:FluxAPI:0.5.4"
 To run Cosmic Quilt in the dev env, run `gradle runQuilt`\
 To run Fabric in the dev env, run `gradle runFabric`\
 To build, run `gradlew build` with the jar being in `build/libs/` and ending with `-all.jar`
+
+### Translations
+The translations repo is at https://github.com/CRModders/Flux-Translations

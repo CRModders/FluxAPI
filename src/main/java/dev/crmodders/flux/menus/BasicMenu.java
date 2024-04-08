@@ -20,10 +20,17 @@ public class BasicMenu extends GameState {
 	public BasicMenu(final GameState previousState) {
 		this.previousState = previousState;
 	}
+	public BasicMenu() {
+		this.previousState = null;
+	}
 
 	protected void addUIElement(UIElement element) {
 		element.show();
 		this.uiElements.add(element);
+	}
+	protected void removeUIElement(UIElement element) {
+		element.hide();
+		this.uiElements.removeValue(element, true);
 	}
 
 	protected void addFluxElement(BaseElement element) {
@@ -31,8 +38,15 @@ public class BasicMenu extends GameState {
 		((GameStateInterface) this).getComponents().add(element);
 	}
 
+	protected void removeFluxElement(BaseElement element) {
+		element.visible = false;
+		((GameStateInterface) this).getComponents().remove(element);
+	}
+
 	protected void onBack() {
-		switchToGameState(previousState);
+		if(previousState != null) {
+			switchToGameState(previousState);
+		}
 	}
 
 	protected void addBackButton() {
@@ -45,7 +59,9 @@ public class BasicMenu extends GameState {
 	}
 
 	protected void onDone() {
-		switchToGameState(previousState);
+		if(previousState != null) {
+			switchToGameState(previousState);
+		}
 	}
 
 	protected void addDoneButton() {
@@ -58,7 +74,9 @@ public class BasicMenu extends GameState {
 	}
 
 	protected void onCancel() {
-		switchToGameState(previousState);
+		if(previousState != null) {
+			switchToGameState(previousState);
+		}
 	}
 
 	protected void addCancelButton() {
@@ -71,7 +89,9 @@ public class BasicMenu extends GameState {
 	}
 
 	protected void onSave() {
-		switchToGameState(previousState);
+		if(previousState != null) {
+			switchToGameState(previousState);
+		}
 	}
 
 	protected void addSaveButton() {
@@ -84,7 +104,9 @@ public class BasicMenu extends GameState {
 	}
 
 	protected void onEscape() {
-		switchToGameState(previousState);
+		if(previousState != null) {
+			switchToGameState(previousState);
+		}
 	}
 
 	@Override

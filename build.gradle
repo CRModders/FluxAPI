@@ -63,11 +63,22 @@ configurations {
     cosmicreach // Config to provide the Cosmic Reach project
     compileOnly.extendsFrom(cosmicreach) // Allows cosmic reach to be used in the codebase
 
-    gameMod // Config to be able to load Fabric Mods (Quilt loads mods from the classpath)
-    implementation.extendsFrom(gameMod)
-
     shadowMe // Allows specifying which stuff gets shadowed
     api.extendsFrom(shadowMe)
+
+    internal { // Allows to include something without it being in the maven
+        visible = false
+        canBeConsumed = false
+        canBeResolved = false
+    }
+    compileClasspath.extendsFrom(internal)
+    runtimeClasspath.extendsFrom(internal)
+    testCompileClasspath.extendsFrom(internal)
+    testRuntimeClasspath.extendsFrom(internal)
+
+
+    gameMod // Config to be able to load Fabric Mods (Quilt loads mods from the classpath)
+    internal.extendsFrom(gameMod)
 }
 
 shadowJar {
@@ -84,6 +95,9 @@ dependencies {
     compileOnly("net.fabricmc:fabric-loader:${fabric_loader_version}") // Include the base Fabric Loader so we can only use classes from that
     compileOnly("net.fabricmc:sponge-mixin:0.12.5+mixin.0.8.5")
     compileOnly("io.github.llamalad7:mixinextras-fabric:0.3.5")
+
+    // Modmenu
+    internal("org.codeberg.CRModders:modmenu:${modmenu_version}")
 
     // Json stuff
     shadowMe("com.google.guava:guava:33.0.0-jre")
@@ -211,6 +225,7 @@ java {
 publishing {
     publications {
         maven(MavenPublication) {
+            groupId = group
             //DO NOT REMOVE; THIS IS NEEDED FOR JITPACK
             artifactId = id
             
