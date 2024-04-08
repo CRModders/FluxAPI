@@ -98,7 +98,7 @@ public class LanguagePickerMenu extends ScrollMenu{
     }
 
     public void reloadLanguages() {
-        TranslationApi.discoverLanguages();
+        // TODO actually do something here besides refreshing the menu
         reload = true;
     }
 

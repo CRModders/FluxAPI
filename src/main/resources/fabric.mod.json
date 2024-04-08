@@ -15,6 +15,9 @@
   },
   "environment": "*",
   "entrypoints": {
+    "preLaunch": [
+      "dev.crmodders.flux.FluxAPI"
+    ],
     "main": [
       "dev.crmodders.flux.FluxAPI"
     ]

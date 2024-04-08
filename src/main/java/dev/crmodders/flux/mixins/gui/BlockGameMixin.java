@@ -2,6 +2,7 @@ package dev.crmodders.flux.mixins.gui;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import dev.crmodders.flux.api.events.GameEvents;
 import dev.crmodders.flux.api.gui.interfaces.GameStateInterface;
 import dev.crmodders.flux.api.renderer.UIRenderer;
 import dev.crmodders.flux.api.renderer.text.TextBatchBuilder;

@@ -15,15 +15,15 @@ public class FluxConstants {
     public static ResourceLocation DirectoryIcon = new ResourceLocation(MOD_ID, "folder_icon.png");
     public static ResourceLocation ReloadIcon = new ResourceLocation(MOD_ID, "reload_icon.png");
 
-    public static final TranslationKey TextOn = new TranslationKey("base:menu.on");
-    public static final TranslationKey TextOff = new TranslationKey("base:menu.off");
-    public static final TranslationKey TextCancel = new TranslationKey("base:menu.cancel");
-    public static final TranslationKey TextBack = new TranslationKey("base:menu.back");
-    public static final TranslationKey TextSave = new TranslationKey("base:menu.save");
-    public static final TranslationKey TextOk = new TranslationKey("base:menu.ok");
-    public static final TranslationKey TextDone = new TranslationKey("base:menu.done");
-    public static final TranslationKey TextReturnToMainMenu = new TranslationKey("base:menu.return_to_main_menu");
-    public static final TranslationKey TextReturnToGame = new TranslationKey("base:menu.return_to_game");
+    public static final TranslationKey TextOn = new TranslationKey("fluxapi:menu.on");
+    public static final TranslationKey TextOff = new TranslationKey("fluxapi:menu.off");
+    public static final TranslationKey TextCancel = new TranslationKey("fluxapi:menu.cancel");
+    public static final TranslationKey TextBack = new TranslationKey("fluxapi:menu.back");
+    public static final TranslationKey TextSave = new TranslationKey("fluxapi:menu.save");
+    public static final TranslationKey TextOk = new TranslationKey("fluxapi:menu.ok");
+    public static final TranslationKey TextDone = new TranslationKey("fluxapi:menu.done");
+    public static final TranslationKey TextReturnToMainMenu = new TranslationKey("fluxapi:menu.return_to_main_menu");
+    public static final TranslationKey TextReturnToGame = new TranslationKey("fluxapi:menu.return_to_game");
 
 
 }

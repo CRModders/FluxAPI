@@ -3,204 +3,8 @@
     "major_version": 1,
     "minor_version": 0,
     "ids": [
-        "base",
         "fluxapi"
     ],
-    "base": {
-        "priority": 1000,
-        "format_templates": {
-            "main_menu": {
-                "game_version": [
-                    "game_version"
-                ],
-                "controller_info": [
-                    "number_of_controllers",
-                    "controller_noun"
-                ]
-            },
-            "options_menu": {
-                "vsync": [
-                    "vsync_on"
-                ],
-                "render_distance": [
-                    "render_distance"
-                ],
-                "inverted_mouse": [
-                    "inverted_mouse"
-                ],
-                "mouse_sensitivity": [
-                    "mouse_sensitivity"
-                ],
-                "sound": [
-                    "sound_on"
-                ],
-                "fov": [
-                    "fov"
-                ],
-                "max_fps": [
-                    "fps"
-                ]
-            },
-            "pause_menu": {
-                "lighting": [
-                    "lighting"
-                ]
-            },
-            "in_game": {
-                "screenshot_saved_to": [
-                    "file"
-                ]
-            },
-            "loading_menu": {
-                "tips": [
-                    "hide_ui_key",
-                    "screenshot_key",
-                    "show_debug_key",
-                    "drop_key",
-                    "inventory_key"
-                ]
-            }
-        },
-        "strings": {
-            "menu": {
-                "on": "On",
-                "off": "Off",
-                "cancel": "Cancel",
-                "back": "Back",
-                "save": "Save",
-                "ok": "Ok",
-                "done": "Done",
-                "return_to_main_menu": "Return to Main Menu",
-                "return_to_game": "Return to Game"
-            },
-            "main_menu": {
-                "start": "Start",
-                "open_save_directory": "Open Save Directory",
-                "options": "Options",
-                "quit": "Quit",
-                "yt_channel": "Watch the devlogs at youtube.com/@finalforeach",
-                "game_version": "Cosmic Reach Version {game_version}",
-                "mac_warning": "WARNING: Mac is not supported at this time. The game is unlikely to work.",
-                "controller": "Controller",
-                "controllers": "Controllers",
-                "controller_info": "{number_of_controllers} {controller_noun} detected!\nController support is incomplete now,\nand will be improved in later updates."
-            },
-            "options_menu": {
-                "vsync": "Vsync: {vsync_on}",
-                "render_distance": "RenderDistance: {render_distance} Chunks",
-                "inverted_mouse": "Inverted Mouse: {inverted_mouse}",
-                "mouse_sensitivity": "Mouse Sensitivity: {mouse_sensitivity}",
-                "sound": "Sound: {sound_on}",
-                "fov": "FOV: {fov}",
-                "keybinds": "Keybinds",
-                "max_fps": "Max FPS: {fps}",
-                "crash_the_game": "Debug: Crash the game"
-            },
-            "pre_alpha_preamble": {
-                "pre_alpha_text": "!Welcome to Cosmic Reach! \n The game is in very early development, it is missing features, is nowhere near complete, \n and will likely have bugs, glitches, crashes and world corruption.\n Everything is subject to change and is not representative of the final game.\n It's available for you to play so that you can give feedback to help guide the future of this game \n Happy testing... and game-breaking!"
-            },
-            "pause_menu": {
-                "lighting": "Lighting: {lighting}",
-                "respawn": "Respawn",
-                "saving": "Saving..."
-            },
-            "keybinds": {
-                "forward": "Forward",
-                "backward": "Backward",
-                "left": "Left",
-                "right": "Right",
-                "jump": "Jump",
-                "crouch": "Crouch",
-                "sprint": "Sprint",
-                "prone": "Prone",
-                "inventory": "Inventory",
-                "drop_item": "Drop Item",
-                "hide_ui": "Hide UI",
-                "screenshot": "Screenshot",
-                "debug_info": "Debug Info",
-                "no_clip": "No-Clip",
-                "reload_shaders": "Reload Shaders",
-                "fullscreen": "Fullscreen"
-            },
-            "world_chooser_menu": {
-                "create_new_world": "Create New World",
-                "open_worlds_directory": "Open Worlds Directory"
-            },
-            "in_game": {
-                "screenshot_saved_to": "Saved screenshot to {file}"
-            },
-            "loading_menu": {
-                "loading": "Loading",
-                "tips": [
-                    "Reticulating splines...",
-                    "Squishing vertices...",
-                    "Shaping the world...",
-                    "Colouring lights...",
-                    "Halving slabs...",
-                    "Populating blocks...",
-                    "Layering chunks...",
-                    "Accumulating space dust...",
-                    "Orbiting cubes...",
-                    "Batching chunks...",
-                    "Curdling the moon...",
-                    "De-cluttering inventories...",
-                    "Fresnel-ificating...",
-                    "Colonizing planets...",
-                    "Tip Pick block using the middle mouse button!",
-                    "Tip Try changing the different lighting modes in the pause menu!",
-                    "Tip Press '{hide_ui_key}' to hide the user interface",
-                    "Tip Press '{screenshot_key}' to take a screenshot!",
-                    "Tip Press '{show_debug_key}' to look at debugging information",
-                    "Tip Press '{drop_key}' to drop the current item!",
-                    "Tip Press '{inventory_key}' to open the inventory!",
-                    "Tip Sprint against a wall to 'wall run', going farther than you would only by jumping."
-                ],
-                "odd_tips": [
-                    "Grafting cells...",
-                    "Incubating...",
-                    "Sacrificing subjects...",
-                    "Counting sheep...",
-                    "Discarding deceased tissue...",
-                    "Harvesting stem cells...",
-                    "Collecting organ \"donations\"...",
-                    "Observing tricephalous...",
-                    "Repeating trials...",
-                    "Categorizing specimens...",
-                    "Tip You cannot fight against entropy.",
-                    "News: Unknown specimen seen on the Moon...",
-                    "News: Specimen classified with the name \"Man of the Moon\"...",
-                    "News: Mysteriously killed players are reported...",
-                    "News: Are we really alone?",
-                    "News: Player claims to have seen the \"Man of the Moon\"...",
-                    "News: Players claim to feel watched...",
-                    "Creating Black Holes..."
-                ]
-            },
-            "debug_menu": {
-                "fps": "FPS: %s",
-                "position": "Position: %%3X: %s%%f, %%4Y: %s%%f, %%2Z: %s%%f",
-                "chunk_title": "Chunk:",
-                "current_chunk": "Current Chunk:",
-                "looking_at": "Looking at: %s",
-                "lighting_title": "Lighting:",
-                "sky_lighting": "SkyLight: %s",
-                "block_lighting_title": "BlockLighting:",
-                "block_light_red": "Red: %s",
-                "block_light_green": "Green: %s",
-                "block_light_blue": "Blue: %s",
-                "runtime": "Cosmic Reach version: %s",
-                "memory_usage": "Memory Usage:",
-                "java_heap": "Java Heap: %s",
-                "native_heap": "Native Heap: %s",
-                "layer_type": "LayerType: %s",
-                "palette_size": "Palette Size: %s",
-                "regions_loaded": "Regions loaded: %s",
-                "chunks_loaded": "Chunks loaded: %s",
-                "world_seed": "World Seed: %s",
-                "zone_seed": "Zone Seed: %s"
-            }
-        }
-    },
     "fluxapi": {
         "priority": 1000,
         "format_templates": {
@@ -216,6 +20,17 @@
             }
         },
         "strings": {
+            "menu": {
+                "on": "On",
+                "off": "Off",
+                "cancel": "Cancel",
+                "back": "Back",
+                "save": "Save",
+                "ok": "Ok",
+                "done": "Done",
+                "return_to_main_menu": "Return to Main Menu",
+                "return_to_game": "Return to Game"
+            },
             "config_menu": {
                 "title": "Config Menu",
                 "button": "{name}"

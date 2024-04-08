@@ -2,11 +2,15 @@ package dev.crmodders.flux.api.events;
 
 import dev.crmodders.flux.api.events.system.Event;
 import dev.crmodders.flux.api.events.system.EventFactory;
+import dev.crmodders.flux.api.resource.ResourceLocation;
+import dev.crmodders.flux.localization.LanguageFile;
+import dev.crmodders.flux.localization.TranslationApi;
 import dev.crmodders.flux.logging.LogWrapper;
 import finalforeach.cosmicreach.blocks.BlockPosition;
 import finalforeach.cosmicreach.blocks.BlockState;
 import finalforeach.cosmicreach.gamestates.GameState;
 import finalforeach.cosmicreach.world.Zone;
+import org.pmw.tinylog.Logger;
 
 public class GameEvents {
 
@@ -78,6 +82,19 @@ public class GameEvents {
         }
     });
 
+    public static final Event<GameEventTriggers.OnRegisterLanguage> ON_REGISTER_LANGUAGE = EventFactory.createArrayBacked(GameEventTriggers.OnRegisterLanguage.class, callbacks -> () -> {
+        for (var callback : callbacks) {
+            if (callback != null) {
+                try {
+                    callback.onRegisterLanguage();
+                } catch (Exception e) {
+                    Logger.error("Failed to load a language, reason:");
+                    Logger.error(e);
+                }
+            }
+        }
+    });
+
 
     public static class GameEventTriggers {
 
@@ -107,6 +124,11 @@ public class GameEvents {
         @FunctionalInterface
         public interface StateChangedTrigger {
             void onStateChanged(GameState gameState);
+        }
+
+        @FunctionalInterface
+        public interface OnRegisterLanguage {
+            void onRegisterLanguage() throws Exception;
         }
 
     }

@@ -1,5 +1,6 @@
 package dev.crmodders.flux.localization;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import dev.crmodders.flux.FluxConstants;
 import dev.crmodders.flux.FluxSettings;
@@ -10,6 +11,7 @@ import dev.crmodders.flux.tags.Identifier;
 import finalforeach.cosmicreach.io.SaveLocation;
 import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.ModContainer;
+import org.pmw.tinylog.Logger;
 
 import java.io.File;
 import java.io.IOException;
@@ -25,60 +27,15 @@ public class TranslationApi {
 
     public static final File LANGUAGE_FOLDER = new File(SaveLocation.getSaveFolderLocation(), "mods/assets/languages");
 
-    public static Identifier getLocaleIdentifier(Locale locale) {
-        return new Identifier(FluxConstants.MOD_ID, locale.toString().replace("_","-"));
+    static {
+        if(!LANGUAGE_FOLDER.exists())
+            LANGUAGE_FOLDER.mkdirs();
     }
 
     public static final Locale LOCALE_EN_US = Locale.forLanguageTag("en-US");
-    public static final Identifier EN_US = getLocaleIdentifier(LOCALE_EN_US);
 
-    public static void discoverLanguages() {
-
-        List<FileHandle> discoveredFiles = new ArrayList<>();
-        for (ModContainer container : FabricLoader.getInstance().getAllMods()) {
-            URL url;
-            String modId;
-            try { // Fix for Cosmic Quilt from versions 1.2.0 to 1.2.2
-                modId = container.getMetadata().getId();
-            } catch (Exception e) { continue; }
-            if (modId.equals("fabricloader") || (url = TranslationApi.class.getResource("/assets/" + modId + "/languages/")) == null)
-                continue;
-            try {
-                URI uri = url.toURI();
-                HashMap<String, String> env = new HashMap<String, String>();
-                env.put("create", "true");
-                FileSystem zipfs = null;
-                try {
-                    zipfs = FileSystems.newFileSystem(uri, env);
-                } catch (Exception ignored) {}
-                Path path = Paths.get(url.toURI());
-                try (Stream<Path> entries = Files.walk(path, 5)) {
-                    entries.forEach(p -> {
-                        String fileName = p.getFileName().toString();
-                        if (fileName.endsWith(".json")) {
-                            FileHandle handle = new ResourceLocation(modId, "languages/" + fileName).load();
-                            discoveredFiles.add(handle);
-                        }
-                    });
-                }
-                if (zipfs != null)
-                    zipfs.close();
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-        }
-        Collections.addAll(discoveredFiles, files.absolute(SaveLocation.getSaveFolderLocation() + "/mods/assets/languages").list());
-
-        try {
-            registerLanguage(LanguageFile.loadLanguageFile(FluxConstants.LanguageEnUs.load()));
-            setLanguage(LOCALE_EN_US);
-            for(FileHandle discovered : discoveredFiles) {
-                registerLanguage(LanguageFile.loadLanguageFile(discovered));
-            }
-            setLanguage(FluxSettings.LanguageSetting.getValue());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+    public static Identifier getLocaleIdentifier(Locale locale) {
+        return new Identifier(FluxConstants.MOD_ID, locale.toLanguageTag());
     }
 
     public static void registerLanguage(LanguageFile file) {
@@ -89,9 +46,9 @@ public class TranslationApi {
             existing.merge(file);
         } else {
             FluxRegistries.LANGUAGE_FILES.register(identifier, file);
+            FluxRegistries.LANGUAGES.register(identifier, new Language(file));
+            Logger.info("Language registered: {} ({})", file.getLocale().getDisplayName(Locale.ENGLISH), file.getLocale().toLanguageTag());
         }
-        LanguageFile en_US = languageFiles.get(EN_US);
-        FluxRegistries.LANGUAGES.register(identifier, new Language(en_US, file));
     }
 
     public static List<Locale> getLanguages() {
@@ -103,6 +60,9 @@ public class TranslationApi {
         FluxSettings.SelectedLanguage = ((AccessableRegistry<Language>) FluxRegistries.LANGUAGES).get(getLocaleIdentifier(locale));
         if(FluxSettings.SelectedLanguage == null) {
             FluxSettings.SelectedLanguage = old;
+        }
+        if(FluxSettings.SelectedLanguage == null) {
+            FluxSettings.SelectedLanguage = ((AccessableRegistry<Language>) FluxRegistries.LANGUAGES).get(getLocaleIdentifier(LOCALE_EN_US));
         }
     }
 }

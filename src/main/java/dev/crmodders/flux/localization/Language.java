@@ -3,20 +3,15 @@ package dev.crmodders.flux.localization;
 import java.util.List;
 
 public class Language implements Translation {
-    private LanguageFile fallback;
-    private LanguageFile locale;
+    private final LanguageFile locale;
 
-    public Language(LanguageFile fallback, LanguageFile locale) {
-        this.fallback = fallback;
+    public Language(LanguageFile locale) {
         this.locale = locale;
     }
 
     private TranslationEntry getEntry(TranslationKey key){
         if(locale.containsKey(key)) {
             return locale.get(key);
-        }
-        if(fallback.containsKey(key)) {
-            return fallback.get(key);
         }
         return UNDEFINED;
     }
