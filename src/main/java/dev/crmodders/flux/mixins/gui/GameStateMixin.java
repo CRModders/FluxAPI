@@ -55,4 +55,13 @@ public abstract class GameStateMixin implements GameStateInterface {
 		}
 	}
 
+	@Inject(method = "switchToGameState", at = @At(value = "HEAD"))
+	private static void cleanUpCustomUIElements(CallbackInfo ci) {
+		if(GameState.currentGameState != null) {
+			for(Component component : ((GameStateInterface) GameState.currentGameState).getComponents()) {
+				component.deactivate();
+			}
+		}
+	}
+
 }

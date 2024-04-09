@@ -12,6 +12,8 @@ public interface Component {
 
 	void draw(UIRenderer renderer, Viewport viewport);
 
+	void deactivate();
+
 	boolean isDirty();
 
 }

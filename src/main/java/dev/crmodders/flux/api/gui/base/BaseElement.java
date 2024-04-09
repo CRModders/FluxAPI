@@ -91,6 +91,11 @@ public abstract class BaseElement implements Component {
     public void draw(UIRenderer renderer, Viewport viewport) {
     }
 
+    @Override
+    public void deactivate() {
+
+    }
+
     public void repaint(){
         dirty = true;
     }

@@ -61,6 +61,7 @@ public class BaseTextInput extends BaseButton implements InputProcessor {
         updateText();
     }
 
+    @Override
     public void deactivate() {
         Gdx.input.setInputProcessor(prev);
         prev = null;
