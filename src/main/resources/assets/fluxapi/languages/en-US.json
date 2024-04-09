@@ -16,6 +16,9 @@
             "flux_options": {
                 "msaa": [
                     "msaa"
+                ],
+                "use_alternative_font" : [
+                    "use_alt_font"
                 ]
             }
         },
@@ -46,6 +49,7 @@
             "flux_options": {
                 "name": "Flux Options",
                 "msaa": "MSAA {msaa}x",
+                "use_alternative_font": "Use Alternative Font: {use_alt_font}",
                 "languages": "Languages"
             }
         }

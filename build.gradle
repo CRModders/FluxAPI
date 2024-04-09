@@ -114,6 +114,9 @@ dependencies {
     shadowMe("org.tinylog:tinylog:${tiny_logger_version}")
     shadowMe("com.github.tobiasrm:tinylog-coloredconsole:${tiny_logger_version}")
 
+    // Shape Drawer
+    shadowMe("space.earlygrey:shapedrawer:${shape_drawer_version}") { exclude group: "com.badlogicgames.gdx" }
+
     // GDX stuff not included in Cosmic Reach
     shadowMe("com.badlogicgames.gdx:gdx-freetype:${gdx_version}") { exclude group: "com.badlogicgames.gdx" }
     shadowMe("com.badlogicgames.gdx:gdx-freetype-platform:${gdx_version}:natives-desktop") { exclude group: "com.badlogicgames.gdx" }
@@ -164,7 +167,7 @@ static def void setCurWorkingDir(Task curTask) {
 
 tasks.register("runQuilt", JavaExec) {
     group = "runs" // Sets the task's group
-    dependsOn "jar" // To run this project in the game, depend on the creation of jar task
+    dependsOn "shadowJar" // To run this project in the game, depend on the creation of jar task
 
     dependencies {
         // Cosmic Quilt
@@ -173,8 +176,11 @@ tasks.register("runQuilt", JavaExec) {
 
 
     jvmArgs = [
-            "-Dloader.development=true", // Allows stuff to be found through the classpath
+            "-Dloader.development=false", // Allows stuff to be found through the classpath
             "-Dloader.gameJarPath=" + configurations.cosmicreach.asPath, // Defines path to Cosmic Reach
+            "-Dloader.addMods=" +
+                    shadowJar.archiveFile.get().asFile + // Add the jar of this project (using shadow on Fabric)
+                    getModLocations(configurations.gameMod) // Adds the jars of any Quilt or Fabric mods added (only needed for Fabric as it doesnt load stuff from classpath)
     ]
 
     setCurWorkingDir(tasks.runQuilt)

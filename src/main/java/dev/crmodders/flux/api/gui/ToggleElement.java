@@ -30,7 +30,7 @@ public class ToggleElement extends BaseButton {
 		TranslationString text = FluxSettings.SelectedLanguage.getTranslatedString(key);
 		TranslationString on = FluxSettings.SelectedLanguage.getTranslatedString(FluxConstants.TextOn);
 		TranslationString off = FluxSettings.SelectedLanguage.getTranslatedString(FluxConstants.TextOff);
-		return text.format(value ? on : off);
+		return text.format(value ? on.string() : off.string());
 	}
 
 }
