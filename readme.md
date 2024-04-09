@@ -14,7 +14,7 @@ repositories {
 
 Step 2: Add Flux to your dependencies using the text below
 ```
-implementation "dev.crmodders:FluxAPI:0.5.6"
+implementation "dev.crmodders:fluxapi:0.5.7"
 ```
 
 ### Dev Commands (for contributors)
