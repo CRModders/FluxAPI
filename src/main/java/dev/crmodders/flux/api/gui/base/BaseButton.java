@@ -20,6 +20,7 @@ public class BaseButton extends BaseText {
     public Texture image;
     public float iconSize = fontSize;
     public float iconPadding = 4f;
+    public float iconRotation = 0f;
 
     protected ImageBatch icon;
     protected ShapeBatch regular;
@@ -52,7 +53,7 @@ public class BaseButton extends BaseText {
 
         if(image != null) {
             ImageBatchBuilder icon = renderer.buildImage();
-            icon.drawImage(image, 0, 0, iconSize, iconSize);
+            icon.drawImage(image, 0, 0, iconSize, iconSize, iconRotation);
             this.icon = icon.build();
         }
 

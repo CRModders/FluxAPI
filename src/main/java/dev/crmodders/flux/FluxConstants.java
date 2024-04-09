@@ -5,6 +5,7 @@ import dev.crmodders.flux.localization.TranslationKey;
 
 public class FluxConstants {
     public static boolean GameHasLoaded;
+    public static boolean FluxHasLoaded;
 
     public static final String MOD_ID = "fluxapi";
     public static final String ASSET_KEY = "¬¬$^$^¬¬";
@@ -15,6 +16,7 @@ public class FluxConstants {
     public static final ResourceLocation WhitePixel = new ResourceLocation(MOD_ID, "whitepixel.png");
     public static ResourceLocation DirectoryIcon = new ResourceLocation(MOD_ID, "folder_icon.png");
     public static ResourceLocation ReloadIcon = new ResourceLocation(MOD_ID, "reload_icon.png");
+    public static ResourceLocation CRModdersIcon = new ResourceLocation(MOD_ID, "crmodders.png");
 
     public static final TranslationKey TextOn = new TranslationKey("fluxapi:menu.on");
     public static final TranslationKey TextOff = new TranslationKey("fluxapi:menu.off");

@@ -20,6 +20,12 @@
                 "use_alternative_font" : [
                     "use_alt_font"
                 ]
+            },
+            "loading_menu": {
+                "ram_usage": [
+                    "usage",
+                    "total"
+                ]
             }
         },
         "strings": {
@@ -42,9 +48,16 @@
                 "config_menu": "Mod Configs"
             },
             "loading_menu": {
-                "waiting_title": "Loading/Building Modded Assets Please Wait",
-                "finished_title": "Asset Loading/Creation Finished",
-                "button": "Continue To Game"
+                "waiting_title": "Loading/Building Modded Assets",
+                "ram_usage": "Memory Used/Total: {usage}MB/{total}MB",
+                "loading_cosmic_reach": "Loading Cosmic Reach",
+                "registering_assets": "Registering Assets",
+                "initializing": "Initializing Flux Mods",
+                "registering_blocks": "Registering Blocks",
+                "registering_block_event_actions": "Registering Block Actions",
+                "registering_block_events": "Registering Block Events",
+                "finalizing": "Finalizing",
+                "finished_loading": "Done!"
             },
             "flux_options": {
                 "name": "Flux Options",

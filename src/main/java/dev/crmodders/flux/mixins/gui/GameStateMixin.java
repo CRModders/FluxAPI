@@ -47,10 +47,10 @@ public abstract class GameStateMixin implements GameStateInterface {
 	@Inject(method = "drawUIElements", at = @At(value = "INVOKE", target = "Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;setProjectionMatrix(Lcom/badlogic/gdx/math/Matrix4;)V"))
 	private void drawCustomUIElements(CallbackInfo ci) {
 		for (Component component : components) {
-			component.update(UIRenderer.uiRenderer, uiViewport, mouse);
 			if (component.isDirty()) {
 				component.paint(UIRenderer.uiRenderer);
 			}
+			component.update(UIRenderer.uiRenderer, uiViewport, mouse);
 			component.draw(UIRenderer.uiRenderer, uiViewport);
 		}
 	}

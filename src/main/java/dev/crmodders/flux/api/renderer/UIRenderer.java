@@ -238,7 +238,20 @@ public class UIRenderer {
 
 	public void render(ImageBatch imageBatch, float xStart, float yStart) {
 		for (Image image : imageBatch.images) {
-			this.batch.draw(image.texture, image.x + xStart, image.y + yStart, image.width, image.height, 0, 0, 1, 1);
+			TextureRegion region  = new TextureRegion(image.texture);
+			region.setRegion(0f, 1f, 1f, 0f);
+			this.batch.draw(
+					region,
+					image.x + xStart,
+					image.y + yStart,
+					image.width / 2f,
+					image.height / 2f,
+					image.width,
+					image.height,
+					1f,
+					1f,
+					image.rotation
+			);
 		}
 	}
 

@@ -13,7 +13,10 @@ public class ImageBatchBuilder implements BatchBuilder {
     public List<Image> images = new ArrayList<>();
 
     public void drawImage(Texture texture, float x, float y, float w, float h) {
-        images.add(new Image(texture, x, y, w, h));
+        images.add(new Image(texture, x, y, w, h, 0f));
+    }
+    public void drawImage(Texture texture, float x, float y, float w, float h, float rotation) {
+        images.add(new Image(texture, x, y, w, h, rotation));
     }
 
     @Override
