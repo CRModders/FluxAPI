@@ -1,10 +1,21 @@
 package dev.crmodders.flux.tags;
 
+import dev.crmodders.flux.annotations.Stable;
+
 import java.util.Objects;
 
+/**
+ * Stores information about Registered Objects in FluxAPI
+ * such as {@link dev.crmodders.flux.api.resource.ResourceLocation}
+ * contains a namespace and name
+ * namespaces are usually the modid
+ * @author Mr-Zombii
+ */
+@Stable
 public class Identifier {
 
-    public String namespace, name;
+    public String namespace;
+    public String name;
 
     public Identifier(String namespace, String name) {
         this.namespace = namespace;

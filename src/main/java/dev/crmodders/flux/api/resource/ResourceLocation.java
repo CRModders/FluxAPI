@@ -4,6 +4,10 @@ import com.badlogic.gdx.files.FileHandle;
 import dev.crmodders.flux.tags.Identifier;
 import finalforeach.cosmicreach.GameAssetLoader;
 
+/**
+ * A Class that stores information about Resources
+ * @author Mr-Zombii
+ */
 public class ResourceLocation extends Identifier {
 
     public ResourceLocation(String modId, String path) {

@@ -9,6 +9,10 @@ import finalforeach.cosmicreach.blocks.BlockState;
 import finalforeach.cosmicreach.entities.Player;
 import finalforeach.cosmicreach.world.Zone;
 
+/**
+ * A Basic {@link IModBlock} implementation that utilizes
+ * the builtin <a href = "https://cosmicreach.wiki.gg/wiki/Modding/Assets">Data Modding</a> features
+ */
 public class BasicResourceBlock implements IModBlock {
 
     BlockGenerator generator;
@@ -21,10 +25,6 @@ public class BasicResourceBlock implements IModBlock {
                 )
         );
     }
-
-    public void onInteract(Zone zone, Player player, BlockState blockState, BlockPosition position) {}
-    public void onPlace(Zone zone, Player player, BlockState blockState, BlockPosition position) {}
-    public void onBreak(Zone zone, Player player, BlockState blockState, BlockPosition position) {}
 
     @Override
     public BlockGenerator getGenerator() {

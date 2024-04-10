@@ -3,6 +3,7 @@ package dev.crmodders.flux.api.config;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
 import com.badlogic.gdx.utils.JsonWriter;
+import dev.crmodders.flux.annotations.Experimental;
 import dev.crmodders.flux.tags.Identifier;
 import finalforeach.cosmicreach.io.SaveLocation;
 
@@ -12,6 +13,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Path;
 
+@Experimental
 public class BasicConfig {
 
     public static File ConfigDirectory = new File(SaveLocation.getSaveFolderLocation(), "configs");

@@ -1,16 +1,25 @@
 package dev.crmodders.flux.api.events;
 
+import dev.crmodders.flux.annotations.Stable;
 import dev.crmodders.flux.api.events.system.Event;
 import dev.crmodders.flux.api.events.system.EventFactory;
+import dev.crmodders.flux.localization.LanguageFile;
 import finalforeach.cosmicreach.blocks.BlockPosition;
 import finalforeach.cosmicreach.blocks.BlockState;
 import finalforeach.cosmicreach.gamestates.GameState;
 import finalforeach.cosmicreach.world.Zone;
 import org.pmw.tinylog.Logger;
 
+/**
+ * A Class for All Events in FluxAPI
+ */
+@Stable
 public class GameEvents {
 
-    // Game Flow Events
+    /**
+     * Triggered after the Game Ticks
+     */
+    @Stable
     public static final Event<GameEventTriggers.OnGameTickedTrigger> AFTER_GAME_IS_TICKED = EventFactory.createArrayBacked(GameEventTriggers.OnGameTickedTrigger.class, callbacks -> () -> {
         for (GameEventTriggers.OnGameTickedTrigger callback : callbacks) {
             if (callback != null)
@@ -18,6 +27,10 @@ public class GameEvents {
         }
     });
 
+    /**
+     * Triggered before the Game Ticks
+     */
+    @Stable
     public static final Event<GameEventTriggers.OnGameTickedTrigger> BEFORE_GAME_IS_TICKED = EventFactory.createArrayBacked(GameEventTriggers.OnGameTickedTrigger.class, callbacks -> () -> {
         for (GameEventTriggers.OnGameTickedTrigger callback : callbacks) {
             if (callback != null)
@@ -25,6 +38,11 @@ public class GameEvents {
         }
     });
 
+
+    /**
+     * Triggered in Phase 1 of Initialization
+     */
+    @Stable
     public static final Event<GameEventTriggers.GameInitializationEvent> ON_GAME_INITIALIZED = EventFactory.createArrayBacked(GameEventTriggers.GameInitializationEvent.class, callbacks -> () -> {
         for (var callback : callbacks) {
             if (callback != null)
@@ -33,7 +51,10 @@ public class GameEvents {
     });
 
 
-    // Block Events
+    /**
+     * Triggered after a block has been broken
+     */
+    @Stable
     public static final Event<GameEventTriggers.OnBlockBrokenTrigger> AFTER_BLOCK_IS_BROKEN = EventFactory.createArrayBacked(GameEventTriggers.OnBlockBrokenTrigger.class, callbacks -> (world, pos, timeSinceLastInteract) -> {
         for (GameEventTriggers.OnBlockBrokenTrigger callback : callbacks) {
             if (callback != null)
@@ -41,6 +62,10 @@ public class GameEvents {
         }
     });
 
+    /**
+     * Triggered before a block has been broken
+     */
+    @Stable
     public static final Event<GameEventTriggers.OnBlockBrokenTrigger> BEFORE_BLOCK_IS_BROKEN = EventFactory.createArrayBacked(GameEventTriggers.OnBlockBrokenTrigger.class, callbacks -> (world, blockPos, timeSinceLastInteract) -> {
         for (GameEventTriggers.OnBlockBrokenTrigger callback : callbacks) {
             if (callback != null)
@@ -48,6 +73,10 @@ public class GameEvents {
         }
     });
 
+    /**
+     * Triggered after a block has been placed
+     */
+    @Stable
     public static final Event<GameEventTriggers.OnBlockPlacedTrigger> AFTER_BLOCK_IS_PLACED = EventFactory.createArrayBacked(GameEventTriggers.OnBlockPlacedTrigger.class, callbacks -> (world, targetBlockState, blockPos, timeSinceLastInteract) -> {
         for (GameEventTriggers.OnBlockPlacedTrigger callback : callbacks) {
             if (callback != null)
@@ -55,6 +84,10 @@ public class GameEvents {
         }
     });
 
+    /**
+     * Triggered before a block has been placed
+     */
+    @Stable
     public static final Event<GameEventTriggers.OnBlockPlacedTrigger> BEFORE_BLOCK_IS_PLACED = EventFactory.createArrayBacked(GameEventTriggers.OnBlockPlacedTrigger.class, callbacks -> (world, targetBlockState, blockPos, timeSinceLastInteract) -> {
         for (GameEventTriggers.OnBlockPlacedTrigger callback : callbacks) {
             if (callback != null)
@@ -62,7 +95,10 @@ public class GameEvents {
         }
     });
 
-    // GameState Events
+    /**
+     * Triggered after the current {@link GameState} changed
+     */
+    @Stable
     public static final Event<GameEventTriggers.StateChangedTrigger> AFTER_GAMESTATE_CHANGED = EventFactory.createArrayBacked(GameEventTriggers.StateChangedTrigger.class, callbacks -> gameState -> {
         for (var callback : callbacks) {
             if (callback != null)
@@ -70,6 +106,10 @@ public class GameEvents {
         }
     });
 
+    /**
+     * Triggered before the current {@link GameState} changed
+     */
+    @Stable
     public static final Event<GameEventTriggers.StateChangedTrigger> BEFORE_GAMESTATE_CHANGED = EventFactory.createArrayBacked(GameEventTriggers.StateChangedTrigger.class, callbacks -> gameState -> {
         for (var callback : callbacks) {
             if (callback != null)
@@ -77,6 +117,10 @@ public class GameEvents {
         }
     });
 
+    /**
+     * Triggered before Phase 1 for loading Languages using {@link dev.crmodders.flux.localization.TranslationApi#registerLanguageFile(LanguageFile)}
+     */
+    @Stable
     public static final Event<GameEventTriggers.OnRegisterLanguage> ON_REGISTER_LANGUAGE = EventFactory.createArrayBacked(GameEventTriggers.OnRegisterLanguage.class, callbacks -> () -> {
         for (var callback : callbacks) {
             if (callback != null) {

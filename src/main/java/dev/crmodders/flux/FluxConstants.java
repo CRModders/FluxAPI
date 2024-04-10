@@ -3,8 +3,20 @@ package dev.crmodders.flux;
 import dev.crmodders.flux.api.resource.ResourceLocation;
 import dev.crmodders.flux.localization.TranslationKey;
 
+/**
+ * A Class for all Constants and static Variables used by Flux
+ * and Addons
+ * @author Mr-Zombii, nanobass
+ */
 public class FluxConstants {
+    /**
+     * Is set true when Cosmic Reach has finished loading
+     */
     public static boolean GameHasLoaded;
+
+    /**
+     * Is set true when FluxAPI has finished loading
+     */
     public static boolean FluxHasLoaded;
 
     public static final String MOD_ID = "fluxapi";
