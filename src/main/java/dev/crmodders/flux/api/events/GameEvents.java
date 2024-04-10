@@ -17,7 +17,6 @@ public class GameEvents {
     // Game Flow Events
     public static final Event<GameEventTriggers.OnGameTickedTrigger> AFTER_GAME_IS_TICKED = EventFactory.createArrayBacked(GameEventTriggers.OnGameTickedTrigger.class, callbacks -> () -> {
         for (GameEventTriggers.OnGameTickedTrigger callback : callbacks) {
-            LogWrapper.info("EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE");
             if (callback != null)
                 callback.onTick();
         }
