@@ -8,6 +8,7 @@ import dev.crmodders.flux.api.gui.TextElement;
 import dev.crmodders.flux.api.gui.base.BaseButton;
 import dev.crmodders.flux.api.gui.base.BaseElement;
 import dev.crmodders.flux.api.gui.base.BaseText;
+import dev.crmodders.flux.api.gui.interfaces.GameStateCache;
 import dev.crmodders.flux.api.resource.ResourceLocation;
 import dev.crmodders.flux.localization.TranslationApi;
 import dev.crmodders.flux.localization.TranslationKey;
@@ -123,6 +124,7 @@ public class LanguagePickerMenu extends ScrollMenu{
     protected void onSave() {
         FluxSettings.LanguageSetting.setValue(locale);
         TranslationApi.setLanguage(locale);
+        GameStateCache.getCache().invalidateCachedAssets();
         super.onSave();
     }
 

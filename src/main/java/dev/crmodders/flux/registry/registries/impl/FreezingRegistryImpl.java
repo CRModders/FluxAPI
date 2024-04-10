@@ -2,6 +2,7 @@ package dev.crmodders.flux.registry.registries.impl;
 
 import dev.crmodders.flux.registry.registries.AccessableRegistry;
 import dev.crmodders.flux.registry.registries.FreezingRegistry;
+import dev.crmodders.flux.registry.registries.NotAccessibleException;
 import dev.crmodders.flux.tags.Identifier;
 
 import java.util.HashMap;
@@ -45,5 +46,10 @@ public class FreezingRegistryImpl<T> implements AccessableRegistry<T>, FreezingR
         if (isFrozen) throw new RuntimeException("CANNOT REGISTER AFTER REGISTRY IS FROZEN");
         objects.put(id, object);
         return new RegistryObject<>(id, this);
+    }
+
+    @Override
+    public AccessableRegistry<T> access() throws NotAccessibleException {
+        return this;
     }
 }

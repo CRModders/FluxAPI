@@ -3,6 +3,7 @@ package dev.crmodders.flux.menus;
 import dev.crmodders.flux.FluxConstants;
 import dev.crmodders.flux.FluxSettings;
 import dev.crmodders.flux.api.gui.*;
+import dev.crmodders.flux.api.gui.interfaces.GameStateCache;
 import dev.crmodders.flux.api.renderer.UIRenderer;
 import dev.crmodders.flux.localization.TranslationApi;
 import dev.crmodders.flux.localization.TranslationKey;
@@ -31,6 +32,7 @@ public class FluxOptionMenu extends LayoutMenu {
 				} else {
 					UIRenderer.font = UIRenderer.cosmicReachFont;
 				}
+				GameStateCache.getCache().invalidateCachedAssets();
 			}
 		};
 		font.translation = new TranslationKey("fluxapi:flux_options.use_alternative_font");

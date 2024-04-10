@@ -8,6 +8,8 @@ public interface DynamicRegistry<T> {
 
     RegistryObject<T> register(Identifier id, T object);
 
+    AccessableRegistry<T> access() throws NotAccessibleException;
+
     public static <T> DynamicRegistry<T> create() {
         return new DynamicRegistryImpl<>();
     }

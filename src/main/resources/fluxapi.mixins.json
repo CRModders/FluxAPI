@@ -23,6 +23,7 @@
     "logging.GameStateMixin",
     "logging.LLwjgl3ApplicationLoggerMixin",
     "registry.RegistryRegisterer",
+    "registry.BlockRegisterer",
     "rendering.shaders.ChunkShaderMixin",
     "rendering.shaders.GameShaderMixin"
   ],

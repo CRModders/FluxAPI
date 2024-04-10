@@ -51,6 +51,7 @@
                 "waiting_title": "Loading/Building Modded Assets",
                 "ram_usage": "Memory Used/Total: {usage}MB/{total}MB",
                 "loading_cosmic_reach": "Loading Cosmic Reach",
+                "loading_blocks": "Loading Blocks",
                 "registering_assets": "Registering Assets",
                 "initializing": "Initializing Flux Mods",
                 "registering_blocks": "Registering Blocks",

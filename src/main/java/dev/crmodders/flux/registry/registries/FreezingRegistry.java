@@ -10,6 +10,8 @@ public interface FreezingRegistry<T> {
     boolean isFrozen();
     RegistryObject<T> register(Identifier id, T object);
 
+    AccessableRegistry<T> access() throws NotAccessibleException;
+
     public static <T> FreezingRegistry<T> create() {
         return new FreezingRegistryImpl<>();
     }
