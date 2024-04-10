@@ -10,7 +10,7 @@ import dev.crmodders.flux.localization.TranslationKey;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 
-public class Initialize implements LoadStage {
+public class PreInitialize implements LoadStage {
     @Override
     public TranslationKey title() {
         return new TranslationKey("fluxapi:loading_menu.initializing");
@@ -18,18 +18,17 @@ public class Initialize implements LoadStage {
 
     @Override
     public void doStage(ProgressBarElement progress, ExecutorService threadPool, ExecutorService glThread) {
-        if(GameEvents.ON_INIT instanceof RunnableArrayListEvent events) {
+        if(GameEvents.ON_PRE_INIT instanceof RunnableArrayListEvent events) {
             List<Runnable> initializers = events.getRunnables();
             progress.range = initializers.size();
-            progress.translation = new TranslationKey("fluxapi:loading_menu.init_phase");
+            progress.translation = new TranslationKey("fluxapi:loading_menu.pre_init_phase");
             for(Runnable runnable : initializers) {
                 glThread.submit(() -> progress.value++);
                 glThread.submit(runnable);
             }
         } else {
-            throw new RuntimeException("Can't run Init phase");
+            throw new RuntimeException("Can't run PreInit phase");
         }
-        glThread.submit(GameEvents.ON_GAME_INITIALIZED.invoker()::onInitialized);
     }
 
 }

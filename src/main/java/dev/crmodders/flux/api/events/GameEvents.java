@@ -40,9 +40,10 @@ public class GameEvents {
 
 
     /**
-     * Triggered in Phase 1 of Initialization
+     * Triggered in Phase 2 of Initialization
+     * @deprecated use {@link GameEvents#ON_INIT} instead
      */
-    @Stable
+    @Deprecated
     public static final Event<GameEventTriggers.GameInitializationEvent> ON_GAME_INITIALIZED = EventFactory.createArrayBacked(GameEventTriggers.GameInitializationEvent.class, callbacks -> () -> {
         for (var callback : callbacks) {
             if (callback != null)
@@ -134,6 +135,23 @@ public class GameEvents {
         }
     });
 
+    /**
+     * Triggered in Phase 1 of Initialization
+     */
+    @Stable
+    public static final Event<Runnable> ON_PRE_INIT = EventFactory.createRunnableArrayListEvent();
+
+    /**
+     * Triggered in Phase 2 of Initialization
+     */
+    @Stable
+    public static final Event<Runnable> ON_INIT = EventFactory.createRunnableArrayListEvent();
+
+    /**
+     * Triggered in Phase 3 of Initialization
+     */
+    @Stable
+    public static final Event<Runnable> ON_POST_INIT = EventFactory.createRunnableArrayListEvent();
 
     public static class GameEventTriggers {
 

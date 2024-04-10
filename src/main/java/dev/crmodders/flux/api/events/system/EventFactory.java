@@ -33,6 +33,10 @@ public class EventFactory {
         return event;
     }
 
+    public static Event<Runnable> createRunnableArrayListEvent() {
+        return new RunnableArrayListEvent();
+    }
+
     private static <T> T buildEmptyInvoker(Class<T> handlerClass, Function<T[], T> invokerSetup) {
         // find the functional interface method
         Method funcIfMethod = null;

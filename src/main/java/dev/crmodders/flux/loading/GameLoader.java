@@ -75,13 +75,15 @@ public class GameLoader extends BasicMenu {
         glThread = new CurrentThreadExecutor();
         threadPool = Executors.newFixedThreadPool(4);
 
+        addStage(new PreInitialize());
         addStage(new CosmicReachLoader());
         addStage(new Initialize());
         addStage(new RegisterAssets());
         addStage(new RegisterBlocks());
         addStage(new RegisterBlockActions());
         addStage(new RegisterBlockEvents());
-        addStage(new Finalize());
+        addStage(new FinalizeBlocks());
+        addStage(new PostInitialize());
 
         major.range = stages.size();
         glThread.submit(this::nextStage);

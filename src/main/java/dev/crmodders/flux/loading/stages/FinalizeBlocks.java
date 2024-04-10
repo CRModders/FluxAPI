@@ -12,10 +12,10 @@ import dev.crmodders.flux.tags.Identifier;
 
 import java.util.concurrent.ExecutorService;
 
-public class Finalize implements LoadStage {
+public class FinalizeBlocks implements LoadStage {
     @Override
     public TranslationKey title() {
-        return new TranslationKey("fluxapi:loading_menu.finalizing");
+        return new TranslationKey("fluxapi:loading_menu.finalizing_blocks");
     }
 
     @Override

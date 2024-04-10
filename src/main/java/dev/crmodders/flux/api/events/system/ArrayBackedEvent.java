@@ -3,7 +3,7 @@ package dev.crmodders.flux.api.events.system;
  * CODE FROM FABRIC MODIFIED, ORIGINAL LICENSE:
  * the Apache License, Version 2.0
  *
- * Modified by repletsin5
+ * Modified by repletsin5 and nanobass
  */
 import java.lang.reflect.Array;
 import java.util.Objects;
