@@ -80,7 +80,10 @@ public class BlockGenerator {
 
             FileHandle dataBlock = null;
             try {
-                dataBlock = GameAssetLoader.loadAsset("assets/" + id.namespace + "/blocks/" + id.name + ".json");
+                dataBlock = GameAssetLoader.loadAsset(id.namespace + ":blocks/" + id.name + ".json");
+                if (dataBlock == null) {
+                    if (resourceDriven) dataBlock = GameAssetLoader.loadAsset(resourceId.namespace + ":blocks/" + resourceId.name + ".json");
+                }
             } catch (Exception ignore) {
             }
 

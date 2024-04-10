@@ -102,7 +102,7 @@ dependencies {
     compileOnly("io.github.llamalad7:mixinextras-fabric:0.3.5")
 
     // Modmenu
-    internal("org.codeberg.CRModders:modmenu:${modmenu_version}")
+    gameMod("org.codeberg.CRModders:modmenu:${modmenu_version}")
             { transitive = false } // This will be fixed on the modmenu side soon (to not have to use this line)
 
     // Json stuff
