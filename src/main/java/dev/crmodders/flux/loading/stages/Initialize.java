@@ -20,8 +20,10 @@ public class Initialize implements LoadStage {
     public void doStage(ProgressBarElement progress, ExecutorService threadPool, ExecutorService glThread) {
         if(GameEvents.ON_INIT instanceof RunnableArrayListEvent events) {
             List<Runnable> initializers = events.getRunnables();
-            progress.range = initializers.size();
-            progress.translation = new TranslationKey("fluxapi:loading_menu.init_phase");
+            glThread.submit(() -> {
+                progress.range = initializers.size();
+                progress.translation = new TranslationKey("fluxapi:loading_menu.init_phase");
+            });
             for(Runnable runnable : initializers) {
                 glThread.submit(() -> progress.value++);
                 glThread.submit(runnable);
