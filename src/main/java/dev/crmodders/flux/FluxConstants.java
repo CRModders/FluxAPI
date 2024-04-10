@@ -11,11 +11,13 @@ import dev.crmodders.flux.localization.TranslationKey;
 public class FluxConstants {
     /**
      * Is set true when Cosmic Reach has finished loading
+     * Set after Phase 1 of loading
      */
     public static boolean GameHasLoaded;
 
     /**
      * Is set true when FluxAPI has finished loading
+     * Set after Phase 7 of loading
      */
     public static boolean FluxHasLoaded;
 

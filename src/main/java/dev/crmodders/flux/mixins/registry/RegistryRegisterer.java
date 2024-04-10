@@ -25,7 +25,6 @@ public class RegistryRegisterer {
 
     @Inject(method = "create", at = @At("TAIL"))
     private void create(CallbackInfo ci) {
-        FluxConstants.GameHasLoaded = true;
         try {
             FindLanguages();
             GameEvents.ON_REGISTER_LANGUAGE.invoker().onRegisterLanguage();
