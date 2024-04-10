@@ -1,7 +1,5 @@
 package dev.crmodders.flux.loading;
 
-import com.badlogic.gdx.utils.Timer;
-import com.esotericsoftware.minlog.Log;
 import org.pmw.tinylog.Logger;
 
 import java.util.ArrayList;

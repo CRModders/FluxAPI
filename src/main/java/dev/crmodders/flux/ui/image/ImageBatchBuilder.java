@@ -1,9 +1,7 @@
-package dev.crmodders.flux.api.renderer.image;
+package dev.crmodders.flux.ui.image;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import dev.crmodders.flux.api.renderer.interfaces.Batch;
-import dev.crmodders.flux.api.renderer.interfaces.BatchBuilder;
+import dev.crmodders.flux.ui.BatchBuilder;
 
 import java.util.ArrayList;
 import java.util.List;

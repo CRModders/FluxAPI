@@ -1,4 +1,4 @@
-package dev.crmodders.flux.api.renderer.text;
+package dev.crmodders.flux.ui.text;
 
 import java.util.ArrayList;
 import java.util.List;

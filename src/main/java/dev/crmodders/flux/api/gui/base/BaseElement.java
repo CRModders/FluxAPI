@@ -1,11 +1,10 @@
 package dev.crmodders.flux.api.gui.base;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import dev.crmodders.flux.api.renderer.UIRenderer;
-import dev.crmodders.flux.api.renderer.interfaces.Component;
+import dev.crmodders.flux.ui.Component;
+import dev.crmodders.flux.ui.UIRenderer;
 import finalforeach.cosmicreach.ui.HorizontalAnchor;
 import finalforeach.cosmicreach.ui.VerticalAnchor;
 

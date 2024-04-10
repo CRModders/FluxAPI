@@ -9,7 +9,6 @@ import finalforeach.cosmicreach.blocks.Block;
 import finalforeach.cosmicreach.io.SaveLocation;
 import org.pmw.tinylog.Logger;
 
-import java.sql.Array;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;

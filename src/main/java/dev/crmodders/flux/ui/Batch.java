@@ -1,4 +1,4 @@
-package dev.crmodders.flux.api.renderer.interfaces;
+package dev.crmodders.flux.ui;
 
 public interface Batch {
 	float width();

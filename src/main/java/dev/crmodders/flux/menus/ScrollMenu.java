@@ -3,15 +3,11 @@ package dev.crmodders.flux.menus;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.MathUtils;
-import dev.crmodders.flux.api.gui.TextElement;
 import dev.crmodders.flux.api.gui.base.BaseText;
 import finalforeach.cosmicreach.gamestates.GameState;
-import finalforeach.cosmicreach.gamestates.MainMenu;
 import finalforeach.cosmicreach.settings.SoundSettings;
 import finalforeach.cosmicreach.ui.UIElement;
-import org.lwjgl.system.MathUtil;
 
 import java.util.ArrayList;
 import java.util.List;

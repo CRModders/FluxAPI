@@ -1,9 +1,7 @@
-package dev.crmodders.flux.api.renderer.image;
+package dev.crmodders.flux.ui.image;
 
-import dev.crmodders.flux.api.gui.base.BaseText;
-import dev.crmodders.flux.api.renderer.interfaces.Batch;
+import dev.crmodders.flux.ui.Batch;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ImageBatch implements Batch {

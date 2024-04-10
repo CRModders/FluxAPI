@@ -1,4 +1,4 @@
-package dev.crmodders.flux.api.renderer.shapes;
+package dev.crmodders.flux.ui.shapes;
 
 import com.badlogic.gdx.graphics.Color;
 

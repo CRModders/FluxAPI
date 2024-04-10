@@ -1,4 +1,4 @@
-package dev.crmodders.flux.font;
+package dev.crmodders.flux.ui.font;
 
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;

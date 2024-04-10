@@ -1,27 +1,17 @@
 package dev.crmodders.flux.localization;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.files.FileHandle;
 import dev.crmodders.flux.FluxConstants;
 import dev.crmodders.flux.FluxSettings;
-import dev.crmodders.flux.api.resource.ResourceLocation;
 import dev.crmodders.flux.registry.FluxRegistries;
 import dev.crmodders.flux.registry.registries.AccessableRegistry;
 import dev.crmodders.flux.tags.Identifier;
 import finalforeach.cosmicreach.io.SaveLocation;
-import net.fabricmc.loader.api.FabricLoader;
-import net.fabricmc.loader.api.ModContainer;
 import org.pmw.tinylog.Logger;
 
 import java.io.File;
-import java.io.IOException;
-import java.net.URI;
-import java.net.URL;
-import java.nio.file.*;
-import java.util.*;
-import java.util.stream.Stream;
-
-import static com.badlogic.gdx.Gdx.files;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Locale;
 
 public class TranslationApi {
 

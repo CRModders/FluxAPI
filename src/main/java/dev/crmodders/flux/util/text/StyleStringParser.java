@@ -1,7 +1,7 @@
 package dev.crmodders.flux.util.text;
 
 import com.badlogic.gdx.graphics.Color;
-import dev.crmodders.flux.api.renderer.text.TextBatchBuilder;
+import dev.crmodders.flux.ui.text.TextBatchBuilder;
 
 import java.util.HashMap;
 import java.util.Map;

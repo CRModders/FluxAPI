@@ -2,7 +2,7 @@ package dev.crmodders.flux.api.gui.interfaces;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import dev.crmodders.flux.api.renderer.interfaces.Component;
+import dev.crmodders.flux.ui.Component;
 
 import java.util.List;
 

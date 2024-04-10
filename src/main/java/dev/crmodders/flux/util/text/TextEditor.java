@@ -1,6 +1,6 @@
 package dev.crmodders.flux.util.text;
 
-import dev.crmodders.flux.api.renderer.UIRenderer;
+import finalforeach.cosmicreach.settings.Keybind;
 
 public class TextEditor implements CharSequence {
 
@@ -52,7 +52,7 @@ public class TextEditor implements CharSequence {
 	}
 
 	public boolean type(char c) {
-		if (UIRenderer.CHARACTER_SET.contains(String.valueOf(c))) {
+		if (Keybind.isPrintableChar(c)) {
 			builder.insert(cursor, c);
 			cursor++;
 			return true;

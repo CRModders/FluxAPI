@@ -2,10 +2,10 @@ package dev.crmodders.flux.util.text;
 
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
-import dev.crmodders.flux.api.renderer.UIRenderer;
-import dev.crmodders.flux.api.renderer.interfaces.Document;
-import dev.crmodders.flux.api.renderer.text.TextBatch;
-import dev.crmodders.flux.api.renderer.text.TextBatchBuilder;
+import dev.crmodders.flux.ui.Document;
+import dev.crmodders.flux.ui.text.TextBatch;
+import dev.crmodders.flux.ui.text.TextBatchBuilder;
+import finalforeach.cosmicreach.settings.Keybind;
 
 public class MarkdownDocument implements Document, InputProcessor {
 
@@ -41,7 +41,7 @@ public class MarkdownDocument implements Document, InputProcessor {
 
 	public boolean type(char c) {
 		markDirty();
-		if (UIRenderer.CHARACTER_SET.contains(String.valueOf(c))) {
+		if (Keybind.isPrintableChar(c)) {
 			editor.insert(cursor, c);
 			cursor++;
 			return true;

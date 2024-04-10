@@ -1,6 +1,5 @@
 package dev.crmodders.flux.loading.stages;
 
-import dev.crmodders.flux.api.block.IModBlock;
 import dev.crmodders.flux.api.gui.ProgressBarElement;
 import dev.crmodders.flux.loading.GameLoader;
 import dev.crmodders.flux.loading.LoadStage;

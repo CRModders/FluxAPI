@@ -2,12 +2,10 @@ package dev.crmodders.flux.api.gui.base;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import dev.crmodders.flux.api.renderer.UIRenderer;
-import dev.crmodders.flux.api.renderer.shapes.ShapeBatch;
-import dev.crmodders.flux.api.renderer.shapes.ShapeBatchBuilder;
-import dev.crmodders.flux.api.renderer.text.TextBatch;
-import dev.crmodders.flux.api.renderer.text.TextBatchBuilder;
 import dev.crmodders.flux.localization.TranslationKey;
+import dev.crmodders.flux.ui.UIRenderer;
+import dev.crmodders.flux.ui.shapes.ShapeBatch;
+import dev.crmodders.flux.ui.shapes.ShapeBatchBuilder;
 import finalforeach.cosmicreach.settings.SoundSettings;
 import finalforeach.cosmicreach.ui.UIElement;
 

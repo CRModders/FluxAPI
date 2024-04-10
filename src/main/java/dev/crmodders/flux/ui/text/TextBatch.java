@@ -1,6 +1,6 @@
-package dev.crmodders.flux.api.renderer.text;
+package dev.crmodders.flux.ui.text;
 
-import dev.crmodders.flux.api.renderer.interfaces.Batch;
+import dev.crmodders.flux.ui.Batch;
 
 import java.util.List;
 

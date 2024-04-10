@@ -1,7 +1,6 @@
 package dev.crmodders.flux.mixins.events;
 
 import dev.crmodders.flux.api.events.GameEvents;
-import finalforeach.cosmicreach.blockevents.BlockEventTrigger;
 import finalforeach.cosmicreach.blocks.BlockPosition;
 import finalforeach.cosmicreach.blocks.BlockState;
 import finalforeach.cosmicreach.world.BlockSelection;
@@ -10,9 +9,6 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
-
-import java.util.Map;
 
 @Mixin(BlockSelection.class)
 public class BlockSelectionEventMixin {

@@ -1,15 +1,13 @@
 package dev.crmodders.flux.menus;
 
-import dev.crmodders.flux.FluxConstants;
 import dev.crmodders.flux.FluxSettings;
-import dev.crmodders.flux.api.gui.*;
+import dev.crmodders.flux.api.gui.BooleanToggleElement;
+import dev.crmodders.flux.api.gui.SteppedIntSliderElement;
+import dev.crmodders.flux.api.gui.SwitchGameStateButtonElement;
 import dev.crmodders.flux.api.gui.interfaces.GameStateCache;
-import dev.crmodders.flux.api.renderer.UIRenderer;
-import dev.crmodders.flux.localization.TranslationApi;
 import dev.crmodders.flux.localization.TranslationKey;
+import dev.crmodders.flux.ui.UIRenderer;
 import finalforeach.cosmicreach.gamestates.GameState;
-
-import java.util.Locale;
 
 public class FluxOptionMenu extends LayoutMenu {
 

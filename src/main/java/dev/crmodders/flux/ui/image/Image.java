@@ -1,7 +1,6 @@
-package dev.crmodders.flux.api.renderer.image;
+package dev.crmodders.flux.ui.image;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class Image {
     public final Texture texture;

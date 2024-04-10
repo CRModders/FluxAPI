@@ -2,10 +2,6 @@ package dev.crmodders.flux.api.events;
 
 import dev.crmodders.flux.api.events.system.Event;
 import dev.crmodders.flux.api.events.system.EventFactory;
-import dev.crmodders.flux.api.resource.ResourceLocation;
-import dev.crmodders.flux.localization.LanguageFile;
-import dev.crmodders.flux.localization.TranslationApi;
-import dev.crmodders.flux.logging.LogWrapper;
 import finalforeach.cosmicreach.blocks.BlockPosition;
 import finalforeach.cosmicreach.blocks.BlockState;
 import finalforeach.cosmicreach.gamestates.GameState;

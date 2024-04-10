@@ -1,6 +1,5 @@
-package dev.crmodders.flux.api.renderer;
+package dev.crmodders.flux.ui;
 
-import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -9,20 +8,18 @@ import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import dev.crmodders.flux.FluxConstants;
 import dev.crmodders.flux.FluxSettings;
-import dev.crmodders.flux.api.renderer.image.Image;
-import dev.crmodders.flux.api.renderer.image.ImageBatch;
-import dev.crmodders.flux.api.renderer.image.ImageBatchBuilder;
-import dev.crmodders.flux.api.renderer.interfaces.Batch;
-import dev.crmodders.flux.api.renderer.shapes.*;
-import dev.crmodders.flux.api.renderer.text.StyleBatch;
-import dev.crmodders.flux.api.renderer.text.TextBatch;
-import dev.crmodders.flux.api.renderer.text.TextBatchBuilder;
-import dev.crmodders.flux.api.renderer.text.TextLine;
-import dev.crmodders.flux.font.Font;
+import dev.crmodders.flux.ui.font.Font;
+import dev.crmodders.flux.ui.image.Image;
+import dev.crmodders.flux.ui.image.ImageBatch;
+import dev.crmodders.flux.ui.image.ImageBatchBuilder;
+import dev.crmodders.flux.ui.shapes.*;
+import dev.crmodders.flux.ui.text.StyleBatch;
+import dev.crmodders.flux.ui.text.TextBatch;
+import dev.crmodders.flux.ui.text.TextBatchBuilder;
+import dev.crmodders.flux.ui.text.TextLine;
 import dev.crmodders.flux.util.text.StyleStringParser;
 import finalforeach.cosmicreach.gamestates.GameState;
 import finalforeach.cosmicreach.ui.HorizontalAnchor;
-import finalforeach.cosmicreach.ui.UIElement;
 import finalforeach.cosmicreach.ui.VerticalAnchor;
 import space.earlygrey.shapedrawer.ShapeDrawer;
 
@@ -181,7 +178,7 @@ public class UIRenderer {
 				render(textBatch, batch.x, batch.y);
 			} else if (batch.batch instanceof ShapeBatch shapeBatch) {
 				render(shapeBatch, batch.x, batch.y);
-			} else if (batch.batch instanceof  ImageBatch imageBatch) {
+			} else if (batch.batch instanceof ImageBatch imageBatch) {
 				render(imageBatch, batch.x, batch.y);
 			}
 		}

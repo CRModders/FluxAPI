@@ -1,8 +1,7 @@
-package dev.crmodders.flux.api.renderer.interfaces;
+package dev.crmodders.flux.ui;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import dev.crmodders.flux.api.renderer.UIRenderer;
 
 public interface Component {
 

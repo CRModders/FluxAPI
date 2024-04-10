@@ -5,7 +5,6 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import dev.crmodders.flux.localization.TranslationKey;
 import dev.crmodders.flux.util.text.TextEditor;
-import finalforeach.cosmicreach.ui.UITextInput;
 
 public class BaseTextInput extends BaseButton implements InputProcessor {
 

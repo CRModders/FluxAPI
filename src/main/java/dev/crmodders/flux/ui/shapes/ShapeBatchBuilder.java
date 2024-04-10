@@ -1,7 +1,7 @@
-package dev.crmodders.flux.api.renderer.shapes;
+package dev.crmodders.flux.ui.shapes;
 
 import com.badlogic.gdx.graphics.Color;
-import dev.crmodders.flux.api.renderer.interfaces.BatchBuilder;
+import dev.crmodders.flux.ui.BatchBuilder;
 
 import java.util.ArrayList;
 import java.util.List;

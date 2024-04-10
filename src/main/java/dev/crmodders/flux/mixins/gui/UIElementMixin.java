@@ -2,11 +2,9 @@ package dev.crmodders.flux.mixins.gui;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import dev.crmodders.flux.api.renderer.UIRenderer;
-import dev.crmodders.flux.api.renderer.text.TextBatch;
-import finalforeach.cosmicreach.ui.FontRenderer;
+import dev.crmodders.flux.ui.UIRenderer;
+import dev.crmodders.flux.ui.text.TextBatch;
 import finalforeach.cosmicreach.ui.UIElement;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;

@@ -1,7 +1,6 @@
 package dev.crmodders.flux.loading.stages;
 
 import com.badlogic.gdx.utils.Json;
-import dev.crmodders.flux.api.block.IModBlock;
 import dev.crmodders.flux.api.generators.data.blockevent.BlockEventDataExt;
 import dev.crmodders.flux.api.gui.ProgressBarElement;
 import dev.crmodders.flux.loading.GameLoader;
