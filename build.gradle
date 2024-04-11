@@ -239,7 +239,7 @@ jar.archiveFileName = "${id}-${version}-debloated.jar"
 publishing {
     repositories {
         maven {
-            name = "CRMReleases"
+            name = "crmReleases"
             url = "https://maven.crmodders.dev/releases"
             credentials{
                 username = System.getenv("CRMReleasesUsername")
@@ -251,7 +251,7 @@ publishing {
         }
 
         maven {
-            name = "CRMSnapshots"
+            name = "cRMSnapshots"
             url = "https://maven.crmodders.dev/snapshots"
             credentials(PasswordCredentials)
             authentication {
