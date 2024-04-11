@@ -241,9 +241,9 @@ publishing {
         maven {
             name = "CRMReleases"
             url = "https://maven.crmodders.dev/releases"
-            credentials(PasswordCredentials)
-            authentication {
-                basic(BasicAuthentication)
+            credentials{
+                username = System.getenv("CRMReleasesUsername")
+                password = System.getenv("CRMReleasesPassword")
             }
         }
 
