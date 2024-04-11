@@ -9,7 +9,8 @@ name: Gradle Package
 
 on:
   release:
-    types: [published]
+    types:
+      - published
 
 jobs:
   build:
