@@ -10,7 +10,7 @@ public interface DynamicRegistry<T> {
 
     AccessableRegistry<T> access() throws NotAccessibleException;
 
-    public static <T> DynamicRegistry<T> create() {
+    static <T> DynamicRegistry<T> create() {
         return new DynamicRegistryImpl<>();
     }
 

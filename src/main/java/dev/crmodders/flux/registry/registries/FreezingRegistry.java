@@ -11,9 +11,11 @@ public interface FreezingRegistry<T> {
     RegistryObject<T> register(Identifier id, T object);
 
     AccessableRegistry<T> access() throws NotAccessibleException;
+    ListenerActiveRegistry<T> asListenerActive() throws NotAccessibleException;
 
-    public static <T> FreezingRegistry<T> create() {
+    static <T> FreezingRegistry<T> create() {
         return new FreezingRegistryImpl<>();
     }
+
 
 }
