@@ -25,6 +25,7 @@ public class BlockGenerator {
     protected JsonObject object;
     protected HashMap<BlockEventType, Boolean> blockEventOverrideMap;
     protected HashMap<BlockEventType, List<TriggerStatePair>> blockTriggers;
+    protected HashMap<BlockEventType, List<BasicTriggerSupplier>> multiStateTriggers;
     protected boolean resourceDriven;
     protected ResourceLocation resourceId;
 
@@ -72,6 +73,14 @@ public class BlockGenerator {
         ));
 
         blockTriggers.put(eventType, blockTriggerz);
+        return this;
+    }
+
+    public BlockGenerator addTriggerMultiStateTrigger(BlockEventType eventType, BasicTriggerSupplier trigger) {
+        List<BasicTriggerSupplier> blockTriggerz = multiStateTriggers.get(eventType);
+        blockTriggerz.add(trigger);
+
+        multiStateTriggers.put(eventType, blockTriggerz);
         return this;
     }
 
@@ -126,12 +135,14 @@ public class BlockGenerator {
                 ).asObject();
             }
 
-
+            addTriggerMultiStateTrigger(BlockEventType.OnBreak, block::onBreak);
+            addTriggerMultiStateTrigger(BlockEventType.OnPlace, block::onPlace);
+            addTriggerMultiStateTrigger(BlockEventType.OnInteract, block::onInteract);
 
             for (String name : object.get("blockStates").asObject().names()) {
-                addTriggerToBlockstate(BlockEventType.OnBreak, name, block::onBreak);
-                addTriggerToBlockstate(BlockEventType.OnBreak, name, block::onPlace);
-                addTriggerToBlockstate(BlockEventType.OnBreak, name, block::onInteract);
+                multiStateTriggers.keySet().forEach((key) -> multiStateTriggers.get(key).forEach((trigger) -> {
+                    addTriggerToBlockstate(key, name, trigger);
+                }));
 
                 JsonObject newBlockstate = BlockStateGenerator.ModifiyBlockState(
                         id,
