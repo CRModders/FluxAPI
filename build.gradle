@@ -1,3 +1,5 @@
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+
 plugins {
     id "application" // TODO: Remove this plugin
     id "maven-publish"
@@ -225,16 +227,53 @@ tasks.register("runFabric", JavaExec) {
 
 
 java {
-    withSourcesJar()
-//    withJavadocJar() // If docs are included with the project, this line can be un-commented
-    sourcesJar.archiveFileName = "${id}-${version}-sources.jar"
-
     // Sets the Java version
     sourceCompatibility = JavaVersion.VERSION_17
     targetCompatibility = JavaVersion.VERSION_17
 }
 
-jar.archiveFileName = "${id}-${version}-debloated.jar"
+jar.enabled = false
+
+// Maven
+tasks.register("buildJars") {
+    group = "compile"
+
+    dependsOn("buildFatJar")
+    dependsOn("buildSlimJar")
+    dependsOn("buildSourcesJar")
+}
+
+tasks.register("buildFatJar", ShadowJar) {
+    group = "compile"
+
+    configurations = [project.configurations.shadowMe]
+    archiveFileName = "${id}-${version}.jar"
+}
+
+tasks.register("buildSlimJar", Jar) {
+    group = "compile"
+
+    dependsOn("compileJava")
+    dependsOn("processResources")
+
+    from(sourceSets.main.resources.sourceDirectories)
+    from(sourceSets.main.java.classesDirectory)
+
+    archiveFileName = "${id}-${version}-slim.jar"
+}
+
+tasks.register("buildSourcesJar", Jar) {
+    group = "compile"
+
+    from(sourceSets.main.allSource)
+    archiveFileName = "${id}-${version}-sources.jar"
+}
+
+//tasks.register("buildDocsJar", ) {
+//    group = "compile"
+//
+//    archiveFileName = "${id}-${version}-slim.jar"
+//}
 
 publishing {
     repositories {
@@ -242,8 +281,8 @@ publishing {
             name = "crmReleases"
             url = "https://maven.crmodders.dev/releases"
             credentials{
-                username = System.getenv("CRMReleasesUsername")
-                password = System.getenv("CRMReleasesPassword")
+                username = "Github"
+                password = "opxpcaK6uiEUznGKdVq4e9nVevmqFNqqd4j8Tkn/2dCLbD3fAQ1qwvlhyrEo13F3"
             }
             authentication {
                 basic(BasicAuthentication)
@@ -259,13 +298,15 @@ publishing {
             }
         }
     }
-
+    assemble.dependsOn buildSourcesJar, buildFatJar, buildSlimJar
     publications {
         maven(MavenPublication) {
             groupId = group
             artifactId = id
 
-            from components.java
+            artifact buildFatJar
+            artifact source: buildSlimJar, classifier: 'slim', extension: 'jar'
+            artifact source: buildSourcesJar, classifier: 'source', extension: 'jar'
         }
     }
 }
