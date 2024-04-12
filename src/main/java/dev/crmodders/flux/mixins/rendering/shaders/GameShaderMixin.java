@@ -6,6 +6,7 @@ import finalforeach.cosmicreach.GameAssetLoader;
 import finalforeach.cosmicreach.rendering.shaders.GameShader;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
 @Mixin(GameShader.class)
@@ -20,4 +21,11 @@ public class GameShaderMixin {
         }
         return GameAssetLoader.loadAsset(fileName);
     }
+
+    @Redirect(method = "loadShaderFile", at = @At(value = "INVOKE", target = "Ljava/lang/String;replaceAll(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;"))
+    String replaceAllInShaderName(String instance, String regex, String replacement) {
+        Identifier id = Identifier.fromString(instance);
+        return id.name.replaceAll(regex, replacement);
+    }
+
 }
