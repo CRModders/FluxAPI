@@ -249,7 +249,10 @@ tasks.register("buildFatJar", ShadowJar) {
     mainClassName = "dev.crmodders.flux.FluxAPI"
     configurations = [project.configurations.shadowMe]
 
-    from(sourceSets.main.resources.sourceDirectories)
+    dependsOn("compileJava")
+    dependsOn("processResources")
+
+    from(processResources.destinationDir)
     from(sourceSets.main.java.classesDirectory)
 
     archiveFileName = "${id}-${version}-fat.jar"
@@ -261,7 +264,7 @@ tasks.register("buildSlimJar", Jar) {
     dependsOn("compileJava")
     dependsOn("processResources")
 
-    from(sourceSets.main.resources.sourceDirectories)
+    from(processResources.destinationDir)
     from(sourceSets.main.java.classesDirectory)
 
     archiveFileName = "${id}-${version}-slim.jar"
