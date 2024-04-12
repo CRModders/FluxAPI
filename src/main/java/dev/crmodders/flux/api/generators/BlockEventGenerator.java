@@ -7,11 +7,13 @@ import dev.crmodders.flux.api.generators.data.blockevent.BlockEventDataExt;
 import dev.crmodders.flux.api.generators.data.blockevent.BlockEventType;
 import dev.crmodders.flux.api.generators.data.blockevent.triggers.TriggerData;
 import dev.crmodders.flux.api.generators.data.blockevent.triggers.TriggerEventData;
+import dev.crmodders.flux.api.generators.suppliers.BasicTriggerSupplier;
 import dev.crmodders.flux.api.suppliers.ReturnableSupplier;
 import dev.crmodders.flux.registry.FluxRegistries;
 import dev.crmodders.flux.tags.Identifier;
 import dev.crmodders.flux.util.PrivUtils;
 import finalforeach.cosmicreach.GameAssetLoader;
+import finalforeach.cosmicreach.blockevents.BlockEventActionRunTrigger;
 import finalforeach.cosmicreach.blockevents.BlockEventTrigger;
 import finalforeach.cosmicreach.blockevents.IBlockEventAction;
 import finalforeach.cosmicreach.blocks.BlockPosition;
@@ -25,64 +27,24 @@ import java.util.*;
 
 public class BlockEventGenerator {
 
-    public static void RegisterBlockEventActions(Identifier id, IModBlock block) {
-        FluxRegistries.BLOCK_EVENT_ACTIONS.register(Identifier.fromString(id + "_INTERACT"), new IBlockEventAction() {
+    private static void registerBlockEvent(String id, List<BasicTriggerSupplier> triggers) {
+        FluxRegistries.BLOCK_EVENT_ACTIONS.register(Identifier.fromString(id), new IBlockEventAction() {
             @Override
             public String getActionId() {
-                return id + "_INTERACT";
+                return id;
             }
 
             @Override
             public void act(BlockState blockState, BlockEventTrigger blockEventTrigger, Zone zone, Map<String, Object> map) {
                 try {
-                    block.onInteract(
-                            zone,
-                            (Player) PrivUtils.getPrivField(InGame.class, "player"),
-                            blockState,
-                            (BlockPosition) map.get("blockPos")
-                    );
-                } catch (NoSuchFieldException | IllegalAccessException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        });
-
-        FluxRegistries.BLOCK_EVENT_ACTIONS.register(Identifier.fromString(id +"_PLACE"), new IBlockEventAction() {
-            @Override
-            public String getActionId() {
-                return id+"_PLACE";
-            }
-
-            @Override
-            public void act(BlockState blockState, BlockEventTrigger blockEventTrigger, Zone zone, Map<String, Object> map) {
-                try {
-                    block.onPlace(
-                            zone,
-                            (Player) PrivUtils.getPrivField(InGame.class, "player"),
-                            blockState,
-                            (BlockPosition) map.get("blockPos")
-                    );
-                } catch (NoSuchFieldException | IllegalAccessException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        });
-
-        FluxRegistries.BLOCK_EVENT_ACTIONS.register(Identifier.fromString(id +"_BREAK"), new IBlockEventAction() {
-            @Override
-            public String getActionId() {
-                return id+"_BREAK";
-            }
-
-            @Override
-            public void act(BlockState blockState, BlockEventTrigger blockEventTrigger, Zone zone, Map<String, Object> map) {
-                try {
-                    block.onBreak(
-                            zone,
-                            (Player) PrivUtils.getPrivField(InGame.class, "player"),
-                            blockState,
-                            (BlockPosition) map.get("blockPos")
-                    );
+                    for (BasicTriggerSupplier trigger : triggers) {
+                        trigger.runTrigger(
+                                zone,
+                                (Player) PrivUtils.getPrivField(InGame.class, "player"),
+                                blockState,
+                                (BlockPosition) map.get("blockPos")
+                        );
+                    }
                 } catch (NoSuchFieldException | IllegalAccessException e) {
                     throw new RuntimeException(e);
                 }
@@ -90,10 +52,35 @@ public class BlockEventGenerator {
         });
     }
 
-    public static BlockEventData CreateNewBlockEvent(Identifier blockEventId, IModBlock block) {
+    public static void RegisterBlockEventActions(Identifier id, IModBlock block, String blockStateName) {
+
         BlockGenerator generator = block.getGenerator();
 
-        RegisterBlockEventActions(blockEventId, block);
+        registerBlockEvent(id + "_INTERACT", generator.getTriggersPairs(
+                BlockEventType.OnInteract,
+                blockStateName
+        ));
+
+        registerBlockEvent(id + "_PLACE", generator.getTriggersPairs(
+                BlockEventType.OnPlace,
+                blockStateName
+        ));
+
+        registerBlockEvent(id + "_BREAK", generator.getTriggersPairs(
+                BlockEventType.OnBreak,
+                blockStateName
+        ));
+
+    }
+
+    public static BlockEventData CreateNewBlockEvent(
+            Identifier blockEventId,
+            IModBlock block,
+            String stateName
+    ) {
+        BlockGenerator generator = block.getGenerator();
+
+        RegisterBlockEventActions(blockEventId, block, stateName);
 
         HashMap<String, Object> onPlaceParams_0 = new HashMap<>();
         onPlaceParams_0.put("xOff", 0);
@@ -182,10 +169,10 @@ public class BlockEventGenerator {
         );
     }
 
-    public static BlockEventDataExt InjectIntoBlockEvent(Identifier oldId, Identifier blockEventId, IModBlock block) {
+    public static BlockEventDataExt InjectIntoBlockEvent(Identifier oldId, Identifier blockEventId, IModBlock block, String blockStateName) {
         BlockGenerator generator = block.getGenerator();
 
-        RegisterBlockEventActions(blockEventId, block);
+        RegisterBlockEventActions(blockEventId, block, blockStateName);
 
         FileHandle f = GameAssetLoader.loadAsset(oldId.namespace + ":block_events/" + oldId.name + ".json");
         JsonObject jsonObject = JsonObject.readJSON(f.readString()).asObject();
