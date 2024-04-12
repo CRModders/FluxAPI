@@ -281,8 +281,8 @@ publishing {
             name = "crmReleases"
             url = "https://maven.crmodders.dev/releases"
             credentials{
-                username = "Github"
-                password = "opxpcaK6uiEUznGKdVq4e9nVevmqFNqqd4j8Tkn/2dCLbD3fAQ1qwvlhyrEo13F3"
+                username = System.getenv("CRMReleasesUsername")
+                password = System.getenv("CRMReleasesPassword")
             }
             authentication {
                 basic(BasicAuthentication)
