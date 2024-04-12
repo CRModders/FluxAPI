@@ -246,7 +246,12 @@ tasks.register("buildJars") {
 tasks.register("buildFatJar", ShadowJar) {
     group = "compile"
 
+    mainClassName = "dev.crmodders.flux.FluxAPI"
     configurations = [project.configurations.shadowMe]
+
+    from(sourceSets.main.resources.sourceDirectories)
+    from(sourceSets.main.java.classesDirectory)
+
     archiveFileName = "${id}-${version}-fat.jar"
 }
 
