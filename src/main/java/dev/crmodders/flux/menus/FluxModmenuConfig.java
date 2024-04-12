@@ -1,7 +1,7 @@
 package dev.crmodders.flux.menus;
 
-import org.coolcosmos.modmenu.api.ConfigScreenFactory;
-import org.coolcosmos.modmenu.api.ModMenuApi;
+import dev.crmodders.modmenu.api.ConfigScreenFactory;
+import dev.crmodders.modmenu.api.ModMenuApi;
 
 public class FluxModmenuConfig implements ModMenuApi {
     @Override
