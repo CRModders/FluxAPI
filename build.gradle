@@ -247,7 +247,7 @@ tasks.register("buildFatJar", ShadowJar) {
     group = "compile"
 
     configurations = [project.configurations.shadowMe]
-    archiveFileName = "${id}-${version}.jar"
+    archiveFileName = "${id}-${version}2.jar"
 }
 
 tasks.register("buildSlimJar", Jar) {
