@@ -103,8 +103,7 @@ dependencies {
     compileOnly("io.github.llamalad7:mixinextras-fabric:0.3.5")
 
     // Modmenu
-    gameMod("org.codeberg.CRModders:modmenu:${modmenu_version}")
-            { transitive = false } // This will be fixed on the modmenu side soon (to not have to use this line)
+    gameMod("dev.crmodders:modmenu:${modmenu_version}")
 
     // Json stuff
     shadowMe("com.google.guava:guava:33.0.0-jre")
@@ -172,7 +171,7 @@ tasks.register("runQuilt", JavaExec) {
 
     dependencies {
         // Cosmic Quilt
-        implementation("org.codeberg.CRModders:cosmic-quilt:${cosmic_quilt_version}")
+        implementation("dev.crmodders:cosmicquilt:${cosmic_quilt_version}")
     }
 
 
