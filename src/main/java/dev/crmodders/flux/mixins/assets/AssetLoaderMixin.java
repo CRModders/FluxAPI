@@ -32,6 +32,10 @@ public class AssetLoaderMixin {
         if (!forceReload && ALL_ASSETS.containsKey(location.toString()))
             return ALL_ASSETS.get(location.toString());
 
+        if("base".equals(location.namespace)) {
+            fileName = location.name;
+        }
+
         FileHandle modLocationFile = Gdx.files.absolute(SaveLocation.getSaveFolderLocation() + "/mods/assets/" + fileName);
         if (modLocationFile.exists()) {
             LogWrapper.info("%s Loading %s from DataMods".formatted(TAG, fileName));

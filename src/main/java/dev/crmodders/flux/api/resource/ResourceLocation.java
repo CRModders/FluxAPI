@@ -12,8 +12,6 @@ public class ResourceLocation extends Identifier {
 
     public ResourceLocation(String modId, String path) {
         super(modId, path);
-        this.namespace = modId;
-        this.name = path;
     }
 
     public static ResourceLocation fromString(String id) {

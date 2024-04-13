@@ -15,6 +15,7 @@ public class ProgressBarElement extends BaseText {
 
     public boolean hideIfZero = false;
     public boolean prefixTranslation = true;
+    public String prefix;
 
     @Override
     public void paint(UIRenderer renderer) {
@@ -51,8 +52,17 @@ public class ProgressBarElement extends BaseText {
 
     @Override
     public String updateTranslation(TranslationKey key) {
+        String formatted = String.format("%d/%d", value, range);
         if(key == null) {
-            return String.format("%d/%d", value, range);
+            if(prefix == null) {
+                return formatted;
+            } else {
+                if(prefixTranslation) {
+                    return prefix + " " + formatted;
+                } else {
+                    return prefix.formatted(value, range);
+                }
+            }
         } else {
             if(prefixTranslation) {
                 return key.getTranslated().string() + " " + String.format("%d/%d", value, range);

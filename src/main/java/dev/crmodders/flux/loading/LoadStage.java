@@ -5,10 +5,19 @@ import dev.crmodders.flux.localization.TranslationKey;
 
 import java.util.concurrent.ExecutorService;
 
-public interface LoadStage {
+public class LoadStage {
 
-    TranslationKey title();
+    public GameLoader loader;
 
-    void doStage(ProgressBarElement progress, ExecutorService threadPool, ExecutorService glThread);
+    public TranslationKey title;
+
+    public void initialize(GameLoader loader) {
+        this.loader = loader;
+    }
+
+    public void doStage() {
+        loader.setupProgressBar(loader.progress2, 0);
+        loader.setupProgressBar(loader.progress3, 0);
+    }
 
 }

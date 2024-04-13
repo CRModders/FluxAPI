@@ -4,6 +4,7 @@ import dev.crmodders.flux.annotations.FluxInternal;
 import dev.crmodders.flux.annotations.Stable;
 import dev.crmodders.flux.api.block.IModBlock;
 import dev.crmodders.flux.api.config.BasicConfig;
+import dev.crmodders.flux.api.factories.IModBlockFactory;
 import dev.crmodders.flux.api.generators.FactoryFinalizer;
 import dev.crmodders.flux.api.generators.data.blockevent.BlockEventDataExt;
 import dev.crmodders.flux.api.resource.ResourceObject;
@@ -12,6 +13,9 @@ import dev.crmodders.flux.localization.LanguageFile;
 import dev.crmodders.flux.registry.registries.DynamicRegistry;
 import dev.crmodders.flux.registry.registries.FreezingRegistry;
 import finalforeach.cosmicreach.blockevents.IBlockEventAction;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Common Class for Flux Registries
@@ -25,6 +29,9 @@ public class FluxRegistries {
      */
     @Stable
     public static DynamicRegistry<ResourceObject> GAME_RESOURCES = DynamicRegistry.create();
+
+    @Stable
+    public static List<IModBlockFactory> BLOCK_FACTORIES = new ArrayList<>();
 
     /**
      * Used for Registering Custom {@link IModBlock}

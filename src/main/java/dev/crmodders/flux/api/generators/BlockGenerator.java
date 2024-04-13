@@ -23,14 +23,16 @@ public class BlockGenerator {
     protected HashMap<BlockEventType, Boolean> blockEventOverrideMap;
     protected boolean resourceDriven;
     protected ResourceLocation resourceId;
+    protected Identifier blockId;
 
-    protected BlockGenerator() {
-        this(false, null);
+    protected BlockGenerator(Identifier blockId) {
+        this(false, null, blockId);
     }
 
-    protected BlockGenerator(boolean resourceDriven, ResourceLocation resourceId) {
+    protected BlockGenerator(boolean resourceDriven, ResourceLocation resourceId, Identifier blockId) {
         this.resourceDriven = resourceDriven;
         this.resourceId = resourceId;
+        this.blockId = blockId;
 
         blockEventOverrideMap = new HashMap<>();
         blockEventOverrideMap.put(BlockEventType.OnPlace, false);
@@ -64,50 +66,60 @@ public class BlockGenerator {
         return this;
     }
 
-    public static BlockGenerator createGenerator() {
-        return new BlockGenerator();
+    public static BlockGenerator createGenerator(Identifier blockId) {
+        return new BlockGenerator(blockId);
     }
 
     public static BlockGenerator createResourceDrivenGenerator(ResourceLocation preExistingBlockId) {
-        return new BlockGenerator(true, preExistingBlockId);
+        return new BlockGenerator(true, preExistingBlockId, null);
     }
 
-    public ReturnableDoubleInputSupplier<IModBlock, Identifier, FactoryFinalizer<Block>> GetGeneratorFactory() {
+    public String getJson(IModBlock block) {
+        if(blockId != null) {
+            object.set("stringId", blockId.toString());
+        }
 
-        return (block, id) -> {
-            if (!FluxRegistries.BLOCKS.isFrozen()) throw new RuntimeException("CANNOT USE GENERATOR FACTORY BECAUSE REGISTRIES ARE NOT FROZEN YET");
-            object.set("stringId", id.toString());
-
-            FileHandle dataBlock = null;
-            try {
-                dataBlock = GameAssetLoader.loadAsset(id.namespace + ":blocks/" + id.name + ".json");
-                if (dataBlock == null) {
-                    if (resourceDriven) dataBlock = GameAssetLoader.loadAsset(resourceId.namespace + ":blocks/" + resourceId.name + ".json");
-                }
-            } catch (Exception ignore) {
+        FileHandle dataBlock = null;
+        try {
+            if(blockId != null) {
+                dataBlock = GameAssetLoader.loadAsset(blockId.namespace + ":blocks/" + blockId.name + ".json");
             }
-
-            if (dataBlock != null) {
-                object = JsonValue.readJSON(
-                        dataBlock.readString()
-                                .replaceAll("\t", "")
-                                .replaceAll(" ", "")
-                                .replaceAll("\n", "")
-                                .replaceAll(",}", "}")
-                ).asObject();
+            if (dataBlock == null && resourceDriven) {
+                dataBlock = GameAssetLoader.loadAsset(resourceId.namespace + ":blocks/" + resourceId.name + ".json");
             }
+        } catch (Exception ignore) {
+        }
 
-            for (String name : object.get("blockStates").asObject().names()) {
-                JsonObject newBlockstate = BlockStateGenerator.ModifiyBlockState(
-                        id,
-                        block,
-                        object.get("blockStates").asObject().get(name).asObject()
-                );
-                object.set("blockStates", object.get("blockStates").asObject().set(name, newBlockstate));
+        if (dataBlock != null) {
+            object = JsonValue.readJSON(
+                    dataBlock.readString()
+                            .replaceAll("\t", "")
+                            .replaceAll(" ", "")
+                            .replaceAll("\n", "")
+                            .replaceAll(",}", "}")
+            ).asObject();
+            if(blockId == null) {
+                blockId = Identifier.fromString(object.get("stringId").asString());
             }
+        }
 
-            return new FactoryFinalizer<>(() -> BlockBuilderUtils.getBlockFromJson(id, object.toString()));
-        };
+//        for (String name : object.get("blockStates").asObject().names()) {
+//            JsonObject newBlockstate = BlockStateGenerator.ModifiyBlockState(
+//                    blockId,
+//                    block,
+//                    object.get("blockStates").asObject().get(name).asObject()
+//            );
+//            object.set("blockStates", object.get("blockStates").asObject().set(name, newBlockstate));
+//        }
+
+        if(blockId == null) {
+            throw new RuntimeException("error loading block");
+        }
+
+        return object.toString();
     }
 
+    public Identifier getBlockId() {
+        return blockId;
+    }
 }
