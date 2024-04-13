@@ -9,7 +9,8 @@ import dev.crmodders.flux.registry.FluxRegistries;
 import dev.crmodders.flux.registry.registries.AccessableRegistry;
 import dev.crmodders.flux.tags.Identifier;
 import finalforeach.cosmicreach.blockevents.BlockEvents;
-import finalforeach.cosmicreach.blockevents.IBlockEventAction;
+import finalforeach.cosmicreach.blockevents.actions.ActionId;
+import finalforeach.cosmicreach.blockevents.actions.IBlockAction;
 
 import java.util.concurrent.ExecutorService;
 
@@ -21,17 +22,18 @@ public class RegisterBlockActions implements LoadStage {
 
     @Override
     public void doStage(ProgressBarElement progress, ExecutorService threadPool, ExecutorService glThread) {
-        AccessableRegistry<IBlockEventAction> registryAccess = FluxRegistries.BLOCK_EVENT_ACTIONS.access();
+        AccessableRegistry<IBlockAction> registryAccess = FluxRegistries.BLOCK_EVENT_ACTIONS.access();
         progress.range = registryAccess.getRegisteredNames().length;
 
         FluxRegistries.BLOCK_EVENT_ACTIONS.freeze();
         for (Identifier actionId : registryAccess.getRegisteredNames()) {
-            IBlockEventAction action = registryAccess.get(actionId);
+            IBlockAction action = registryAccess.get(actionId);
             glThread.submit(() -> {
-                BlockEvents.registerBlockEventAction(action);
+                BlockEvents.ALL_ACTIONS.put(actionId.toString(), action.getClass());
                 progress.value++;
                 LogWrapper.info("%s: Registered Block Event Action %s".formatted(GameLoader.TAG, action.getActionId()));
             });
+
         }
     }
 

@@ -114,7 +114,7 @@ public class GameLoader extends BasicMenu {
             if(SoundSettings.isSoundEnabled()) {
                 UIElement.onClickSound.setPitch(UIElement.onClickSound.play(), 4f);
             }
-            GameState.switchToGameState(GameState.MAIN_MENU);
+            GameState.switchToGameState(FluxConstants.MAIN_MENU);
         }
 
         super.render(partTime);

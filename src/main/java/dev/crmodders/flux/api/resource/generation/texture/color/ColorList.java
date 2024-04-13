@@ -1,4 +1,4 @@
-package dev.crmodders.flux.api.generation.texture.color;
+package dev.crmodders.flux.api.resource.generation.texture.color;
 
 import java.util.HashMap;
 import java.util.Map; /**

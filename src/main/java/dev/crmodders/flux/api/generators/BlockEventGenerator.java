@@ -13,14 +13,9 @@ import dev.crmodders.flux.registry.FluxRegistries;
 import dev.crmodders.flux.tags.Identifier;
 import dev.crmodders.flux.util.PrivUtils;
 import finalforeach.cosmicreach.GameAssetLoader;
-import finalforeach.cosmicreach.blockevents.BlockEventActionRunTrigger;
-import finalforeach.cosmicreach.blockevents.BlockEventTrigger;
-import finalforeach.cosmicreach.blockevents.IBlockEventAction;
 import finalforeach.cosmicreach.blocks.BlockPosition;
-import finalforeach.cosmicreach.blocks.BlockState;
 import finalforeach.cosmicreach.entities.Player;
 import finalforeach.cosmicreach.gamestates.InGame;
-import finalforeach.cosmicreach.world.Zone;
 import org.hjson.JsonObject;
 
 import java.util.*;
@@ -28,26 +23,19 @@ import java.util.*;
 public class BlockEventGenerator {
 
     private static void registerBlockEvent(String id, List<BasicTriggerSupplier> triggers) {
-        FluxRegistries.BLOCK_EVENT_ACTIONS.register(Identifier.fromString(id), new IBlockEventAction() {
-            @Override
-            public String getActionId() {
-                return id;
-            }
 
-            @Override
-            public void act(BlockState blockState, BlockEventTrigger blockEventTrigger, Zone zone, Map<String, Object> map) {
-                try {
-                    for (BasicTriggerSupplier trigger : triggers) {
-                        trigger.runTrigger(
-                                zone,
-                                (Player) PrivUtils.getPrivField(InGame.class, "player"),
-                                blockState,
-                                (BlockPosition) map.get("blockPos")
-                        );
-                    }
-                } catch (NoSuchFieldException | IllegalAccessException e) {
-                    throw new RuntimeException(e);
+        FluxRegistries.BLOCK_EVENT_ACTIONS.register(Identifier.fromString(id), (blockState, blockEventTrigger, zone, map) -> {
+            try {
+                for (BasicTriggerSupplier trigger : triggers) {
+                    trigger.runTrigger(
+                            zone,
+                            (Player) PrivUtils.getPrivField(InGame.class, "player"),
+                            blockState,
+                            (BlockPosition) map.get("blockPos")
+                    );
                 }
+            } catch (NoSuchFieldException | IllegalAccessException e) {
+                throw new RuntimeException(e);
             }
         });
     }

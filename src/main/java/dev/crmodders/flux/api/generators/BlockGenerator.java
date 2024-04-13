@@ -2,6 +2,7 @@ package dev.crmodders.flux.api.generators;
 
 import com.badlogic.gdx.files.FileHandle;
 import dev.crmodders.flux.api.block.IModBlock;
+import dev.crmodders.flux.api.events.GameEvents;
 import dev.crmodders.flux.api.generators.data.blockevent.BlockEventType;
 import dev.crmodders.flux.api.generators.data.blockstate.BlockStateData;
 import dev.crmodders.flux.api.generators.data.blockstate.BlockStateDataExt;
@@ -58,6 +59,7 @@ public class BlockGenerator {
                Identifier.fromString("base:block_events_default"),
                 "model_metal_panel"
         ));
+
 
     }
 

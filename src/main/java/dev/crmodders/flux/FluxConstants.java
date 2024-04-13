@@ -2,6 +2,8 @@ package dev.crmodders.flux;
 
 import dev.crmodders.flux.api.resource.ResourceLocation;
 import dev.crmodders.flux.localization.TranslationKey;
+import finalforeach.cosmicreach.gamestates.GameState;
+import finalforeach.cosmicreach.gamestates.MainMenu;
 
 /**
  * A Class for all Constants and static Variables used by Flux
@@ -23,6 +25,8 @@ public class FluxConstants {
 
     public static final String MOD_ID = "fluxapi";
     public static final String ASSET_KEY = "¬¬$^$^¬¬";
+
+    public static GameState MAIN_MENU = new MainMenu();
 
     public static final ResourceLocation LanguageEnUs = new ResourceLocation(MOD_ID, "languages/en-US.json");
     public static final ResourceLocation CosmicReachFont = new ResourceLocation(MOD_ID, "fonts/cosmic_reach.fnt");
