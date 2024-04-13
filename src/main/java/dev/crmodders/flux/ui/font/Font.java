@@ -1,12 +1,23 @@
 package dev.crmodders.flux.ui.font;
 
 import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.TextureData;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.math.Vector2;
 
+import java.awt.*;
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.util.Objects;
+import java.lang.reflect.Field;
+import java.nio.file.Files;
+import java.util.*;
+import java.util.List;
+import java.util.stream.IntStream;
 
 public class Font {
 
@@ -16,6 +27,66 @@ public class Font {
             case "ttf" -> generateTrueTypeFont(file, resolution, characters);
             default -> throw new RuntimeException(file + " is not a Font");
         };
+    }
+
+    public static Font generateFontTextureFont(List<FontTexture> fontTextures) {
+        int totalSizeInSquarePixels = fontTextures.size() * 256 * 256;
+        int width = -1;
+        int height = -1;
+        for(width = 256; width <= 32768; width += 256) {
+            height = totalSizeInSquarePixels / width;
+            if(width >= height && Math.floorDiv(height, 256) * 256 == height) {
+                break;
+            }
+        }
+
+        int x = 0;
+        int y = 0;
+
+        Map<FontTexture, Point> locations = new HashMap<>();
+        Pixmap pixmap = new Pixmap(width, height, Pixmap.Format.RGBA8888);
+        for(FontTexture ft : fontTextures) {
+            TextureData td = ft.fontTextureRegions[0].getTexture().getTextureData();
+            td.prepare();
+            pixmap.drawPixmap(td.consumePixmap(), x, y);
+            locations.put(ft, new Point(x, y));
+            x += 256;
+            if(x >= width) {
+                x = 0;
+                y += 256;
+            }
+        }
+
+        Texture texture = new Texture(pixmap);
+        BitmapFont.BitmapFontData data = new BitmapFont.BitmapFontData();
+        data.flipped = true;
+        StringBuilder characters = new StringBuilder();
+        for(FontTexture ft : fontTextures) {
+            int xOffset = locations.get(ft).x;
+            int yOffset = locations.get(ft).y;
+            String unicodeCharacters = IntStream.range(ft.unicodeStart, ft.unicodeStart + 256)
+                                                .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append).toString();
+            characters.append(unicodeCharacters);
+            for(int unicode = ft.unicodeStart; unicode < ft.unicodeStart + 256; unicode++) {
+                Vector2 charStart = ft.fontCharStartPos[unicode - ft.unicodeStart];
+                Vector2 charSize = ft.fontCharSizes[unicode - ft.unicodeStart];
+                BitmapFont.Glyph glyph = new BitmapFont.Glyph();
+                glyph.id = unicode;
+                glyph.srcX = xOffset + (int)charStart.x;
+                glyph.srcY = yOffset + (int)charStart.y;
+                glyph.width = (int)charSize.x;
+                if(unicode == ' ')
+                    glyph.width /= 4;
+                glyph.height = (int)charSize.y;
+                glyph.xadvance = glyph.width + 2;
+                glyph.yoffset = 16 - glyph.height;
+                data.setGlyph(unicode, glyph);
+
+            }
+
+        }
+
+        return new Font(new BitmapFont(data, new TextureRegion(texture), true), 16);
     }
 
     public static Font generateTrueTypeFont(FileHandle ttf, int resolution, String characters) {

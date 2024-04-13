@@ -29,8 +29,6 @@ public class FluxConstants {
     public static GameState MAIN_MENU = new MainMenu();
 
     public static final ResourceLocation LanguageEnUs = new ResourceLocation(MOD_ID, "languages/en-US.json");
-    public static final ResourceLocation CosmicReachFont = new ResourceLocation(MOD_ID, "fonts/cosmic_reach.fnt");
-    public static final ResourceLocation ComicSansFont = new ResourceLocation(MOD_ID, "fonts/comic_sans_ms.ttf");
     public static final ResourceLocation WhitePixel = new ResourceLocation(MOD_ID, "whitepixel.png");
     public static ResourceLocation DirectoryIcon = new ResourceLocation(MOD_ID, "folder_icon.png");
     public static ResourceLocation ReloadIcon = new ResourceLocation(MOD_ID, "reload_icon.png");

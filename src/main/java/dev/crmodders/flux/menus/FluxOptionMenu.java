@@ -21,23 +21,6 @@ public class FluxOptionMenu extends LayoutMenu {
 		msaa.updateText();
 		addFluxElement(msaa);
 
-		BooleanToggleElement font = new BooleanToggleElement(FluxSettings.UseAlternativeFont) {
-			@Override
-			public void onMouseReleased() {
-				super.onMouseReleased();
-				if(FluxSettings.UseAlternativeFont.getValue()) {
-					UIRenderer.font = UIRenderer.comicSansFont;
-				} else {
-					UIRenderer.font = UIRenderer.cosmicReachFont;
-				}
-				GameStateCache.getCache().invalidateCachedAssets();
-			}
-		};
-		font.translation = new TranslationKey("fluxapi:flux_options.use_alternative_font");
-		font.updateText();
-		addFluxElement(font);
-
-
 		SwitchGameStateButtonElement language = new SwitchGameStateButtonElement(() -> new LanguagePickerMenu(GameState.currentGameState));
 		language.translation = new TranslationKey("fluxapi:flux_options.languages");
 		language.updateText();
