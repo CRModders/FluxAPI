@@ -3,7 +3,7 @@
 
   "quilt_loader": {
     "group": "${mod_group}",
-    "id": "${mod_id}",
+    "id": "modtest",
     "version": "${mod_version}",
 
     "intermediate_mappings":"net.fabricmc:intermediary",
@@ -20,7 +20,9 @@
       "contact": {
         "issues": "https://github.com/CRModders/FluxAPI/issues",
         "sources": "https://github.com/CRModders/FluxAPI"
-      }
+      },
+
+      "icon": "assets/fluxapi/icon.png"
     },
 
     "entrypoints": {

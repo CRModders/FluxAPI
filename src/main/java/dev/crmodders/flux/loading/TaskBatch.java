@@ -1,5 +1,6 @@
 package dev.crmodders.flux.loading;
 
+import dev.crmodders.flux.logging.LogWrapper;
 import org.pmw.tinylog.Logger;
 
 import java.util.ArrayList;
@@ -32,7 +33,7 @@ public class TaskBatch {
             try {
                 await();
             } catch (InterruptedException | ExecutionException e) {
-                Logger.error(e);
+                LogWrapper.error(String.valueOf(e));
             }
         });
     }

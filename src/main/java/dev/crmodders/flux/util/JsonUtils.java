@@ -2,7 +2,7 @@ package dev.crmodders.flux.util;
 
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
-import dev.crmodders.flux.api.resource.generation.block.BlockAction;
+import dev.crmodders.flux.api.resource.generation.block.trigger.BlockAction;
 import org.hjson.JsonObject;
 import org.hjson.JsonValue;
 
@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class JsonUtil {
+public class JsonUtils {
 
     public static JsonObject MapToJson(Map<String, ?> map) {
         Type typeObject = new TypeToken<HashMap>() {}.getType();

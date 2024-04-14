@@ -1,8 +1,6 @@
 package dev.crmodders.flux.api.resource.generation.material;
 
 import dev.crmodders.flux.api.resource.ResourceLocation;
-import dev.crmodders.flux.api.resource.generation.block.TriggerSheet;
-import dev.crmodders.flux.util.JsonUtil;
 import org.hjson.JsonObject;
 
 public class Material {

@@ -1,10 +1,10 @@
-package dev.crmodders.flux.api.resource.generation.block;
+package dev.crmodders.flux.api.resource.generation.block.trigger;
 
 import dev.crmodders.flux.api.resource.ResourceLocation;
 import dev.crmodders.flux.api.resource.generation.Writeable;
 import dev.crmodders.flux.api.suppliers.ReturnableInputSupplier;
 import dev.crmodders.flux.tags.Identifier;
-import dev.crmodders.flux.util.JsonUtil;
+import dev.crmodders.flux.util.JsonUtils;
 import org.hjson.JsonObject;
 
 import java.util.ArrayList;
@@ -165,7 +165,7 @@ public class TriggerSheet extends Writeable {
         if (this.parent == null) object.set("parent", "base:block_events_default");
         else object.set("parent",  output.serialize());
         object.set("stringId",  output.id.toString());
-        object.set("triggers", JsonUtil.ActionsMapToJson(this.triggers));
+        object.set("triggers", JsonUtils.ActionsMapToJson(this.triggers));
 
         return object;
     }

@@ -2,6 +2,7 @@ package dev.crmodders.flux.logging;
 
 import org.pmw.tinylog.Logger;
 
+import java.text.MessageFormat;
 import java.util.logging.Level;
 
 public class LogWrapper {
@@ -29,9 +30,27 @@ public class LogWrapper {
         Logger.info(out);
     }
 
+    public static void info(String out, Object... objects) {
+        String formattedMessage = fixFormat(out, objects);
+        if (isQuilt) {
+            logger.info(formattedMessage);
+            return;
+        }
+        Logger.info(out);
+    }
+
     public static void warn(String out) {
         if (isQuilt) {
             logger.warning(out);
+            return;
+        }
+        Logger.warn(out);
+    }
+
+    public static void warn(String out, Object... objects) {
+        String formattedMessage = fixFormat(out, objects);
+        if (isQuilt) {
+            logger.warning(formattedMessage);
             return;
         }
         Logger.warn(out);
@@ -45,6 +64,15 @@ public class LogWrapper {
         Logger.error(out);
     }
 
+    public static void error(String out, Object... objects) {
+        String formattedMessage = fixFormat(out, objects);
+        if (isQuilt) {
+            logger.log(Level.SEVERE, formattedMessage);
+            return;
+        }
+        Logger.error(formattedMessage);
+    }
+
     public static void debug(String out) {
         if (isQuilt) {
             logger.log(Level.FINE, out);
@@ -52,4 +80,18 @@ public class LogWrapper {
         }
         Logger.debug(out);
     }
+
+    public static void debug(String out, Object... objects) {
+        String formattedMessage = fixFormat(out, objects);
+        if (isQuilt) {
+            logger.log(Level.FINE, formattedMessage);
+            return;
+        }
+        Logger.debug(formattedMessage);
+    }
+
+    static String fixFormat(String out, Object... objects) {
+        return out.replaceAll("\\{}", "%s").formatted(objects);
+    }
+
 }
