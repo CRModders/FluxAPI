@@ -3,7 +3,7 @@
 
   "quilt_loader": {
     "group": "${mod_group}",
-    "id": "modtest",
+    "id": "${mod_id}",
     "version": "${mod_version}",
 
     "intermediate_mappings":"net.fabricmc:intermediary",
