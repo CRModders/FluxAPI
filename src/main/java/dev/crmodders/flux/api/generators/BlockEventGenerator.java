@@ -1,6 +1,7 @@
 package dev.crmodders.flux.api.generators;
 
 import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.utils.*;
 import dev.crmodders.flux.api.block.IModBlock;
 import dev.crmodders.flux.api.generators.data.blockevent.BlockEventData;
 import dev.crmodders.flux.api.generators.data.blockevent.BlockEventDataExt;
@@ -9,33 +10,56 @@ import dev.crmodders.flux.api.generators.data.blockevent.triggers.TriggerData;
 import dev.crmodders.flux.api.generators.data.blockevent.triggers.TriggerEventData;
 import dev.crmodders.flux.api.generators.suppliers.BasicTriggerSupplier;
 import dev.crmodders.flux.api.suppliers.ReturnableSupplier;
+import dev.crmodders.flux.logging.LogWrapper;
 import dev.crmodders.flux.registry.FluxRegistries;
 import dev.crmodders.flux.tags.Identifier;
 import dev.crmodders.flux.util.PrivUtils;
 import finalforeach.cosmicreach.GameAssetLoader;
+import finalforeach.cosmicreach.blockevents.BlockEventTrigger;
+import finalforeach.cosmicreach.blockevents.BlockEvents;
+import finalforeach.cosmicreach.blockevents.actions.*;
 import finalforeach.cosmicreach.blocks.BlockPosition;
+import finalforeach.cosmicreach.blocks.BlockState;
 import finalforeach.cosmicreach.entities.Player;
 import finalforeach.cosmicreach.gamestates.InGame;
+import finalforeach.cosmicreach.world.Zone;
+import org.hjson.JsonArray;
 import org.hjson.JsonObject;
 
 import java.util.*;
 
 public class BlockEventGenerator {
 
+    public static Map<String, IBlockAction> ALL_ACTION_INSTANCES = new HashMap<>();
+
+
+    public static void registerBlockEventAction(Identifier id, IBlockAction action) {
+        ALL_ACTION_INSTANCES.put(id.toString(), action);
+        BlockEvents.ALL_ACTIONS.put(id.toString(), action.getClass());
+    }
+
     private static void registerBlockEvent(String id, List<BasicTriggerSupplier> triggers) {
 
-        FluxRegistries.BLOCK_EVENT_ACTIONS.register(Identifier.fromString(id), (blockState, blockEventTrigger, zone, map) -> {
-            try {
-                for (BasicTriggerSupplier trigger : triggers) {
-                    trigger.runTrigger(
-                            zone,
-                            (Player) PrivUtils.getPrivField(InGame.class, "player"),
-                            blockState,
-                            (BlockPosition) map.get("blockPos")
-                    );
+        FluxRegistries.BLOCK_EVENT_ACTIONS.register(Identifier.fromString(id), new IBlockAction() {
+            @Override
+            public void act(BlockState blockState, BlockEventTrigger blockEventTrigger, Zone zone, Map<String, Object> map) {
+                try {
+                    for (BasicTriggerSupplier trigger : triggers) {
+                        trigger.runTrigger(
+                                zone,
+                                (Player) PrivUtils.getPrivField(InGame.class, "player"),
+                                blockState,
+                                (BlockPosition) map.get("blockPos")
+                        );
+                    }
+                } catch (NoSuchFieldException | IllegalAccessException e) {
+                    throw new RuntimeException(e);
                 }
-            } catch (NoSuchFieldException | IllegalAccessException e) {
-                throw new RuntimeException(e);
+            }
+
+            @Override
+            public String getActionId() {
+                return id;
             }
         });
     }
@@ -95,7 +119,7 @@ public class BlockEventGenerator {
         onBreakParams_1.put("pan", 0);
 
         return new BlockEventData(
-                Identifier.fromString("base:block_events_default"),
+                null,
                 blockEventId,
                 new TriggerData[]{
                         new TriggerData(
@@ -153,7 +177,7 @@ public class BlockEventGenerator {
                                     return data.toArray(new TriggerEventData[0]);
                                 }).get()
                         )
-                }
+                }, true
         );
     }
 
@@ -164,6 +188,8 @@ public class BlockEventGenerator {
 
         FileHandle f = GameAssetLoader.loadAsset(oldId.namespace + ":block_events/" + oldId.name + ".json");
         JsonObject jsonObject = JsonObject.readJSON(f.readString()).asObject();
+        jsonObject.set("stringId", blockEventId.toString());
+
         if (jsonObject.get("triggers") == null) jsonObject.set("triggers", new JsonObject());
 
         boolean LazyInjected_Interact = false;
@@ -297,7 +323,126 @@ public class BlockEventGenerator {
                     )
             );
         }
+
         return () -> jsonObject;
+    }
+
+    public static BlockEvents fromJson(JsonObject json) {
+        NewBlockEvents events = new NewBlockEvents();
+        if (json.get("parent") != null) events.parent = json.get("parent").asString();
+        events.stringId = json.get("stringId").asString();
+
+        JsonObject triggers = json.get("triggers").asObject();
+        for (String trigger : triggers.names()) {
+            List<BlockEventTrigger> eventTriggers = new ArrayList<>();
+            JsonArray jsonValues = triggers.get(trigger).asArray();
+            Iterator<org.hjson.JsonValue> jsonValueIterator = jsonValues.iterator();
+            while (jsonValueIterator.hasNext()) {
+                JsonObject object = jsonValueIterator.next().asObject();
+                BlockEventTrigger eventTrigger = getNewBlockEventTrigger(object);
+                eventTriggers.add(eventTrigger);
+            }
+            events.triggers.put(trigger, eventTriggers.toArray(new BlockEventTrigger[0]));
+        }
+        return events;
+    }
+
+    private static BlockEventTrigger getNewBlockEventTrigger(JsonObject object) {
+        NewBlockEventTrigger eventTrigger = new NewBlockEventTrigger();
+        try {
+            JsonValue fromJson = new JsonReader().parse(object.toString());
+            eventTrigger.read(new Json(), fromJson, object);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return eventTrigger;
+    }
+
+    public static class NewBlockEventTrigger extends BlockEventTrigger {
+        public IBlockAction action;
+
+        @Override
+        public void write(Json json) {
+            throw new RuntimeException("Not yet implemented!");
+        }
+
+        public void read(Json json, JsonValue jsonData, JsonObject object) {
+            String actionId = json.readValue(String.class, jsonData.get("actionId"));
+            Class<? extends IBlockAction> actionClass = BlockEvents.ALL_ACTIONS.get(actionId);
+            if (actionClass == null) {
+                throw new RuntimeException("Could not find action for id: " + actionId);
+            } else {
+                if (actionClass == null) {
+                    throw new RuntimeException("Could not find action for id: " + actionId);
+                } else {
+                    try {
+                        this.action = json.fromJson(actionClass, jsonData.toString());
+                    } catch (Exception e) {
+                        try {
+                            this.action = ALL_ACTION_INSTANCES.get(actionId);
+                        } catch (Exception e2) {
+                            e2.printStackTrace();
+                        }
+                    }
+                }
+            }
+        }
+
+        @Override
+        public IBlockAction getAction() {
+            return this.action;
+        }
+
+        @Override
+        public void act(BlockState srcBlockState, Zone zone, Map<String, Object> args) {
+            this.action.act(srcBlockState, this, zone, args);
+        }
+
+        @Override
+        public String toString() {
+            return action.getActionId();
+        }
+    }
+
+    private static class NewBlockEvents extends BlockEvents {
+        public String parent;
+        public String stringId;
+        public OrderedMap<String, BlockEventTrigger[]> triggers = new OrderedMap<>();
+        public transient boolean initTriggers;
+
+        public BlockEvents getParent() {
+            return this.parent == null ? null : getInstance(this.parent);
+        }
+
+        @Override
+        public OrderedMap<String, BlockEventTrigger[]> getTriggerMap() {
+            if (!this.initTriggers) {
+                BlockEvents parentEvent = this.getParent();
+                if (parentEvent != null) {
+                    OrderedMap<String, BlockEventTrigger[]> parentTriggers = parentEvent.getTriggerMap();
+                    if (parentTriggers != null) {
+                        ObjectMap.Entries var3 = parentTriggers.entries().iterator();
+                        while(var3.hasNext()) {
+                            ObjectMap.Entry<String, BlockEventTrigger[]> t = (ObjectMap.Entry)var3.next();
+                            if (!this.triggers.containsKey(t.key)) {
+                                this.triggers.put(t.key, t.value);
+                            }
+                        }
+                    }
+                }
+
+                this.initTriggers = true;
+            }
+
+            return this.triggers;
+        }
+
+        @Override
+        public BlockEventTrigger[] getTriggers(String triggerId) {
+            OrderedMap<String, BlockEventTrigger[]> triggers = this.getTriggerMap();
+            return triggers.get(triggerId);
+        }
+
     }
 
 }

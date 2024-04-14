@@ -2,6 +2,7 @@ package dev.crmodders.flux.api.resource.generation.block.trigger;
 
 import dev.crmodders.flux.api.resource.ResourceLocation;
 import dev.crmodders.flux.api.resource.generation.Writeable;
+import dev.crmodders.flux.api.resource.generation.block.BlockAction;
 import dev.crmodders.flux.api.suppliers.ReturnableInputSupplier;
 import dev.crmodders.flux.tags.Identifier;
 import dev.crmodders.flux.util.JsonUtils;

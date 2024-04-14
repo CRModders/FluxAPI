@@ -1,5 +1,6 @@
 package dev.crmodders.flux.loading.stages;
 
+import dev.crmodders.flux.api.generators.BlockEventGenerator;
 import dev.crmodders.flux.api.gui.ProgressBarElement;
 import dev.crmodders.flux.loading.GameLoader;
 import dev.crmodders.flux.loading.LoadStage;
@@ -29,7 +30,7 @@ public class RegisterBlockActions implements LoadStage {
         for (Identifier actionId : registryAccess.getRegisteredNames()) {
             IBlockAction action = registryAccess.get(actionId);
             glThread.submit(() -> {
-                BlockEvents.ALL_ACTIONS.put(actionId.toString(), action.getClass());
+                BlockEventGenerator.registerBlockEventAction(actionId, action);
                 progress.value++;
                 LogWrapper.info("%s: Registered Block Event Action %s".formatted(GameLoader.TAG, action.getActionId()));
             });

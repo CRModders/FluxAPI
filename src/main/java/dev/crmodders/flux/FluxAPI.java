@@ -1,9 +1,12 @@
 package dev.crmodders.flux;
 
 import dev.crmodders.flux.api.events.GameEvents;
+import dev.crmodders.flux.api.generators.BlockGenerator;
 import dev.crmodders.flux.localization.LanguageFile;
 import dev.crmodders.flux.localization.TranslationApi;
 import dev.crmodders.flux.logging.LogWrapper;
+import dev.crmodders.flux.registry.FluxRegistries;
+import dev.crmodders.flux.tags.Identifier;
 import net.fabricmc.api.ModInitializer;
 
 public class FluxAPI implements ModInitializer {
@@ -17,6 +20,11 @@ public class FluxAPI implements ModInitializer {
             LanguageFile lang = LanguageFile.loadLanguageFile(FluxConstants.LanguageEnUs.load());
             TranslationApi.registerLanguageFile(lang);
         });
+
+        FluxRegistries.BLOCKS.register(
+                new Identifier("test", "test"),
+                BlockGenerator::createGenerator
+        );
 
     }
 }

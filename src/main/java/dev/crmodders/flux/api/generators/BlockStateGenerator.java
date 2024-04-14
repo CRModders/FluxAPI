@@ -42,11 +42,12 @@ public class BlockStateGenerator {
                     stateName
             );
         }
+
         blockstate.set("blockEventsId", blockEventId.toString());
         if (blockstate.get("blockEventsId") != null) {
             blockstate.set("blockEventsId", blockstate.get("blockEventsId").asString().replaceAll("\"", ""));
         } else {
-            blockstate.set("blockEventsId", id + "_Custom_Injected_Blockstate");
+            blockstate.set("blockEventsId", eventData.toJson().get("stringId"));
         }
         FluxRegistries.BLOCK_EVENTS.register(blockEventId, eventData);
         return blockstate;

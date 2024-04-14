@@ -1,6 +1,6 @@
 package dev.crmodders.flux.loading.stages;
 
-import com.badlogic.gdx.utils.Json;
+import dev.crmodders.flux.api.generators.BlockEventGenerator;
 import dev.crmodders.flux.api.generators.data.blockevent.BlockEventDataExt;
 import dev.crmodders.flux.api.gui.ProgressBarElement;
 import dev.crmodders.flux.loading.GameLoader;
@@ -22,13 +22,17 @@ public class RegisterBlockEvents implements LoadStage {
 
     @Override
     public void doStage(ProgressBarElement progress, ExecutorService threadPool, ExecutorService glThread) {
-        FluxRegistries.BLOCK_EVENTS.freeze();
         AccessableRegistry<BlockEventDataExt> registryAccess = FluxRegistries.BLOCK_EVENTS.access();
         progress.range = registryAccess.getRegisteredNames().length;
+
+        FluxRegistries.BLOCK_EVENTS.freeze();
         for (Identifier eventId : registryAccess.getRegisteredNames()) {
             BlockEventDataExt event = registryAccess.get(eventId);
             glThread.submit(() -> {
-                BlockEvents.INSTANCES.put(eventId.toString(), new Json().fromJson(BlockEvents.class, event.toJson().toString()));
+                BlockEvents events = BlockEventGenerator.fromJson(event.toJson());
+                BlockEvents.INSTANCES.put(eventId.toString(), events);
+//                BlockEvents.INSTANCES.put(event.toJson().get("stringId").toString(), events);
+                LogWrapper.info(events.getTriggerMap().toString());
                 progress.value++;
                 LogWrapper.info("%s: Registered Block Event: %s".formatted(GameLoader.TAG, event.toJson().get("stringId")));
             });

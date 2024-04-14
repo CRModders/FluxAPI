@@ -91,7 +91,7 @@ public class LogWrapper {
     }
 
     static String fixFormat(String out, Object... objects) {
-        return out.replaceAll("\\{}", "%s").formatted(objects);
+        return out.replaceAll("\\{", "").replaceAll("}", "%s").formatted(objects);
     }
 
 }

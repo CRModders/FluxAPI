@@ -8,12 +8,14 @@ import org.hjson.JsonObject;
 public record BlockEventData(
         Identifier parentEvent,
         Identifier identifier,
-        TriggerData[] triggers
+        TriggerData[] triggers,
+
+        boolean noParent
 ) implements BlockEventDataExt {
 
     public JsonObject toJson() {
         JsonObject blockEventData = new JsonObject();
-        blockEventData.set("parent", parentEvent.toString());
+        if (parentEvent != null) blockEventData.set("parent", parentEvent.toString());
         blockEventData.set("stringId", identifier.toString());
         blockEventData.set("triggers", ((ReturnableSupplier<JsonObject>)()->{
             JsonObject eventData = new JsonObject();

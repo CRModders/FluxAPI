@@ -57,7 +57,7 @@ public class BlockGenerator {
         object.set("blockStates", new JsonObject());
         setBlockState("default", new BlockStateData(
                Identifier.fromString("base:block_events_default"),
-                "model_metal_panel"
+                "base:model_metal_panel"
         ));
 
 
@@ -123,7 +123,7 @@ public class BlockGenerator {
 
         return (block, id) -> {
             if (!FluxRegistries.BLOCKS.isFrozen()) throw new RuntimeException("CANNOT USE GENERATOR FACTORY BECAUSE REGISTRIES ARE NOT FROZEN YET");
-            object.set("stringId", id.toString());
+            if (object.get("stringId") != null) object.set("stringId", id.toString());
 
             FileHandle dataBlock = null;
             try {
