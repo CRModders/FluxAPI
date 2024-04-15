@@ -8,15 +8,30 @@ import dev.crmodders.flux.registry.FluxRegistries;
 import dev.crmodders.flux.tags.Identifier;
 import org.hjson.JsonObject;
 
+/**
+ * The internal generation class for {@link BlockStateGenerator}
+ */
+
 @Stable
 public class BlockStateGenerator {
 
     protected JsonObject object;
 
+    /**
+     * Creates a BlockStateGenerator
+     */
     public static BlockStateGenerator createGenerator() {
         return new BlockStateGenerator();
     }
 
+    /**
+     * Creates a {@link BlockStateData} based on 2 params
+     *
+     * @param blockEventsId The Event to be used when this blockState is active.
+     * @param modelName The model that is displayed when this state is loaded.
+     *
+     * @return A newly created BlockState
+     */
     public static BlockStateData createBasicBlockState(Identifier blockEventsId, String modelName) {
         return new BlockStateData(
                 blockEventsId, modelName

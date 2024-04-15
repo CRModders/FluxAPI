@@ -5,6 +5,12 @@ import dev.crmodders.flux.api.suppliers.ReturnableSupplier;
 import org.hjson.JsonArray;
 import org.hjson.JsonObject;
 
+/**
+ * The interaction trigger that activates the other events listed in the events parameter.
+ *
+ * @param name the interaction name of this trigger.
+ * @param events The trigger events that are activated as soon as this trigger is loaded after interaction.
+ */
 public record TriggerData(
     String name,
     TriggerEventData[] events

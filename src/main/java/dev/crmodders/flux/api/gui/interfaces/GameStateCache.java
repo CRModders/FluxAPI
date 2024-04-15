@@ -4,9 +4,14 @@ import finalforeach.cosmicreach.gamestates.GameState;
 
 import java.util.List;
 
+import finalforeach.cosmicreach.blocks.Block;
+
+/**
+ * The basic cache for gameStates that holds the current block state and some other methods you can use in your impls.
+ */
 public interface GameStateCache {
 
-    public static GameStateCache getCache() {
+    static GameStateCache getCache() {
         return (GameStateCache) GameState.currentGameState;
     }
 

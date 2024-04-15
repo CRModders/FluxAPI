@@ -29,12 +29,25 @@ import org.hjson.JsonObject;
 
 import java.util.*;
 
+/**
+ * An internal class used in {@link BlockGenerator} to ease the creation of blockEvents.
+ */
+
 @Stable
 public class BlockEventGenerator {
 
+    /**
+     * The action instances for every {@link IBlockAction}
+     */
     public static Map<String, IBlockAction> ALL_ACTION_INSTANCES = new HashMap<>();
 
 
+    /**
+     * An action to register a blockEventAction without the pain of Annotations introduces in CosmicReach 0.1.22.
+     *
+     * @param id The identifier for the blockAction that can be called in triggers using the actionId.
+     * @param action The action to execute in during a trigger event.
+     */
     public static void registerBlockEventAction(Identifier id, IBlockAction action) {
         ALL_ACTION_INSTANCES.put(id.toString(), action);
         BlockEvents.ALL_ACTIONS.put(id.toString(), action.getClass());

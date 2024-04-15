@@ -22,10 +22,17 @@ public class ResourceLocation extends Identifier {
         return new ResourceLocation(splitId[0], splitId[1]);
     }
 
+    /**
+     * A method to load the resource mentioned in the constructor.
+     * @param forceReload it replaces the currently loaded resource with a reload of it.
+     */
     public FileHandle load(boolean forceReload) {
         return GameAssetLoader.loadAsset(toString(), forceReload);
     }
 
+    /**
+     * A method to load the current resource mentioned in the creation construction.
+     */
     public FileHandle load() {
         return load(false);
     }

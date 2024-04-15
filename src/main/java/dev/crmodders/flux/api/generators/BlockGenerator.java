@@ -1,15 +1,12 @@
 package dev.crmodders.flux.api.generators;
 
 import com.badlogic.gdx.files.FileHandle;
-import com.badlogic.gdx.utils.Json;
 import dev.crmodders.flux.annotations.Stable;
 import dev.crmodders.flux.api.block.IModBlock;
-import dev.crmodders.flux.api.events.GameEvents;
 import dev.crmodders.flux.api.generators.data.blockevent.BlockEventType;
 import dev.crmodders.flux.api.generators.data.blockstate.BlockStateData;
 import dev.crmodders.flux.api.generators.data.blockstate.BlockStateDataExt;
 import dev.crmodders.flux.api.generators.suppliers.BasicTriggerSupplier;
-import dev.crmodders.flux.api.resource.AssetLoader;
 import dev.crmodders.flux.api.resource.ResourceLocation;
 import dev.crmodders.flux.api.suppliers.ReturnableDoubleInputSupplier;
 import dev.crmodders.flux.registry.FluxRegistries;
@@ -188,7 +185,7 @@ public class BlockGenerator {
 
         return (block, id) -> {
             if (!FluxRegistries.BLOCKS.isFrozen()) throw new RuntimeException("CANNOT USE GENERATOR FACTORY BECAUSE REGISTRIES ARE NOT FROZEN YET");
-            if (object.get("stringId") != null) object.set("stringId", id.toString());
+            if (object.get("stringId") == null) object.set("stringId", id.toString());
 
             FileHandle dataBlock = null;
             try {
