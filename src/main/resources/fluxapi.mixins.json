@@ -5,6 +5,7 @@
   "compatibilityLevel": "JAVA_17",
   "mixins": [
     "accessor.BlockAccessor",
+    "accessor.ChunkShaderAccessor",
     "assets.AssetLoaderMixin",
     "assets.BlockEventsMixin",
     "assets.BlockModelJsonMixin",

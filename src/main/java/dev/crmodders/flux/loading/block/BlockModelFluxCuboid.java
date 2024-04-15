@@ -1,6 +1,6 @@
 // Decompiled with: Procyon 0.6.0
 // Class Version: 17
-package dev.crmodders.flux.loading.block.model;
+package dev.crmodders.flux.loading.block;
 
 import finalforeach.cosmicreach.constants.AdjacentBitmask;
 import finalforeach.cosmicreach.rendering.blockmodels.BlockModelJsonTexture;

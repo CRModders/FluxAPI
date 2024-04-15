@@ -15,6 +15,7 @@ import dev.crmodders.flux.registry.registries.AccessableRegistry;
 import dev.crmodders.flux.tags.Identifier;
 import dev.crmodders.flux.util.BlockBuilderUtils;
 import finalforeach.cosmicreach.blocks.Block;
+import finalforeach.cosmicreach.gamestates.LanguagesMenu;
 import finalforeach.cosmicreach.io.SaveLocation;
 import finalforeach.cosmicreach.rendering.WorldRenderingMeshGenThread;
 import org.pmw.tinylog.Logger;
@@ -41,8 +42,6 @@ public class InitializingCosmicReach extends LoadStage {
     public void doStage() {
         super.doStage();
 
-
-
         for(String f : Gdx.files.internal("assets.txt").readString().split("\n")) {
             if (f.startsWith("blocks/") && f.endsWith(".json") && Gdx.files.internal(f).exists()) {
                 blockNames.add(f.replace("blocks/", "").replace(".json", ""));
@@ -57,6 +56,7 @@ public class InitializingCosmicReach extends LoadStage {
 
         loader.setupProgressBar(loader.progress2, blockNames.size(), "Loading Vanilla Blocks");
         for(String blockName : blockNames) {
+            loader.incrementProgress(loader.progress2);
             try {
                 IModBlock block = new VanillaModBlock(blockName);
                 Identifier blockId = loader.blockLoader.loadBlock(block);
@@ -70,6 +70,7 @@ public class InitializingCosmicReach extends LoadStage {
         AccessableRegistry<IModBlock> modBlocks = FluxRegistries.BLOCKS.access();
         loader.setupProgressBar(loader.progress2, modBlocks.getRegisteredNames().length, "Loading Flux Blocks");
         for(Identifier blockId : modBlocks.getRegisteredNames()) {
+            loader.incrementProgress(loader.progress2);
             IModBlock block = modBlocks.get(blockId);
             if(block instanceof VanillaModBlock) {
                 continue;

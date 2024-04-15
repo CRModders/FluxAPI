@@ -1,21 +1,16 @@
 // Decompiled with: Procyon 0.6.0
 // Class Version: 17
-package dev.crmodders.flux.loading.block.model;
+package dev.crmodders.flux.loading.block;
 
 import java.lang.StringBuilder;
 import java.util.*;
-import java.util.Collections;
 
-import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.math.collision.BoundingBox;
 import com.badlogic.gdx.utils.*;
 import com.badlogic.gdx.graphics.Color;
-import dev.crmodders.flux.logging.LogWrapper;
 import finalforeach.cosmicreach.GameAssetLoader;
 import finalforeach.cosmicreach.RuntimeInfo;
 import finalforeach.cosmicreach.blocks.BlockState;
-import finalforeach.cosmicreach.constants.AdjacentBitmask;
-import finalforeach.cosmicreach.constants.DiagonalBitmask;
 import finalforeach.cosmicreach.rendering.IMeshData;
 import finalforeach.cosmicreach.rendering.blockmodels.*;
 import finalforeach.cosmicreach.rendering.shaders.ChunkShader;

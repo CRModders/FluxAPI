@@ -1,4 +1,4 @@
-package dev.crmodders.flux.loading.block.model;
+package dev.crmodders.flux.loading.block;
 
 import finalforeach.cosmicreach.rendering.blockmodels.BlockModel;
 
