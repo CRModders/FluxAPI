@@ -10,7 +10,7 @@ import finalforeach.cosmicreach.world.Zone;
  * @deprecated
  * This class has been replaced by {@link IModBlock}
  */
-@Deprecated
+@Deprecated(forRemoval = true)
 public interface IFunctionalBlock extends IModBlock {
 
     /**

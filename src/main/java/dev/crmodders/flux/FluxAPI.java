@@ -21,10 +21,5 @@ public class FluxAPI implements ModInitializer {
             TranslationApi.registerLanguageFile(lang);
         });
 
-        FluxRegistries.BLOCKS.register(
-                new Identifier("test", "test"),
-                BlockGenerator::createGenerator
-        );
-
     }
 }

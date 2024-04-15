@@ -11,7 +11,8 @@ import finalforeach.cosmicreach.world.Zone;
 
 /**
  * A Basic {@link IModBlock} implementation that utilizes
- * the builtin <a href = "https://cosmicreach.wiki.gg/wiki/Modding/Assets">Data Modding</a> features
+ * the builtin <a href = "https://cosmicreach.wiki.gg/wiki/Modding/Assets">Data Modding</a> features,
+ * and allows you to specify resources from other mods.
  */
 public class BasicResourceBlock implements IModBlock {
 

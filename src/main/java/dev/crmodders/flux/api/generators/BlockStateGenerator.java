@@ -1,5 +1,6 @@
 package dev.crmodders.flux.api.generators;
 
+import dev.crmodders.flux.annotations.Stable;
 import dev.crmodders.flux.api.block.IModBlock;
 import dev.crmodders.flux.api.generators.data.blockevent.BlockEventDataExt;
 import dev.crmodders.flux.api.generators.data.blockstate.BlockStateData;
@@ -7,6 +8,7 @@ import dev.crmodders.flux.registry.FluxRegistries;
 import dev.crmodders.flux.tags.Identifier;
 import org.hjson.JsonObject;
 
+@Stable
 public class BlockStateGenerator {
 
     protected JsonObject object;
@@ -21,7 +23,7 @@ public class BlockStateGenerator {
         );
     }
 
-    public static JsonObject ModifiyBlockState(Identifier id, IModBlock block, JsonObject oldBlockState, String stateName) {
+    protected static JsonObject ModifiyBlockState(Identifier id, IModBlock block, JsonObject oldBlockState, String stateName) {
         JsonObject blockstate = oldBlockState;
         Identifier blockEventId;
         BlockEventDataExt eventData;

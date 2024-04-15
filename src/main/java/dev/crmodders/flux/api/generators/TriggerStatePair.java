@@ -2,7 +2,7 @@ package dev.crmodders.flux.api.generators;
 
 import dev.crmodders.flux.api.generators.suppliers.BasicTriggerSupplier;
 
-public record TriggerStatePair(
+record TriggerStatePair(
         String blockStateName,
         BasicTriggerSupplier triggerSupplier
 ) {}
