@@ -17,99 +17,7 @@ import finalforeach.cosmicreach.rendering.shaders.ChunkShader;
 
 public class BlockModelFlux extends BlockModel {
 
-    public static class Instantiator implements IBlockModelInstantiator {
 
-        public final Map<InstanceKey, BlockModelFlux> models = new LinkedHashMap<>();
-
-        @Override
-        public BlockModel getInstance(String modelName, int rotXZ) {
-            final InstanceKey key = new InstanceKey(modelName, rotXZ);
-            if(models.containsKey(key)) {
-                return models.get(key);
-            }
-
-            String modelJson = GameAssetLoader.loadAsset("models/blocks/" + modelName + ".json").readString();
-            BlockModelFlux model = fromJson(modelJson, modelName, rotXZ);
-
-            if(model.parent != null) {
-                getInstance(model.parent, rotXZ);
-            }
-
-            models.put(key, model);
-            return model;
-        }
-
-        public BlockModel createFromJson(String modelName, int rotXZ, String modelJson) {
-            final InstanceKey key = new InstanceKey(modelName, rotXZ);
-            if(models.containsKey(key)) {
-                return models.get(key);
-            }
-
-            BlockModelFlux model = fromJson(modelJson, modelName, rotXZ);
-
-            if(model.parent != null) {
-                getInstance(model.parent, rotXZ);
-            }
-
-            models.put(key, model);
-            return model;
-        }
-
-        @Override
-        public void createSlabInstance(String modelName, BlockState blockState, String modelSlabType, int rotXZ) {
-            final InstanceKey key = new InstanceKey(modelName, rotXZ);
-            if(models.containsKey(key)) {
-                return;
-            }
-            Json json = new Json();
-            BlockModelFlux oldModel = (BlockModelFlux) blockState.getModel();
-
-            StringBuilder slabModelJson = new StringBuilder();
-            slabModelJson.append("{\"parent\":\"");
-            slabModelJson.append(modelSlabType);
-            slabModelJson.append("\", textures:");
-            slabModelJson.append(json.toJson(oldModel.getTextures()));
-            slabModelJson.append("}");
-
-            String modelJson = slabModelJson.toString();
-            BlockModelFlux model = fromJson(modelJson, modelName, rotXZ);
-
-            if(model.parent != null) {
-                getInstance(model.parent, rotXZ);
-            }
-
-            models.put(key, model);
-        }
-
-        private int getNumberOfParents(BlockModelFlux model) {
-            int n = 0;
-            String parent = model.parent;
-            while(parent != null) {
-                BlockModelFlux parentModel = null;
-
-                InstanceKey parentKey;
-                if(models.containsKey(parentKey = new InstanceKey(parent, 0))) parentModel = models.get(parentKey);
-                else if(models.containsKey(parentKey = new InstanceKey(parent, 90))) parentModel = models.get(parentKey);
-                else if(models.containsKey(parentKey = new InstanceKey(parent, 180))) parentModel = models.get(parentKey);
-                else if(models.containsKey(parentKey = new InstanceKey(parent, 270))) parentModel = models.get(parentKey);
-
-                parent = parentModel == null ? null : parentModel.parent;
-                n++;
-            }
-            return n;
-        }
-
-        public int compare(BlockModelFlux o1, BlockModelFlux o2) {
-            return Integer.compare(getNumberOfParents(o1), getNumberOfParents(o2));
-        }
-
-        public List<BlockModelFlux> sort() {
-            List<BlockModelFlux> models = new ArrayList<>(this.models.values());
-            models.sort(this::compare);
-            return models;
-        }
-
-    }
 
     public static BlockModelFlux fromJson(String modelJson, String modelName, int rotXZ) {
         Json json = new Json();
@@ -119,8 +27,6 @@ public class BlockModelFlux extends BlockModel {
         model.rotXZ = rotXZ;
         return model;
     }
-
-    public record InstanceKey(String modelName, int rotXZ) {}
 
     public static final boolean useIndices = !RuntimeInfo.useSharedIndices;
     public transient String modelJson;
@@ -134,7 +40,7 @@ public class BlockModelFlux extends BlockModel {
     public OrderedMap<String, BlockModelJsonTexture> textures;
     public BlockModelFluxCuboid[] cuboids;
 
-    private BlockModelFlux() {
+    public BlockModelFlux() {
     }
 
     private static boolean endsWithOnce(String string, String endsWith) {

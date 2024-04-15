@@ -7,9 +7,11 @@ import dev.crmodders.flux.api.block.IModBlock;
 import dev.crmodders.flux.api.generators.BlockGenerator;
 import dev.crmodders.flux.mixins.accessor.BlockAccessor;
 import dev.crmodders.flux.tags.Identifier;
-import finalforeach.cosmicreach.GameAssetLoader;
+import finalforeach.cosmicreach.blockevents.BlockEvents;
+import finalforeach.cosmicreach.blockevents.actions.IBlockAction;
 import finalforeach.cosmicreach.blocks.Block;
 import finalforeach.cosmicreach.blocks.BlockState;
+import finalforeach.cosmicreach.rendering.blockmodels.BlockModel;
 import sun.misc.Unsafe;
 
 import java.lang.reflect.Field;
@@ -17,7 +19,7 @@ import java.util.function.BiConsumer;
 
 public class BlockLoader {
 
-    public BlockModelFlux.Instantiator instantiator = new BlockModelFlux.Instantiator();
+    public BlockModelFactory factory = new BlockModelFactory();
 
     /**
      * Call this method to register custom json models, this has to be called
@@ -29,7 +31,11 @@ public class BlockLoader {
      * @param modelJson regular json model from DataMods
      */
     public void registerBlockModel(String modelName, int rotXZ, String modelJson) {
-        instantiator.createFromJson(modelName, rotXZ, modelJson);
+        factory.createFromJson(modelName, rotXZ, modelJson);
+    }
+
+    public void registerCustomBlockModel(String modelName, float[] vertices, float[] uvs) {
+        throw new IllegalStateException("Not implemented");
     }
 
     /**
@@ -44,6 +50,14 @@ public class BlockLoader {
      */
     public void registerTexture(String textureName, Pixmap texture) {
         CustomTextureLoader.registerTexture(textureName, texture);
+    }
+
+    public void registerEvent(String eventId, BlockEvents event) {
+        BlockEvents.INSTANCES.put(eventId, event);
+    }
+
+    public void registerEventAction(String actionId, Class<? extends IBlockAction> actionClass) {
+        BlockEvents.ALL_ACTIONS.put(actionId, actionClass);
     }
 
     /**
@@ -98,10 +112,14 @@ public class BlockLoader {
     public void loadModels() {
 
         // initialize models, less parents first order
-        for (BlockModelFlux model : instantiator.sort()) {
-            BlockModelFlux.InstanceKey parentKey = new BlockModelFlux.InstanceKey(model.parent, model.rotXZ);
-            BlockModelFlux parent = instantiator.models.get(parentKey);
-            model.initialize(parent);
+        for (BlockModel model : factory.sort()) {
+            if(model instanceof BlockModelFlux flux) {
+                BlockModelFactory.InstanceKey parentKey = new BlockModelFactory.InstanceKey(flux.parent, flux.rotXZ);
+                BlockModelFlux parent = (BlockModelFlux) factory.models.get(parentKey);
+                flux.initialize(parent);
+            } else if (model instanceof  BlockModelVertex vertex) {
+                vertex.initialize();
+            }
         }
 
         // fix culling flags

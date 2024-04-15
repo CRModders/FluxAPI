@@ -1,27 +1,17 @@
 package dev.crmodders.flux.loading;
 
-import com.badlogic.gdx.graphics.Texture;
 import dev.crmodders.flux.FluxConstants;
 import dev.crmodders.flux.api.gui.ProgressBarElement;
 import dev.crmodders.flux.api.gui.TextElement;
-import dev.crmodders.flux.api.gui.base.BaseButton;
 import dev.crmodders.flux.loading.block.BlockLoader;
 import dev.crmodders.flux.loading.stages.*;
 import dev.crmodders.flux.localization.TranslationKey;
 import dev.crmodders.flux.menus.BasicMenu;
-import finalforeach.cosmicreach.BlockGame;
 import finalforeach.cosmicreach.GameSingletons;
 import finalforeach.cosmicreach.gamestates.GameState;
-import finalforeach.cosmicreach.rendering.blockmodels.BlockModelJson;
-import finalforeach.cosmicreach.settings.SoundSettings;
-import finalforeach.cosmicreach.ui.HorizontalAnchor;
-import finalforeach.cosmicreach.ui.UIElement;
-import finalforeach.cosmicreach.ui.VerticalAnchor;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Queue;
 import java.util.concurrent.CountDownLatch;
 
 public class GameLoader extends BasicMenu implements Runnable {
@@ -75,7 +65,7 @@ public class GameLoader extends BasicMenu implements Runnable {
         addFluxElement(progress3);
 
         blockLoader = new BlockLoader();
-        GameSingletons.blockModelInstantiator = blockLoader.instantiator;
+        GameSingletons.blockModelInstantiator = blockLoader.factory;
 
         stages.add(new InitializingCosmicReach());
 
