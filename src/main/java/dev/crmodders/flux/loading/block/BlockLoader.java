@@ -12,6 +12,7 @@ import finalforeach.cosmicreach.GameSingletons;
 import finalforeach.cosmicreach.blocks.Block;
 import finalforeach.cosmicreach.blocks.BlockState;
 import finalforeach.cosmicreach.rendering.blockmodels.BlockModel;
+import org.pmw.tinylog.Logger;
 import sun.misc.Unsafe;
 
 import java.lang.reflect.Field;
@@ -24,21 +25,30 @@ public class BlockLoader {
 
     public Identifier loadBlock(IModBlock block) {
         BlockGenerator generator = block.getGenerator();
-        String json = generator.getJson(block);
-        Identifier blockId = generator.getBlockId();
+        String json = generator.createJSON(block);
 
         Block b = new Json().fromJson(Block.class, json);
         Array<String> blockStateKeysToAdd = b.blockStates.keys().toArray();
 
-        BlockState blockState;
-        for(Array.ArrayIterator<String> it = blockStateKeysToAdd.iterator(); it.hasNext(); Block.allBlockStates.put(blockState.stringId, blockState)) {
-            String stateKey = it.next();
-            blockState = b.blockStates.get(stateKey);
-            blockState.initialize(b);
-            blockState.stringId = stateKey;
-            if (blockState.generateSlabs) {
-                BlockAccessor.generateSlabs(blockState.stringId, blockState);
+        Identifier blockId = Identifier.fromString(b.getStringId());
+
+        try {
+            BlockState blockState;
+            for(Array.ArrayIterator<String> it = blockStateKeysToAdd.iterator(); it.hasNext(); Block.allBlockStates.put(blockState.stringId, blockState)) {
+                String stateKey = it.next();
+                blockState = b.blockStates.get(stateKey);
+                blockState.initialize(b);
+                blockState.stringId = stateKey;
+                if (blockState.generateSlabs) {
+                    BlockAccessor.generateSlabs(blockState.stringId, blockState);
+                }
             }
+        } catch (Exception e) {
+            for(BlockState blockState : b.blockStates.values()) {
+                Block.allBlockStates.remove(blockState.stringId);
+            }
+            Block.allBlocks.removeValue(b, true);
+            throw e;
         }
 
         Block.blocksByStringId.put(blockId.toString(), b);

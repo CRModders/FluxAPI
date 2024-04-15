@@ -113,7 +113,7 @@ public class GameLoader extends BasicMenu implements Runnable {
             blockLoader.loadModels();
             blockLoader.hookBlockManager();
 
-            GameState.switchToGameState(GameState.MAIN_MENU);
+            GameState.switchToGameState(FluxConstants.MAIN_MENU);
         }
 
         super.render(partTime);

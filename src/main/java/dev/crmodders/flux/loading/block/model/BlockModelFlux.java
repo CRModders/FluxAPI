@@ -19,7 +19,6 @@ import finalforeach.cosmicreach.constants.DiagonalBitmask;
 import finalforeach.cosmicreach.rendering.IMeshData;
 import finalforeach.cosmicreach.rendering.blockmodels.*;
 import finalforeach.cosmicreach.rendering.shaders.ChunkShader;
-import org.jetbrains.annotations.NotNull;
 
 public class BlockModelFlux extends BlockModel {
 
@@ -105,7 +104,7 @@ public class BlockModelFlux extends BlockModel {
             return n;
         }
 
-        public int compare(@NotNull BlockModelFlux o1, @NotNull BlockModelFlux o2) {
+        public int compare(BlockModelFlux o1, BlockModelFlux o2) {
             return Integer.compare(getNumberOfParents(o1), getNumberOfParents(o2));
         }
 

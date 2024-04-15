@@ -28,6 +28,7 @@ public class BlockGenerator {
     protected HashMap<BlockEventType, List<TriggerStatePair>> blockTriggers;
     protected HashMap<BlockEventType, List<BasicTriggerSupplier>> multiStateTriggers;
     protected boolean resourceDriven;
+    protected Identifier blockId;
     protected ResourceLocation resourceId;
 
     protected BlockGenerator() {
@@ -119,49 +120,46 @@ public class BlockGenerator {
         return new BlockGenerator(true, preExistingBlockId);
     }
 
-    public ReturnableDoubleInputSupplier<IModBlock, Identifier, FactoryFinalizer<Block>> GetGeneratorFactory() {
+    public String createJSON(IModBlock block) {
+        if(blockId != null)  object.set("stringId", blockId.toString());
 
-        return (block, id) -> {
-            if (!FluxRegistries.BLOCKS.isFrozen()) throw new RuntimeException("CANNOT USE GENERATOR FACTORY BECAUSE REGISTRIES ARE NOT FROZEN YET");
-            object.set("stringId", id.toString());
+        FileHandle dataBlock = null;
+        try {
+            if (resourceDriven) dataBlock = GameAssetLoader.loadAsset(resourceId.namespace + ":blocks/" + resourceId.name + ".json");
+        } catch (Exception ignore) {
+        }
 
-            FileHandle dataBlock = null;
-            try {
-                if (resourceDriven) dataBlock = GameAssetLoader.loadAsset(resourceId.namespace + ":blocks/" + resourceId.name + ".json");
-                else dataBlock = GameAssetLoader.loadAsset(id.namespace + ":blocks/" + id.name + ".json");
-            } catch (Exception ignore) {
+        if (dataBlock != null) {
+            object = JsonValue.readJSON(
+                    dataBlock.readString()
+                            .replaceAll("\t", "")
+                            .replaceAll(" ", "")
+                            .replaceAll("\n", "")
+                            .replaceAll(",}", "}")
+            ).asObject();
+            if(blockId == null) {
+                blockId = Identifier.fromString(object.get("stringId").asString());
             }
+        }
 
-            if (dataBlock != null) {
-                object = JsonValue.readJSON(
-                        dataBlock.readString()
-                                .replaceAll("\t", "")
-                                .replaceAll(" ", "")
-                                .replaceAll("\n", "")
-                                .replaceAll(",}", "}")
-                ).asObject();
-            }
+        addTriggerMultiStateTrigger(BlockEventType.OnBreak, block::onBreak);
+        addTriggerMultiStateTrigger(BlockEventType.OnPlace, block::onPlace);
+        addTriggerMultiStateTrigger(BlockEventType.OnInteract, block::onInteract);
 
-            addTriggerMultiStateTrigger(BlockEventType.OnBreak, block::onBreak);
-            addTriggerMultiStateTrigger(BlockEventType.OnPlace, block::onPlace);
-            addTriggerMultiStateTrigger(BlockEventType.OnInteract, block::onInteract);
+        for (String name : object.get("blockStates").asObject().names()) {
+            for (BlockEventType key : multiStateTriggers.keySet())
+                for (BasicTriggerSupplier trigger : multiStateTriggers.get(key))
+                    addTriggerToBlockstate(key, name, trigger);
 
-            for (String name : object.get("blockStates").asObject().names()) {
-                for (BlockEventType key : multiStateTriggers.keySet())
-                    for (BasicTriggerSupplier trigger : multiStateTriggers.get(key))
-                        addTriggerToBlockstate(key, name, trigger);
-
-                JsonObject newBlockstate = BlockStateGenerator.ModifiyBlockState(
-                        id,
-                        block,
-                        object.get("blockStates").asObject().get(name).asObject(),
-                        name
-                );
-                object.set("blockStates", object.get("blockStates").asObject().set(name, newBlockstate));
-            }
-
-            return new FactoryFinalizer<>(() -> BlockBuilderUtils.getBlockFromJson(id, object.toString()));
-        };
+//            JsonObject newBlockstate = BlockStateGenerator.ModifiyBlockState(
+//                    blockId,
+//                    block,
+//                    object.get("blockStates").asObject().get(name).asObject(),
+//                    name
+//            );
+//            object.set("blockStates", object.get("blockStates").asObject().set(name, newBlockstate));
+        }
+        return object.toString();
     }
 
 }

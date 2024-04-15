@@ -41,6 +41,8 @@ public class InitializingCosmicReach extends LoadStage {
     public void doStage() {
         super.doStage();
 
+
+
         for(String f : Gdx.files.internal("assets.txt").readString().split("\n")) {
             if (f.startsWith("blocks/") && f.endsWith(".json") && Gdx.files.internal(f).exists()) {
                 blockNames.add(f.replace("blocks/", "").replace(".json", ""));
