@@ -2,108 +2,136 @@
 // Class Version: 17
 package dev.crmodders.flux.loading.block.model;
 
+import finalforeach.cosmicreach.constants.AdjacentBitmask;
 import finalforeach.cosmicreach.rendering.blockmodels.BlockModelJsonTexture;
 import finalforeach.cosmicreach.rendering.shaders.ChunkShader;
 import com.badlogic.gdx.utils.ObjectMap;
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.math.collision.BoundingBox;
 import com.badlogic.gdx.utils.OrderedMap;
 
+import java.util.List;
+
 public class BlockModelFluxCuboid
 {
-    public boolean isPosXFaceOccluding;
-    public boolean isNegXFaceOccluding;
-    public boolean isPosYFaceOccluding;
-    public boolean isNegYFaceOccluding;
-    public boolean isPosZFaceOccluding;
-    public boolean isNegZFaceOccluding;
-    public boolean isPosXFacePartOccluding;
-    public boolean isNegXFacePartOccluding;
-    public boolean isPosYFacePartOccluding;
-    public boolean isNegYFacePartOccluding;
-    public boolean isPosZFacePartOccluding;
-    public boolean isNegZFacePartOccluding;
+
+    public static class Face
+    {
+        public float[] uv;
+        public boolean ambientocclusion;
+        public boolean cullFace;
+        public String texture;
+        public  int uvRotation;
+        public transient int cullingMask;
+        public  transient float x1;
+        public  transient float y1;
+        public  transient float z1;
+        public  transient float x2;
+        public  transient float y2;
+        public  transient float z2;
+        public  transient float midX1;
+        public  transient float midY1;
+        public  transient float midZ1;
+        public  transient float midX2;
+        public  transient float midY2;
+        public  transient float midZ2;
+        public  transient float uA;
+        public  transient float vA;
+        public  transient float uB;
+        public  transient float vB;
+        public  transient float uC;
+        public  transient float vC;
+        public  transient float uD;
+        public  transient float vD;
+        public  transient int modelUvIdxA;
+        public  transient int modelUvIdxB;
+        public  transient int modelUvIdxC;
+        public  transient int modelUvIdxD;
+        public  transient int vertexIndexA;
+        public  transient int vertexIndexB;
+        public  transient int vertexIndexC;
+        public  transient int vertexIndexD;
+        public  transient int aoBitmaskA1;
+        public  transient int aoBitmaskA2;
+        public  transient int aoBitmaskA3;
+        public  transient int aoBitmaskB1;
+        public  transient int aoBitmaskB2;
+        public  transient int aoBitmaskB3;
+        public  transient int aoBitmaskC1;
+        public  transient int aoBitmaskC2;
+        public  transient int aoBitmaskC3;
+        public  transient int aoBitmaskD1;
+        public  transient int aoBitmaskD2;
+        public  transient int aoBitmaskD3;
+    }
+
+    public transient boolean isPosXFaceOccluding;
+    public transient boolean isNegXFaceOccluding;
+    public transient boolean isPosYFaceOccluding;
+    public transient boolean isNegYFaceOccluding;
+    public transient boolean isPosZFaceOccluding;
+    public transient boolean isNegZFaceOccluding;
+    public transient boolean isPosXFacePartOccluding;
+    public transient boolean isNegXFacePartOccluding;
+    public transient boolean isPosYFacePartOccluding;
+    public transient boolean isNegYFacePartOccluding;
+    public transient boolean isPosZFacePartOccluding;
+    public transient boolean isNegZFacePartOccluding;
+
     public float[] localBounds;
-    public OrderedMap<String, BlockModelFluxCuboidFace> faces;
-    
+    public OrderedMap<String, Face> faces;
+
+    // LEGACY
     public BoundingBox getBoundingBox() {
-        final BoundingBox bb = new BoundingBox();
+        BoundingBox bb = new BoundingBox();
         bb.min.set(this.localBounds[0] / 16.0f, this.localBounds[1] / 16.0f, this.localBounds[2] / 16.0f);
         bb.max.set(this.localBounds[3] / 16.0f, this.localBounds[4] / 16.0f, this.localBounds[5] / 16.0f);
         bb.update();
         return bb;
     }
-    
-    private BlockModelJsonTexture getTexture(final OrderedMap<String, BlockModelJsonTexture> textures, final String texName) {
-        final BlockModelJsonTexture t = textures.get(texName);
-        if (t != null) {
-            return t;
-        }
-        if (texName.equals("slab_top")) {
-            return this.getTexture(textures, "top");
-        }
-        if (texName.equals("slab_bottom")) {
-            return this.getTexture(textures, "bottom");
-        }
-        if (texName.equals("slab_side")) {
-            return this.getTexture(textures, "side");
-        }
-        return textures.get("all");
-    }
 
-    void initialize(final OrderedMap<String, BlockModelJsonTexture> textures, final Array<BlockModelFluxCuboidFace> allFaces) {
-        for (final ObjectMap.Entry<String, BlockModelFluxCuboidFace> kf : this.faces) {
-            final BlockModelFluxCuboidFace f = kf.value;
+    public void initialize(BlockModelFlux model, List<Face> allFaces) {
+        for (final ObjectMap.Entry<String, Face> kf : this.faces) {
+
             boolean isValidFace = true;
-            final String faceDirection = kf.key;
-            final float x1 = this.localBounds[0] / 16.0f;
-            final float y1 = this.localBounds[1] / 16.0f;
-            final float z1 = this.localBounds[2] / 16.0f;
-            final float x2 = this.localBounds[3] / 16.0f;
-            final float y2 = this.localBounds[4] / 16.0f;
-            final float z2 = this.localBounds[5] / 16.0f;
-            final float minX = Math.min(x1, x2);
-            final float minY = Math.min(y1, y2);
-            final float minZ = Math.min(z1, z2);
-            final float maxX = Math.max(x1, x2);
-            final float maxY = Math.max(y1, y2);
-            final float maxZ = Math.max(z1, z2);
-            final float uvScale = (float)(ChunkShader.allBlocksTexSize / 16);
+            Face f = kf.value;
+
+            // normalize bounds
+            float x1 = this.localBounds[0] / 16.0f;
+            float y1 = this.localBounds[1] / 16.0f;
+            float z1 = this.localBounds[2] / 16.0f;
+            float x2 = this.localBounds[3] / 16.0f;
+            float y2 = this.localBounds[4] / 16.0f;
+            float z2 = this.localBounds[5] / 16.0f;
+
+            // find min,max of bounds
+            float minX = Math.min(x1, x2);
+            float minY = Math.min(y1, y2);
+            float minZ = Math.min(z1, z2);
+            float maxX = Math.max(x1, x2);
+            float maxY = Math.max(y1, y2);
+            float maxZ = Math.max(z1, z2);
+
+            float uvScale = (float)(ChunkShader.allBlocksTexSize / 16);
+
+            // determine culling flags
             if (f.cullFace) {
-                final String s = faceDirection;
-                switch (s) {
-                    case "localNegX": {
-                        f.cullingMask = 1;
-                        break;
-                    }
-                    case "localPosX": {
-                        f.cullingMask = 2;
-                        break;
-                    }
-                    case "localNegY": {
-                        f.cullingMask = 4;
-                        break;
-                    }
-                    case "localPosY": {
-                        f.cullingMask = 8;
-                        break;
-                    }
-                    case "localNegZ": {
-                        f.cullingMask = 16;
-                        break;
-                    }
-                    case "localPosZ": {
-                        f.cullingMask = 32;
-                        break;
-                    }
-                }
+                f.cullingMask = switch (kf.key) {
+                    case "localNegX" -> AdjacentBitmask.NEG_X;
+                    case "localPosX" -> AdjacentBitmask.POS_X;
+                    case "localNegY" -> AdjacentBitmask.NEG_Y;
+                    case "localPosY" -> AdjacentBitmask.POS_Y;
+                    case "localNegZ" -> AdjacentBitmask.NEG_Z;
+                    case "localPosZ" -> AdjacentBitmask.POS_Z;
+                    default -> throw new IllegalArgumentException("faceDirection is not valid: " + kf.key);
+                };
             }
-            final BlockModelJsonTexture t = this.getTexture(textures, f.texture);
-            final String s2 = faceDirection;
-            switch (s2) {
-                case "localNegX": {
-                    this.isNegXFaceOccluding |= (minX == 0.0f && minY <= 0.0f && maxY >= 1.0f && minZ <= 0.0f && maxZ >= 1.0f);
-                    this.isNegXFacePartOccluding |= (minX == 0.0f);
+
+            // keep this
+            BlockModelJsonTexture t = model.getTexture(f.texture);
+            switch (kf.key) {
+                case "localNegX":
+                    this.isNegXFaceOccluding |= minX == 0.0F && minY <= 0.0F && maxY >= 1.0F && minZ <= 0.0F && maxZ >= 1.0F;
+                    this.isNegXFacePartOccluding |= minX == 0.0F;
                     f.vertexIndexA = 0;
                     f.aoBitmaskA1 = 64;
                     f.aoBitmaskA2 = 128;
@@ -132,19 +160,18 @@ public class BlockModelFluxCuboid
                     f.midX2 = f.x1;
                     f.midY2 = f.y2;
                     f.midZ2 = f.z1;
-                    f.uA = (t.uv[0] + f.uv[0] / 16.0f) / uvScale;
-                    f.vA = (t.uv[1] + f.uv[3] / 16.0f) / uvScale;
-                    f.uB = (t.uv[0] + f.uv[2] / 16.0f) / uvScale;
-                    f.vB = (t.uv[1] + f.uv[3] / 16.0f) / uvScale;
-                    f.uC = (t.uv[0] + f.uv[2] / 16.0f) / uvScale;
-                    f.vC = (t.uv[1] + f.uv[1] / 16.0f) / uvScale;
-                    f.uD = (t.uv[0] + f.uv[0] / 16.0f) / uvScale;
-                    f.vD = (t.uv[1] + f.uv[1] / 16.0f) / uvScale;
+                    f.uA = (t.uv[0] + f.uv[0] / 16.0F) / uvScale;
+                    f.vA = (t.uv[1] + f.uv[3] / 16.0F) / uvScale;
+                    f.uB = (t.uv[0] + f.uv[2] / 16.0F) / uvScale;
+                    f.vB = (t.uv[1] + f.uv[3] / 16.0F) / uvScale;
+                    f.uC = (t.uv[0] + f.uv[2] / 16.0F) / uvScale;
+                    f.vC = (t.uv[1] + f.uv[1] / 16.0F) / uvScale;
+                    f.uD = (t.uv[0] + f.uv[0] / 16.0F) / uvScale;
+                    f.vD = (t.uv[1] + f.uv[1] / 16.0F) / uvScale;
                     break;
-                }
-                case "localPosX": {
-                    this.isPosXFaceOccluding |= (maxX == 1.0f && minY <= 0.0f && maxY >= 1.0f && minZ <= 0.0f && maxZ >= 1.0f);
-                    this.isPosXFacePartOccluding |= (maxX == 1.0f);
+                case "localPosX":
+                    this.isPosXFaceOccluding |= maxX == 1.0F && minY <= 0.0F && maxY >= 1.0F && minZ <= 0.0F && maxZ >= 1.0F;
+                    this.isPosXFacePartOccluding |= maxX == 1.0F;
                     f.vertexIndexA = 2;
                     f.aoBitmaskA1 = 262144;
                     f.aoBitmaskA2 = 524288;
@@ -173,19 +200,18 @@ public class BlockModelFluxCuboid
                     f.midX2 = f.x1;
                     f.midY2 = f.y1;
                     f.midZ2 = f.z2;
-                    f.uA = (t.uv[0] + f.uv[2] / 16.0f) / uvScale;
-                    f.vA = (t.uv[1] + f.uv[3] / 16.0f) / uvScale;
-                    f.uB = (t.uv[0] + f.uv[2] / 16.0f) / uvScale;
-                    f.vB = (t.uv[1] + f.uv[1] / 16.0f) / uvScale;
-                    f.uC = (t.uv[0] + f.uv[0] / 16.0f) / uvScale;
-                    f.vC = (t.uv[1] + f.uv[1] / 16.0f) / uvScale;
-                    f.uD = (t.uv[0] + f.uv[0] / 16.0f) / uvScale;
-                    f.vD = (t.uv[1] + f.uv[3] / 16.0f) / uvScale;
+                    f.uA = (t.uv[0] + f.uv[2] / 16.0F) / uvScale;
+                    f.vA = (t.uv[1] + f.uv[3] / 16.0F) / uvScale;
+                    f.uB = (t.uv[0] + f.uv[2] / 16.0F) / uvScale;
+                    f.vB = (t.uv[1] + f.uv[1] / 16.0F) / uvScale;
+                    f.uC = (t.uv[0] + f.uv[0] / 16.0F) / uvScale;
+                    f.vC = (t.uv[1] + f.uv[1] / 16.0F) / uvScale;
+                    f.uD = (t.uv[0] + f.uv[0] / 16.0F) / uvScale;
+                    f.vD = (t.uv[1] + f.uv[3] / 16.0F) / uvScale;
                     break;
-                }
-                case "localNegY": {
-                    this.isNegYFaceOccluding |= (minX <= 0.0f && maxX >= 1.0f && minY == 0.0f && minZ <= 0.0f && maxZ >= 1.0f);
-                    this.isNegYFacePartOccluding |= (minY == 0.0f);
+                case "localNegY":
+                    this.isNegYFaceOccluding |= minX <= 0.0F && maxX >= 1.0F && minY == 0.0F && minZ <= 0.0F && maxZ >= 1.0F;
+                    this.isNegYFacePartOccluding |= minY == 0.0F;
                     f.vertexIndexA = 0;
                     f.aoBitmaskA1 = 64;
                     f.aoBitmaskA2 = 128;
@@ -214,19 +240,18 @@ public class BlockModelFluxCuboid
                     f.midX2 = f.x1;
                     f.midY2 = f.y1;
                     f.midZ2 = f.z2;
-                    f.uA = (t.uv[0] + f.uv[0] / 16.0f) / uvScale;
-                    f.vA = (t.uv[1] + f.uv[3] / 16.0f) / uvScale;
-                    f.uB = (t.uv[0] + f.uv[2] / 16.0f) / uvScale;
-                    f.vB = (t.uv[1] + f.uv[3] / 16.0f) / uvScale;
-                    f.uC = (t.uv[0] + f.uv[2] / 16.0f) / uvScale;
-                    f.vC = (t.uv[1] + f.uv[1] / 16.0f) / uvScale;
-                    f.uD = (t.uv[0] + f.uv[0] / 16.0f) / uvScale;
-                    f.vD = (t.uv[1] + f.uv[1] / 16.0f) / uvScale;
+                    f.uA = (t.uv[0] + f.uv[0] / 16.0F) / uvScale;
+                    f.vA = (t.uv[1] + f.uv[3] / 16.0F) / uvScale;
+                    f.uB = (t.uv[0] + f.uv[2] / 16.0F) / uvScale;
+                    f.vB = (t.uv[1] + f.uv[3] / 16.0F) / uvScale;
+                    f.uC = (t.uv[0] + f.uv[2] / 16.0F) / uvScale;
+                    f.vC = (t.uv[1] + f.uv[1] / 16.0F) / uvScale;
+                    f.uD = (t.uv[0] + f.uv[0] / 16.0F) / uvScale;
+                    f.vD = (t.uv[1] + f.uv[1] / 16.0F) / uvScale;
                     break;
-                }
-                case "localPosY": {
-                    this.isPosYFaceOccluding |= (minX <= 0.0f && maxX >= 1.0f && maxY == 1.0f && minZ <= 0.0f && maxZ >= 1.0f);
-                    this.isPosYFacePartOccluding |= (maxY == 1.0f);
+                case "localPosY":
+                    this.isPosYFaceOccluding |= minX <= 0.0F && maxX >= 1.0F && maxY == 1.0F && minZ <= 0.0F && maxZ >= 1.0F;
+                    this.isPosYFacePartOccluding |= maxY == 1.0F;
                     f.vertexIndexA = 4;
                     f.aoBitmaskA1 = 2048;
                     f.aoBitmaskA2 = 4096;
@@ -255,19 +280,18 @@ public class BlockModelFluxCuboid
                     f.midX2 = f.x2;
                     f.midY2 = f.y1;
                     f.midZ2 = f.z1;
-                    f.uA = (t.uv[0] + f.uv[0] / 16.0f) / uvScale;
-                    f.vA = (t.uv[1] + f.uv[1] / 16.0f) / uvScale;
-                    f.uB = (t.uv[0] + f.uv[0] / 16.0f) / uvScale;
-                    f.vB = (t.uv[1] + f.uv[3] / 16.0f) / uvScale;
-                    f.uC = (t.uv[0] + f.uv[2] / 16.0f) / uvScale;
-                    f.vC = (t.uv[1] + f.uv[3] / 16.0f) / uvScale;
-                    f.uD = (t.uv[0] + f.uv[2] / 16.0f) / uvScale;
-                    f.vD = (t.uv[1] + f.uv[1] / 16.0f) / uvScale;
+                    f.uA = (t.uv[0] + f.uv[0] / 16.0F) / uvScale;
+                    f.vA = (t.uv[1] + f.uv[1] / 16.0F) / uvScale;
+                    f.uB = (t.uv[0] + f.uv[0] / 16.0F) / uvScale;
+                    f.vB = (t.uv[1] + f.uv[3] / 16.0F) / uvScale;
+                    f.uC = (t.uv[0] + f.uv[2] / 16.0F) / uvScale;
+                    f.vC = (t.uv[1] + f.uv[3] / 16.0F) / uvScale;
+                    f.uD = (t.uv[0] + f.uv[2] / 16.0F) / uvScale;
+                    f.vD = (t.uv[1] + f.uv[1] / 16.0F) / uvScale;
                     break;
-                }
-                case "localNegZ": {
-                    this.isNegZFaceOccluding |= (minX <= 0.0f && maxX >= 1.0f && minY <= 0.0f && maxY >= 1.0f && minZ == 0.0f);
-                    this.isNegZFacePartOccluding |= (minZ == 0.0f);
+                case "localNegZ":
+                    this.isNegZFaceOccluding |= minX <= 0.0F && maxX >= 1.0F && minY <= 0.0F && maxY >= 1.0F && minZ == 0.0F;
+                    this.isNegZFacePartOccluding |= minZ == 0.0F;
                     f.vertexIndexA = 0;
                     f.aoBitmaskA1 = 64;
                     f.aoBitmaskA2 = 16384;
@@ -296,19 +320,18 @@ public class BlockModelFluxCuboid
                     f.midX2 = f.x2;
                     f.midY2 = f.y1;
                     f.midZ2 = f.z1;
-                    f.uA = (t.uv[0] + f.uv[0] / 16.0f) / uvScale;
-                    f.vA = (t.uv[1] + f.uv[3] / 16.0f) / uvScale;
-                    f.uB = (t.uv[0] + f.uv[0] / 16.0f) / uvScale;
-                    f.vB = (t.uv[1] + f.uv[1] / 16.0f) / uvScale;
-                    f.uC = (t.uv[0] + f.uv[2] / 16.0f) / uvScale;
-                    f.vC = (t.uv[1] + f.uv[1] / 16.0f) / uvScale;
-                    f.uD = (t.uv[0] + f.uv[2] / 16.0f) / uvScale;
-                    f.vD = (t.uv[1] + f.uv[3] / 16.0f) / uvScale;
+                    f.uA = (t.uv[0] + f.uv[0] / 16.0F) / uvScale;
+                    f.vA = (t.uv[1] + f.uv[3] / 16.0F) / uvScale;
+                    f.uB = (t.uv[0] + f.uv[0] / 16.0F) / uvScale;
+                    f.vB = (t.uv[1] + f.uv[1] / 16.0F) / uvScale;
+                    f.uC = (t.uv[0] + f.uv[2] / 16.0F) / uvScale;
+                    f.vC = (t.uv[1] + f.uv[1] / 16.0F) / uvScale;
+                    f.uD = (t.uv[0] + f.uv[2] / 16.0F) / uvScale;
+                    f.vD = (t.uv[1] + f.uv[3] / 16.0F) / uvScale;
                     break;
-                }
-                case "localPosZ": {
-                    this.isPosZFaceOccluding |= (minX <= 0.0f && maxX >= 1.0f && minY <= 0.0f && maxY >= 1.0f && maxZ == 1.0f);
-                    this.isPosZFacePartOccluding |= (maxZ == 1.0f);
+                case "localPosZ":
+                    this.isPosZFaceOccluding |= minX <= 0.0F && maxX >= 1.0F && minY <= 0.0F && maxY >= 1.0F && maxZ == 1.0F;
+                    this.isPosZFacePartOccluding |= maxZ == 1.0F;
                     f.vertexIndexA = 1;
                     f.aoBitmaskA1 = 256;
                     f.aoBitmaskA2 = 32768;
@@ -337,77 +360,45 @@ public class BlockModelFluxCuboid
                     f.midX2 = f.x1;
                     f.midY2 = f.y2;
                     f.midZ2 = f.z1;
-                    f.uA = (t.uv[0] + f.uv[0] / 16.0f) / uvScale;
-                    f.vA = (t.uv[1] + f.uv[3] / 16.0f) / uvScale;
-                    f.uB = (t.uv[0] + f.uv[2] / 16.0f) / uvScale;
-                    f.vB = (t.uv[1] + f.uv[3] / 16.0f) / uvScale;
-                    f.uC = (t.uv[0] + f.uv[2] / 16.0f) / uvScale;
-                    f.vC = (t.uv[1] + f.uv[1] / 16.0f) / uvScale;
-                    f.uD = (t.uv[0] + f.uv[0] / 16.0f) / uvScale;
-                    f.vD = (t.uv[1] + f.uv[1] / 16.0f) / uvScale;
+                    f.uA = (t.uv[0] + f.uv[0] / 16.0F) / uvScale;
+                    f.vA = (t.uv[1] + f.uv[3] / 16.0F) / uvScale;
+                    f.uB = (t.uv[0] + f.uv[2] / 16.0F) / uvScale;
+                    f.vB = (t.uv[1] + f.uv[3] / 16.0F) / uvScale;
+                    f.uC = (t.uv[0] + f.uv[2] / 16.0F) / uvScale;
+                    f.vC = (t.uv[1] + f.uv[1] / 16.0F) / uvScale;
+                    f.uD = (t.uv[0] + f.uv[0] / 16.0F) / uvScale;
+                    f.vD = (t.uv[1] + f.uv[1] / 16.0F) / uvScale;
                     break;
-                }
-                default: {
+                default:
                     isValidFace = false;
-                    break;
-                }
             }
-            switch (f.uvRotation) {
-                case 0: {
-                    break;
-                }
-                case 270: {
-                    final float tmpU = f.uA;
-                    final float tmpV = f.vA;
-                    f.uA = f.uB;
-                    f.vA = f.vB;
-                    f.uB = f.uC;
-                    f.vB = f.vC;
-                    f.uC = f.uD;
-                    f.vC = f.vD;
-                    f.uD = tmpU;
-                    f.vD = tmpV;
-                }
-                case 180: {
-                    final float tmpU = f.uA;
-                    final float tmpV = f.vA;
-                    f.uA = f.uB;
-                    f.vA = f.vB;
-                    f.uB = f.uC;
-                    f.vB = f.vC;
-                    f.uC = f.uD;
-                    f.vC = f.vD;
-                    f.uD = tmpU;
-                    f.vD = tmpV;
-                }
-                case 90: {
-                    final float tmpU = f.uA;
-                    final float tmpV = f.vA;
-                    f.uA = f.uB;
-                    f.vA = f.vB;
-                    f.uB = f.uC;
-                    f.vB = f.vC;
-                    f.uC = f.uD;
-                    f.vC = f.vD;
-                    f.uD = tmpU;
-                    f.vD = tmpV;
-                    break;
-                }
-                default: {
-                    throw new UnsupportedOperationException("Invalid value for uvRotation, must be 0, 90, 180, or 270");
-                }
+
+            int tmpRotation = f.uvRotation / 90;
+            while(tmpRotation > 0) {
+                float tmpU = f.uA;
+                float tmpV = f.vA;
+                f.uA = f.uB;
+                f.vA = f.vB;
+                f.uB = f.uC;
+                f.vB = f.vC;
+                f.uC = f.uD;
+                f.vC = f.vD;
+                f.uD = tmpU;
+                f.vD = tmpV;
+                tmpRotation--;
             }
-            f.modelUvIdxA = this.getFaceUBOFloatsIdx(f.uA, f.vA);
-            f.modelUvIdxB = this.getFaceUBOFloatsIdx(f.uB, f.vB);
-            f.modelUvIdxC = this.getFaceUBOFloatsIdx(f.uC, f.vC);
-            f.modelUvIdxD = this.getFaceUBOFloatsIdx(f.uD, f.vD);
-            if (isValidFace) {
-                allFaces.add(f);
-            }
+
+            f.modelUvIdxA = createFaceUBOFloatsIdx(f.uA, f.vA);
+            f.modelUvIdxB = createFaceUBOFloatsIdx(f.uB, f.vB);
+            f.modelUvIdxC = createFaceUBOFloatsIdx(f.uC, f.vC);
+            f.modelUvIdxD = createFaceUBOFloatsIdx(f.uD, f.vD);
+
+            if (isValidFace) allFaces.add(f);
+
         }
     }
 
-    private int getFaceUBOFloatsIdx(final float u, final float v) {
+    private static int createFaceUBOFloatsIdx(final float u, final float v) {
         for (int i = 0; i < ChunkShader.faceTexBufFloats.size; i += 2) {
             if (ChunkShader.faceTexBufFloats.get(i) == u && ChunkShader.faceTexBufFloats.get(i + 1) == v) {
                 return i / 2;

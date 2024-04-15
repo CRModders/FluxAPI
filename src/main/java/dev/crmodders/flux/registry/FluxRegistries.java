@@ -30,9 +30,6 @@ public class FluxRegistries {
     @Stable
     public static DynamicRegistry<ResourceObject> GAME_RESOURCES = DynamicRegistry.create();
 
-    @Stable
-    public static List<IModBlockFactory> BLOCK_FACTORIES = new ArrayList<>();
-
     /**
      * Used for Registering Custom {@link IModBlock}
      * This Registry will be frozen in Phase 4 of loading

@@ -12,6 +12,7 @@ import dev.crmodders.flux.menus.BasicMenu;
 import finalforeach.cosmicreach.BlockGame;
 import finalforeach.cosmicreach.GameSingletons;
 import finalforeach.cosmicreach.gamestates.GameState;
+import finalforeach.cosmicreach.rendering.blockmodels.BlockModelJson;
 import finalforeach.cosmicreach.settings.SoundSettings;
 import finalforeach.cosmicreach.ui.HorizontalAnchor;
 import finalforeach.cosmicreach.ui.UIElement;
@@ -74,7 +75,7 @@ public class GameLoader extends BasicMenu implements Runnable {
         addFluxElement(progress3);
 
         blockLoader = new BlockLoader();
-        GameSingletons.blockModelInstantiator = blockLoader;
+        GameSingletons.blockModelInstantiator = blockLoader.instantiator;
 
         stages.add(new InitializingCosmicReach());
 
