@@ -2,11 +2,11 @@
 
 ### Using flux in your projects
 
-Step 1: Add [CRModder's Maven](https://maven.crmodders.dev/) in your build.gradle at the end of your repositories tag.\
+Step 1: Add [CRModder's Maven](https://maven.crmodders.dev/rrlease) in your build.gradle at the end of your repositories tag.\
 Here is an example `repositories` section
 ```
 repositories {
-	maven { url 'https://maven.crmodders.dev' }
+	maven { url 'https://maven.crmodders.dev/releases/' }
 	
 	mavenCentral()
 }
