@@ -12,7 +12,7 @@ import dev.crmodders.flux.localization.Language;
 import dev.crmodders.flux.localization.LanguageFile;
 import dev.crmodders.flux.registry.registries.DynamicRegistry;
 import dev.crmodders.flux.registry.registries.FreezingRegistry;
-import finalforeach.cosmicreach.blockevents.IBlockEventAction;
+import finalforeach.cosmicreach.blockevents.actions.IBlockAction;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,11 +38,11 @@ public class FluxRegistries {
     public static FreezingRegistry<IModBlock> BLOCKS = FreezingRegistry.create();
 
     /**
-     * Used for Registering Custom {@link IBlockEventAction}
+     * Used for Registering Custom {@link IBlockAction}
      * This Registry will be frozen in Phase 5 of loading
      */
     @Stable
-    public static FreezingRegistry<IBlockEventAction> BLOCK_EVENT_ACTIONS = FreezingRegistry.create();
+    public static FreezingRegistry<IBlockAction> BLOCK_EVENT_ACTIONS = FreezingRegistry.create();
 
     /**
      * Used for Registering Custom {@link BlockEventDataExt}

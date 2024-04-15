@@ -21,19 +21,25 @@ public class BlockStateGenerator {
         );
     }
 
-    public static JsonObject ModifiyBlockState(Identifier id, IModBlock block, JsonObject oldBlockState) {
+    public static JsonObject ModifiyBlockState(Identifier id, IModBlock block, JsonObject oldBlockState, String stateName) {
         JsonObject blockstate = oldBlockState;
         Identifier blockEventId;
         BlockEventDataExt eventData;
+        
         if (blockstate.get("blockEventsId") == null) {
             blockEventId = Identifier.fromString(id.toString() + "_Custom_Constructed_Blockstate");
-            eventData = BlockEventGenerator.CreateNewBlockEvent(blockEventId, block);
+            eventData = BlockEventGenerator.CreateNewBlockEvent(
+                    blockEventId,
+                    block,
+                    stateName
+            );
         } else {
             blockEventId = Identifier.fromString(blockstate.get("blockEventsId").asString().replaceAll("\"", "")+"_Custom_Injected_Blockstate_"+id.name);
             eventData = BlockEventGenerator.InjectIntoBlockEvent(
                     Identifier.fromString(blockstate.get("blockEventsId").asString().replaceAll("\"", "")),
                     blockEventId,
-                    block
+                    block,
+                    stateName
             );
         }
         blockstate.set("blockEventsId", blockEventId.toString());

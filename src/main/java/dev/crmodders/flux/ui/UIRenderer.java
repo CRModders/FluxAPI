@@ -9,6 +9,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import dev.crmodders.flux.FluxConstants;
 import dev.crmodders.flux.FluxSettings;
 import dev.crmodders.flux.ui.font.Font;
+import dev.crmodders.flux.ui.font.FontTexture;
 import dev.crmodders.flux.ui.image.Image;
 import dev.crmodders.flux.ui.image.ImageBatch;
 import dev.crmodders.flux.ui.image.ImageBatchBuilder;
@@ -19,11 +20,13 @@ import dev.crmodders.flux.ui.text.TextBatchBuilder;
 import dev.crmodders.flux.ui.text.TextLine;
 import dev.crmodders.flux.util.text.StyleStringParser;
 import finalforeach.cosmicreach.gamestates.GameState;
+import finalforeach.cosmicreach.ui.FontRenderer;
 import finalforeach.cosmicreach.ui.HorizontalAnchor;
 import finalforeach.cosmicreach.ui.VerticalAnchor;
 import space.earlygrey.shapedrawer.ShapeDrawer;
 
 import java.lang.Character.UnicodeBlock;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -74,18 +77,28 @@ public class UIRenderer {
 
 	public static Texture white;
 	public static final Font cosmicReachFont;
-	public static final Font comicSansFont;
 	public static Font font;
 	public static UIRenderer uiRenderer;
 	static {
 		white = new Texture(FluxConstants.WhitePixel.load());
-		cosmicReachFont = Font.generate(FluxConstants.CosmicReachFont.load(), 48, CHARACTER_SET);
-		comicSansFont = Font.generate(FluxConstants.ComicSansFont.load(), 48, CHARACTER_SET);
-		if(FluxSettings.UseAlternativeFont.getValue()) {
-			font = comicSansFont;
-		} else {
-			font = cosmicReachFont;
+
+		try {
+			Class<?> fontTextureType = Class.forName("finalforeach.cosmicreach.ui.FontTexture");
+			List<FontTexture> fontTextures = new ArrayList<>();
+			for(Field field : FontRenderer.class.getDeclaredFields()) {
+				field.setAccessible(true);
+				Object value = field.get(null);
+				if(fontTextureType.isInstance(value)) {
+					FontTexture tex = new FontTexture(value, fontTextureType);
+					fontTextures.add(tex);
+				}
+			}
+			cosmicReachFont = Font.generateFontTextureFont(fontTextures);
+		} catch (Exception e) {
+			throw new RuntimeException(e);
 		}
+
+		font = cosmicReachFont;
 		uiRenderer = new UIRenderer(GameState.batch);
 	}
 

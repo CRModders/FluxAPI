@@ -1,3 +1,5 @@
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+
 plugins {
     id "application" // TODO: Remove this plugin
     id "maven-publish"
@@ -63,7 +65,6 @@ repositories {
     mavenCentral()
 }
 
-
 configurations {
     cosmicreach // Config to provide the Cosmic Reach project
     compileOnly.extendsFrom(cosmicreach) // Allows cosmic reach to be used in the codebase
@@ -89,8 +90,8 @@ configurations {
 shadowJar {
     configurations = [project.configurations.shadowMe]
     mainClassName = "dev.crmodders.flux.FluxAPI"
+    archiveFileName = "${id}-${version}.jar"
 }
-
 
 dependencies {
     // Cosmic Reach jar
@@ -102,8 +103,7 @@ dependencies {
     compileOnly("io.github.llamalad7:mixinextras-fabric:0.3.5")
 
     // Modmenu
-    gameMod("org.codeberg.CRModders:modmenu:${modmenu_version}")
-            { transitive = false } // This will be fixed on the modmenu side soon (to not have to use this line)
+    gameMod("dev.crmodders:modmenu:${modmenu_version}")
 
     // Json stuff
     shadowMe("com.google.guava:guava:33.0.0-jre")
@@ -171,7 +171,7 @@ tasks.register("runQuilt", JavaExec) {
 
     dependencies {
         // Cosmic Quilt
-        implementation("org.codeberg.CRModders:cosmic-quilt:${cosmic_quilt_version}")
+        implementation("dev.crmodders:cosmicquilt:${cosmic_quilt_version}")
     }
 
 
@@ -226,27 +226,78 @@ tasks.register("runFabric", JavaExec) {
 
 
 java {
-    withSourcesJar()
-    // withJavadocJar() // If docs are included with the project, this line can be un-commented
-
     // Sets the Java version
     sourceCompatibility = JavaVersion.VERSION_17
     targetCompatibility = JavaVersion.VERSION_17
 }
 
+jar.enabled = false
+
+// Maven
+tasks.register("buildJars") {
+    group = "compile"
+
+    dependsOn("buildFatJar")
+    dependsOn("buildSlimJar")
+    dependsOn("buildSourcesJar")
+}
+
+tasks.register("buildFatJar", ShadowJar) {
+    group = "compile"
+
+    mainClassName = "dev.crmodders.flux.FluxAPI"
+    configurations = [project.configurations.shadowMe]
+
+    dependsOn("compileJava")
+    dependsOn("processResources")
+
+    from(processResources.destinationDir)
+    from(sourceSets.main.java.classesDirectory)
+
+    archiveFileName = "${id}-${version}-fat.jar"
+}
+
+tasks.register("buildSlimJar", Jar) {
+    group = "compile"
+
+    dependsOn("compileJava")
+    dependsOn("processResources")
+
+    from(processResources.destinationDir)
+    from(sourceSets.main.java.classesDirectory)
+
+    archiveFileName = "${id}-${version}-slim.jar"
+}
+
+tasks.register("buildSourcesJar", Jar) {
+    group = "compile"
+
+    from(sourceSets.main.allSource)
+    archiveFileName = "${id}-${version}-sources.jar"
+}
+
+//tasks.register("buildDocsJar", ) {
+//    group = "compile"
+//
+//    archiveFileName = "${id}-${version}-slim.jar"
+//}
+
 publishing {
     repositories {
         maven {
-            name = "crmoddersRepoReleases"
+            name = "crmReleases"
             url = "https://maven.crmodders.dev/releases"
-            credentials(PasswordCredentials)
+            credentials{
+                username = System.getenv("CRMReleasesUsername")
+                password = System.getenv("CRMReleasesPassword")
+            }
             authentication {
                 basic(BasicAuthentication)
             }
         }
 
         maven {
-            name = "crmoddersRepoSnapshots"
+            name = "cRMSnapshots"
             url = "https://maven.crmodders.dev/snapshots"
             credentials(PasswordCredentials)
             authentication {
@@ -254,13 +305,15 @@ publishing {
             }
         }
     }
-
+    assemble.dependsOn buildSourcesJar, buildFatJar, buildSlimJar
     publications {
         maven(MavenPublication) {
             groupId = group
             artifactId = id
-            
-            from components.java
+
+            artifact buildFatJar
+            artifact source: buildSlimJar, classifier: 'slim', extension: 'jar'
+            artifact source: buildSourcesJar, classifier: 'source', extension: 'jar'
         }
     }
 }

@@ -24,11 +24,11 @@ public class BasicMenu extends GameState {
 
 	protected void addUIElement(UIElement element) {
 		element.show();
-		this.uiElements.add(element);
+		this.uiObjects.add(element);
 	}
 	protected void removeUIElement(UIElement element) {
 		element.hide();
-		this.uiElements.removeValue(element, true);
+		this.uiObjects.removeValue(element, true);
 	}
 
 	protected void addFluxElement(BaseElement element) {

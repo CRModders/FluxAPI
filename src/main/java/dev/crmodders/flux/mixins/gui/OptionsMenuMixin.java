@@ -7,6 +7,7 @@ import dev.crmodders.flux.menus.FluxOptionMenu;
 import finalforeach.cosmicreach.gamestates.GameState;
 import finalforeach.cosmicreach.gamestates.OptionsMenu;
 import finalforeach.cosmicreach.ui.UIElement;
+import finalforeach.cosmicreach.ui.UIObject;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -19,17 +20,8 @@ public abstract class OptionsMenuMixin extends GameState {
 
 	@Inject(method = "<init>", at = @At("TAIL"))
 	private void addUiElements(CallbackInfo ci) {
-		for (int i = 0; i < uiElements.size; i++) {
-			if (uiElements.get(i).x == 0f && uiElements.get(i).y == 100f) {
-				UIElement keybinds = uiElements.get(i);
-				keybinds.x = -137.0f;
-				keybinds.y = 25f;
-				break;
-			}
-		}
-
 		SwitchGameStateButtonElement button = new SwitchGameStateButtonElement(() -> new FluxOptionMenu(this));
-		button.setBounds(0f, 100f, 250f, 50f);
+		button.setBounds(-137.0f, 25f, 250f, 50f);
 		button.translation = TEXT_FLUX_OPTIONS;
 		button.visible = true;
 		button.updateText();

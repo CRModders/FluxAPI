@@ -17,5 +17,6 @@ public class FluxAPI implements ModInitializer {
             LanguageFile lang = LanguageFile.loadLanguageFile(FluxConstants.LanguageEnUs.load());
             TranslationApi.registerLanguageFile(lang);
         });
+
     }
 }

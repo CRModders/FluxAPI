@@ -11,6 +11,7 @@ import dev.crmodders.flux.ui.Component;
 import dev.crmodders.flux.ui.UIRenderer;
 import finalforeach.cosmicreach.gamestates.GameState;
 import finalforeach.cosmicreach.ui.UIElement;
+import finalforeach.cosmicreach.ui.UIObject;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -100,7 +101,7 @@ public abstract class GameStateMixin implements GameStateInterface, GameStateCac
 	@Override
 	public void invalidateCachedAssets() {
 		for(GameState state : stack) {
-            for (UIElement uiElement : state.uiElements) {
+            for (UIObject uiElement : state.uiObjects) {
                 uiElement.updateText();
             }
 			for(Component element : ((GameStateInterface) state).getComponents()) {

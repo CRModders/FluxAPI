@@ -27,7 +27,7 @@ public class MainMenuMixin extends GameState {
         };
         configButton.setText(TEXT_MOD_CONFIGS.getTranslated().string());
         configButton.show();
-        this.uiElements.add(configButton);
+        this.uiObjects.add(configButton);
     }
 
 }
