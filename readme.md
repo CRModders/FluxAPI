@@ -6,7 +6,7 @@ Step 1: Add [CRModder's Maven](https://maven.crmodders.dev/) in your build.gradl
 Here is an example `repositories` section
 ```
 repositories {
-	maven { url 'https://maven.crmodders.dev' }
+	maven { url 'https://maven.crmodders.dev/releases/' }
 	
 	mavenCentral()
 }

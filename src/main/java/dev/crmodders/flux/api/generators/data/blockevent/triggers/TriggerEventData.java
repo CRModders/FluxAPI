@@ -3,6 +3,7 @@ package dev.crmodders.flux.api.generators.data.blockevent.triggers;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 import dev.crmodders.flux.api.generators.data.DataJson;
+import dev.crmodders.flux.api.generators.data.blockevent.BlockEventData;
 import dev.crmodders.flux.api.suppliers.ReturnableSupplier;
 import dev.crmodders.flux.tags.Identifier;
 import org.hjson.JsonObject;
@@ -12,6 +13,12 @@ import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * The trigger activated during the parent Interation Trigger
+ *
+ * @param actionID the code-based-action loaded on activation
+ * @param parameters the params passed into the action from actionID
+ */
 public record TriggerEventData(
         Identifier actionID,
         Map<String, Object> parameters

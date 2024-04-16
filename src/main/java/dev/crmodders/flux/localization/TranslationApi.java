@@ -2,6 +2,7 @@ package dev.crmodders.flux.localization;
 
 import dev.crmodders.flux.FluxConstants;
 import dev.crmodders.flux.FluxSettings;
+import dev.crmodders.flux.logging.LogWrapper;
 import dev.crmodders.flux.registry.FluxRegistries;
 import dev.crmodders.flux.registry.registries.AccessableRegistry;
 import dev.crmodders.flux.tags.Identifier;
@@ -45,7 +46,7 @@ public class TranslationApi {
         for(Identifier identifier : languageFiles.getRegisteredNames()) {
             LanguageFile file = languageFiles.get(identifier);
             FluxRegistries.LANGUAGES.register(identifier, new Language(file, enUs));
-            Logger.info("LanguageFile registered: {} ({})", file.getLocale().getDisplayName(Locale.ENGLISH), file.getLocale().toLanguageTag());
+            LogWrapper.info("LanguageFile registered: {} ({})", file.getLocale().getDisplayName(Locale.ENGLISH), file.getLocale().toLanguageTag());
         }
     }
 

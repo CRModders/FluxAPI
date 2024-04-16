@@ -20,7 +20,9 @@
       "contact": {
         "issues": "https://github.com/CRModders/FluxAPI/issues",
         "sources": "https://github.com/CRModders/FluxAPI"
-      }
+      },
+
+      "icon": "assets/fluxapi/icon.png"
     },
 
     "entrypoints": {

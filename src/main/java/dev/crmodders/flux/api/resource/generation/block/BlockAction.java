@@ -2,7 +2,8 @@ package dev.crmodders.flux.api.resource.generation.block;
 
 import dev.crmodders.flux.api.resource.ResourceLocation;
 import dev.crmodders.flux.tags.Identifier;
-import dev.crmodders.flux.util.JsonUtil;
+import dev.crmodders.flux.util.JsonUtils;
+import dev.crmodders.flux.api.resource.generation.block.trigger.TriggerSheet;
 import org.hjson.JsonObject;
 
 import java.util.HashMap;
@@ -76,7 +77,7 @@ public class BlockAction {
         action.parameters.put("xOff", x);
         action.parameters.put("yOff", y);
         action.parameters.put("zOff", z);
-        action.parameters.put("params", JsonUtil.MapToJson(params));
+        action.parameters.put("params", JsonUtils.MapToJson(params));
         return action;
     }
 
@@ -145,7 +146,7 @@ public class BlockAction {
     public JsonObject serialize() {
         JsonObject object = new JsonObject();
         object.set("actionId",  this.type);
-        object.set("parameters", JsonUtil.MapToJson(this.parameters));
+        object.set("parameters", JsonUtils.MapToJson(this.parameters));
 
         return object;
     }

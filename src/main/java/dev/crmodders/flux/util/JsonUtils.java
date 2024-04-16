@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class JsonUtil {
+public class JsonUtils {
 
     public static JsonObject MapToJson(Map<String, ?> map) {
         Type typeObject = new TypeToken<HashMap>() {}.getType();
