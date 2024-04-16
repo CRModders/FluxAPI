@@ -42,12 +42,13 @@ public class BlockEventGenerator implements IGenerator {
     @Override
     public String generateJson() {
         Json json = new Json();
+        json.setTypeName(null);
         OrderedMap<String, Trigger[]> triggers = new OrderedMap<>();
         for(String triggerName : triggers.keys()) {
             triggers.put(triggerName, this.triggers.get(triggerName).toArray(Trigger[]::new));
         }
         return """
-               "parent":"base:block_events_default","stringId":"%s","triggers":%s
+               {"parent":"base:block_events_default","stringId":"%s","triggers":%s}
                 """.formatted(eventId.toString(), json.toJson(triggers));
     }
 }

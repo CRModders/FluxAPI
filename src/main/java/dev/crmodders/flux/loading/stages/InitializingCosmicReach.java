@@ -2,6 +2,7 @@ package dev.crmodders.flux.loading.stages;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
+import dev.crmodders.flux.api.block.DataModBlock;
 import dev.crmodders.flux.api.block.IModBlock;
 import dev.crmodders.flux.api.factories.IModBlockFactory;
 import dev.crmodders.flux.api.generators.BlockGenerator;
@@ -13,7 +14,6 @@ import dev.crmodders.flux.logging.LogWrapper;
 import dev.crmodders.flux.registry.FluxRegistries;
 import dev.crmodders.flux.registry.registries.AccessableRegistry;
 import dev.crmodders.flux.tags.Identifier;
-import dev.crmodders.flux.util.BlockBuilderUtils;
 import finalforeach.cosmicreach.blocks.Block;
 import finalforeach.cosmicreach.gamestates.LanguagesMenu;
 import finalforeach.cosmicreach.io.SaveLocation;
@@ -58,7 +58,7 @@ public class InitializingCosmicReach extends LoadStage {
         for(String blockName : blockNames) {
             loader.incrementProgress(loader.progress2);
             try {
-                IModBlock block = new VanillaModBlock(blockName);
+                IModBlock block = new DataModBlock(blockName);
                 Identifier blockId = loader.blockLoader.loadBlock(block);
                 FluxRegistries.BLOCKS.register(blockId, block);
             } catch (Exception e) {

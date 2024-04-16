@@ -117,6 +117,7 @@ public class BlockModelGenerator implements IGenerator {
         }
 
         Json json = new Json();
+        json.setTypeName(null);
         return json.toJson(model);
     }
 }

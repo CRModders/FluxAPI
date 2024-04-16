@@ -3,6 +3,7 @@ package dev.crmodders.flux.api.generators;
 import com.badlogic.gdx.utils.Json;
 import dev.crmodders.flux.loading.block.BlockLoader;
 import dev.crmodders.flux.tags.Identifier;
+import finalforeach.cosmicreach.blocks.BlockState;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -17,6 +18,7 @@ public class BlockGenerator implements IGenerator {
         public int lightAttenuation = 15;
         public String blockEventsId = "base:block_events_default";
         public float blastResistance = 100.0F;
+        public boolean generateSlabs = false;
         public boolean catalogHidden = false;
         public boolean isTransparent = false;
         public boolean isOpaque = true;
@@ -31,11 +33,13 @@ public class BlockGenerator implements IGenerator {
 
     public Identifier blockId;
     public String blockName;
+    public Map<String, String> defaultParams;
     public Map<String, State> blockStates;
 
     public BlockGenerator(Identifier blockId, String blockName) {
         this.blockId = blockId;
         this.blockName = blockName;
+        this.defaultParams = new HashMap<>();
         this.blockStates = new HashMap<>();
     }
 
@@ -52,6 +56,7 @@ public class BlockGenerator implements IGenerator {
     @Override
     public String generateJson() {
         Json json = new Json();
+        json.setTypeName(null);
         return """
                 {"stringId":%s,"blockStates":%s}
                 """.formatted(blockId.toString(), json.toJson(blockStates));
