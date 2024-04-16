@@ -2,12 +2,12 @@ package dev.crmodders.flux.localization;
 
 import dev.crmodders.flux.FluxConstants;
 import dev.crmodders.flux.FluxSettings;
-import dev.crmodders.flux.logging.LogWrapper;
 import dev.crmodders.flux.registry.FluxRegistries;
 import dev.crmodders.flux.registry.registries.AccessableRegistry;
 import dev.crmodders.flux.tags.Identifier;
 import finalforeach.cosmicreach.io.SaveLocation;
-import org.pmw.tinylog.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.util.Arrays;
@@ -17,6 +17,7 @@ import java.util.Locale;
 public class TranslationApi {
 
     public static final File LANGUAGE_FOLDER = new File(SaveLocation.getSaveFolderLocation(), "mods/assets/languages");
+    public static final Logger logger = LoggerFactory.getLogger("FluxAPI / Translation");
 
     static {
         if(!LANGUAGE_FOLDER.exists())
@@ -46,7 +47,7 @@ public class TranslationApi {
         for(Identifier identifier : languageFiles.getRegisteredNames()) {
             LanguageFile file = languageFiles.get(identifier);
             FluxRegistries.LANGUAGES.register(identifier, new Language(file, enUs));
-            LogWrapper.info("LanguageFile registered: {} ({})", file.getLocale().getDisplayName(Locale.ENGLISH), file.getLocale().toLanguageTag());
+            logger.info("LanguageFile registered: {} ({})", file.getLocale().getDisplayName(Locale.ENGLISH), file.getLocale().toLanguageTag());
         }
     }
 

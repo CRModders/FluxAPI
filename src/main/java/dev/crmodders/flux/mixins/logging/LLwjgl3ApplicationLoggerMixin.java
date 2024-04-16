@@ -2,42 +2,55 @@ package dev.crmodders.flux.mixins.logging;
 
 import com.badlogic.gdx.ApplicationLogger;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationLogger;
-import dev.crmodders.flux.logging.LogWrapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Mixin(Lwjgl3ApplicationLogger.class)
 public class LLwjgl3ApplicationLoggerMixin implements ApplicationLogger {
 
+    @Unique
+    private static Map<String, Logger> cache = new HashMap<>();
+
+    @Unique
+    private static Logger taggedLogger(String tag) {
+        if (cache.containsKey(tag)) return cache.get(tag);
+        Logger logger = LoggerFactory.getLogger("CosmicReach / " + tag);
+        cache.put(tag, logger);
+        return logger;
+    }
+
     @Override
     public void log(String tag, String msg) {
-        LogWrapper.info("\u001B[35;1m{%s}\u001B[0m\u001B[37m: %s".formatted(tag, msg));
+        taggedLogger(tag).info(msg);
     }
 
     @Override
     public void log(String tag, String msg, Throwable throwable) {
-        LogWrapper.info("\u001B[35;1m{%s}\u001B[0m\u001B[37m: %s".formatted(tag, msg));
-        throwable.printStackTrace(System.out);
+        taggedLogger(tag).info(msg, throwable);
     }
 
     @Override
     public void error(String tag, String msg) {
-        LogWrapper.error("\u001B[35;1m{%s}\u001B[0m\u001B[37m: %s".formatted(tag, msg));
+        taggedLogger(tag).error(msg);
     }
 
     @Override
     public void error(String tag, String msg, Throwable throwable) {
-        LogWrapper.error("\u001B[35;1m{%s}\u001B[0m\u001B[37m: %s".formatted(tag, msg));
-        throwable.printStackTrace(System.err);
+        taggedLogger(tag).error(msg, throwable);
     }
 
     @Override
     public void debug(String tag, String msg) {
-        LogWrapper.debug("\u001B[35;1m{%s}\u001B[0m\u001B[37m: %s".formatted(tag, msg));
+        taggedLogger(tag).debug(msg, msg);
     }
 
     @Override
     public void debug(String tag, String msg, Throwable throwable) {
-        LogWrapper.debug("\u001B[35;1m{%s}\u001B[0m\u001B[37m: %s".formatted(tag, msg));
-        throwable.printStackTrace(System.out);
+        taggedLogger(tag).debug(msg, msg, throwable);
     }
 }

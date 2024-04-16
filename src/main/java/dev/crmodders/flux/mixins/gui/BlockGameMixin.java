@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import dev.crmodders.flux.api.config.BasicConfig;
 import dev.crmodders.flux.api.gui.interfaces.GameStateInterface;
-import dev.crmodders.flux.logging.LogWrapper;
 import dev.crmodders.flux.registry.FluxRegistries;
 import dev.crmodders.flux.registry.registries.AccessableRegistry;
 import dev.crmodders.flux.tags.Identifier;
@@ -13,14 +12,19 @@ import finalforeach.cosmicreach.BlockGame;
 import finalforeach.cosmicreach.gamestates.GameState;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL13;
-import org.pmw.tinylog.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(value = BlockGame.class, priority = 2000)
 public class BlockGameMixin {
+
+	@Unique
+	private static Logger logger = LoggerFactory.getLogger("FluxAPI / BlockGameInfo");
 
 	@Inject(method = "render", at = @At("TAIL"))
 	private void render(CallbackInfo ci) {
@@ -44,7 +48,8 @@ public class BlockGameMixin {
 			try {
 				config.save();
 			} catch (Exception e) {
-				Logger.error("failed saving config " + id);
+
+				logger.error("Failed to save config {}", id);
 			}
 		}
 	}

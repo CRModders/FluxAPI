@@ -7,17 +7,19 @@ import dev.crmodders.flux.api.factories.FactoryFinalizer;
 import dev.crmodders.flux.api.generators.BlockModelGenerator;
 import dev.crmodders.flux.localization.LanguageFile;
 import dev.crmodders.flux.localization.TranslationApi;
-import dev.crmodders.flux.logging.LogWrapper;
 import dev.crmodders.flux.registry.FluxRegistries;
 import dev.crmodders.flux.tags.Identifier;
 import net.fabricmc.api.ModInitializer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class FluxAPI implements ModInitializer {
 
+    static Logger logger = LoggerFactory.getLogger("FluxAPI");
+
     @Override
     public void onInitialize() {
-        LogWrapper.init();
-        LogWrapper.info("Flux Fabric Initialized");
+        logger.info("Flux Fabric Initialized");
 
         GameEvents.ON_REGISTER_LANGUAGE.register(() -> {
             LanguageFile lang = LanguageFile.loadLanguageFile(FluxConstants.LanguageEnUs.load());

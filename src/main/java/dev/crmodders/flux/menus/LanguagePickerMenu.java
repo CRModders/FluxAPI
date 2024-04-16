@@ -8,7 +8,6 @@ import dev.crmodders.flux.api.gui.base.BaseText;
 import dev.crmodders.flux.api.gui.interfaces.GameStateCache;
 import dev.crmodders.flux.localization.TranslationApi;
 import dev.crmodders.flux.localization.TranslationKey;
-import dev.crmodders.flux.logging.LogWrapper;
 import finalforeach.cosmicreach.gamestates.GameState;
 import finalforeach.cosmicreach.io.SaveLocation;
 import finalforeach.cosmicreach.ui.HorizontalAnchor;
@@ -17,6 +16,8 @@ import finalforeach.cosmicreach.ui.VerticalAnchor;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+
+import static dev.crmodders.flux.localization.TranslationApi.logger;
 
 public class LanguagePickerMenu extends ScrollMenu{
 
@@ -88,7 +89,7 @@ public class LanguagePickerMenu extends ScrollMenu{
         try {
             SaveLocation.OpenFolderWithFileManager(TranslationApi.LANGUAGE_FOLDER);
         } catch (Exception e) {
-            LogWrapper.error(String.valueOf(e));
+            logger.error(String.valueOf(e));
         }
     }
 

@@ -4,17 +4,20 @@ import dev.crmodders.flux.annotations.Stable;
 import dev.crmodders.flux.api.events.system.Event;
 import dev.crmodders.flux.api.events.system.EventFactory;
 import dev.crmodders.flux.localization.LanguageFile;
-import dev.crmodders.flux.logging.LogWrapper;
 import finalforeach.cosmicreach.blocks.BlockPosition;
 import finalforeach.cosmicreach.blocks.BlockState;
 import finalforeach.cosmicreach.gamestates.GameState;
 import finalforeach.cosmicreach.world.Zone;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * A Class for All Events in FluxAPI
  */
 @Stable
 public class GameEvents {
+
+    static Logger logger = LoggerFactory.getLogger("FluxAPI / GameEvents");
 
     /**
      * Triggered after the Game Ticks
@@ -128,8 +131,7 @@ public class GameEvents {
                 try {
                     callback.onRegisterLanguage();
                 } catch (Exception e) {
-                    LogWrapper.error("Failed to load a language, reason:");
-                    LogWrapper.error(String.valueOf(e));
+                    logger.error("Failed to load a language", e);
                 }
             }
         }

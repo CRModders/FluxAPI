@@ -5,7 +5,8 @@ import finalforeach.cosmicreach.GameAssetLoader;
 import finalforeach.cosmicreach.blocks.BlockState;
 import finalforeach.cosmicreach.rendering.blockmodels.BlockModel;
 import finalforeach.cosmicreach.rendering.blockmodels.IBlockModelInstantiator;
-import org.pmw.tinylog.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -17,6 +18,8 @@ public class BlockModelFactory implements IBlockModelInstantiator {
     public record InstanceKey(String modelName, int rotXZ) {}
 
     public final Map<InstanceKey, BlockModel> models = new LinkedHashMap<>();
+
+    static Logger logger = LoggerFactory.getLogger("FluxAPI / BlockModelFactory");
 
     public void registerBlockModel(String modelName, int rotXZ, BlockModel model) {
         final InstanceKey key = new InstanceKey(modelName, rotXZ);
@@ -83,7 +86,7 @@ public class BlockModelFactory implements IBlockModelInstantiator {
 
             models.put(key, model);
         } else {
-            Logger.error("can't create slab instances for '" + blockState.getModel().getClass().getSimpleName() + "'");
+            logger.error("can't create slab instances for '" + blockState.getModel().getClass().getSimpleName() + "'");
         }
     }
 

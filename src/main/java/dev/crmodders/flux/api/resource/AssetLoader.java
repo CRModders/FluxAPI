@@ -3,15 +3,9 @@ package dev.crmodders.flux.api.resource;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import dev.crmodders.flux.FluxConstants;
-import dev.crmodders.flux.logging.LogWrapper;
 import dev.crmodders.flux.registry.FluxRegistries;
 import dev.crmodders.flux.registry.registries.impl.RegistryObject;
-import dev.crmodders.flux.tags.Identifier;
-import finalforeach.cosmicreach.GameAssetLoader;
 import finalforeach.cosmicreach.io.SaveLocation;
-import org.pmw.tinylog.Logger;
-
-import static finalforeach.cosmicreach.GameAssetLoader.ALL_ASSETS;
 
 public class AssetLoader {
 

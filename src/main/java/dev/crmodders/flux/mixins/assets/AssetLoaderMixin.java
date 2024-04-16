@@ -2,11 +2,11 @@ package dev.crmodders.flux.mixins.assets;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
-import dev.crmodders.flux.logging.LogWrapper;
 import dev.crmodders.flux.tags.Identifier;
 import finalforeach.cosmicreach.GameAssetLoader;
 import finalforeach.cosmicreach.io.SaveLocation;
-import org.pmw.tinylog.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
@@ -18,7 +18,7 @@ import java.util.HashMap;
 
 @Mixin(GameAssetLoader.class)
 public class AssetLoaderMixin {
-    private static String TAG = "\u001B[35;1m{Assets}\u001B[0m\u001B[37m:";
+    private static Logger logger = LoggerFactory.getLogger("FluxAPI / AssetLoader");
 
     @Shadow @Final public static HashMap<String, FileHandle> ALL_ASSETS;
 
@@ -36,28 +36,28 @@ public class AssetLoaderMixin {
             fileName = location.name;
         }
 
+        FileHandle classpathLocationFile = Gdx.files.classpath("assets/%s/%s".formatted(location.namespace, location.name));
+        if (classpathLocationFile.exists()) {
+            logger.info("Loading {} from the Classpath", fileName);
+            ALL_ASSETS.put(fileName, classpathLocationFile);
+            return classpathLocationFile;
+        }
+
         FileHandle modLocationFile = Gdx.files.absolute(SaveLocation.getSaveFolderLocation() + "/mods/assets/" + fileName);
         if (modLocationFile.exists()) {
-            LogWrapper.info("%s Loading %s from DataMods".formatted(TAG, fileName));
+            logger.info("Loading {} from DataMods", fileName);
             ALL_ASSETS.put(fileName, modLocationFile);
             return modLocationFile;
         }
 
         FileHandle vanillaLocationFile = Gdx.files.internal(location.name);
         if (vanillaLocationFile.exists()) {
-            LogWrapper.info("%s Loading %s from Cosmic Reach".formatted(TAG, fileName));
+            logger.info("Loading {} from Cosmic Reach Jar", fileName);
             ALL_ASSETS.put(fileName, vanillaLocationFile);
             return vanillaLocationFile;
         }
 
-        FileHandle classpathLocationFile = Gdx.files.classpath("assets/%s/%s".formatted(location.namespace, location.name));
-        if (classpathLocationFile.exists()) {
-            LogWrapper.info("%s Loading %s from the Classpath".formatted(TAG, fileName));
-            ALL_ASSETS.put(fileName, classpathLocationFile);
-            return classpathLocationFile;
-        }
-
-        Logger.error("%s Cannot Load %s from Classpath, CosmicReach, or DataMods | ASSET_ID: %s".formatted(TAG, fileName, location));
+        logger.error("Cannot find the resource {}, ResourceId: {}", fileName, location);
         return null;
     }
 

@@ -9,6 +9,8 @@ import dev.crmodders.flux.localization.TranslationKey;
 import dev.crmodders.flux.menus.BasicMenu;
 import finalforeach.cosmicreach.GameSingletons;
 import finalforeach.cosmicreach.gamestates.GameState;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +18,7 @@ import java.util.concurrent.CountDownLatch;
 
 public class GameLoader extends BasicMenu implements Runnable {
 
-    public static final String TAG = "\u001B[35;1m{Registry}\u001B[0m\u001B[37m";
+    public static final Logger logger = LoggerFactory.getLogger("FluxAPI / GameLoader");
 
     public TextElement title;
     public ProgressBarElement ram;

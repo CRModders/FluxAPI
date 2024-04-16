@@ -3,10 +3,6 @@ package dev.crmodders.flux.tags;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
 import dev.crmodders.flux.annotations.Stable;
-import dev.crmodders.flux.logging.LogWrapper;
-import finalforeach.cosmicreach.blockevents.BlockEventTrigger;
-import finalforeach.cosmicreach.blockevents.actions.BlockActionRunTrigger;
-import finalforeach.cosmicreach.rendering.blockmodels.BlockModelJson;
 
 import java.util.Objects;
 
