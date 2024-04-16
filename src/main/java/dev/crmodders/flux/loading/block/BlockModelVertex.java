@@ -2,9 +2,11 @@ package dev.crmodders.flux.loading.block;
 
 import com.badlogic.gdx.math.collision.BoundingBox;
 import com.badlogic.gdx.utils.Array;
+import dev.crmodders.flux.annotations.Experimental;
 import finalforeach.cosmicreach.rendering.IMeshData;
 import finalforeach.cosmicreach.rendering.blockmodels.BlockModel;
 
+@Experimental
 public class BlockModelVertex extends BlockModel {
 
     public BlockModelVertex() {

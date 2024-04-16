@@ -2,12 +2,18 @@ package dev.crmodders.flux.mixins.gui;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import dev.crmodders.flux.api.config.BasicConfig;
 import dev.crmodders.flux.api.gui.interfaces.GameStateInterface;
+import dev.crmodders.flux.logging.LogWrapper;
+import dev.crmodders.flux.registry.FluxRegistries;
+import dev.crmodders.flux.registry.registries.AccessableRegistry;
+import dev.crmodders.flux.tags.Identifier;
 import dev.crmodders.flux.ui.UIRenderer;
 import finalforeach.cosmicreach.BlockGame;
 import finalforeach.cosmicreach.gamestates.GameState;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL13;
+import org.pmw.tinylog.Logger;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -28,6 +34,19 @@ public class BlockGameMixin {
 		UIRenderer.uiRenderer.render(gameState.getCamera().combined);
 		Gdx.gl.glDisable(GL11.GL_BLEND);
 		Gdx.gl.glDisable(GL13.GL_MULTISAMPLE);
+	}
+
+	@Inject(method = "dispose", at = @At("HEAD"))
+	private void dispose(CallbackInfo ci) {
+		AccessableRegistry<BasicConfig> access = FluxRegistries.MOD_CONFIGS.access();
+		for(Identifier id : access.getRegisteredNames()) {
+			BasicConfig config = access.get(id);
+			try {
+				config.save();
+			} catch (Exception e) {
+				Logger.error("failed saving config " + id);
+			}
+		}
 	}
 
 }

@@ -1,10 +1,17 @@
 package dev.crmodders.flux.api.block;
 
+import dev.crmodders.flux.api.generators.BlockEventGenerator;
 import dev.crmodders.flux.api.generators.BlockGenerator;
+import dev.crmodders.flux.api.generators.BlockModelGenerator;
+import dev.crmodders.flux.tags.Identifier;
 import finalforeach.cosmicreach.blocks.BlockPosition;
 import finalforeach.cosmicreach.blocks.BlockState;
 import finalforeach.cosmicreach.entities.Player;
 import finalforeach.cosmicreach.world.Zone;
+
+import java.util.Collections;
+import java.util.List;
+import java.util.OptionalDouble;
 
 /**
  * Adds an Interactive block to Cosmic Reach
@@ -42,6 +49,10 @@ public interface IModBlock {
      * Used by FluxAPI for generating this block and registering it with Cosmic Reach
      * @return The {@link BlockGenerator} that is used for generating this Block
      */
-    BlockGenerator getGenerator();
+    BlockGenerator getBlockGenerator();
+
+    default List<BlockModelGenerator> getBlockModelGenerators(Identifier blockId) { return Collections.emptyList(); }
+
+    default BlockEventGenerator getBlockEventGenerator(Identifier blockId) { return null; }
 
 }

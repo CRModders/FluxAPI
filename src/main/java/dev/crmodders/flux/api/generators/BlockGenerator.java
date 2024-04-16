@@ -1,165 +1,59 @@
 package dev.crmodders.flux.api.generators;
 
-import com.badlogic.gdx.files.FileHandle;
-import dev.crmodders.flux.api.block.IModBlock;
-import dev.crmodders.flux.api.events.GameEvents;
-import dev.crmodders.flux.api.generators.data.blockevent.BlockEventType;
-import dev.crmodders.flux.api.generators.data.blockstate.BlockStateData;
-import dev.crmodders.flux.api.generators.data.blockstate.BlockStateDataExt;
-import dev.crmodders.flux.api.generators.suppliers.BasicTriggerSupplier;
-import dev.crmodders.flux.api.resource.ResourceLocation;
-import dev.crmodders.flux.api.suppliers.ReturnableDoubleInputSupplier;
-import dev.crmodders.flux.registry.FluxRegistries;
+import com.badlogic.gdx.utils.Json;
+import dev.crmodders.flux.loading.block.BlockLoader;
 import dev.crmodders.flux.tags.Identifier;
-import dev.crmodders.flux.util.BlockBuilderUtils;
-import finalforeach.cosmicreach.GameAssetLoader;
-import finalforeach.cosmicreach.blocks.Block;
-import org.hjson.JsonObject;
-import org.hjson.JsonValue;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
+import java.util.Map;
 
-public class BlockGenerator {
+public class BlockGenerator implements IGenerator {
 
-    protected JsonObject object;
-    protected HashMap<BlockEventType, Boolean> blockEventOverrideMap;
-    protected HashMap<BlockEventType, List<TriggerStatePair>> blockTriggers;
-    protected HashMap<BlockEventType, List<BasicTriggerSupplier>> multiStateTriggers;
-    protected boolean resourceDriven;
-    protected Identifier blockId;
-    protected ResourceLocation resourceId;
-
-    protected BlockGenerator() {
-        this(false, null);
+    public static class State {
+        public String modelName;
+        public int lightLevelRed = 0;
+        public int lightLevelGreen = 0;
+        public int lightLevelBlue = 0;
+        public int lightAttenuation = 15;
+        public String blockEventsId = "base:block_events_default";
+        public float blastResistance = 100.0F;
+        public boolean catalogHidden = false;
+        public boolean isTransparent = false;
+        public boolean isOpaque = true;
+        public boolean walkThrough = false;
+        public boolean cullsSelf = true;
+        public boolean itemCatalogHidden = false;
+        public boolean canRaycastForBreak = true;
+        public boolean canRaycastForPlaceOn = true;
+        public boolean canRaycastForReplace = false;
+        public boolean isFluid = false;
     }
 
-    protected BlockGenerator(boolean resourceDriven, ResourceLocation resourceId) {
-        this.resourceDriven = resourceDriven;
-        this.resourceId = resourceId;
+    public Identifier blockId;
+    public String blockName;
+    public Map<String, State> blockStates;
 
-        blockTriggers = new HashMap<>();
-        blockTriggers.put(BlockEventType.OnPlace, new ArrayList<>());
-        blockTriggers.put(BlockEventType.OnInteract, new ArrayList<>());
-        blockTriggers.put(BlockEventType.OnBreak, new ArrayList<>());
-
-        multiStateTriggers = new HashMap<>();
-        multiStateTriggers.put(BlockEventType.OnPlace, new ArrayList<>());
-        multiStateTriggers.put(BlockEventType.OnInteract, new ArrayList<>());
-        multiStateTriggers.put(BlockEventType.OnBreak, new ArrayList<>());
-
-        blockEventOverrideMap = new HashMap<>();
-        blockEventOverrideMap.put(BlockEventType.OnPlace, false);
-        blockEventOverrideMap.put(BlockEventType.OnInteract, false);
-        blockEventOverrideMap.put(BlockEventType.OnBreak, false);
-
-        object = new JsonObject();
-        object.set("blockStates", new JsonObject());
-        setBlockState("default", new BlockStateData(
-               Identifier.fromString("base:block_events_default"),
-                "model_metal_panel"
-        ));
-
-
+    public BlockGenerator(Identifier blockId, String blockName) {
+        this.blockId = blockId;
+        this.blockName = blockName;
+        this.blockStates = new HashMap<>();
     }
 
-    public BlockGenerator overrideEvent(BlockEventType eventType, boolean overrides) {
-        blockEventOverrideMap.put(eventType, overrides);
-        return this;
+    public State createBlockState(String id, String modelName) {
+        State state = new State();
+        blockStates.put(id, state);
+        state.modelName = modelName;
+        return state;
     }
 
-    public boolean overridesEvent(BlockEventType eventType) {
-        return blockEventOverrideMap.get(eventType);
+    @Override
+    public void register(BlockLoader loader) {}
+
+    @Override
+    public String generateJson() {
+        Json json = new Json();
+        return """
+                {"stringId":%s,"blockStates":%s}
+                """.formatted(blockId.toString(), json.toJson(blockStates));
     }
-
-    public BlockGenerator addTriggerToBlockstate(BlockEventType eventType, String blockStateName, BasicTriggerSupplier trigger) {
-        List<TriggerStatePair> blockTriggerz = blockTriggers.get(eventType);
-        blockTriggerz.add(new TriggerStatePair(
-                blockStateName,
-                trigger
-        ));
-
-        blockTriggers.put(eventType, blockTriggerz);
-        return this;
-    }
-
-    public BlockGenerator addTriggerMultiStateTrigger(BlockEventType eventType, BasicTriggerSupplier trigger) {
-        List<BasicTriggerSupplier> blockTriggerz = multiStateTriggers.get(eventType);
-        blockTriggerz.add(trigger);
-
-        multiStateTriggers.put(eventType, blockTriggerz);
-        return this;
-    }
-
-    public List<BasicTriggerSupplier> getTriggersPairs(BlockEventType eventType, String blockStateName) {
-        List<BasicTriggerSupplier> triggers = new ArrayList<>();
-        for (TriggerStatePair triggerStatePair : blockTriggers.get(eventType)) {
-            if (triggerStatePair.blockStateName().equals(blockStateName)) {
-                triggers.add(triggerStatePair.triggerSupplier());
-            }
-        }
-        return triggers;
-    }
-
-    public BlockGenerator setStringId(Identifier id) {
-        object.set("stringId", id.toString());
-        return this;
-    }
-
-    private BlockGenerator setBlockState(String state, BlockStateDataExt blockStateData) {
-        object.set("blockStates", object.get("blockStates").asObject().set(state, blockStateData.toJson()));
-        return this;
-    }
-
-    public static BlockGenerator createGenerator() {
-        return new BlockGenerator();
-    }
-
-    public static BlockGenerator createResourceDrivenGenerator(ResourceLocation preExistingBlockId) {
-        return new BlockGenerator(true, preExistingBlockId);
-    }
-
-    public String createJSON(IModBlock block) {
-        if(blockId != null)  object.set("stringId", blockId.toString());
-
-        FileHandle dataBlock = null;
-        try {
-            if (resourceDriven) dataBlock = GameAssetLoader.loadAsset(resourceId.namespace + ":blocks/" + resourceId.name + ".json");
-        } catch (Exception ignore) {
-        }
-
-        if (dataBlock != null) {
-            object = JsonValue.readJSON(
-                    dataBlock.readString()
-                            .replaceAll("\t", "")
-                            .replaceAll(" ", "")
-                            .replaceAll("\n", "")
-                            .replaceAll(",}", "}")
-            ).asObject();
-            if(blockId == null) {
-                blockId = Identifier.fromString(object.get("stringId").asString());
-            }
-        }
-
-        addTriggerMultiStateTrigger(BlockEventType.OnBreak, block::onBreak);
-        addTriggerMultiStateTrigger(BlockEventType.OnPlace, block::onPlace);
-        addTriggerMultiStateTrigger(BlockEventType.OnInteract, block::onInteract);
-
-        for (String name : object.get("blockStates").asObject().names()) {
-            for (BlockEventType key : multiStateTriggers.keySet())
-                for (BasicTriggerSupplier trigger : multiStateTriggers.get(key))
-                    addTriggerToBlockstate(key, name, trigger);
-
-//            JsonObject newBlockstate = BlockStateGenerator.ModifiyBlockState(
-//                    blockId,
-//                    block,
-//                    object.get("blockStates").asObject().get(name).asObject(),
-//                    name
-//            );
-//            object.set("blockStates", object.get("blockStates").asObject().set(name, newBlockstate));
-        }
-        return object.toString();
-    }
-
 }
