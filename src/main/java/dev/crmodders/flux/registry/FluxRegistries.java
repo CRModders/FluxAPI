@@ -4,6 +4,7 @@ import dev.crmodders.flux.annotations.FluxInternal;
 import dev.crmodders.flux.annotations.Stable;
 import dev.crmodders.flux.api.block.IModBlock;
 import dev.crmodders.flux.api.config.BasicConfig;
+import dev.crmodders.flux.api.generators.FactoryFinalizer;
 import dev.crmodders.flux.api.generators.data.blockevent.BlockEventDataExt;
 import dev.crmodders.flux.api.resource.ResourceObject;
 import dev.crmodders.flux.localization.Language;
@@ -49,6 +50,19 @@ public class FluxRegistries {
     @Stable
     public static FreezingRegistry<BlockEventDataExt> BLOCK_EVENTS = FreezingRegistry.create();
 
+    /**
+     * Used for Registering {@link FactoryFinalizer}
+     * This Registry will register in Phase 7 of loading
+     */
+    @Stable
+    public static DynamicRegistry<FactoryFinalizer<?>> FACTORY_FINALIZERS = DynamicRegistry.create();
+
+    /**
+     * Used for Registering {@link BasicConfig}
+     */
+    @Stable
+    public static DynamicRegistry<BasicConfig> MOD_CONFIGS = DynamicRegistry.create();
+
     @FluxInternal
     public static DynamicRegistry<LanguageFile> LANGUAGE_FILES = DynamicRegistry.create();
 
@@ -56,9 +70,4 @@ public class FluxRegistries {
     public static DynamicRegistry<Language> LANGUAGES = DynamicRegistry.create();
 
 
-    /**
-     * Used for Registering {@link BasicConfig}
-     */
-    @Stable
-    public static DynamicRegistry<BasicConfig> MOD_CONFIGS = DynamicRegistry.create();
 }
