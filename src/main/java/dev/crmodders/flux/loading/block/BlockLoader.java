@@ -3,11 +3,13 @@ package dev.crmodders.flux.loading.block;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Json;
+import com.google.gson.Gson;
 import dev.crmodders.flux.api.block.IModBlock;
 import dev.crmodders.flux.api.generators.BlockEventGenerator;
 import dev.crmodders.flux.api.generators.BlockGenerator;
 import dev.crmodders.flux.api.generators.BlockModelGenerator;
 import dev.crmodders.flux.mixins.accessor.BlockAccessor;
+import dev.crmodders.flux.registry.FluxRegistries;
 import dev.crmodders.flux.tags.Identifier;
 import finalforeach.cosmicreach.blockevents.BlockEventTrigger;
 import finalforeach.cosmicreach.blockevents.BlockEvents;
@@ -25,12 +27,6 @@ import java.util.function.BiConsumer;
 public class BlockLoader {
 
     public BlockModelFactory factory = new BlockModelFactory();
-
-    public enum FluxBlockEvents {
-        onInteract,
-        OnPlace,
-        OnBreak
-    }
 
     /**
      * Call this method to register custom json models, this has to be called
@@ -62,13 +58,23 @@ public class BlockLoader {
     /**
      * Call this method to register custom block events instead of loading them from
      * json files
-     * @param eventId the id
+     * @param eventName the id
      * @param eventJson the json
      */
-    public void registerEvent(String eventId, String eventJson) {
+    public void registerEvent(String eventName, String eventJson) {
         Json json = new Json();
         BlockEvents blockEvents = json.fromJson(BlockEvents.class, eventJson);
-        BlockEvents.INSTANCES.put(eventId, blockEvents);
+        BlockEvents.INSTANCES.put(eventName, blockEvents);
+    }
+
+    /**
+     * Registers a block event action, it can be called using the fluxapi:proxy
+     * action in regular block events
+     * @param actionId the id used with fluxapi:proxy
+     * @param action the action
+     */
+    public void registerEventAction(Identifier actionId, IBlockAction action) {
+        FluxRegistries.BLOCK_EVENT_ACTIONS.register(actionId, action);
     }
 
     /**
@@ -102,11 +108,9 @@ public class BlockLoader {
         }
 
         BlockEventGenerator defaultEventGenerator = new BlockEventGenerator(blockGenerator.blockId, "default");
-        defaultEventGenerator.createTrigger("onInteract", Identifier.fromString("fluxapi:onInteract"), Map.of("blockId", blockGenerator.blockId.toString()));
-        defaultEventGenerator.createTrigger("onPlace", Identifier.fromString("fluxapi:onPlace"), Map.of("blockId", blockGenerator.blockId.toString()));
-        defaultEventGenerator.createTrigger("onBreak", Identifier.fromString("fluxapi:onBreak"), Map.of("blockId", blockGenerator.blockId.toString()));
-        defaultEventGenerator.register(this);
-        registerEvent(defaultEventGenerator.eventId.toString(), defaultEventGenerator.generateJson());
+        // TODO register IModBlock's events here
+        // defaultEventGenerator.register(this);
+        // registerEvent(defaultEventGenerator.eventId.toString(), defaultEventGenerator.generateJson());
 
         try {
 

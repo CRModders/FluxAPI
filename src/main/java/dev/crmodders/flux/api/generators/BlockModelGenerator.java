@@ -71,7 +71,7 @@ public class BlockModelGenerator implements IGenerator {
     }
 
     public void createTexture(String textureName, Pixmap texture) {
-        textures.put(getModelTextureName(textureName), texture);
+        textures.put(textureName, texture);
     }
 
     public Cuboid createCuboid(int x1, int y1, int z1, int x2, int y2, int z2) {
@@ -105,24 +105,24 @@ public class BlockModelGenerator implements IGenerator {
         createTexture(textureName, texture);
         Cuboid cuboid = createCuboid(x1, y1, z1, x2, y2, z2);
         Cuboid.Face topFace = cuboid.faces[Cuboid.LOCAL_POS_Y];
-        topFace.texture = getModelTextureName(textureName);
+        topFace.texture = textureName;
         Cuboid.Face bottomFace = cuboid.faces[Cuboid.LOCAL_NEG_Y];
-        bottomFace.texture = getModelTextureName(textureName);
+        bottomFace.texture = textureName;
         Cuboid.Face sideFace1 = cuboid.faces[Cuboid.LOCAL_POS_X];
-        sideFace1.texture = getModelTextureName(textureName);
+        sideFace1.texture = textureName;
         Cuboid.Face sideFace2 = cuboid.faces[Cuboid.LOCAL_NEG_X];
-        sideFace2.texture = getModelTextureName(textureName);
+        sideFace2.texture = textureName;
         Cuboid.Face sideFace3 = cuboid.faces[Cuboid.LOCAL_POS_Z];
-        sideFace3.texture = getModelTextureName(textureName);
+        sideFace3.texture = textureName;
         Cuboid.Face sideFace4 = cuboid.faces[Cuboid.LOCAL_NEG_Z];
-        sideFace4.texture = getModelTextureName(textureName);
+        sideFace4.texture = textureName;
         return cuboid;
     }
 
     @Override
     public void register(BlockLoader loader) {
         for(String textureName : textures.keySet()) {
-            loader.registerTexture(textureName, textures.get(textureName));
+            loader.registerTexture(getModelTextureName(textureName), textures.get(textureName));
         }
     }
 
@@ -133,7 +133,7 @@ public class BlockModelGenerator implements IGenerator {
         model.textures = new OrderedMap<>();
         for(String textureName : textures.keySet()) {
             BlockModelJsonTexture texture = new BlockModelJsonTexture();
-            texture.fileName = textureName;
+            texture.fileName = getModelTextureName(textureName);
             model.textures.put(textureName, texture);
         }
 
