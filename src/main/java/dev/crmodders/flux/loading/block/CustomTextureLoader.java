@@ -40,7 +40,6 @@ public class CustomTextureLoader {
                 terrainPixCurY += blockTex.getHeight();
             }
 
-            blockTex.dispose();
             if (chunkTerrainTex != null) {
                 chunkTerrainTex.dispose();
                 chunkTerrainTex = null;

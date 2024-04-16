@@ -1,4 +1,4 @@
-package dev.crmodders.flux.api.generators;
+package dev.crmodders.flux.api.factories;
 
 import dev.crmodders.flux.loading.block.BlockLoader;
 

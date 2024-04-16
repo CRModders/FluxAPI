@@ -87,7 +87,7 @@ public class BlockLoader {
 
         for(BlockModelGenerator modelGenerator : modBlock.getBlockModelGenerators(blockGenerator.blockId)) {
             modelGenerator.register(this);
-            String modelName = modelGenerator.modelName.toString();
+            String modelName = modelGenerator.getModelName();
             int rotXZ = 0;
             String modelJson = modelGenerator.generateJson();
             registerBlockModel(modelName, rotXZ, modelJson);
@@ -130,7 +130,7 @@ public class BlockLoader {
                 Block.allBlockStates.remove(blockState.stringId);
             }
             Block.allBlocks.removeValue(block, true);
-            throw e;
+            throw new BlockLoadException(blockGenerator.blockName, e);
         }
 
         return blockGenerator.blockId;

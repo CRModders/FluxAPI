@@ -2,6 +2,7 @@ package dev.crmodders.flux.api.generators;
 
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.OrderedMap;
+import dev.crmodders.flux.api.factories.IGenerator;
 import dev.crmodders.flux.loading.block.BlockLoader;
 import dev.crmodders.flux.tags.Identifier;
 

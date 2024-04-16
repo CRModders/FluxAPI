@@ -4,8 +4,8 @@ import com.badlogic.gdx.graphics.Pixmap;
 import dev.crmodders.flux.tags.Identifier;
 
 public class BasicCubeModelGenerator extends  BlockModelGenerator {
-    public BasicCubeModelGenerator(Identifier modelName, Pixmap top, Pixmap bottom, Pixmap side) {
-        super(modelName);
+    public BasicCubeModelGenerator(Identifier blockId, String modelName, Pixmap top, Pixmap bottom, Pixmap side) {
+        super(blockId, modelName);
         createTexture("top", top);
         createTexture("bottom", bottom);
         createTexture("side", side);

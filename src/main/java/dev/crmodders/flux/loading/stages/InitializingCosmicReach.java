@@ -4,11 +4,12 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import dev.crmodders.flux.api.block.DataModBlock;
 import dev.crmodders.flux.api.block.IModBlock;
+import dev.crmodders.flux.api.factories.FactoryFinalizer;
 import dev.crmodders.flux.api.factories.IModBlockFactory;
 import dev.crmodders.flux.api.generators.BlockGenerator;
 import dev.crmodders.flux.loading.GameLoader;
 import dev.crmodders.flux.loading.LoadStage;
-import dev.crmodders.flux.loading.block.VanillaModBlock;
+import dev.crmodders.flux.loading.block.BlockLoadException;
 import dev.crmodders.flux.localization.TranslationKey;
 import dev.crmodders.flux.logging.LogWrapper;
 import dev.crmodders.flux.registry.FluxRegistries;
@@ -54,28 +55,20 @@ public class InitializingCosmicReach extends LoadStage {
             }
         }
 
-        loader.setupProgressBar(loader.progress2, blockNames.size(), "Loading Vanilla Blocks");
         for(String blockName : blockNames) {
-            loader.incrementProgress(loader.progress2);
-            try {
-                IModBlock block = new DataModBlock(blockName);
-                Identifier blockId = loader.blockLoader.loadBlock(block);
-                FluxRegistries.BLOCKS.register(blockId, block);
-            } catch (Exception e) {
-                Logger.error("can't load vanilla block: '"  + blockName + "', reason: ");
-                Logger.error(e);
-            }
+            FluxRegistries.BLOCK_FACTORIES.add(new FactoryFinalizer<>(() -> new DataModBlock(blockName)));
         }
 
-        AccessableRegistry<IModBlock> modBlocks = FluxRegistries.BLOCKS.access();
-        loader.setupProgressBar(loader.progress2, modBlocks.getRegisteredNames().length, "Loading Flux Blocks");
-        for(Identifier blockId : modBlocks.getRegisteredNames()) {
+        loader.setupProgressBar(loader.progress2, blockNames.size(), "Building Blocks");
+        for(FactoryFinalizer<IModBlock> blockFactory : FluxRegistries.BLOCK_FACTORIES) {
             loader.incrementProgress(loader.progress2);
-            IModBlock block = modBlocks.get(blockId);
-            if(block instanceof VanillaModBlock) {
-                continue;
-            } else {
-                loader.blockLoader.loadBlock(block);
+            try {
+                IModBlock block = blockFactory.finalizeFactory();
+                Identifier blockId = loader.blockLoader.loadBlock(block);
+                FluxRegistries.BLOCKS.register(blockId, block);
+            } catch (BlockLoadException e) {
+                Logger.warn("can't load block: '"  + e.blockName + "', reason: ");
+                Logger.warn(e.getCause());
             }
         }
 

@@ -1,9 +1,9 @@
 package dev.crmodders.flux.api.generators;
 
 import com.badlogic.gdx.utils.Json;
+import dev.crmodders.flux.api.factories.IGenerator;
 import dev.crmodders.flux.loading.block.BlockLoader;
 import dev.crmodders.flux.tags.Identifier;
-import finalforeach.cosmicreach.blocks.BlockState;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -46,7 +46,7 @@ public class BlockGenerator implements IGenerator {
     public State createBlockState(String id, String modelName) {
         State state = new State();
         blockStates.put(id, state);
-        state.modelName = modelName;
+        state.modelName = BlockModelGenerator.getModelName(blockId, modelName);
         return state;
     }
 

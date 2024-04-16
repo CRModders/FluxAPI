@@ -17,8 +17,6 @@ import finalforeach.cosmicreach.rendering.shaders.ChunkShader;
 
 public class BlockModelFlux extends BlockModel {
 
-
-
     public static BlockModelFlux fromJson(String modelJson, String modelName, int rotXZ) {
         Json json = new Json();
         BlockModelFlux model = json.fromJson(BlockModelFlux.class, modelJson);
