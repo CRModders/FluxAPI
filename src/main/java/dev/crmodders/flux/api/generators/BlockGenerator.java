@@ -16,7 +16,7 @@ public class BlockGenerator implements IGenerator {
         public int lightLevelGreen = 0;
         public int lightLevelBlue = 0;
         public int lightAttenuation = 15;
-        public String blockEventsId = "base:block_events_default";
+        public Identifier blockEventsId = Identifier.fromString("base:block_events_default");
         public float blastResistance = 100.0F;
         public boolean generateSlabs = false;
         public boolean catalogHidden = false;
