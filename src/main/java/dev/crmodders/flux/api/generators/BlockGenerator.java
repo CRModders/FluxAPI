@@ -16,7 +16,7 @@ public class BlockGenerator implements IGenerator {
         public int lightLevelGreen = 0;
         public int lightLevelBlue = 0;
         public int lightAttenuation = 15;
-        public Identifier blockEventsId = Identifier.fromString("base:block_events_default");
+        public String blockEventsId = "base:block_events_default";
         public float blastResistance = 100.0F;
         public boolean generateSlabs = false;
         public boolean catalogHidden = false;
@@ -46,7 +46,7 @@ public class BlockGenerator implements IGenerator {
     public State createBlockState(String id, String modelName) {
         State state = new State();
         blockStates.put(id, state);
-        state.modelName = BlockModelGenerator.getModelName(blockId, modelName);
+        state.modelName = modelName;
         return state;
     }
 

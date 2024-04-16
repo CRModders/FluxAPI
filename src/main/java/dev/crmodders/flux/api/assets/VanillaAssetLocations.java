@@ -3,6 +3,7 @@ package dev.crmodders.flux.api.assets;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import dev.crmodders.flux.api.resource.ResourceLocation;
+import dev.crmodders.flux.tags.Identifier;
 import finalforeach.cosmicreach.io.SaveLocation;
 
 import java.util.ArrayList;
@@ -32,35 +33,40 @@ public class VanillaAssetLocations {
         return files;
     }
 
+    private static ResourceLocation getLocation(String folder, String name, String extension) {
+        Identifier identifier = Identifier.fromString(name);
+        return new ResourceLocation(identifier.namespace, folder + "/" + identifier.name + "." + extension);
+    }
+
     public static ResourceLocation getBlock(String blockName) {
-        return new ResourceLocation("base", "blocks/" + blockName + ".json");
+        return getLocation("blocks", blockName, "json");
     }
 
     public static ResourceLocation getBlockTexture(String blockTextureName) {
-        return new ResourceLocation("base", "textures/blocks/" + blockTextureName + ".png");
+        return getLocation("textures/blocks", blockTextureName, "png");
     }
 
     public static ResourceLocation getBlockModel(String blockModelName) {
-        return new ResourceLocation("base", "models/blocks/" + blockModelName + ".json");
+        return getLocation("models/blocks", blockModelName, "json");
     }
 
     public static ResourceLocation getBlockEvents(String blockEventsName) {
-        return new ResourceLocation("base", "block_events/" + blockEventsName + ".json");
+        return getLocation("block_events", blockEventsName, "json");
     }
 
     public static ResourceLocation getTexture(String textureName) {
-        return new ResourceLocation("base", "textures/" + textureName + ".png");
+        return getLocation("textures", textureName, "png");
     }
 
     public static ResourceLocation getLanguage(String languageName) {
-        return new ResourceLocation("base", "lang/" + languageName + ".json");
+        return getLocation("lang", languageName, "json");
     }
 
     public static ResourceLocation getFontTexture(String fontTextureName) {
-        return new ResourceLocation("base", "lang/textures/" + fontTextureName + ".png");
+        return getLocation("lang/textures", fontTextureName, "png");
     }
 
     public static ResourceLocation getShader(String shaderName) {
-        return new ResourceLocation("base", "shaders/" + shaderName + ".glsl");
+        return getLocation("shaders", shaderName, "glsl");
     }
 }

@@ -1,6 +1,7 @@
 package dev.crmodders.flux.loading.block;
 
 import com.badlogic.gdx.utils.Json;
+import dev.crmodders.flux.api.assets.VanillaAssetLocations;
 import finalforeach.cosmicreach.GameAssetLoader;
 import finalforeach.cosmicreach.blocks.BlockState;
 import finalforeach.cosmicreach.rendering.blockmodels.BlockModel;
@@ -36,7 +37,7 @@ public class BlockModelFactory implements IBlockModelInstantiator {
             return models.get(key);
         }
 
-        String modelJson = GameAssetLoader.loadAsset("models/blocks/" + modelName + ".json").readString();
+        String modelJson = VanillaAssetLocations.getBlockModel(modelName).load().readString();
         BlockModelFlux model = BlockModelFlux.fromJson(modelJson, modelName, rotXZ);
         if (model.parent != null) {
             getInstance(model.parent, rotXZ);
