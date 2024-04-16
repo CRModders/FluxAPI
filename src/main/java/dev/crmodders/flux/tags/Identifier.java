@@ -3,6 +3,10 @@ package dev.crmodders.flux.tags;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
 import dev.crmodders.flux.annotations.Stable;
+import dev.crmodders.flux.logging.LogWrapper;
+import finalforeach.cosmicreach.blockevents.BlockEventTrigger;
+import finalforeach.cosmicreach.blockevents.actions.BlockActionRunTrigger;
+import finalforeach.cosmicreach.rendering.blockmodels.BlockModelJson;
 
 import java.util.Objects;
 
@@ -16,15 +20,16 @@ import java.util.Objects;
 @Stable
 public class Identifier implements Json.Serializable {
 
+    private String serializedName;
     public String namespace;
     public String name;
+
+    public Identifier() {}
 
     public Identifier(String namespace, String name) {
         this.namespace = namespace;
         this.name = name;
     }
-
-    public Identifier() {}
 
     @Override
     public String toString() {
@@ -59,11 +64,12 @@ public class Identifier implements Json.Serializable {
 
     @Override
     public void write(Json json) {
-        throw new RuntimeException("Cannot Serialize Identifier: Not Implemented");
+        json.writeValue(serializedName, toString());
     }
 
     @Override
     public void read(Json json, JsonValue jsonValue) {
         internalFromString(jsonValue.asString());
+        serializedName = jsonValue.name();
     }
 }

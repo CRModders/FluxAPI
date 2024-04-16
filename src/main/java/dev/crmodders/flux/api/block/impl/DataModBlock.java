@@ -1,7 +1,8 @@
-package dev.crmodders.flux.api.block;
+package dev.crmodders.flux.api.block.impl;
 
 import com.badlogic.gdx.utils.Json;
 import dev.crmodders.flux.api.assets.VanillaAssetLocations;
+import dev.crmodders.flux.api.block.IModBlock;
 import dev.crmodders.flux.api.generators.BlockGenerator;
 import dev.crmodders.flux.api.resource.ResourceLocation;
 import dev.crmodders.flux.tags.Identifier;
