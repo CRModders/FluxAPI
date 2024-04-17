@@ -1,7 +1,6 @@
 package dev.crmodders.flux.util;
 
-import dev.crmodders.flux.api.suppliers.ReturnableInputSupplier;
-import dev.crmodders.flux.logging.LogWrapper;
+import dev.crmodders.flux.api.v5.suppliers.ReturnableInputSupplier;
 
 import java.util.HashMap;
 import java.util.Map;

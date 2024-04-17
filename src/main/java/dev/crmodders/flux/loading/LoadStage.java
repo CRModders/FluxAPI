@@ -1,6 +1,6 @@
 package dev.crmodders.flux.loading;
 
-import dev.crmodders.flux.api.gui.ProgressBarElement;
+import dev.crmodders.flux.api.v5.gui.ProgressBarElement;
 import dev.crmodders.flux.localization.TranslationKey;
 
 import java.util.concurrent.ExecutorService;

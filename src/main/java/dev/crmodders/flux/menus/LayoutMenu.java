@@ -1,6 +1,6 @@
 package dev.crmodders.flux.menus;
 
-import dev.crmodders.flux.api.gui.base.BaseElement;
+import dev.crmodders.flux.api.v5.gui.base.BaseElement;
 import finalforeach.cosmicreach.gamestates.GameState;
 import finalforeach.cosmicreach.ui.UIElement;
 import finalforeach.cosmicreach.ui.VerticalAnchor;

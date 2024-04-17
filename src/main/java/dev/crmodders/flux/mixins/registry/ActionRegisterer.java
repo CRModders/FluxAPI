@@ -1,6 +1,6 @@
 package dev.crmodders.flux.mixins.registry;
 
-import dev.crmodders.flux.api.generators.BlockEventGenerator;
+import dev.crmodders.flux.api.v5.generators.BlockEventGenerator;
 import finalforeach.cosmicreach.blockevents.BlockEvents;
 import finalforeach.cosmicreach.blockevents.actions.ActionId;
 import finalforeach.cosmicreach.blockevents.actions.IBlockAction;

@@ -2,11 +2,11 @@ package dev.crmodders.flux.registry;
 
 import dev.crmodders.flux.annotations.FluxInternal;
 import dev.crmodders.flux.annotations.Stable;
-import dev.crmodders.flux.api.block.IModBlock;
-import dev.crmodders.flux.api.config.BasicConfig;
-import dev.crmodders.flux.api.generators.FactoryFinalizer;
-import dev.crmodders.flux.api.generators.data.blockevent.BlockEventDataExt;
-import dev.crmodders.flux.api.resource.ResourceObject;
+import dev.crmodders.flux.api.v5.block.IModBlock;
+import dev.crmodders.flux.api.v5.config.BasicConfig;
+import dev.crmodders.flux.api.v5.generators.FactoryFinalizer;
+import dev.crmodders.flux.api.v5.generators.data.blockevent.BlockEventDataExt;
+import dev.crmodders.flux.api.v5.resource.ResourceObject;
 import dev.crmodders.flux.localization.Language;
 import dev.crmodders.flux.localization.LanguageFile;
 import dev.crmodders.flux.registry.registries.DynamicRegistry;

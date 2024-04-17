@@ -1,7 +1,7 @@
 package dev.crmodders.flux.mixins.gui;
 
-import dev.crmodders.flux.api.gui.SwitchGameStateButtonElement;
-import dev.crmodders.flux.api.gui.interfaces.GameStateInterface;
+import dev.crmodders.flux.api.v5.gui.SwitchGameStateButtonElement;
+import dev.crmodders.flux.api.v5.gui.interfaces.GameStateInterface;
 import dev.crmodders.flux.localization.TranslationKey;
 import dev.crmodders.flux.menus.FluxOptionMenu;
 import finalforeach.cosmicreach.gamestates.GameState;

@@ -1,10 +1,10 @@
 package dev.crmodders.flux.menus;
 
 import dev.crmodders.flux.FluxSettings;
-import dev.crmodders.flux.api.gui.BooleanToggleElement;
-import dev.crmodders.flux.api.gui.SteppedIntSliderElement;
-import dev.crmodders.flux.api.gui.SwitchGameStateButtonElement;
-import dev.crmodders.flux.api.gui.interfaces.GameStateCache;
+import dev.crmodders.flux.api.v5.gui.BooleanToggleElement;
+import dev.crmodders.flux.api.v5.gui.SteppedIntSliderElement;
+import dev.crmodders.flux.api.v5.gui.SwitchGameStateButtonElement;
+import dev.crmodders.flux.api.v5.gui.interfaces.GameStateCache;
 import dev.crmodders.flux.localization.TranslationKey;
 import dev.crmodders.flux.ui.UIRenderer;
 import finalforeach.cosmicreach.gamestates.GameState;

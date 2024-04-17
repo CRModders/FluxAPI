@@ -1,7 +1,7 @@
 package dev.crmodders.flux;
 
-import dev.crmodders.flux.api.events.GameEvents;
-import dev.crmodders.flux.api.generators.BlockGenerator;
+import dev.crmodders.flux.api.v5.events.GameEvents;
+import dev.crmodders.flux.api.v5.generators.BlockGenerator;
 import dev.crmodders.flux.localization.LanguageFile;
 import dev.crmodders.flux.localization.TranslationApi;
 import dev.crmodders.flux.logging.LogWrapper;

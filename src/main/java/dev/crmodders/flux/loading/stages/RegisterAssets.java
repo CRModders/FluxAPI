@@ -1,7 +1,7 @@
 package dev.crmodders.flux.loading.stages;
 
-import dev.crmodders.flux.api.gui.ProgressBarElement;
-import dev.crmodders.flux.api.resource.ResourceObject;
+import dev.crmodders.flux.api.v5.gui.ProgressBarElement;
+import dev.crmodders.flux.api.v5.resource.ResourceObject;
 import dev.crmodders.flux.loading.GameLoader;
 import dev.crmodders.flux.loading.LoadStage;
 import dev.crmodders.flux.loading.TaskBatch;

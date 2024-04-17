@@ -1,6 +1,6 @@
 package dev.crmodders.flux.mixins.events;
 
-import dev.crmodders.flux.api.events.GameEvents;
+import dev.crmodders.flux.api.v5.events.GameEvents;
 import finalforeach.cosmicreach.blocks.BlockPosition;
 import finalforeach.cosmicreach.blocks.BlockState;
 import finalforeach.cosmicreach.world.BlockSelection;

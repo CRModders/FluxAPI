@@ -1,8 +1,8 @@
 package dev.crmodders.flux.loading.stages;
 
-import dev.crmodders.flux.api.events.GameEvents;
-import dev.crmodders.flux.api.events.system.RunnableArrayListEvent;
-import dev.crmodders.flux.api.gui.ProgressBarElement;
+import dev.crmodders.flux.api.v5.events.GameEvents;
+import dev.crmodders.flux.api.v5.events.system.RunnableArrayListEvent;
+import dev.crmodders.flux.api.v5.gui.ProgressBarElement;
 import dev.crmodders.flux.loading.LoadStage;
 import dev.crmodders.flux.loading.TaskBatch;
 import dev.crmodders.flux.localization.TranslationKey;

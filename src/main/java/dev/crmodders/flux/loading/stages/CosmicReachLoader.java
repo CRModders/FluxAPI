@@ -3,7 +3,7 @@ package dev.crmodders.flux.loading.stages;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import dev.crmodders.flux.FluxConstants;
-import dev.crmodders.flux.api.gui.ProgressBarElement;
+import dev.crmodders.flux.api.v5.gui.ProgressBarElement;
 import dev.crmodders.flux.loading.LoadStage;
 import dev.crmodders.flux.localization.TranslationKey;
 import finalforeach.cosmicreach.blocks.Block;

@@ -2,9 +2,9 @@ package dev.crmodders.flux.loading;
 
 import com.badlogic.gdx.graphics.Texture;
 import dev.crmodders.flux.FluxConstants;
-import dev.crmodders.flux.api.gui.ProgressBarElement;
-import dev.crmodders.flux.api.gui.TextElement;
-import dev.crmodders.flux.api.gui.base.BaseButton;
+import dev.crmodders.flux.api.v5.gui.ProgressBarElement;
+import dev.crmodders.flux.api.v5.gui.TextElement;
+import dev.crmodders.flux.api.v5.gui.base.BaseButton;
 import dev.crmodders.flux.loading.stages.*;
 import dev.crmodders.flux.localization.TranslationKey;
 import dev.crmodders.flux.menus.BasicMenu;

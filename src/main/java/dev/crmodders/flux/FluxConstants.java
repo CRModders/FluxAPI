@@ -1,6 +1,6 @@
 package dev.crmodders.flux;
 
-import dev.crmodders.flux.api.resource.ResourceLocation;
+import dev.crmodders.flux.api.v5.resource.ResourceLocation;
 import dev.crmodders.flux.localization.TranslationKey;
 import finalforeach.cosmicreach.gamestates.GameState;
 import finalforeach.cosmicreach.gamestates.MainMenu;

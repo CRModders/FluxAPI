@@ -2,9 +2,9 @@ package dev.crmodders.flux.util;
 
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Json;
-import dev.crmodders.flux.api.block.IModBlock;
-import dev.crmodders.flux.api.generators.BlockGenerator;
-import dev.crmodders.flux.api.resource.ResourceLocation;
+import dev.crmodders.flux.api.v5.block.IModBlock;
+import dev.crmodders.flux.api.v5.generators.BlockGenerator;
+import dev.crmodders.flux.api.v5.resource.ResourceLocation;
 import dev.crmodders.flux.mixins.accessor.BlockAccessor;
 import dev.crmodders.flux.registry.FluxRegistries;
 import dev.crmodders.flux.tags.Identifier;

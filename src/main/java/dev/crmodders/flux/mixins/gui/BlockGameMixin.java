@@ -2,7 +2,7 @@ package dev.crmodders.flux.mixins.gui;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import dev.crmodders.flux.api.gui.interfaces.GameStateInterface;
+import dev.crmodders.flux.api.v5.gui.interfaces.GameStateInterface;
 import dev.crmodders.flux.ui.UIRenderer;
 import finalforeach.cosmicreach.BlockGame;
 import finalforeach.cosmicreach.gamestates.GameState;

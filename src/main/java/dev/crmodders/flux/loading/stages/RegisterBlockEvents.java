@@ -1,8 +1,8 @@
 package dev.crmodders.flux.loading.stages;
 
-import dev.crmodders.flux.api.generators.BlockEventGenerator;
-import dev.crmodders.flux.api.generators.data.blockevent.BlockEventDataExt;
-import dev.crmodders.flux.api.gui.ProgressBarElement;
+import dev.crmodders.flux.api.v5.generators.BlockEventGenerator;
+import dev.crmodders.flux.api.v5.generators.data.blockevent.BlockEventDataExt;
+import dev.crmodders.flux.api.v5.gui.ProgressBarElement;
 import dev.crmodders.flux.loading.GameLoader;
 import dev.crmodders.flux.loading.LoadStage;
 import dev.crmodders.flux.localization.TranslationKey;
