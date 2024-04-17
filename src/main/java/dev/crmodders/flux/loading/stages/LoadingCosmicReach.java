@@ -54,7 +54,7 @@ public class LoadingCosmicReach extends LoadStage {
             FluxRegistries.BLOCK_FACTORIES.add(() -> new DataModBlock(blockName));
         }
 
-        loader.setupProgressBar(loader.progress2, blockNames.size(), "Creating Blocks");
+        loader.setupProgressBar(loader.progress2, FluxRegistries.BLOCK_FACTORIES.size(), "Creating Blocks");
         for(IFactory<IModBlock> blockFactory : FluxRegistries.BLOCK_FACTORIES) {
             loader.incrementProgress(loader.progress2);
             try {

@@ -20,14 +20,12 @@ public class BlockModelFlux extends BlockModel {
     public static BlockModelFlux fromJson(String modelJson, String modelName, int rotXZ) {
         Json json = new Json();
         BlockModelFlux model = json.fromJson(BlockModelFlux.class, modelJson);
-        model.modelJson = modelJson; // TODO maybe remove this (high memory usage)
         model.modelName = modelName;
         model.rotXZ = rotXZ;
         return model;
     }
 
     public static final boolean useIndices = !RuntimeInfo.useSharedIndices;
-    public transient String modelJson;
     public transient String modelName;
     public transient int rotXZ;
     public transient BlockModelFluxCuboid.Face[] allFaces;

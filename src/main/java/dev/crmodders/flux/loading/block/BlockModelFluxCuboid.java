@@ -17,7 +17,7 @@ public class BlockModelFluxCuboid
     public static class Face
     {
         public float[] uv;
-        public boolean ambientocclusion;
+        public boolean ambientocclusion = true;
         public boolean cullFace;
         public String texture;
         public  int uvRotation;
