@@ -5,14 +5,15 @@ import dev.crmodders.flux.registry.registries.DynamicRegistry;
 import dev.crmodders.flux.registry.registries.NotAccessibleException;
 import dev.crmodders.flux.tags.Identifier;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class DynamicRegistryImpl<T> implements AccessableRegistry<T>, DynamicRegistry<T> {
 
-    private HashMap<Identifier, T> objects;
+    private Map<Identifier, T> objects;
 
     public DynamicRegistryImpl() {
-        objects = new HashMap<>();
+        objects = new LinkedHashMap<>();
     }
 
     @Override

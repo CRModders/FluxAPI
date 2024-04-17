@@ -11,11 +11,23 @@ import java.util.Map;
 public class BlockGenerator implements IGenerator {
 
     public static class State {
+        /**
+         * modelName is used for locating the model used for this block
+         * for blocks using models in vanilla json files the modelName is
+         * a ResourceLocation
+         * for blocks using custom models, the modelName is a combination
+         * of blockId and modelName
+         * this is handled by setting the usingBlockModelGenerator flag in
+         * createBlockState
+         */
         public String modelName;
         public int lightLevelRed = 0;
         public int lightLevelGreen = 0;
         public int lightLevelBlue = 0;
         public int lightAttenuation = 15;
+        /**
+         * better name would be eventName
+         */
         public String blockEventsId = "base:block_events_default";
         public float blastResistance = 100.0F;
         public boolean generateSlabs = false;
@@ -29,6 +41,7 @@ public class BlockGenerator implements IGenerator {
         public boolean canRaycastForPlaceOn = true;
         public boolean canRaycastForReplace = false;
         public boolean isFluid = false;
+
     }
 
     public Identifier blockId;
@@ -43,10 +56,19 @@ public class BlockGenerator implements IGenerator {
         this.blockStates = new HashMap<>();
     }
 
-    public State createBlockState(String id, String modelName) {
+    public State createBlockState(String id, String modelName, boolean usingBlockModelGenerator) {
         State state = new State();
+        state.modelName = usingBlockModelGenerator ? BlockModelGenerator.getModelName(blockId, modelName) : modelName;
+        state.blockEventsId = BlockEventGenerator.getEventName(blockId, "flux_default");
         blockStates.put(id, state);
-        state.modelName = modelName;
+        return state;
+    }
+
+    public State createBlockState(String id, String modelName, boolean usingBlockModelGenerator, String eventName, boolean usingBlockEventGenerator) {
+        State state = new State();
+        state.modelName = usingBlockModelGenerator ? BlockModelGenerator.getModelName(blockId, modelName) : modelName;
+        state.blockEventsId = usingBlockEventGenerator ? BlockEventGenerator.getEventName(blockId, eventName) : eventName;
+        blockStates.put(id, state);
         return state;
     }
 

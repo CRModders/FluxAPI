@@ -13,11 +13,13 @@ import finalforeach.cosmicreach.world.Zone;
 
 import java.util.Map;
 
-@ActionId(id = "fluxapi:onInteract")
+@ActionId(id = "fluxapi:mod_block_interact")
 public class OnInteractTrigger implements IBlockAction {
+
+    public Identifier blockId;
+
     @Override
     public void act(BlockState blockState, BlockEventTrigger blockEventTrigger, Zone zone, Map<String, Object> map) {
-        Identifier blockId = Identifier.fromString(String.valueOf(map.get("blockId")));
         IModBlock block = FluxRegistries.BLOCKS.access().get(blockId);
         block.onInteract(zone, InGame.getLocalPlayer(), blockState, (BlockPosition) map.get("blockPos"));
     }

@@ -3,7 +3,11 @@ package dev.crmodders.flux.api.block;
 import dev.crmodders.flux.api.generators.BlockEventGenerator;
 import dev.crmodders.flux.api.generators.BlockGenerator;
 import dev.crmodders.flux.api.generators.BlockModelGenerator;
+import dev.crmodders.flux.loading.block.BlockLoader;
 import dev.crmodders.flux.tags.Identifier;
+import dev.crmodders.flux.util.BlockEventUtil;
+import finalforeach.cosmicreach.blockevents.actions.BlockActionPlaySound2D;
+import finalforeach.cosmicreach.blockevents.actions.BlockActionReplaceBlockState;
 import finalforeach.cosmicreach.blocks.BlockPosition;
 import finalforeach.cosmicreach.blocks.BlockState;
 import finalforeach.cosmicreach.entities.Player;
@@ -11,10 +15,10 @@ import finalforeach.cosmicreach.world.Zone;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.OptionalDouble;
+import java.util.Map;
 
 /**
- * Adds an Interactive block to Cosmic Reach
+ * Adds a fully customizable block to Cosmic Reach
  */
 public interface IModBlock {
 
@@ -34,7 +38,12 @@ public interface IModBlock {
      * @param blockState The Blocks State
      * @param position The Blocks Position
      */
-    default void onPlace(Zone zone, Player player, BlockState blockState, BlockPosition position) {}
+    default void onPlace(Zone zone, Player player, BlockState blockState, BlockPosition position) {
+        BlockActionReplaceBlockState replace = BlockEventUtil.createReplaceBlockEvent("self", 0 ,0, 0);
+        replace.act(blockState, null, zone, position);
+        BlockActionPlaySound2D sound2D = BlockEventUtil.createPlaySound2D("block-place.ogg", 1, 1, 0);
+        sound2D.act(blockState, null, zone, Map.of());
+    }
 
     /**
      * Triggered when a Player Breaks this block
@@ -43,7 +52,12 @@ public interface IModBlock {
      * @param blockState The Blocks State
      * @param position The Blocks Position
      */
-    default void onBreak(Zone zone, Player player, BlockState blockState, BlockPosition position) {}
+    default void onBreak(Zone zone, Player player, BlockState blockState, BlockPosition position) {
+        BlockActionReplaceBlockState replace = BlockEventUtil.createReplaceBlockEvent("base:air[default]", 0 ,0, 0);
+        replace.act(blockState, null, zone, position);
+        BlockActionPlaySound2D sound2D = BlockEventUtil.createPlaySound2D("block-break.ogg", 1, 1, 0);
+        sound2D.act(blockState, null, zone, Map.of());
+    }
 
     /**
      * Used by FluxAPI for generating this block and registering it with Cosmic Reach
@@ -51,8 +65,21 @@ public interface IModBlock {
      */
     BlockGenerator getBlockGenerator();
 
+    /**
+     * Used by FluxAPI for generating any custom block models associated
+     * with this block
+     * @param blockId the blockId that has been extracted from getBlockGenerator()
+     * @return a List of BlockModelGenerator used by this block
+     */
     default List<BlockModelGenerator> getBlockModelGenerators(Identifier blockId) { return Collections.emptyList(); }
 
-    default BlockEventGenerator getBlockEventGenerator(Identifier blockId) { return null; }
+    /**
+     * Used by FluxAPI for generating any custom block events associated
+     * with this block, FluxAPI will register onInteract, onPlace and onBreak events by default see {@link IModBlock}
+     * For registering Block Actions see {@link BlockLoader#registerEventAction}
+     * @param blockId the blockId that has been extracted from getBlockGenerator()
+     * @return a List of BlockEventGenerator used by this block
+     */
+    default List<BlockEventGenerator> getBlockEventGenerators(Identifier blockId) { return Collections.emptyList(); }
 
 }

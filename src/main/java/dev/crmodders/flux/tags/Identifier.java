@@ -1,7 +1,5 @@
 package dev.crmodders.flux.tags;
 
-import com.badlogic.gdx.utils.Json;
-import com.badlogic.gdx.utils.JsonValue;
 import dev.crmodders.flux.annotations.Stable;
 
 import java.util.Objects;
@@ -14,7 +12,7 @@ import java.util.Objects;
  * @author Mr-Zombii
  */
 @Stable
-public class Identifier implements Json.Serializable {
+public class Identifier {
 
     private String serializedName;
     public String namespace;
@@ -51,21 +49,4 @@ public class Identifier implements Json.Serializable {
         return new Identifier(splitId[0], splitId[1]);
     }
 
-    public void internalFromString(String id) {
-        if (!id.contains(":")) id = "base:"+id;
-        String[] splitId = id.split(":");
-        namespace = splitId[0];
-        name = splitId[1];
-    }
-
-    @Override
-    public void write(Json json) {
-        json.writeValue(serializedName, toString());
-    }
-
-    @Override
-    public void read(Json json, JsonValue jsonValue) {
-        internalFromString(jsonValue.asString());
-        serializedName = jsonValue.name();
-    }
 }
