@@ -1,6 +1,6 @@
 package dev.crmodders.flux;
 
-import dev.crmodders.flux.api.block.impl.FunniBok;
+import dev.crmodders.flux.api.block.impl.funni.FunniBok;
 import dev.crmodders.flux.api.events.GameEvents;
 import dev.crmodders.flux.localization.LanguageFile;
 import dev.crmodders.flux.localization.TranslationApi;

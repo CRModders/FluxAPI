@@ -1,4 +1,4 @@
-package dev.crmodders.flux.api.block.impl;
+package dev.crmodders.flux.api.block.impl.funni;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
@@ -6,6 +6,7 @@ import dev.crmodders.flux.api.block.IModBlock;
 import dev.crmodders.flux.api.generators.BlockGenerator;
 import dev.crmodders.flux.api.generators.BlockModelGenerator;
 import dev.crmodders.flux.tags.Identifier;
+import finalforeach.cosmicreach.rendering.shaders.ChunkShader;
 
 import java.util.Arrays;
 import java.util.List;
@@ -17,10 +18,10 @@ public class FunniBok implements IModBlock {
         Identifier id;
 
         public FunniBok() {
-            pixmap = new Pixmap(512, 512, Pixmap.Format.RGB888);
+            pixmap = new Pixmap(ChunkShader.allBlocksTexSize, ChunkShader.allBlocksTexSize, Pixmap.Format.RGB888);
             Random random = new Random();
-            for (int x = 0; x < 512; x++) {
-                for (int y = 0; y < 512; y++) {
+            for (int x = 0; x < ChunkShader.allBlocksTexSize; x++) {
+                for (int y = 0; y < ChunkShader.allBlocksTexSize; y++) {
                     int nextInt = random.nextInt(256*256*256);
                     pixmap.drawPixel(x, y, Color.valueOf(String.format("%06x", nextInt)).toIntBits());
                 }
@@ -41,13 +42,13 @@ public class FunniBok implements IModBlock {
         public List<BlockModelGenerator> getBlockModelGenerators(Identifier blockId) {
             BlockModelGenerator generator = new BlockModelGenerator(blockId, "model");
             generator.createTexture("texture", pixmap);
-            BlockModelGenerator.Cuboid cuboid = generator.createCuboid(0, 0, 0, 512, 512, 512);
+            BlockModelGenerator.Cuboid cuboid = generator.createCuboid(0, 0, 0, ChunkShader.allBlocksTexSize, ChunkShader.allBlocksTexSize, ChunkShader.allBlocksTexSize);
             Arrays.stream(cuboid.faces).forEach((f) -> {
                 f.texture = "texture";
                 f.u1 = 0;
-                f.u2 = 512;
+                f.u2 = ChunkShader.allBlocksTexSize;
                 f.v1 = 0;
-                f.v2 = 512;
+                f.v2 = ChunkShader.allBlocksTexSize;
             });
 
 //            generator.createColoredCuboid(0, 0, 0, 32, 32, 32, "green", Color.GREEN);
