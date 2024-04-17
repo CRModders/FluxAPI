@@ -12,24 +12,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 public class BlockReg {
 
-    public static void create(CallbackInfo ci) {
-        BuiltInRegistries.MODDED_BLOCK_EVENTS.freeze();
-        for (Identifier eventID : BuiltInRegistries.MODDED_BLOCK_EVENTS.access().getRegisteredNames()) {
-            BlockEvents event = BuiltInRegistries.MODDED_BLOCK_EVENTS.access().get(eventID);
-            BlockEvents.INSTANCES.put(eventID.toString(), event);
-        }
-
-        BuiltInRegistries.MODDED_BLOCKS.freeze();
-        for (Identifier blockID : BuiltInRegistries.MODDED_BLOCKS.access().getRegisteredNames()) {
-            ModBlock modBlock = BuiltInRegistries.MODDED_BLOCKS.access().get(blockID);
-            if (modBlock.block != null) {
-                Block.blocksByName.put(blockID.toString(), getBlockFromBlock(blockID, modBlock.block));
-            } else {
-                Block.blocksByName.put(blockID.toString(), getBlockFromJson(blockID));
-            }
-        }
-    }
-
     public static Block getBlockFromBlock(Identifier id, Block b) {
         Array<String> blockStateKeysToAdd = b.blockStates.keys().toArray();
 

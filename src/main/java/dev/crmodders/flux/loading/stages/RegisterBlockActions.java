@@ -1,5 +1,6 @@
 package dev.crmodders.flux.loading.stages;
 
+import dev.crmodders.flux.api.v2.registries.BuiltInRegistries;
 import dev.crmodders.flux.api.v5.generators.BlockEventGenerator;
 import dev.crmodders.flux.api.v5.gui.ProgressBarElement;
 import dev.crmodders.flux.loading.GameLoader;
@@ -35,6 +36,12 @@ public class RegisterBlockActions implements LoadStage {
                 LogWrapper.info("%s: Registered Block Event Action %s".formatted(GameLoader.TAG, action.getActionId()));
             });
 
+        }
+
+        BuiltInRegistries.MODDED_BLOCK_EVENTS.freeze();
+        for (Identifier eventID : BuiltInRegistries.MODDED_BLOCK_EVENTS.access().getRegisteredNames()) {
+            BlockEvents event = BuiltInRegistries.MODDED_BLOCK_EVENTS.access().get(eventID);
+            BlockEvents.INSTANCES.put(eventID.toString(), event);
         }
     }
 
