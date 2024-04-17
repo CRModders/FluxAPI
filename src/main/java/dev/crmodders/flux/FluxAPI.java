@@ -18,12 +18,12 @@ public class FluxAPI implements ModInitializer {
     public void onInitialize() {
         LOGGER.info("Flux Fabric Initialized");
 
-        FluxRegistries.BLOCK_FACTORIES.add(new FactoryFinalizer<>(TestBlock::new));
-
         GameEvents.ON_REGISTER_LANGUAGE.register(() -> {
             LanguageFile lang = LanguageFile.loadLanguageFile(FluxConstants.LanguageEnUs.load());
             TranslationApi.registerLanguageFile(lang);
         });
+
+        FluxRegistries.BLOCK_FACTORIES.add(new FactoryFinalizer<>(TestBlock::new));
 
     }
 }
