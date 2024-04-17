@@ -33,7 +33,7 @@ public class TestBlock implements IModBlock {
         @Override
         public BlockGenerator getBlockGenerator() {
             BlockGenerator generator = new BlockGenerator(id, "test");
-            generator.createBlockState("default", BlockModelGenerator.getModelName(id, "model"));
+            generator.createBlockState("default", "model", true);
             return generator;
         }
 
