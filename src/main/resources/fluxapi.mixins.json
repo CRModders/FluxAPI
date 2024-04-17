@@ -9,6 +9,7 @@
     "assets.AssetLoaderMixin",
     "assets.BlockEventsMixin",
     "assets.BlockModelJsonMixin",
+    "blockevents.BlockEventTriggerMixin",
     "events.BlockGameEventMixin",
     "events.BlockSelectionEventMixin",
     "events.GameStateEventMixin",

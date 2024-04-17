@@ -3,19 +3,21 @@ package dev.crmodders.flux.api.block.impl;
 import com.badlogic.gdx.graphics.Pixmap;
 import dev.crmodders.flux.api.block.IModBlock;
 import dev.crmodders.flux.api.generators.BasicCubeModelGenerator;
-import dev.crmodders.flux.api.generators.BlockEventGenerator;
 import dev.crmodders.flux.api.generators.BlockGenerator;
 import dev.crmodders.flux.api.generators.BlockModelGenerator;
 import dev.crmodders.flux.tags.Identifier;
 
-import java.util.Collections;
 import java.util.List;
 
+/**
+ * This class creates a basic Block with top, bottom and side
+ * textures, a simple default block state and a single custom
+ * model
+ */
 public class BasicModBlock implements IModBlock {
 
     public Identifier blockId;
     public String blockName;
-
     public Pixmap top, bottom, side;
 
     public BasicModBlock(Identifier blockId, String blockName) {
@@ -23,16 +25,10 @@ public class BasicModBlock implements IModBlock {
         this.blockName = blockName;
     }
 
-    public void setTextures(Pixmap top, Pixmap bottom, Pixmap side) {
-        this.top = top;
-        this.bottom = bottom;
-        this.side = side;
-    }
-
     @Override
     public BlockGenerator getBlockGenerator() {
         BlockGenerator generator = new BlockGenerator(blockId, blockName);
-        generator.createBlockState("default", BlockModelGenerator.getModelName(blockId, "model"));
+        generator.createBlockState("default", "model", true);
         return generator;
     }
 

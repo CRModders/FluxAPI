@@ -9,6 +9,8 @@ import finalforeach.cosmicreach.rendering.blockmodels.BlockModel;
 @Experimental
 public class BlockModelVertex extends BlockModel {
 
+    public String modelName;
+
     public BlockModelVertex() {
         isPosXFaceOccluding = false;
         isNegXFaceOccluding = false;

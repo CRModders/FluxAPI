@@ -9,17 +9,18 @@ import dev.crmodders.flux.registry.registries.NotAccessibleException;
 import dev.crmodders.flux.tags.Identifier;
 
 import java.util.Arrays;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class FreezingRegistryImpl<T> implements AccessableRegistry<T>, FreezingRegistry<T>, ListenerActiveRegistry<T> {
 
     private boolean isFrozen;
-    private final HashMap<Identifier, T> objects;
-    private final HashMap<Identifier, Event<RegistryObjectListener<T>>> listeners;
+    private final Map<Identifier, T> objects;
+    private final Map<Identifier, Event<RegistryObjectListener<T>>> listeners;
 
     public FreezingRegistryImpl() {
-        objects = new HashMap<>();
-        listeners = new HashMap<>();
+        objects = new LinkedHashMap<>();
+        listeners = new LinkedHashMap<>();
     }
 
     @Override

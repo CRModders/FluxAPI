@@ -2,19 +2,17 @@ package dev.crmodders.flux.registry;
 
 import dev.crmodders.flux.annotations.FluxInternal;
 import dev.crmodders.flux.annotations.Stable;
+import dev.crmodders.flux.api.block.FluxBlockAction;
 import dev.crmodders.flux.api.block.IModBlock;
 import dev.crmodders.flux.api.config.BasicConfig;
-import dev.crmodders.flux.api.factories.FactoryFinalizer;
-import dev.crmodders.flux.api.generators.data.blockevent.BlockEventDataExt;
+import dev.crmodders.flux.api.factories.IFactory;
 import dev.crmodders.flux.api.resource.ResourceObject;
 import dev.crmodders.flux.localization.Language;
 import dev.crmodders.flux.localization.LanguageFile;
 import dev.crmodders.flux.registry.registries.DynamicRegistry;
 import dev.crmodders.flux.registry.registries.FreezingRegistry;
-import finalforeach.cosmicreach.blockevents.actions.IBlockAction;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -24,45 +22,58 @@ import java.util.List;
 public class FluxRegistries {
 
     /**
+     * Runs in Phase 1 of loading
+     */
+    @Stable
+    public static FreezingRegistry<Runnable> ON_PRE_INITIALIZE = FreezingRegistry.create();
+
+    /**
+     * Runs in Phase 3 of loading
+     */
+    @Stable
+    public static FreezingRegistry<Runnable> ON_INITIALIZE = FreezingRegistry.create();
+
+    /**
+     * Runs in Phase 5 of loading
+     */
+    @Stable
+    public static FreezingRegistry<Runnable> ON_POST_INITIALIZE = FreezingRegistry.create();
+
+    /**
      * Used for Registering {@link ResourceObject}
-     * This Registry will register in Phase 3 of loading
+     * This Registry will register in Phase 2 of loading
      */
     @Stable
     public static DynamicRegistry<ResourceObject> GAME_RESOURCES = DynamicRegistry.create();
 
     /**
+     * Used for Registering {@link IModBlock} using Factories
+     * This Registry will register in Phase 3 of loading
      */
     @Stable
-    public static List<FactoryFinalizer<IModBlock>> BLOCK_FACTORIES = new ArrayList<>();
-
+    public static List<IFactory<IModBlock>> BLOCK_FACTORIES = new ArrayList<>();
 
     /**
-     * Used for Registering Custom {@link IModBlock}
-     * This Registry will be frozen in Phase 4 of loading
+     * Used for Registering Custom {@link FluxBlockAction} using Factories
+     * This Registry will be frozen in Phase 3 of loading
+     */
+    @Stable
+    public static FreezingRegistry<IFactory<FluxBlockAction>> BLOCK_EVENT_ACTION_FACTORIES = FreezingRegistry.create();
+
+    @FluxInternal
+    public static FreezingRegistry<Runnable> BLOCK_MODEL_FINALIZERS = FreezingRegistry.create();
+
+    @FluxInternal
+    public static FreezingRegistry<Runnable> BLOCK_FINALIZERS = FreezingRegistry.create();
+
+    /**
+     * Used by Flux to register all blocks {@link IModBlock}
+     * This Registry will be frozen in Phase 3 of loading
+     * Mods can look up IModBlocks using the block id here
      */
     @Stable
     public static FreezingRegistry<IModBlock> BLOCKS = FreezingRegistry.create();
 
-    /**
-     * Used for Registering Custom {@link IBlockAction}
-     * This Registry will be frozen in Phase 5 of loading
-     */
-    @Stable
-    public static FreezingRegistry<IBlockAction> BLOCK_EVENT_ACTIONS = FreezingRegistry.create();
-
-    /**
-     * Used for Registering Custom {@link BlockEventDataExt}
-     * This Registry will be frozen in Phase 6 of loading
-     */
-    @Stable
-    public static FreezingRegistry<BlockEventDataExt> BLOCK_EVENTS = FreezingRegistry.create();
-
-    /**
-     * Used for Registering {@link FactoryFinalizer}
-     * This Registry will register in Phase 7 of loading
-     */
-    @Stable
-    public static DynamicRegistry<FactoryFinalizer<?>> FACTORY_FINALIZERS = DynamicRegistry.create();
 
     /**
      * Used for Registering {@link BasicConfig}

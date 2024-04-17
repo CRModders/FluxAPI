@@ -3,24 +3,23 @@ package dev.crmodders.flux.loading.block;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Json;
-import com.google.gson.Gson;
+import dev.crmodders.flux.api.block.FluxBlockAction;
 import dev.crmodders.flux.api.block.IModBlock;
+import dev.crmodders.flux.api.factories.IFactory;
 import dev.crmodders.flux.api.generators.BlockEventGenerator;
 import dev.crmodders.flux.api.generators.BlockGenerator;
 import dev.crmodders.flux.api.generators.BlockModelGenerator;
 import dev.crmodders.flux.mixins.accessor.BlockAccessor;
 import dev.crmodders.flux.registry.FluxRegistries;
 import dev.crmodders.flux.tags.Identifier;
-import finalforeach.cosmicreach.blockevents.BlockEventTrigger;
 import finalforeach.cosmicreach.blockevents.BlockEvents;
-import finalforeach.cosmicreach.blockevents.actions.IBlockAction;
 import finalforeach.cosmicreach.blocks.Block;
 import finalforeach.cosmicreach.blocks.BlockState;
 import finalforeach.cosmicreach.rendering.blockmodels.BlockModel;
-import finalforeach.cosmicreach.ui.UIElement;
 import sun.misc.Unsafe;
 
 import java.lang.reflect.Field;
+import java.util.List;
 import java.util.Map;
 import java.util.function.BiConsumer;
 
@@ -68,18 +67,17 @@ public class BlockLoader {
     }
 
     /**
-     * Registers a block event action, it can be called using the fluxapi:proxy
-     * action in regular block events
-     * @param actionId the id used with fluxapi:proxy
+     * Registers a block event action
+     * @param actionId the id
      * @param action the action
      */
-    public void registerEventAction(Identifier actionId, IBlockAction action) {
-        FluxRegistries.BLOCK_EVENT_ACTIONS.register(actionId, action);
+    public void registerEventAction(Identifier actionId, IFactory<FluxBlockAction> action) {
+        FluxRegistries.BLOCK_EVENT_ACTION_FACTORIES.register(actionId, action);
     }
 
     /**
-     * Call this method to load a block from json, see DataModding, it will use cached
-     * models and textures, like those registered by registerBlockModel and registerTexture
+     * Call this method to load a block, it will use cached models and textures,
+     * like those registered by registerBlockModel and registerTexture
      * @param modBlock the block to be generated
      * @return the block id extracted from the generated json
      */
@@ -99,18 +97,21 @@ public class BlockLoader {
             registerBlockModel(modelName, rotXZ, modelJson);
         }
 
-        BlockEventGenerator eventGenerator = modBlock.getBlockEventGenerator(blockGenerator.blockId);
-        if(eventGenerator != null) {
+        List<BlockEventGenerator> eventGenerators = modBlock.getBlockEventGenerators(blockGenerator.blockId);
+        if(eventGenerators.isEmpty()) {
+            BlockEventGenerator eventGenerator = new BlockEventGenerator(blockGenerator.blockId, "flux_default");
+            eventGenerators = List.of(eventGenerator);
+        }
+        for(BlockEventGenerator eventGenerator : eventGenerators) {
+            eventGenerator.createTrigger("onInteract", Identifier.fromString("fluxapi:mod_block_interact"), Map.of("blockId", blockGenerator.blockId));
+            eventGenerator.createTrigger("onPlace", Identifier.fromString("fluxapi:mod_block_place"), Map.of("blockId", blockGenerator.blockId));
+            eventGenerator.createTrigger("onBreak", Identifier.fromString("fluxapi:mod_block_break"), Map.of("blockId", blockGenerator.blockId));
             eventGenerator.register(this);
-            String eventId = eventGenerator.eventId.toString();
+            String eventName = eventGenerator.getEventName();
             String eventJson = eventGenerator.generateJson();
-            registerEvent(eventId, eventJson);
+            registerEvent(eventName, eventJson);
         }
 
-        BlockEventGenerator defaultEventGenerator = new BlockEventGenerator(blockGenerator.blockId, "default");
-        // TODO register IModBlock's events here
-        // defaultEventGenerator.register(this);
-        // registerEvent(defaultEventGenerator.eventId.toString(), defaultEventGenerator.generateJson());
 
         try {
 
@@ -144,27 +145,29 @@ public class BlockLoader {
      * This has to be called on the OpenGL thread else the game
      * will hard crash with no error message
      */
-    public void loadModels() {
+    public void registerFinalizers() {
 
         // initialize models, less parents first order
+        // it's very critical that registries are run in order here
         for (BlockModel model : factory.sort()) {
             if(model instanceof BlockModelFlux flux) {
-                BlockModelFactory.InstanceKey parentKey = new BlockModelFactory.InstanceKey(flux.parent, flux.rotXZ);
-                BlockModelFlux parent = (BlockModelFlux) factory.models.get(parentKey);
-                flux.initialize(parent);
+                FluxRegistries.BLOCK_MODEL_FINALIZERS.register(Identifier.fromString(flux.modelName + "_" + flux.rotXZ), flux::initialize);
             } else if (model instanceof  BlockModelVertex vertex) {
-                vertex.initialize();
+                FluxRegistries.BLOCK_MODEL_FINALIZERS.register(Identifier.fromString(vertex.modelName), vertex::initialize);
             }
         }
+        FluxRegistries.BLOCK_MODEL_FINALIZERS.freeze();
 
         // fix culling flags
         for(Block block : Block.allBlocks) {
             for(BlockState blockState : block.blockStates.values()) {
                 if(blockState.getModel() instanceof BlockModelFlux model) {
-                    blockState.setBlockModel(model.modelName, model.rotXZ);
+                    String blockStateId = block.getStringId() + "[" + blockState.stringId + "]";
+                    FluxRegistries.BLOCK_FINALIZERS.register(Identifier.fromString(blockStateId), () -> blockState.setBlockModel(model.modelName, model.rotXZ));
                 }
             }
         }
+        FluxRegistries.BLOCK_FINALIZERS.freeze();
 
     }
 

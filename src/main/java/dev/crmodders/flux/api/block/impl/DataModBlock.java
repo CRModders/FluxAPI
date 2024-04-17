@@ -8,10 +8,14 @@ import dev.crmodders.flux.api.resource.ResourceLocation;
 import dev.crmodders.flux.tags.Identifier;
 import java.util.LinkedHashMap;
 
+/**
+ * This class allows loading regular Json files
+ * as IModBlocks
+ */
 public class DataModBlock implements IModBlock {
 
     public static class JsonBlock {
-        public Identifier stringId;
+        public String stringId;
         public LinkedHashMap<String, String> defaultParams;
         public LinkedHashMap<String, BlockGenerator.State> blockStates;
     }
@@ -36,7 +40,7 @@ public class DataModBlock implements IModBlock {
     public BlockGenerator getBlockGenerator() {
         Json json = new Json();
         JsonBlock block = json.fromJson(JsonBlock.class, blockJson);
-        BlockGenerator generator = new BlockGenerator(block.stringId, blockName);
+        BlockGenerator generator = new BlockGenerator(Identifier.fromString(block.stringId), blockName);
         generator.defaultParams = block.defaultParams;
         generator.blockStates = block.blockStates;
         return generator;

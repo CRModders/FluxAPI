@@ -2,18 +2,18 @@
 // Class Version: 17
 package dev.crmodders.flux.loading.block;
 
-import java.lang.StringBuilder;
-import java.util.*;
-
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.collision.BoundingBox;
 import com.badlogic.gdx.utils.*;
-import com.badlogic.gdx.graphics.Color;
-import finalforeach.cosmicreach.GameAssetLoader;
+import finalforeach.cosmicreach.GameSingletons;
 import finalforeach.cosmicreach.RuntimeInfo;
-import finalforeach.cosmicreach.blocks.BlockState;
 import finalforeach.cosmicreach.rendering.IMeshData;
-import finalforeach.cosmicreach.rendering.blockmodels.*;
+import finalforeach.cosmicreach.rendering.blockmodels.BlockModel;
+import finalforeach.cosmicreach.rendering.blockmodels.BlockModelJsonTexture;
 import finalforeach.cosmicreach.rendering.shaders.ChunkShader;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class BlockModelFlux extends BlockModel {
 
@@ -74,12 +74,14 @@ public class BlockModelFlux extends BlockModel {
         return textures.get("all");
     }
     
-    public void initialize(BlockModelFlux parent) {
+    public void initialize() {
+
+        BlockModelFlux parent = this.parent == null ? null : (BlockModelFlux) GameSingletons.blockModelInstantiator.getInstance(this.parent, this.rotXZ);
 
         if (parent != null) {
 
             if(!parent.initialized) {
-                throw new RuntimeException("Parent not Initialized");
+                parent.initialize();
             }
 
             Json json = new Json();
@@ -260,6 +262,11 @@ public class BlockModelFlux extends BlockModel {
 
         boundingBox.update();
         initialized = true;
+
+        if(allFaces == null) {
+            throw new IllegalStateException(modelName);
+        }
+
     }
 
     @Override

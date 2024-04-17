@@ -3,17 +3,19 @@ package dev.crmodders.flux.loading;
 import dev.crmodders.flux.FluxConstants;
 import dev.crmodders.flux.api.gui.ProgressBarElement;
 import dev.crmodders.flux.api.gui.TextElement;
-import dev.crmodders.flux.loading.block.BlockLoader;
 import dev.crmodders.flux.loading.stages.*;
 import dev.crmodders.flux.localization.TranslationKey;
 import dev.crmodders.flux.menus.BasicMenu;
 import finalforeach.cosmicreach.GameSingletons;
 import finalforeach.cosmicreach.gamestates.GameState;
 import org.slf4j.Logger;
+import dev.crmodders.flux.loading.block.BlockLoader;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 import java.util.concurrent.CountDownLatch;
 
 public class GameLoader extends BasicMenu implements Runnable {
@@ -28,7 +30,8 @@ public class GameLoader extends BasicMenu implements Runnable {
 
     private final List<LoadStage> stages = new ArrayList<>();
 
-    private CountDownLatch lock;
+    private Queue<Runnable> glQueue;
+    private CountDownLatch glLock;
     private Thread loadingThread;
 
     public BlockLoader blockLoader;
@@ -69,11 +72,17 @@ public class GameLoader extends BasicMenu implements Runnable {
         blockLoader = new BlockLoader();
         GameSingletons.blockModelInstantiator = blockLoader.factory;
 
-        stages.add(new InitializingCosmicReach());
+        stages.add(new PreInitialize());
+        stages.add(new LoadResources());
+        stages.add(new Initialize());
+        stages.add(new LoadingCosmicReach());
+        stages.add(new PostInitialize());
 
         for(LoadStage stage : stages) {
             stage.initialize(this);
         }
+
+        glQueue = new LinkedList<>();
 
         loadingThread = new Thread(this, "GameLoader");
         loadingThread.start();
@@ -88,6 +97,19 @@ public class GameLoader extends BasicMenu implements Runnable {
             progress1.updateText();
 
             stage.doStage();
+
+            glLock = new CountDownLatch(1);
+
+            List<Runnable> glTasks = stage.getGlTasks();
+            glQueue.addAll(glTasks);
+            glQueue.add( glLock::countDown );
+
+            try {
+                glLock.await();
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+
         }
         FluxConstants.FluxHasLoaded = true;
     }
@@ -100,11 +122,13 @@ public class GameLoader extends BasicMenu implements Runnable {
         ram.range = (int) (runtime.maxMemory() / (1024 * 1024));
         ram.updateText();
 
+        long endTime = System.currentTimeMillis() + 50;
+        while (!glQueue.isEmpty() && System.currentTimeMillis() < endTime) {
+            Runnable glTask = glQueue.poll();
+            glTask.run();
+        }
+
         if(FluxConstants.FluxHasLoaded) {
-
-            blockLoader.loadModels();
-            blockLoader.hookBlockManager();
-
             GameState.switchToGameState(FluxConstants.MAIN_MENU);
         }
 
