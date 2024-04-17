@@ -11,12 +11,12 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
-public class TestBlock implements IModBlock {
+public class FunniBok implements IModBlock {
 
         Pixmap pixmap;
         Identifier id;
 
-        public TestBlock() {
+        public FunniBok() {
             pixmap = new Pixmap(512, 512, Pixmap.Format.RGB888);
             Random random = new Random();
             for (int x = 0; x < 512; x++) {

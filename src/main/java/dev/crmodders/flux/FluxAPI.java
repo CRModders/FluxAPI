@@ -1,5 +1,6 @@
 package dev.crmodders.flux;
 
+import dev.crmodders.flux.api.block.impl.FunniBok;
 import dev.crmodders.flux.api.events.GameEvents;
 import dev.crmodders.flux.localization.LanguageFile;
 import dev.crmodders.flux.localization.TranslationApi;
@@ -22,6 +23,7 @@ public class FluxAPI implements ModInitializer {
         FluxRegistries.ON_PRE_INITIALIZE.register(new Identifier(FluxConstants.MOD_ID, ""), () -> {
             FluxRegistries.BLOCK_EVENT_ACTION_FACTORIES.register(new Identifier(FluxConstants.MOD_ID, "action"), TestAction::new);
             FluxRegistries.BLOCK_FACTORIES.add(TestBlock::new);
+            FluxRegistries.BLOCK_FACTORIES.add(FunniBok::new);
         });
 
         GameEvents.ON_REGISTER_LANGUAGE.register(() -> {
