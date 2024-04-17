@@ -1,10 +1,10 @@
 package dev.crmodders.flux;
 
 import com.badlogic.gdx.graphics.Color;
-import dev.crmodders.flux.api.block.IModBlock;
-import dev.crmodders.flux.api.generators.BlockEventGenerator;
-import dev.crmodders.flux.api.generators.BlockGenerator;
-import dev.crmodders.flux.api.generators.BlockModelGenerator;
+import dev.crmodders.flux.api.v6.block.IModBlock;
+import dev.crmodders.flux.api.v6.generators.BlockEventGenerator;
+import dev.crmodders.flux.api.v6.generators.BlockGenerator;
+import dev.crmodders.flux.api.v6.generators.BlockModelGenerator;
 import dev.crmodders.flux.tags.Identifier;
 import finalforeach.cosmicreach.blocks.BlockPosition;
 import finalforeach.cosmicreach.blocks.BlockState;
