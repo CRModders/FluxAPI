@@ -1,6 +1,6 @@
-package dev.crmodders.flux.api.gui;
+package dev.crmodders.flux.api.v6.gui;
 
-import dev.crmodders.flux.api.gui.base.BaseTextInput;
+import dev.crmodders.flux.api.v6.gui.base.BaseTextInput;
 
 public class TextBoxElement extends BaseTextInput {
 

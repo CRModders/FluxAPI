@@ -4,7 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.MathUtils;
-import dev.crmodders.flux.api.gui.base.BaseText;
+import dev.crmodders.flux.api.v6.gui.base.BaseText;
 import finalforeach.cosmicreach.gamestates.GameState;
 import finalforeach.cosmicreach.settings.SoundSettings;
 import finalforeach.cosmicreach.ui.UIElement;

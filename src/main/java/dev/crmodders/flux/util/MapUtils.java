@@ -1,6 +1,6 @@
 package dev.crmodders.flux.util;
 
-import dev.crmodders.flux.api.suppliers.ReturnableInputSupplier;
+import dev.crmodders.flux.api.v6.suppliers.ReturnableInputSupplier;
 
 
 import java.util.HashMap;

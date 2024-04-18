@@ -1,4 +1,4 @@
-package dev.crmodders.flux.api.resource.generation.texture.model.direction;
+package dev.crmodders.flux.api.v6.resource.generation.texture.model.direction;
 
 import java.util.List;
 

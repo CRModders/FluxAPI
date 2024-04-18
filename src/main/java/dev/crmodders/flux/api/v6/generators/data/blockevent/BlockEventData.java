@@ -1,12 +1,12 @@
-package dev.crmodders.flux.api.generators.data.blockevent;
+package dev.crmodders.flux.api.v6.generators.data.blockevent;
 
-import dev.crmodders.flux.api.generators.data.blockevent.triggers.TriggerData;
+import dev.crmodders.flux.api.v6.generators.data.blockevent.triggers.TriggerData;
 import dev.crmodders.flux.api.v6.suppliers.ReturnableSupplier;
 import dev.crmodders.flux.tags.Identifier;
 import org.hjson.JsonObject;
 
 /**
- * The Structure of blockEvents used in {@link dev.crmodders.flux.api.generators.BlockEventGenerator}.
+ * The Structure of blockEvents used in {@link dev.crmodders.flux.api.v6.generators.BlockEventGenerator}.
  *
  * @param parentEvent the parent event to base the events off of.
  * @param identifier the id for this block event.

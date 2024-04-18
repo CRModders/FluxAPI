@@ -1,6 +1,6 @@
-package dev.crmodders.flux.api.generators.data.blockevent;
+package dev.crmodders.flux.api.v6.generators.data.blockevent;
 
-import dev.crmodders.flux.api.generators.data.DataJson;
+import dev.crmodders.flux.api.v6.generators.data.DataJson;
 
 /**
  * The Base interface for {@link BlockEventData}

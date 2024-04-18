@@ -1,6 +1,6 @@
-package dev.crmodders.flux.api.resource.generation.texture.model.direction;
+package dev.crmodders.flux.api.v6.resource.generation.texture.model.direction;
 
-import dev.crmodders.flux.api.suppliers.InputSupplier;
+import dev.crmodders.flux.api.v6.suppliers.InputSupplier;
 
 import java.util.Arrays;
 import java.util.HashSet;

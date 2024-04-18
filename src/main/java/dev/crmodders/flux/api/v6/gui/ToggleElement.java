@@ -1,8 +1,8 @@
-package dev.crmodders.flux.api.gui;
+package dev.crmodders.flux.api.v6.gui;
 
 import dev.crmodders.flux.FluxConstants;
 import dev.crmodders.flux.FluxSettings;
-import dev.crmodders.flux.api.gui.base.BaseButton;
+import dev.crmodders.flux.api.v6.gui.base.BaseButton;
 import dev.crmodders.flux.localization.TranslationKey;
 import dev.crmodders.flux.localization.TranslationString;
 

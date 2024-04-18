@@ -2,7 +2,7 @@ package dev.crmodders.flux.util;
 
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
-import dev.crmodders.flux.api.resource.generation.block.BlockAction;
+import dev.crmodders.flux.api.v6.resource.generation.block.BlockAction;
 import org.hjson.JsonObject;
 import org.hjson.JsonValue;
 

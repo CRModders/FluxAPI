@@ -1,4 +1,4 @@
-package dev.crmodders.flux.api.generators.data.blockstate;
+package dev.crmodders.flux.api.v6.generators.data.blockstate;
 
 import dev.crmodders.flux.tags.Identifier;
 import org.hjson.JsonObject;

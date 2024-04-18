@@ -1,4 +1,4 @@
-package dev.crmodders.flux.api.gui.interfaces;
+package dev.crmodders.flux.api.v6.gui.interfaces;
 
 import finalforeach.cosmicreach.gamestates.GameState;
 

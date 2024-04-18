@@ -4,7 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import dev.crmodders.flux.FluxConstants;
 import dev.crmodders.flux.FluxSettings;
-import dev.crmodders.flux.api.events.GameEvents;
+import dev.crmodders.flux.api.v6.events.GameEvents;
 import dev.crmodders.flux.loading.GameLoader;
 import dev.crmodders.flux.localization.LanguageFile;
 import dev.crmodders.flux.localization.TranslationApi;

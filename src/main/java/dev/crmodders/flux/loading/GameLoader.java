@@ -1,8 +1,8 @@
 package dev.crmodders.flux.loading;
 
 import dev.crmodders.flux.FluxConstants;
-import dev.crmodders.flux.api.gui.ProgressBarElement;
-import dev.crmodders.flux.api.gui.TextElement;
+import dev.crmodders.flux.api.v6.gui.ProgressBarElement;
+import dev.crmodders.flux.api.v6.gui.TextElement;
 import dev.crmodders.flux.loading.stages.*;
 import dev.crmodders.flux.localization.TranslationKey;
 import dev.crmodders.flux.menus.BasicMenu;

@@ -1,6 +1,6 @@
 package dev.crmodders.flux.loading.stages;
 
-import dev.crmodders.flux.api.resource.ResourceObject;
+import dev.crmodders.flux.api.v6.resource.ResourceObject;
 import dev.crmodders.flux.loading.GameLoader;
 import dev.crmodders.flux.loading.LoadStage;
 import dev.crmodders.flux.localization.TranslationKey;

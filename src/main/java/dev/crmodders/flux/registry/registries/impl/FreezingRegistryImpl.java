@@ -1,7 +1,7 @@
 package dev.crmodders.flux.registry.registries.impl;
 
-import dev.crmodders.flux.api.events.system.Event;
-import dev.crmodders.flux.api.events.system.EventFactory;
+import dev.crmodders.flux.api.v6.events.system.Event;
+import dev.crmodders.flux.api.v6.events.system.EventFactory;
 import dev.crmodders.flux.registry.registries.AccessableRegistry;
 import dev.crmodders.flux.registry.registries.FreezingRegistry;
 import dev.crmodders.flux.registry.registries.ListenerActiveRegistry;

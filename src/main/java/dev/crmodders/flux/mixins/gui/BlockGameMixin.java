@@ -2,8 +2,8 @@ package dev.crmodders.flux.mixins.gui;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import dev.crmodders.flux.api.config.BasicConfig;
-import dev.crmodders.flux.api.gui.interfaces.GameStateInterface;
+import dev.crmodders.flux.api.v6.config.BasicConfig;
+import dev.crmodders.flux.api.v6.gui.interfaces.GameStateInterface;
 import dev.crmodders.flux.registry.FluxRegistries;
 import dev.crmodders.flux.registry.registries.AccessableRegistry;
 import dev.crmodders.flux.tags.Identifier;

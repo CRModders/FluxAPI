@@ -1,4 +1,4 @@
-package dev.crmodders.flux.api.resource.generation;
+package dev.crmodders.flux.api.v6.resource.generation;
 
 import dev.crmodders.flux.tags.Identifier;
 import org.hjson.JsonObject;

@@ -1,4 +1,4 @@
-package dev.crmodders.flux.api.gui.base;
+package dev.crmodders.flux.api.v6.gui.base;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;

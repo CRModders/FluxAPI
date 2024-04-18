@@ -1,6 +1,6 @@
-package dev.crmodders.flux.api.gui;
+package dev.crmodders.flux.api.v6.gui;
 
-import dev.crmodders.flux.api.gui.base.BaseText;
+import dev.crmodders.flux.api.v6.gui.base.BaseText;
 import dev.crmodders.flux.localization.TranslationKey;
 
 public class TextElement extends BaseText {

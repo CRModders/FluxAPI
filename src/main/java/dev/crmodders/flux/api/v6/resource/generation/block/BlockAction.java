@@ -1,9 +1,9 @@
-package dev.crmodders.flux.api.resource.generation.block;
+package dev.crmodders.flux.api.v6.resource.generation.block;
 
-import dev.crmodders.flux.api.resource.ResourceLocation;
+import dev.crmodders.flux.api.v6.resource.ResourceLocation;
 import dev.crmodders.flux.tags.Identifier;
 import dev.crmodders.flux.util.JsonUtils;
-import dev.crmodders.flux.api.resource.generation.block.trigger.TriggerSheet;
+import dev.crmodders.flux.api.v6.resource.generation.block.trigger.TriggerSheet;
 import org.hjson.JsonObject;
 
 import java.util.HashMap;

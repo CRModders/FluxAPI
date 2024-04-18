@@ -1,6 +1,6 @@
-package dev.crmodders.flux.api.resource.generation.material;
+package dev.crmodders.flux.api.v6.resource.generation.material;
 
-import dev.crmodders.flux.api.resource.ResourceLocation;
+import dev.crmodders.flux.api.v6.resource.ResourceLocation;
 import org.hjson.JsonObject;
 
 public class Material {

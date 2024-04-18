@@ -1,6 +1,6 @@
-package dev.crmodders.flux.api.gui;
+package dev.crmodders.flux.api.v6.gui;
 
-import dev.crmodders.flux.api.gui.base.BaseButton;
+import dev.crmodders.flux.api.v6.gui.base.BaseButton;
 import dev.crmodders.flux.localization.TranslationKey;
 
 import java.util.List;

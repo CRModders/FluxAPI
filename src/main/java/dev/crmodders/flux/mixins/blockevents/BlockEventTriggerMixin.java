@@ -2,8 +2,8 @@ package dev.crmodders.flux.mixins.blockevents;
 
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
-import dev.crmodders.flux.api.block.FluxBlockAction;
-import dev.crmodders.flux.api.factories.IFactory;
+import dev.crmodders.flux.api.v6.block.FluxBlockAction;
+import dev.crmodders.flux.api.v6.factories.IFactory;
 import dev.crmodders.flux.registry.FluxRegistries;
 import dev.crmodders.flux.registry.registries.AccessableRegistry;
 import dev.crmodders.flux.tags.Identifier;

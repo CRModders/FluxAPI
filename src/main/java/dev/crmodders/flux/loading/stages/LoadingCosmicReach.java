@@ -1,13 +1,13 @@
 package dev.crmodders.flux.loading.stages;
 
-import dev.crmodders.flux.api.assets.VanillaAssetLocations;
-import dev.crmodders.flux.api.block.IModBlock;
-import dev.crmodders.flux.api.block.impl.DataModBlock;
-import dev.crmodders.flux.api.factories.IFactory;
-import dev.crmodders.flux.api.generators.OnBreakTrigger;
-import dev.crmodders.flux.api.generators.OnInteractTrigger;
-import dev.crmodders.flux.api.generators.OnPlaceTrigger;
-import dev.crmodders.flux.api.resource.ResourceLocation;
+import dev.crmodders.flux.api.v6.assets.VanillaAssetLocations;
+import dev.crmodders.flux.api.v6.block.IModBlock;
+import dev.crmodders.flux.api.v6.block.impl.DataModBlock;
+import dev.crmodders.flux.api.v6.factories.IFactory;
+import dev.crmodders.flux.api.v6.generators.OnBreakTrigger;
+import dev.crmodders.flux.api.v6.generators.OnInteractTrigger;
+import dev.crmodders.flux.api.v6.generators.OnPlaceTrigger;
+import dev.crmodders.flux.api.v6.resource.ResourceLocation;
 import dev.crmodders.flux.loading.GameLoader;
 import dev.crmodders.flux.loading.LoadStage;
 import dev.crmodders.flux.loading.block.BlockLoadException;

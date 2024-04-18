@@ -1,4 +1,4 @@
-package dev.crmodders.flux.api.resource.generation.texture.color;
+package dev.crmodders.flux.api.v6.resource.generation.texture.color;
 
 /**
  * A list of default colors that can be used.

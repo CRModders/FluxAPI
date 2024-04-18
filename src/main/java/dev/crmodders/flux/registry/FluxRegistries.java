@@ -2,11 +2,11 @@ package dev.crmodders.flux.registry;
 
 import dev.crmodders.flux.annotations.FluxInternal;
 import dev.crmodders.flux.annotations.Stable;
-import dev.crmodders.flux.api.block.FluxBlockAction;
-import dev.crmodders.flux.api.block.IModBlock;
-import dev.crmodders.flux.api.config.BasicConfig;
-import dev.crmodders.flux.api.factories.IFactory;
-import dev.crmodders.flux.api.resource.ResourceObject;
+import dev.crmodders.flux.api.v6.block.FluxBlockAction;
+import dev.crmodders.flux.api.v6.block.IModBlock;
+import dev.crmodders.flux.api.v6.config.BasicConfig;
+import dev.crmodders.flux.api.v6.factories.IFactory;
+import dev.crmodders.flux.api.v6.resource.ResourceObject;
 import dev.crmodders.flux.localization.Language;
 import dev.crmodders.flux.localization.LanguageFile;
 import dev.crmodders.flux.registry.registries.DynamicRegistry;
