@@ -1,8 +1,8 @@
-package dev.crmodders.flux.api.v6.events;
+package dev.crmodders.flux.events;
 
 import dev.crmodders.flux.annotations.Stable;
-import dev.crmodders.flux.api.v6.events.system.Event;
-import dev.crmodders.flux.api.v6.events.system.EventFactory;
+import dev.crmodders.flux.events.system.Event;
+import dev.crmodders.flux.events.system.EventFactory;
 import dev.crmodders.flux.localization.LanguageFile;
 import finalforeach.cosmicreach.blocks.BlockPosition;
 import finalforeach.cosmicreach.blocks.BlockState;

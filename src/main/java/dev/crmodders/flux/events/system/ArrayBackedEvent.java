@@ -1,4 +1,4 @@
-package dev.crmodders.flux.api.v6.events.system;
+package dev.crmodders.flux.events.system;
 /*
  * CODE FROM FABRIC MODIFIED, ORIGINAL LICENSE:
  * the Apache License, Version 2.0

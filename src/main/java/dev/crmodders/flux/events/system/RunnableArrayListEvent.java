@@ -1,11 +1,9 @@
-package dev.crmodders.flux.api.v6.events.system;
+package dev.crmodders.flux.events.system;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
-import java.util.function.Function;
 
 public class RunnableArrayListEvent extends Event<Runnable> {
 

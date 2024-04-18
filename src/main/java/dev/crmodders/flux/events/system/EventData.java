@@ -1,4 +1,4 @@
-package dev.crmodders.flux.api.v6.events.system;
+package dev.crmodders.flux.events.system;
 
 import java.lang.reflect.Array;
 import java.util.Arrays;

@@ -19,6 +19,10 @@ public abstract class BlockEventTriggerMixin {
 
     @Shadow private IBlockAction action;
 
+    /**
+     * @author nanobass
+     * @reason
+     */
     @Overwrite
     public void read(Json json, JsonValue jsonData) {
         Identifier actionId = Identifier.fromString(json.readValue(String.class, jsonData.get("actionId")));

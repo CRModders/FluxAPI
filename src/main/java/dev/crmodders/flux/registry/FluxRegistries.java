@@ -1,7 +1,10 @@
 package dev.crmodders.flux.registry;
 
 import dev.crmodders.flux.annotations.FluxInternal;
+import dev.crmodders.flux.annotations.Legacy;
 import dev.crmodders.flux.annotations.Stable;
+import dev.crmodders.flux.api.v5.generators.FactoryFinalizer;
+import dev.crmodders.flux.api.v5.generators.data.blockevent.BlockEventDataExt;
 import dev.crmodders.flux.api.v6.block.FluxBlockAction;
 import dev.crmodders.flux.api.v6.block.IModBlock;
 import dev.crmodders.flux.api.v6.config.BasicConfig;
@@ -11,6 +14,7 @@ import dev.crmodders.flux.localization.Language;
 import dev.crmodders.flux.localization.LanguageFile;
 import dev.crmodders.flux.registry.registries.DynamicRegistry;
 import dev.crmodders.flux.registry.registries.FreezingRegistry;
+import finalforeach.cosmicreach.blockevents.actions.IBlockAction;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -86,6 +90,20 @@ public class FluxRegistries {
 
     @FluxInternal
     public static DynamicRegistry<Language> LANGUAGES = DynamicRegistry.create();
+
+    // LEGACY REGISTRIES
+
+    @Legacy
+    public static DynamicRegistry<FactoryFinalizer<?>> FACTORY_FINALIZERS = DynamicRegistry.create();
+
+    @Legacy
+    public static FreezingRegistry<BlockEventDataExt> BLOCK_EVENTS = FreezingRegistry.create();
+
+    @Legacy
+    public static FreezingRegistry<IBlockAction> BLOCK_EVENT_ACTIONS = FreezingRegistry.create();
+
+    @Legacy
+    public static FreezingRegistry<dev.crmodders.flux.api.v5.block.IModBlock> BLOCKS_V5 = FreezingRegistry.create();
 
 
 }

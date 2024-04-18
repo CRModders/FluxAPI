@@ -3,13 +3,17 @@ package dev.crmodders.flux.loading;
 import dev.crmodders.flux.FluxConstants;
 import dev.crmodders.flux.api.v6.gui.ProgressBarElement;
 import dev.crmodders.flux.api.v6.gui.TextElement;
+import dev.crmodders.flux.loading.block.BlockLoader;
 import dev.crmodders.flux.loading.stages.*;
+import dev.crmodders.flux.loading.stages.legacy.FinalizeBlocks;
+import dev.crmodders.flux.loading.stages.legacy.RegisterBlockActions;
+import dev.crmodders.flux.loading.stages.legacy.RegisterBlockEvents;
+import dev.crmodders.flux.loading.stages.legacy.RegisterBlocks;
 import dev.crmodders.flux.localization.TranslationKey;
 import dev.crmodders.flux.menus.BasicMenu;
 import finalforeach.cosmicreach.GameSingletons;
 import finalforeach.cosmicreach.gamestates.GameState;
 import org.slf4j.Logger;
-import dev.crmodders.flux.loading.block.BlockLoader;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
@@ -75,6 +79,13 @@ public class GameLoader extends BasicMenu implements Runnable {
         stages.add(new PreInitialize());
         stages.add(new LoadResources());
         stages.add(new Initialize());
+
+        // Legacy V5 Stages
+        stages.add(new RegisterBlocks());
+        stages.add(new RegisterBlockActions());
+        stages.add(new RegisterBlockEvents());
+        stages.add(new FinalizeBlocks());
+
         stages.add(new LoadingCosmicReach());
         stages.add(new PostInitialize());
 

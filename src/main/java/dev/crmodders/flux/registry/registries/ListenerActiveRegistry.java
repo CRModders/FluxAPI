@@ -1,6 +1,6 @@
 package dev.crmodders.flux.registry.registries;
 
-import dev.crmodders.flux.api.v6.events.system.Event;
+import dev.crmodders.flux.events.system.Event;
 import dev.crmodders.flux.tags.Identifier;
 
 public interface ListenerActiveRegistry<T> {
