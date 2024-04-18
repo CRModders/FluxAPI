@@ -1,4 +1,4 @@
-package dev.crmodders.flux.api.v5.resource;
+package dev.crmodders.flux.api.v5.settings;
 
 import finalforeach.cosmicreach.settings.GameSetting;
 
