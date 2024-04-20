@@ -5,7 +5,6 @@ import com.badlogic.gdx.utils.Json;
 import dev.crmodders.flux.api.v5.block.IModBlock;
 import dev.crmodders.flux.api.v5.generators.BlockGenerator;
 import dev.crmodders.flux.api.v5.resource.ResourceLocation;
-import dev.crmodders.flux.mixins.accessor.BlockAccessor;
 import dev.crmodders.flux.registry.FluxRegistries;
 import dev.crmodders.flux.tags.Identifier;
 import finalforeach.cosmicreach.GameAssetLoader;
@@ -15,20 +14,18 @@ import finalforeach.cosmicreach.blocks.BlockState;
 public class BlockBuilderUtils {
     public static Block getBlockFromBlock(Identifier id, Block b) {
         Array<String> blockStateKeysToAdd = b.blockStates.keys().toArray();
+        Array.ArrayIterator var4 = blockStateKeysToAdd.iterator();
 
-        BlockState blockState;
-        for (String stateKey : blockStateKeysToAdd) {
-            blockState = b.blockStates.get(stateKey);
-            blockState.initialize(b);
+        while(var4.hasNext()) {
+            String stateKey = (String)var4.next();
+            BlockState blockState = b.blockStates.get(stateKey);
             blockState.stringId = stateKey;
-
-            if (blockState.generateSlabs) BlockAccessor.generateSlabs(blockState.stringId, blockState);
-
+            blockState.initialize(b);
             Block.allBlockStates.put(blockState.stringId, blockState);
         }
 
         Block.blocksByStringId.put(id.toString(), b);
-        Block.blocksByName.put(id.name, b);
+        Block.blocksByName.put(id.name+"_"+id.namespace, b);
         return b;
     }
 
@@ -36,20 +33,18 @@ public class BlockBuilderUtils {
         Json json = new Json();
         Block b = json.fromJson(Block.class, str);
         Array<String> blockStateKeysToAdd = b.blockStates.keys().toArray();
+        Array.ArrayIterator var4 = blockStateKeysToAdd.iterator();
 
-        BlockState blockState;
-        for (String stateKey : blockStateKeysToAdd) {
-            blockState = b.blockStates.get(stateKey);
-            blockState.initialize(b);
+        while(var4.hasNext()) {
+            String stateKey = (String)var4.next();
+            BlockState blockState = b.blockStates.get(stateKey);
             blockState.stringId = stateKey;
-
-            if (blockState.generateSlabs) BlockAccessor.generateSlabs(blockState.stringId, blockState);
-
+            blockState.initialize(b);
             Block.allBlockStates.put(blockState.stringId, blockState);
         }
 
         Block.blocksByStringId.put(id.toString(), b);
-        Block.blocksByName.put(id.name, b);
+        Block.blocksByName.put(id.name+"_"+id.namespace, b);
         return b;
     }
 
@@ -71,20 +66,18 @@ public class BlockBuilderUtils {
         Json json = new Json();
         Block b = json.fromJson(Block.class, GameAssetLoader.loadAsset("assets/" + id.namespace + "/blocks/" + id.name + ".json"));
         Array<String> blockStateKeysToAdd = b.blockStates.keys().toArray();
+        Array.ArrayIterator var4 = blockStateKeysToAdd.iterator();
 
-        BlockState blockState;
-        for (String stateKey : blockStateKeysToAdd) {
-            blockState = b.blockStates.get(stateKey);
-            blockState.initialize(b);
+        while(var4.hasNext()) {
+            String stateKey = (String)var4.next();
+            BlockState blockState = b.blockStates.get(stateKey);
             blockState.stringId = stateKey;
-
-            if (blockState.generateSlabs) BlockAccessor.generateSlabs(blockState.stringId, blockState);
-
+            blockState.initialize(b);
             Block.allBlockStates.put(blockState.stringId, blockState);
         }
 
         Block.blocksByStringId.put(id.toString(), b);
-        Block.blocksByName.put(id.name, b);
+        Block.blocksByName.put(id.name+"_"+id.namespace, b);
         return b;
     }
 
