@@ -4,12 +4,7 @@ plugins {
     id "maven-publish"
     id "java-library"
     id "com.github.johnrengelman.shadow" version "8.1.1"
-//    id "dev.crmodders.fluxmoddingtool" version "snapshot-0"
 }
-
-//configure<AccessWidenerExtension> {
-//    paths = files("path/to/file.accessWidener")
-//}
 
 repositories {
     ivy {
@@ -100,7 +95,6 @@ configurations {
 
 shadowJar {
     configurations = [project.configurations.shadowMe]
-//    mainClassName = "dev.crmodders.flux.FluxAPI"
     archiveFileName = "${id}-${version}.jar"
 }
 
@@ -290,7 +284,7 @@ tasks.register("buildSourcesJar", Jar) {
 //tasks.register("buildDocsJar", ) {
 //    group = "compile"
 //
-//    archiveFileName = "${id}-${version}-slim.jar"
+//    archiveFileName = "${id}-${version}-docs.jar"
 //}
 
 publishing {
@@ -308,7 +302,7 @@ publishing {
         }
 
         maven {
-            name = "cRMSnapshots"
+            name = "crmSnapshots"
             url = "https://maven.crmodders.dev/snapshots"
             credentials(PasswordCredentials)
             authentication {
