@@ -304,7 +304,10 @@ publishing {
         maven {
             name = "crmSnapshots"
             url = "https://maven.crmodders.dev/snapshots"
-            credentials(PasswordCredentials)
+            credentials{
+                username = System.getenv("CRMSnapshotsUsername")
+                password = System.getenv("CRMSnapshotsPassword")
+            }
             authentication {
                 basic(BasicAuthentication)
             }
