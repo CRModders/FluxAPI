@@ -1,15 +1,15 @@
 package dev.crmodders.flux.api.v5.generators;
 
-import dev.crmodders.flux.api.v5.suppliers.ReturnableSupplier;
+import java.util.function.Supplier;
 
 /**
  * A helper class that just runs after everything else is loaded to make sure everything is working correctly
  * */
 public class FactoryFinalizer<T> {
 
-        ReturnableSupplier<T> finalizer;
+    Supplier<T> finalizer;
 
-        public FactoryFinalizer(ReturnableSupplier<T> finalizer) {
+        public FactoryFinalizer(Supplier<T> finalizer) {
             this.finalizer = finalizer;
         }
 

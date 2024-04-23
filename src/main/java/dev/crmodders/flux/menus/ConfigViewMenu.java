@@ -1,8 +1,8 @@
 package dev.crmodders.flux.menus;
 
-import dev.crmodders.flux.api.v6.config.BasicConfig;
-import dev.crmodders.flux.api.v6.gui.ButtonElement;
-import dev.crmodders.flux.api.v6.gui.TextElement;
+import dev.crmodders.flux.api.config.BasicConfig;
+import dev.crmodders.flux.api.gui.ButtonElement;
+import dev.crmodders.flux.api.gui.TextElement;
 import dev.crmodders.flux.localization.TranslationKey;
 import dev.crmodders.flux.registry.FluxRegistries;
 import dev.crmodders.flux.registry.registries.AccessableRegistry;

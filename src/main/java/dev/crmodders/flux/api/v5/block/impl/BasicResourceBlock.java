@@ -2,7 +2,7 @@ package dev.crmodders.flux.api.v5.block.impl;
 
 import dev.crmodders.flux.api.v5.block.IModBlock;
 import dev.crmodders.flux.api.v5.generators.BlockGenerator;
-import dev.crmodders.flux.api.v6.resource.ResourceLocation;
+import dev.crmodders.flux.api.resource.ResourceLocation;
 import dev.crmodders.flux.tags.Identifier;
 
 /**

@@ -51,17 +51,9 @@
                 "waiting_title": "Loading/Building Modded Assets",
                 "ram_usage": "Memory Used/Total: {usage}MB/{total}MB",
                 "loading_cosmic_reach": "Loading Cosmic Reach",
-                "loading_blocks": "Loading Blocks",
                 "registering_assets": "Registering Assets",
                 "initializing": "Initializing Flux Mods",
-                "pre_init_phase": "PreInit",
-                "init_phase": "Init",
-                "post_init_phase": "PostInit",
-                "registering_blocks": "Registering Blocks",
-                "registering_block_event_actions": "Registering Block Actions",
-                "registering_block_events": "Registering Block Events",
-                "finalizing_blocks": "Finalizing Blocks",
-                "finished_loading": "Done!"
+                "legacy": "Legacy"
             },
             "flux_options": {
                 "name": "Flux Options",

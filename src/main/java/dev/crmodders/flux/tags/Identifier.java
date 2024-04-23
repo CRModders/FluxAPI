@@ -6,7 +6,7 @@ import java.util.Objects;
 
 /**
  * Stores information about Registered Objects in FluxAPI
- * such as {@link dev.crmodders.flux.api.v6.resource.ResourceLocation}
+ * such as {@link dev.crmodders.flux.api.resource.ResourceLocation}
  * contains a namespace and name
  * namespaces are usually the modid
  * @author Mr-Zombii
@@ -14,7 +14,6 @@ import java.util.Objects;
 @Stable
 public class Identifier {
 
-    private String serializedName;
     public String namespace;
     public String name;
 

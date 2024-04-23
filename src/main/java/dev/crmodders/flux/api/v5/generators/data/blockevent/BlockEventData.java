@@ -1,9 +1,10 @@
 package dev.crmodders.flux.api.v5.generators.data.blockevent;
 
 import dev.crmodders.flux.api.v5.generators.data.blockevent.triggers.TriggerData;
-import dev.crmodders.flux.api.v5.suppliers.ReturnableSupplier;
 import dev.crmodders.flux.tags.Identifier;
 import org.hjson.JsonObject;
+
+import java.util.function.Supplier;
 
 /**
  * The Structure of blockEvents used in {@link dev.crmodders.flux.api.v5.generators.BlockEventGenerator}.
@@ -26,7 +27,7 @@ public record BlockEventData(
         JsonObject blockEventData = new JsonObject();
         if (parentEvent != null) blockEventData.set("parent", parentEvent.toString());
         blockEventData.set("stringId", identifier.toString());
-        blockEventData.set("triggers", ((ReturnableSupplier<JsonObject>)()->{
+        blockEventData.set("triggers", ((Supplier<JsonObject>)()->{
             JsonObject eventData = new JsonObject();
             for (TriggerData event : triggers) {
                 eventData.set(event.name(), event.toJson().get(event.name()));

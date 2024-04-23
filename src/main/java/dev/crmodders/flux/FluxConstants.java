@@ -1,6 +1,6 @@
 package dev.crmodders.flux;
 
-import dev.crmodders.flux.api.v6.resource.ResourceLocation;
+import dev.crmodders.flux.api.resource.ResourceLocation;
 import dev.crmodders.flux.localization.TranslationKey;
 import finalforeach.cosmicreach.gamestates.GameState;
 import finalforeach.cosmicreach.gamestates.MainMenu;
@@ -29,7 +29,6 @@ public class FluxConstants {
     public static GameState MAIN_MENU = new MainMenu();
 
     public static final ResourceLocation LanguageEnUs = new ResourceLocation(MOD_ID, "languages/en-US.json");
-    public static final ResourceLocation WhitePixel = new ResourceLocation(MOD_ID, "whitepixel.png");
     public static ResourceLocation DirectoryIcon = new ResourceLocation(MOD_ID, "folder_icon.png");
     public static ResourceLocation ReloadIcon = new ResourceLocation(MOD_ID, "reload_icon.png");
     public static ResourceLocation CRModdersIcon = new ResourceLocation(MOD_ID, "crmodders.png");

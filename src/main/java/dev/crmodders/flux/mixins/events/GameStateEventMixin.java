@@ -1,6 +1,6 @@
 package dev.crmodders.flux.mixins.events;
 
-import dev.crmodders.flux.events.GameEvents;
+import dev.crmodders.flux.api.events.GameEvents;
 import finalforeach.cosmicreach.gamestates.GameState;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;

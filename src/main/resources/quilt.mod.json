@@ -27,7 +27,7 @@
 
     "entrypoints": {
       "main": "dev.crmodders.flux.FluxAPI",
-      "modmenu": "dev.crmodders.flux.menus.FluxModmenuConfig"
+      "modmenu": "dev.crmodders.flux.FluxModMenuConfig"
     },
 
     "depends": [

@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.TextureData;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.math.Vector2;
@@ -13,10 +12,10 @@ import com.badlogic.gdx.math.Vector2;
 import java.awt.*;
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.lang.reflect.Field;
-import java.nio.file.Files;
-import java.util.*;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import java.util.stream.IntStream;
 
 public class Font {
@@ -33,7 +32,7 @@ public class Font {
         int totalSizeInSquarePixels = fontTextures.size() * 256 * 256;
         int width = -1;
         int height = -1;
-        for(width = 256; width <= 32768; width += 256) {
+        for(width = 256; width <= 16384; width += 256) {
             height = totalSizeInSquarePixels / width;
             if(width >= height && Math.floorDiv(height, 256) * 256 == height) {
                 break;

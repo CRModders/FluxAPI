@@ -1,6 +1,6 @@
 package dev.crmodders.flux;
 
-import dev.crmodders.flux.api.v6.block.FluxBlockAction;
+import dev.crmodders.flux.api.block.FluxBlockAction;
 import finalforeach.cosmicreach.blockevents.BlockEventTrigger;
 import finalforeach.cosmicreach.blocks.BlockState;
 import finalforeach.cosmicreach.world.Zone;

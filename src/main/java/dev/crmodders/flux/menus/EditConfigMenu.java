@@ -1,6 +1,6 @@
 package dev.crmodders.flux.menus;
 
-import dev.crmodders.flux.api.v6.config.BasicConfig;
+import dev.crmodders.flux.api.config.BasicConfig;
 import dev.crmodders.flux.localization.TranslationKey;
 import finalforeach.cosmicreach.gamestates.GameState;
 

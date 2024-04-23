@@ -1,10 +1,11 @@
 package dev.crmodders.flux;
 
 import com.badlogic.gdx.graphics.Color;
-import dev.crmodders.flux.api.v6.block.IModBlock;
-import dev.crmodders.flux.api.v6.generators.BlockEventGenerator;
-import dev.crmodders.flux.api.v6.generators.BlockGenerator;
-import dev.crmodders.flux.api.v6.generators.BlockModelGenerator;
+import dev.crmodders.flux.api.block.IModBlock;
+import dev.crmodders.flux.api.generators.BlockEventGenerator;
+import dev.crmodders.flux.api.generators.BlockGenerator;
+import dev.crmodders.flux.api.generators.BlockModelGenerator;
+import dev.crmodders.flux.api.generators.SingleColorModelGenerator;
 import dev.crmodders.flux.tags.Identifier;
 import finalforeach.cosmicreach.blocks.BlockPosition;
 import finalforeach.cosmicreach.blocks.BlockState;
@@ -41,8 +42,7 @@ public class TestBlock implements IModBlock {
 
     @Override
     public List<BlockModelGenerator> getBlockModelGenerators(Identifier blockId) {
-        BlockModelGenerator generator = new BlockModelGenerator(blockId, "test_model");
-        generator.createColoredCuboid(0, 0, 0, 16, 16, 16, "green", Color.GREEN);
+        BlockModelGenerator generator = new SingleColorModelGenerator(blockId, "test_model", Color.GREEN);
         return List.of(generator);
     }
 

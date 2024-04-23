@@ -1,13 +1,12 @@
 package dev.crmodders.flux.ui;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import dev.crmodders.flux.FluxConstants;
-import dev.crmodders.flux.FluxSettings;
 import dev.crmodders.flux.ui.font.Font;
 import dev.crmodders.flux.ui.font.FontTexture;
 import dev.crmodders.flux.ui.image.Image;
@@ -18,7 +17,7 @@ import dev.crmodders.flux.ui.text.StyleBatch;
 import dev.crmodders.flux.ui.text.TextBatch;
 import dev.crmodders.flux.ui.text.TextBatchBuilder;
 import dev.crmodders.flux.ui.text.TextLine;
-import dev.crmodders.flux.util.text.StyleStringParser;
+import dev.crmodders.flux.ui.util.StyleStringParser;
 import finalforeach.cosmicreach.gamestates.GameState;
 import finalforeach.cosmicreach.ui.FontRenderer;
 import finalforeach.cosmicreach.ui.HorizontalAnchor;
@@ -80,7 +79,10 @@ public class UIRenderer {
 	public static Font font;
 	public static UIRenderer uiRenderer;
 	static {
-		white = new Texture(FluxConstants.WhitePixel.load());
+		Pixmap whitePixel = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
+		whitePixel.setColor(1, 1, 1, 1);
+		whitePixel.drawPixel(0, 0);
+		white = new Texture(whitePixel);
 
 		try {
 			Class<?> fontTextureType = Class.forName("finalforeach.cosmicreach.ui.FontTexture");

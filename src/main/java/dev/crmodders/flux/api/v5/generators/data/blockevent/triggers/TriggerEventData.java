@@ -3,7 +3,6 @@ package dev.crmodders.flux.api.v5.generators.data.blockevent.triggers;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 import dev.crmodders.flux.api.v5.generators.data.DataJson;
-import dev.crmodders.flux.api.v5.suppliers.ReturnableSupplier;
 import dev.crmodders.flux.tags.Identifier;
 import org.hjson.JsonObject;
 import org.hjson.JsonValue;
@@ -11,6 +10,7 @@ import org.hjson.JsonValue;
 import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Supplier;
 
 /**
  * The trigger activated during the parent Interation Trigger
@@ -26,7 +26,7 @@ public record TriggerEventData(
     public JsonObject toJson() {
         JsonObject TEventData = new JsonObject();
         TEventData.set("actionId", actionID.toString());
-        TEventData.set("parameters", ((ReturnableSupplier<JsonObject>)()->{
+        TEventData.set("parameters", ((Supplier<JsonObject>)()->{
             Type typeObject = new TypeToken<HashMap>() {}.getType();
             JsonObject params = JsonValue.readJSON(new Gson().toJson(parameters, typeObject)).asObject();
             return params;

@@ -3,15 +3,14 @@ package dev.crmodders.flux.api.v5.generators;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.Json;
 import dev.crmodders.flux.annotations.Stable;
-import dev.crmodders.flux.api.v2.registries.BlockReg;
+import dev.crmodders.flux.api.block.impl.DataModBlock;
+import dev.crmodders.flux.api.resource.ResourceLocation;
+import dev.crmodders.flux.api.v5.BlockReg;
 import dev.crmodders.flux.api.v5.block.IModBlock;
 import dev.crmodders.flux.api.v5.generators.data.blockevent.BlockEventType;
 import dev.crmodders.flux.api.v5.generators.data.blockstate.BlockStateData;
 import dev.crmodders.flux.api.v5.generators.data.blockstate.BlockStateDataExt;
 import dev.crmodders.flux.api.v5.generators.suppliers.BasicTriggerSupplier;
-import dev.crmodders.flux.api.v5.suppliers.ReturnableDoubleInputSupplier;
-import dev.crmodders.flux.api.v6.block.impl.DataModBlock;
-import dev.crmodders.flux.api.v6.resource.ResourceLocation;
 import dev.crmodders.flux.registry.FluxRegistries;
 import dev.crmodders.flux.tags.Identifier;
 import finalforeach.cosmicreach.GameAssetLoader;
@@ -23,6 +22,7 @@ import org.hjson.JsonValue;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.function.BiFunction;
 
 
 /**
@@ -183,7 +183,7 @@ public class BlockGenerator {
     /**
      * This method gets the generation factory that flux requires in order to get your block working and cannot be called until the registries are frozen.
      */
-    public ReturnableDoubleInputSupplier<IModBlock, Identifier, FactoryFinalizer<Block>> GetGeneratorFactory() {
+    public BiFunction<IModBlock, Identifier, FactoryFinalizer<Block>> GetGeneratorFactory() {
 
         return (block, id) -> {
             if (!FluxRegistries.BLOCKS.isFrozen()) throw new RuntimeException("CANNOT USE GENERATOR FACTORY BECAUSE REGISTRIES ARE NOT FROZEN YET");
@@ -242,7 +242,7 @@ public class BlockGenerator {
         };
     }
 
-    static class InternalBlock implements dev.crmodders.flux.api.v6.block.IModBlock {
+    static class InternalBlock implements dev.crmodders.flux.api.block.IModBlock {
 
         String blockJson;
 
@@ -251,10 +251,10 @@ public class BlockGenerator {
         }
 
         @Override
-        public dev.crmodders.flux.api.v6.generators.BlockGenerator getBlockGenerator() {
+        public dev.crmodders.flux.api.generators.BlockGenerator getBlockGenerator() {
             Json json = new Json();
             DataModBlock.JsonBlock block = json.fromJson(DataModBlock.JsonBlock.class, blockJson);
-            dev.crmodders.flux.api.v6.generators.BlockGenerator generator = new dev.crmodders.flux.api.v6.generators.BlockGenerator(Identifier.fromString(block.stringId), Identifier.fromString(block.stringId).name);
+            dev.crmodders.flux.api.generators.BlockGenerator generator = new dev.crmodders.flux.api.generators.BlockGenerator(Identifier.fromString(block.stringId), Identifier.fromString(block.stringId).name);
             generator.defaultParams = block.defaultParams;
             generator.blockStates = block.blockStates;
             return generator;

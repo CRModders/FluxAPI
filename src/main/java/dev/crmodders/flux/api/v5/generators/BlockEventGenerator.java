@@ -11,7 +11,6 @@ import dev.crmodders.flux.api.v5.generators.data.blockevent.triggers.TriggerEven
 import dev.crmodders.flux.api.v5.generators.helpers.ModifiedBlockEventTrigger;
 import dev.crmodders.flux.api.v5.generators.helpers.ModifiedBlockEvents;
 import dev.crmodders.flux.api.v5.generators.suppliers.BasicTriggerSupplier;
-import dev.crmodders.flux.api.v5.suppliers.ReturnableSupplier;
 import dev.crmodders.flux.registry.FluxRegistries;
 import dev.crmodders.flux.tags.Identifier;
 import dev.crmodders.flux.util.PrivUtils;
@@ -28,6 +27,7 @@ import org.hjson.JsonArray;
 import org.hjson.JsonObject;
 
 import java.util.*;
+import java.util.function.Supplier;
 
 /**
  * An internal class used in {@link BlockGenerator} to ease the creation of blockEvents.
@@ -158,7 +158,7 @@ public class BlockEventGenerator {
                         ),
                         new TriggerData(
                                 "onPlace",
-                                ((ReturnableSupplier<TriggerEventData[]>)()->{
+                                ((Supplier<TriggerEventData[]>)()->{
                                     List<TriggerEventData> data = new ArrayList<>();
 
                                     data.add(new TriggerEventData(
@@ -181,7 +181,7 @@ public class BlockEventGenerator {
                         ),
                         new TriggerData(
                                 "onBreak",
-                                ((ReturnableSupplier<TriggerEventData[]>)()->{
+                                ((Supplier<TriggerEventData[]>)()->{
                                     List<TriggerEventData> data = new ArrayList<>();
 
                                     data.add(new TriggerEventData(
@@ -283,7 +283,7 @@ public class BlockEventGenerator {
             jsonObject.set("triggers", jsonObject.get("triggers").asObject()
                     .set("onPlace", new TriggerData(
                                     "onPlace",
-                                    ((ReturnableSupplier<TriggerEventData[]>)()->{
+                                    ((Supplier<TriggerEventData[]>)()->{
                                         List<TriggerEventData> data = new ArrayList<>();
 
                                         data.add(new TriggerEventData(
@@ -324,7 +324,7 @@ public class BlockEventGenerator {
             jsonObject.set("triggers", jsonObject.get("triggers").asObject()
                     .set("onBreak", new TriggerData(
                                     "onBreak",
-                                        ((ReturnableSupplier<TriggerEventData[]>)()->{
+                                        ((Supplier<TriggerEventData[]>)()->{
                                             List<TriggerEventData> data = new ArrayList<>();
 
                                             data.add(new TriggerEventData(

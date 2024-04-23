@@ -1,9 +1,10 @@
 package dev.crmodders.flux.api.v5.generators.data.blockevent.triggers;
 
 import dev.crmodders.flux.api.v5.generators.data.DataJson;
-import dev.crmodders.flux.api.v5.suppliers.ReturnableSupplier;
 import org.hjson.JsonArray;
 import org.hjson.JsonObject;
+
+import java.util.function.Supplier;
 
 /**
  * The interaction trigger that activates the other events listed in the events parameter.
@@ -18,7 +19,7 @@ public record TriggerData(
 
     public JsonObject toJson() {
         JsonObject triggerData = new JsonObject();
-        triggerData.set(name, ((ReturnableSupplier<JsonArray>)()->{
+        triggerData.set(name, ((Supplier<JsonArray>)()->{
             JsonArray eventData = new JsonArray();
             for (TriggerEventData event : events) {
                 eventData.add(event.toJson());

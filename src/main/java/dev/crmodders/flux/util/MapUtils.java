@@ -1,10 +1,8 @@
 package dev.crmodders.flux.util;
 
-import dev.crmodders.flux.api.v6.suppliers.ReturnableInputSupplier;
-
-
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Function;
 
 public class MapUtils {
 
@@ -46,8 +44,8 @@ public class MapUtils {
         return map;
     }
 
-    public static <A, B>  HashMap<A, B> manipulateMapValue(HashMap<A, B> map, A key, ReturnableInputSupplier<B, B> valueManipulator) {
-        map.put(key, valueManipulator.get(map.get(key)));
+    public static <A, B>  HashMap<A, B> manipulateMapValue(HashMap<A, B> map, A key, Function<B, B> valueManipulator) {
+        map.put(key, valueManipulator.apply(map.get(key)));
         return map;
     }
 }
