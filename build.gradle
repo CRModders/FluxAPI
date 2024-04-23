@@ -317,7 +317,11 @@ publishing {
     publications {
         maven(MavenPublication) {
             groupId = group
-            artifactId = id
+            if (System.getenv("COMMIT_ID") != null) {
+                artifactId = System.getenv("COMMIT_ID")
+            } else {
+                artifactId = id
+            }
 
             artifact buildFatJar
             artifact source: buildSlimJar, classifier: 'slim', extension: 'jar'
