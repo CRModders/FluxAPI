@@ -7,6 +7,7 @@ plugins {
 }
 
 repositories {
+    gradlePluginPortal()
     ivy {
         name "Cosmic Reach"
         url "https://cosmic-archive.netlify.app/"
@@ -123,7 +124,7 @@ dependencies {
     // Shape Drawer
     shadowMe("space.earlygrey:shapedrawer:${shape_drawer_version}") { exclude group: "com.badlogicgames.gdx" }
 
-    // GDX stuff not included in Cosmic Reach
+    // GDX stuff not included in Cosmic Reacha
     shadowMe("com.badlogicgames.gdx:gdx-freetype:${gdx_version}") { exclude group: "com.badlogicgames.gdx" }
     shadowMe("com.badlogicgames.gdx:gdx-freetype-platform:${gdx_version}:natives-desktop") { exclude group: "com.badlogicgames.gdx" }
 }
