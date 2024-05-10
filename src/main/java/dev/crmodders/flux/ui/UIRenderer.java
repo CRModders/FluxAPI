@@ -1,27 +1,24 @@
 package dev.crmodders.flux.ui;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Matrix4;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import dev.crmodders.flux.api.gui.base.BaseElement;
 import dev.crmodders.flux.ui.font.Font;
 import dev.crmodders.flux.ui.font.FontTexture;
-import dev.crmodders.flux.ui.image.Image;
-import dev.crmodders.flux.ui.image.ImageBatch;
-import dev.crmodders.flux.ui.image.ImageBatchBuilder;
-import dev.crmodders.flux.ui.shapes.*;
-import dev.crmodders.flux.ui.text.StyleBatch;
 import dev.crmodders.flux.ui.text.TextBatch;
 import dev.crmodders.flux.ui.text.TextBatchBuilder;
-import dev.crmodders.flux.ui.text.TextLine;
 import dev.crmodders.flux.ui.util.StyleStringParser;
 import finalforeach.cosmicreach.gamestates.GameState;
 import finalforeach.cosmicreach.ui.FontRenderer;
-import finalforeach.cosmicreach.ui.HorizontalAnchor;
-import finalforeach.cosmicreach.ui.VerticalAnchor;
+import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL13;
 import space.earlygrey.shapedrawer.ShapeDrawer;
 
 import java.lang.Character.UnicodeBlock;
@@ -104,26 +101,23 @@ public class UIRenderer {
 		uiRenderer = new UIRenderer(GameState.batch);
 	}
 
-	public List<DrawBatch> batches;
 	public SpriteBatch batch;
 	public ShapeDrawer renderer;
 
 	public UIRenderer(SpriteBatch batch) {
-		this.batches = new ArrayList<>();
-		this.batch = batch;
-		this.renderer = new ShapeDrawer(batch, new TextureRegion(white));
+		changeSpriteBatch(batch);
 	}
 
-	public ShapeBatchBuilder buildShape() {
-		return new ShapeBatchBuilder();
+	public void changeSpriteBatch(SpriteBatch batch) {
+		boolean wasDrawing = this.batch == null ? false : this.batch.isDrawing();
+		if(wasDrawing) this.batch.end();
+		this.batch = batch;
+		this.renderer = new ShapeDrawer(batch, new TextureRegion(white));
+		if(wasDrawing) this.batch.begin();
 	}
 
 	public TextBatchBuilder buildText() {
 		return new TextBatchBuilder(font, 18.0f);
-	}
-
-	public ImageBatchBuilder buildImage() {
-		return new ImageBatchBuilder();
 	}
 
 	public TextBatchBuilder buildText(Font font, float fontSize) {
@@ -143,140 +137,50 @@ public class UIRenderer {
 		return builder.build();
 	}
 
-	public ImageBatch createImage(Texture texture, float x, float y, float w, float h) {
-		ImageBatchBuilder b = buildImage();
-		b.drawImage(texture, x, y, w, h);
-		return b.build();
+	public TextBatch createText(String text, Color color) {
+		return createText(font, 18.0f, text, color);
 	}
 
-	public void drawBatch(Batch batch, float x, float y) {
-		batches.add(new DrawBatch(batch, x, y));
+	private boolean wasDrawingBeforeCustomShader;
+
+	public void prepareForCustomShader() {
+		wasDrawingBeforeCustomShader = batch.isDrawing();
+		if(wasDrawingBeforeCustomShader) batch.end();
 	}
 
-	public void drawBatch(Batch batch, Viewport uiViewport, float xStart, float yStart, HorizontalAnchor hAnchor, VerticalAnchor vAnchor) {
-		float w = batch.width();
-		float h = batch.height();
-		switch (hAnchor) {
-			case LEFT_ALIGNED: {
-				xStart -= uiViewport.getWorldWidth() / 2.0f;
-				break;
-			}
-			case RIGHT_ALIGNED: {
-				xStart = xStart + uiViewport.getWorldWidth() / 2.0f - w;
-				break;
-			}
-			default: {
-				xStart -= w / 2.0f;
-			}
-		}
-		switch (vAnchor) {
-			case TOP_ALIGNED: {
-				yStart -= uiViewport.getWorldHeight() / 2.0f;
-				break;
-			}
-			case BOTTOM_ALIGNED: {
-				yStart = yStart + uiViewport.getWorldHeight() / 2.0f - h;
-				break;
-			}
-			default: {
-				yStart -= h / 2.0f;
-			}
-		}
-		drawBatch(batch, xStart, yStart);
+	public void resetAfterCustomShader() {
+		if(wasDrawingBeforeCustomShader) batch.begin();
+		wasDrawingBeforeCustomShader = false;
 	}
 
-	public void render(Matrix4 projectionMatrix) {
-		batch.setProjectionMatrix(projectionMatrix);
+	public void render(List<Component> components, Camera uiCamera, Viewport uiViewport, Vector2 mouse) {
+		Gdx.gl.glDisable(GL11.GL_CULL_FACE);
+		Gdx.gl.glEnable(GL13.GL_MULTISAMPLE);
+		uiViewport.apply();
+		batch.setProjectionMatrix(uiCamera.combined);
+		batch.enableBlending();
 		batch.begin();
-		for (DrawBatch batch : batches) {
-			if (batch.batch instanceof TextBatch textBatch) {
-				render(textBatch, batch.x, batch.y);
-			} else if (batch.batch instanceof ShapeBatch shapeBatch) {
-				render(shapeBatch, batch.x, batch.y);
-			} else if (batch.batch instanceof ImageBatch imageBatch) {
-				render(imageBatch, batch.x, batch.y);
+		for(Component component : components) {
+			if (component.isDirty()) {
+				component.paint(this);
+			}
+			component.update(this, uiViewport, mouse);
+		}
+		for (Component component : components) {
+			if(component instanceof BaseElement element) {
+				element.drawBackground(this, uiViewport);
 			}
 		}
-		batches.clear();
+		for (Component component : components) {
+			component.draw(this, uiViewport);
+		}
+		for (Component component : components) {
+			if(component instanceof BaseElement element) {
+				element.drawOverlay(this, uiViewport);
+			}
+		}
 		batch.end();
-	}
-
-	public void render(TextBatch textBatch, float xStart, float yStart) {
-		Matrix4 matrix = new Matrix4();
-		for (TextLine line : textBatch.lines()) {
-			matrix.idt();
-			matrix.translate(xStart, yStart, 0);
-
-			for (StyleBatch batch : line.batches) {
-				this.batch.setColor(1,1,1, batch.alpha);
-				this.batch.setTransformMatrix(matrix);
-
-				for(int page = 0; page < batch.pageVertices.length; page++) {
-					TextureRegion region = batch.font.bitmapFont.getRegion(page);
-					float[] vertices = batch.pageVertices[page];
-					this.batch.draw(region.getTexture(), vertices, 0, vertices.length);
-				}
-				if(batch.underline) {
-					this.renderer.line(0, batch.fontSize, batch.width, batch.fontSize);
-				}
-
-				if(batch.strikethrough) {
-					this.renderer.line(0, batch.fontSize * 1/2f, batch.width, batch.fontSize * 1/2f, 2f);
-				}
-				matrix.translate(batch.width, 0, 0);
-			}
-
-			yStart += line.height();
-		}
-		matrix.idt();
-		this.batch.setTransformMatrix(matrix);
-	}
-
-	public void render(ShapeBatch shapeBatch, float xStart, float yStart) {
-		for (Shape shape : shapeBatch.shapes) {
-
-			if (shape instanceof DrawRect rect) {
-				renderer.rectangle(xStart + rect.x, yStart + rect.y, rect.w, rect.h, rect.color, rect.thickness);
-			} else if (shape instanceof FillRect rect) {
-				float x1 = xStart + rect.x + rect.w;
-				float y1 = yStart + rect.y;
-				float x2 = xStart + rect.x;
-				float y2 = yStart + rect.y + rect.h;
-				renderer.filledTriangle(x1, y1, x2, y1, x2, y2, rect.color);
-				renderer.filledTriangle(x2, y2, x1, y2, x1, y1, rect.color);
-			}
-		}
-	}
-
-	public void render(ImageBatch imageBatch, float xStart, float yStart) {
-		for (Image image : imageBatch.images) {
-			TextureRegion region  = new TextureRegion(image.texture);
-			region.setRegion(0f, 1f, 1f, 0f);
-			this.batch.draw(
-					region,
-					image.x + xStart,
-					image.y + yStart,
-					image.width / 2f,
-					image.height / 2f,
-					image.width,
-					image.height,
-					1f,
-					1f,
-					image.rotation
-			);
-		}
-	}
-
-	public static class DrawBatch {
-		public Batch batch;
-		public float x, y;
-
-		public DrawBatch(Batch batch, float x, float y) {
-			this.batch = batch;
-			this.x = x;
-			this.y = y;
-		}
-
+		Gdx.gl.glDisable(GL13.GL_MULTISAMPLE);
 	}
 
 }

@@ -5,7 +5,6 @@ import dev.crmodders.flux.FluxConstants;
 import dev.crmodders.flux.FluxSettings;
 import dev.crmodders.flux.api.gui.ButtonElement;
 import dev.crmodders.flux.api.gui.base.BaseText;
-import dev.crmodders.flux.api.gui.interfaces.GameStateCache;
 import dev.crmodders.flux.localization.TranslationApi;
 import dev.crmodders.flux.localization.TranslationKey;
 import finalforeach.cosmicreach.gamestates.GameState;
@@ -119,7 +118,6 @@ public class LanguagePickerMenu extends ScrollMenu{
     protected void onSave() {
         FluxSettings.LanguageSetting.setValue(locale);
         TranslationApi.setLanguage(locale);
-        GameStateCache.getCache().invalidateCachedAssets();
         super.onSave();
     }
 

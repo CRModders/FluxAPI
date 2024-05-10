@@ -31,7 +31,7 @@ public class ProgressBarElement extends BaseText {
             this.height = this.foreground.height() + automaticSizePadding;
         }
 
-        ShapeBatchBuilder regular = renderer.buildShape();
+        ShapeBatchBuilder regular = new ShapeBatchBuilder();
         regular.color(Color.BLACK);
         regular.fillRect(0, 0, width, height);
         regular.color(Color.GRAY);

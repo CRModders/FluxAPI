@@ -43,7 +43,7 @@ public abstract class UIElementMixin {
             x += this.w / 2.0F - tb.width() / 2.0F;
             y += this.h / 2.0F - tb.height() / 2.0F;
 
-            UIRenderer.uiRenderer.drawBatch(tb, x, y);
+            tb.render(UIRenderer.uiRenderer, x, y);
         }
     }
 

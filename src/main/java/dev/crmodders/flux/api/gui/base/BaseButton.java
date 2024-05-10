@@ -29,7 +29,7 @@ public class BaseButton extends BaseText {
 
         this.regular = super.background;
 
-        ShapeBatchBuilder highlighted = renderer.buildShape();
+        ShapeBatchBuilder highlighted = new ShapeBatchBuilder();
         highlighted.color(Color.BLACK);
         highlighted.fillRect(0, 0, width, height);
         highlighted.color(Color.WHITE);
@@ -37,7 +37,7 @@ public class BaseButton extends BaseText {
         highlighted.drawRect(0, 0, width, height);
         this.highlighted = highlighted.build();
 
-        ShapeBatchBuilder clicked = renderer.buildShape();
+        ShapeBatchBuilder clicked = new ShapeBatchBuilder();
         clicked.color(Color.GRAY);
         clicked.fillRect(0, 0, width, height);
         clicked.color(Color.WHITE);
@@ -48,7 +48,7 @@ public class BaseButton extends BaseText {
         this.background = this.regular;
 
         if(image != null) {
-            ImageBatchBuilder icon = renderer.buildImage();
+            ImageBatchBuilder icon = new ImageBatchBuilder();
             icon.drawImage(image, 0, 0, iconSize, iconSize, iconRotation);
             this.icon = icon.build();
         }
@@ -65,24 +65,24 @@ public class BaseButton extends BaseText {
         float x = this.getDisplayX(viewport);
         float y = this.getDisplayY(viewport);
         if(backgroundEnabled) {
-            renderer.drawBatch(background, x, y);
+            background.render(renderer, x, y);
         }
 
         if(icon == null) {
             float left = (width - foreground.width()) / 2f;
             float top = (height - foreground.height()) / 2f;
-            renderer.drawBatch(foreground, x + left, y + top);
+            foreground.render(renderer, x + left, y + top);
         } else {
             float iconWidth = iconSize + iconPadding * 2f;
             float iconHeight = iconSize + iconPadding * 2f;
 
             float left1 = (width - iconWidth - foreground.width()) / 2f + iconWidth;
             float top1 = (height - foreground.height()) / 2f;
-            renderer.drawBatch(foreground, x + left1, y + top1);
+            foreground.render(renderer, x + left1, y + top1);
 
             float left2 = (width - iconWidth - foreground.width()) / 2f + iconPadding;
             float top2 = (height - iconHeight) / 2f + iconPadding;
-            renderer.drawBatch(icon, x + left2, y + top2);
+            icon.render(renderer, x + left2, y + top2);
         }
 
     }

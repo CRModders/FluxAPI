@@ -48,7 +48,7 @@ public class BaseSlider extends BaseText {
 
         this.regular = super.background;
 
-        ShapeBatchBuilder highlighted = renderer.buildShape();
+        ShapeBatchBuilder highlighted = new ShapeBatchBuilder();
         highlighted.color(Color.BLACK);
         highlighted.fillRect(0, 0, width, height);
         highlighted.color(Color.WHITE);
@@ -56,7 +56,7 @@ public class BaseSlider extends BaseText {
         highlighted.drawRect(0, 0, width, height);
         this.highlighted = highlighted.build();
 
-        ShapeBatchBuilder clicked = renderer.buildShape();
+        ShapeBatchBuilder clicked = new ShapeBatchBuilder();
         clicked.color(Color.GRAY);
         clicked.fillRect(0, 0, width, height);
         clicked.color(Color.WHITE);
@@ -66,7 +66,7 @@ public class BaseSlider extends BaseText {
 
         this.background = this.regular;
 
-        ShapeBatchBuilder knob = renderer.buildShape();
+        ShapeBatchBuilder knob = new ShapeBatchBuilder();
         knob.color(Color.BLACK);
         knob.fillRect(0, 0, 10.0f, this.height + 8.0f);
         knob.color(Color.WHITE);
@@ -83,15 +83,15 @@ public class BaseSlider extends BaseText {
         float x = this.getDisplayX(viewport);
         float y = this.getDisplayY(viewport);
         if(backgroundEnabled) {
-            renderer.drawBatch(background, x, y);
+            background.render(renderer, x, y);
         }
 
         float ratio = (this.value - this.min) / (this.max - this.min);
         float knobX = x + ratio * this.width - 10.0f / 2.0f;
         float knobY = y - 4.0f;
-        renderer.drawBatch(knob, knobX, knobY);
+        knob.render(renderer, knobX, knobY);
 
-        renderer.drawBatch(foreground, x + (width - foreground.width()) / 2f, y + (height - foreground.height()) / 2f);
+        foreground.render(renderer, x + (width - foreground.width()) / 2f, y + (height - foreground.height()) / 2f);
     }
 
     @Override

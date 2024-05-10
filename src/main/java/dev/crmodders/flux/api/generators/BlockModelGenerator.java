@@ -9,6 +9,7 @@ import dev.crmodders.flux.engine.blocks.BlockLoader;
 import dev.crmodders.flux.engine.blocks.models.json.BlockModelFlux;
 import dev.crmodders.flux.engine.blocks.models.json.BlockModelFluxCuboid;
 import dev.crmodders.flux.tags.Identifier;
+import finalforeach.cosmicreach.constants.Direction;
 import finalforeach.cosmicreach.rendering.blockmodels.BlockModelJsonTexture;
 
 import java.util.ArrayList;
@@ -32,12 +33,12 @@ public class BlockModelGenerator implements IGenerator {
             public String id = "";
 
             public String texture = "all";
-            public int u1 = 0, v1 = 0, u2 = 16, v2 = 16;
+            public float u1 = 0, v1 = 0, u2 = 16, v2 = 16;
             public int uvRotation = 0;
             public boolean ambientOcclusion = true;
             public boolean cullFace = true;
 
-            public void setUVs(int u1, int v1, int u2, int v2) {
+            public void setUVs(float u1, float v1, float u2, float v2) {
                 this.u1 = u1;
                 this.v1 = v1;
                 this.u2 = u2;
@@ -46,11 +47,11 @@ public class BlockModelGenerator implements IGenerator {
 
         }
 
-        public int x1 = 0, y1 = 0, z1 = 0;
-        public int x2 = 16, y2 = 16, z2 = 16;
+        public float x1 = 0, y1 = 0, z1 = 0;
+        public float x2 = 16, y2 = 16, z2 = 16;
         public final Face[] faces = new Face[6];
 
-        public Cuboid(int x1, int y1, int z1, int x2, int y2, int z2) {
+        public Cuboid(float x1, float y1, float z1, float x2, float y2, float z2) {
             this.x1 = x1;
             this.y1 = y1;
             this.z1 = z1;
@@ -80,13 +81,24 @@ public class BlockModelGenerator implements IGenerator {
             setAmbientOcclusion(true);
         }
 
+        public Face face(Direction direction) {
+            return faces[direction.ordinal()];
+        }
+
         public void setAmbientOcclusion(boolean on) {
-            this.faces[Cuboid.LOCAL_NEG_X].ambientOcclusion = on;
-            this.faces[Cuboid.LOCAL_POS_X].ambientOcclusion = on;
-            this.faces[Cuboid.LOCAL_NEG_Y].ambientOcclusion = on;
-            this.faces[Cuboid.LOCAL_POS_Y].ambientOcclusion = on;
-            this.faces[Cuboid.LOCAL_NEG_Z].ambientOcclusion = on;
-            this.faces[Cuboid.LOCAL_POS_Z].ambientOcclusion = on;
+            for(Face face : faces) face.ambientOcclusion = on;
+        }
+
+        public void setCullFace(boolean on) {
+            for(Face face : faces) face.cullFace = on;
+        }
+
+        public void setUVs(float u1, float v1, float u2, float v2) {
+            for(Face face : faces) face.setUVs(u1, v1, u2, v2);
+        }
+
+        public void setUVRotation(int uvRotation) {
+            for(Face face : faces) face.uvRotation = uvRotation;
         }
 
     }
@@ -128,13 +140,13 @@ public class BlockModelGenerator implements IGenerator {
         customTextures.put(textureName, texture);
     }
 
-    public Cuboid createCuboid(int x1, int y1, int z1, int x2, int y2, int z2) {
+    public Cuboid createCuboid(float x1, float y1, float z1, float x2, float y2, float z2) {
         Cuboid cuboid = new Cuboid(x1, y1, z1, x2, y2, z2);
         cuboids.add(cuboid);
         return cuboid;
     }
 
-    public Cuboid createCuboid(int x1, int y1, int z1, int x2, int y2, int z2, String texture) {
+    public Cuboid createCuboid(float x1, float y1, float z1, float x2, float y2, float z2, String texture) {
         Cuboid cuboid = new Cuboid(x1, y1, z1, x2, y2, z2);
         cuboid.faces[Cuboid.LOCAL_POS_Y].texture = texture;
         cuboid.faces[Cuboid.LOCAL_NEG_Y].texture = texture;
@@ -146,7 +158,7 @@ public class BlockModelGenerator implements IGenerator {
         return cuboid;
     }
 
-    public Cuboid createCuboid(int x1, int y1, int z1, int x2, int y2, int z2, String top, String bottom, String side) {
+    public Cuboid createCuboid(float x1, float y1, float z1, float x2, float y2, float z2, String top, String bottom, String side) {
         Cuboid cuboid = new Cuboid(x1, y1, z1, x2, y2, z2);
         cuboid.faces[Cuboid.LOCAL_POS_Y].texture = top;
         cuboid.faces[Cuboid.LOCAL_NEG_Y].texture = bottom;
@@ -158,7 +170,7 @@ public class BlockModelGenerator implements IGenerator {
         return cuboid;
     }
 
-    public Cuboid createCuboid(int x1, int y1, int z1, int x2, int y2, int z2, String top, String bottom, String side, String front) {
+    public Cuboid createCuboid(float x1, float y1, float z1, float x2, float y2, float z2, String top, String bottom, String side, String front) {
         Cuboid cuboid = new Cuboid(x1, y1, z1, x2, y2, z2);
         cuboid.faces[Cuboid.LOCAL_POS_Y].texture = top;
         cuboid.faces[Cuboid.LOCAL_NEG_Y].texture = bottom;
@@ -170,7 +182,7 @@ public class BlockModelGenerator implements IGenerator {
         return cuboid;
     }
 
-    public Cuboid createCuboid(int x1, int y1, int z1, int x2, int y2, int z2, String top, String bottom, String left, String right, String front, String back) {
+    public Cuboid createCuboid(float x1, float y1, float z1, float x2, float y2, float z2, String top, String bottom, String left, String right, String front, String back) {
         Cuboid cuboid = new Cuboid(x1, y1, z1, x2, y2, z2);
         cuboid.faces[Cuboid.LOCAL_POS_Y].texture = top;
         cuboid.faces[Cuboid.LOCAL_NEG_Y].texture = bottom;

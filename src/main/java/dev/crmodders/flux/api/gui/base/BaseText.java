@@ -56,7 +56,7 @@ public class BaseText extends BaseElement{
             this.height = this.foreground.height() + automaticSizePadding;
         }
 
-        ShapeBatchBuilder regular = renderer.buildShape();
+        ShapeBatchBuilder regular = new ShapeBatchBuilder();
         regular.color(Color.BLACK);
         regular.fillRect(0, 0, width, height);
         regular.color(Color.GRAY);
@@ -74,9 +74,9 @@ public class BaseText extends BaseElement{
         float x = this.getDisplayX(viewport);
         float y = this.getDisplayY(viewport);
         if(backgroundEnabled) {
-            renderer.drawBatch(background, x, y);
+            background.render(renderer, x, y);
         }
-        renderer.drawBatch(foreground, x + (width - foreground.width()) / 2f, y + (height - foreground.height()) / 2f);
+        foreground.render(renderer, x + (width - foreground.width()) / 2f, y + (height - foreground.height()) / 2f);
     }
 
 

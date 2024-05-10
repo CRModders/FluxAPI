@@ -86,8 +86,16 @@ public abstract class BaseElement implements Component {
     public void paint(UIRenderer renderer) {
     }
 
+    public void drawBackground(UIRenderer renderer, Viewport viewport) {
+
+    }
+
     @Override
     public void draw(UIRenderer renderer, Viewport viewport) {
+    }
+
+    public void drawOverlay(UIRenderer renderer, Viewport viewport) {
+
     }
 
     @Override
