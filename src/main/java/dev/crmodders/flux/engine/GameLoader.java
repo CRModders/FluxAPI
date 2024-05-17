@@ -5,7 +5,6 @@ import dev.crmodders.flux.api.gui.ProgressBarElement;
 import dev.crmodders.flux.api.gui.TextElement;
 import dev.crmodders.flux.engine.blocks.BlockLoader;
 import dev.crmodders.flux.engine.stages.*;
-import dev.crmodders.flux.engine.stages.Legacy;
 import dev.crmodders.flux.localization.TranslationKey;
 import dev.crmodders.flux.menus.BasicMenu;
 import finalforeach.cosmicreach.GameSingletons;
@@ -13,7 +12,6 @@ import finalforeach.cosmicreach.gamestates.GameState;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -29,7 +27,7 @@ public class GameLoader extends BasicMenu implements Runnable {
     public ProgressBarElement progress2;
     public ProgressBarElement progress3;
 
-    private final List<LoadStage> stages = new ArrayList<>();
+    private final Queue<LoadStage> stages = new LinkedList<>();
 
     private Queue<Runnable> glQueue;
     private CountDownLatch glLock;
@@ -73,16 +71,12 @@ public class GameLoader extends BasicMenu implements Runnable {
         blockLoader = new BlockLoader();
         GameSingletons.blockModelInstantiator = blockLoader.factory;
 
-        stages.add(new PreInitialize());
-        stages.add(new LoadResources());
-        stages.add(new Initialize());
-        stages.add(new LoadingCosmicReach());
-        stages.add(new Legacy());
-        stages.add(new PostInitialize());
-
-        for(LoadStage stage : stages) {
-            stage.initialize(this);
-        }
+        addStage(new PreInitialize());
+        addStage(new LoadResources());
+        addStage(new Initialize());
+        addStage(new LoadingCosmicReach());
+        addStage(new Legacy());
+        addStage(new PostInitialize());
 
         glQueue = new LinkedList<>();
 
@@ -90,10 +84,16 @@ public class GameLoader extends BasicMenu implements Runnable {
         loadingThread.start();
     }
 
+    public void addStage(LoadStage stage) {
+        stages.add(stage);
+        stage.initialize(this);
+    }
+
     @Override
     public void run() {
         progress1.range = stages.size();
-        for(LoadStage stage : stages) {
+        while(!stages.isEmpty()) {
+            LoadStage stage = stages.poll();
             progress1.translation = stage.title;
             progress1.value++;
             progress1.updateText();
@@ -114,7 +114,6 @@ public class GameLoader extends BasicMenu implements Runnable {
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-
         }
         FluxConstants.FluxHasLoaded = true;
     }

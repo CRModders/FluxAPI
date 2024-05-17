@@ -43,6 +43,7 @@ public class FluxRegistries {
     @Stable
     public static FreezingRegistry<IFactory<FluxBlockAction>> BLOCK_EVENT_ACTION_FACTORIES = FreezingRegistry.create();
 
+
     /**
      * Used by Flux to register all blocks {@link IModBlock}
      * This Registry is used by flux and is read only to Mods.
