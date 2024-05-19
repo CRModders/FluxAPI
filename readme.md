@@ -7,6 +7,7 @@ Here is an example `repositories` section
 ```
 repositories {
 	maven { url 'https://maven.crmodders.dev/releases/' }
+	maven { url 'https://maven.crmodders.dev/snapshots/' }
 	
 	mavenCentral()
 }
@@ -14,7 +15,7 @@ repositories {
 
 Step 2: Add Flux to your dependencies using the text below
 ```
-implementation "dev.crmodders:fluxapi:0.6.0"
+implementation "dev.crmodders:fluxapi:0.6.1"
 ```
 
 ### Dev Commands (for contributors)
