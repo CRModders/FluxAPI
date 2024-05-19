@@ -127,12 +127,15 @@ dependencies {
     // GDX stuff not included in Cosmic Reacha
     shadowMe("com.badlogicgames.gdx:gdx-freetype:${gdx_version}") { exclude group: "com.badlogicgames.gdx" }
     shadowMe("com.badlogicgames.gdx:gdx-freetype-platform:${gdx_version}:natives-desktop") { exclude group: "com.badlogicgames.gdx" }
+
+    shadowMe fileTree("./lib")
 }
 
 processResources {
     def resourceTargets = [ // Locations of where to inject the properties
                             "fabric.mod.json",
-                            "quilt.mod.json"
+                            "quilt.mod.json",
+                            "appel.mod.json"
     ]
 
     // Left item is the name in the target, right is the variable name
@@ -144,7 +147,6 @@ processResources {
             "mod_group"       : project.group,
             "cosmic_reach_version"        : cosmic_reach_version,
     ]
-
 
     inputs.properties replaceProperties
     replaceProperties.put "project", project
