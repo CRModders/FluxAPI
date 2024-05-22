@@ -1,5 +1,6 @@
 package dev.crmodders.flux.mixins.gui;
 
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -22,8 +23,8 @@ public class FontRendererMixin {
 		ci.setReturnValue(textDim);
 	}
 
-	@Inject(method = "drawText(Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;Lcom/badlogic/gdx/utils/viewport/Viewport;Ljava/lang/String;FF)V", at = @At("HEAD"), cancellable = true)
-	private static void drawText(SpriteBatch batch, Viewport uiViewport, String text, float xStart, float yStart, CallbackInfo ci) {
+	@Inject(method = "drawText(Lcom/badlogic/gdx/graphics/g2d/Batch;Lcom/badlogic/gdx/utils/viewport/Viewport;Ljava/lang/String;FF)V", at = @At("HEAD"), cancellable = true)
+	private static void drawText(Batch batch, Viewport uiViewport, String text, float xStart, float yStart, CallbackInfo ci) {
 		TextBatch textBatch = UIRenderer.uiRenderer.createStyledText(UIRenderer.font, 18, text);
 		UIRenderer.uiRenderer.drawBatch(textBatch, xStart, yStart);
 		ci.cancel();

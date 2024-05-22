@@ -3,7 +3,7 @@ package dev.crmodders.flux.mixins.events;
 import dev.crmodders.flux.api.v5.events.GameEvents;
 import finalforeach.cosmicreach.blocks.BlockPosition;
 import finalforeach.cosmicreach.blocks.BlockState;
-import finalforeach.cosmicreach.world.BlockSelection;
+import finalforeach.cosmicreach.BlockSelection;
 import finalforeach.cosmicreach.world.Zone;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
