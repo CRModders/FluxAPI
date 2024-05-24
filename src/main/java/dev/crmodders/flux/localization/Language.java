@@ -1,39 +1,59 @@
 package dev.crmodders.flux.localization;
 
+import dev.crmodders.flux.FluxRegistries;
+import dev.crmodders.flux.registries.AccessableRegistry;
+
 import java.util.List;
 
-public class Language implements Translation {
-    private final LanguageFile locale;
+public class Language {
 
-    private final LanguageFile enUs;
+	private final ILanguageFile file;
 
-    public Language(LanguageFile locale, LanguageFile enUs) {
-        this.locale = locale;
-        this.enUs = enUs;
-    }
+	public Language(ILanguageFile file) {
+		super();
+		this.file = file;
+	}
 
-    private TranslationEntry getEntry(TranslationKey key){
-        if(locale.containsKey(key)) {
-            return locale.get(key);
-        }
-        if(enUs.containsKey(key)) {
-            return enUs.get(key);
-        }
-        return UNDEFINED;
-    }
+	protected TranslationEntry entry(TranslationKey key) {
+		if (file.contains(key)) {
+			return file.get(key);
+		}
+		for (TranslationLocale fallback : file.fallbacks()) {
+			AccessableRegistry<Language> allLanguages = FluxRegistries.LANGUAGES.access();
+			Language language = allLanguages.get(fallback.toIdentifier());
+			if (language != null) {
+				return language.entry(key);
+			}
+		}
+		return new TranslationEntry(key.getIdentifier());
+	}
 
-    @Override
-    public TranslationString getTranslatedString(TranslationKey key) {
-        return getEntry(key).getString();
-    }
+	public TranslationString get(String key) {
+		return entry(new TranslationKey(key)).string();
+	}
 
-    @Override
-    public List<TranslationString> getTranslatedStrings(TranslationKey key) {
-        return getEntry(key).getStrings();
-    }
+	public String string(String key) {
+		return get(key).string();
+	}
 
-    @Override
-    public TranslationString getTranslatedString(TranslationKey key, int index) {
-        return getEntry(key).getString(index);
-    }
+	public String format(String key, Object... args) {
+		return get(key).format(args);
+	}
+
+	public TranslationString get(TranslationKey key) {
+		return entry(key).string();
+	}
+
+	public List<TranslationString> getList(TranslationKey key) {
+		return entry(key).strings();
+	}
+
+	public TranslationString get(TranslationKey key, int index) {
+		return entry(key).string(index);
+	}
+
+	public ILanguageFile getFile() {
+		return file;
+	}
+
 }

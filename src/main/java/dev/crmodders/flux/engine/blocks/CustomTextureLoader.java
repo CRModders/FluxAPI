@@ -2,7 +2,7 @@ package dev.crmodders.flux.engine.blocks;
 
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
-import dev.crmodders.flux.mixins.accessor.ChunkShaderAccessor;
+import dev.crmodders.flux.mixins.blocks.ChunkShaderAccessor;
 import finalforeach.cosmicreach.rendering.blockmodels.BlockModelJsonTexture;
 import finalforeach.cosmicreach.rendering.shaders.ChunkShader;
 

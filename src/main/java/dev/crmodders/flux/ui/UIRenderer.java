@@ -5,11 +5,11 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import dev.crmodders.flux.api.gui.base.BaseElement;
+import dev.crmodders.flux.gui.base.BaseElement;
 import dev.crmodders.flux.ui.font.Font;
 import dev.crmodders.flux.ui.font.FontTexture;
 import dev.crmodders.flux.ui.text.TextBatch;
@@ -101,15 +101,15 @@ public class UIRenderer {
 		uiRenderer = new UIRenderer(GameState.batch);
 	}
 
-	public SpriteBatch batch;
+	public Batch batch;
 	public ShapeDrawer renderer;
 
-	public UIRenderer(SpriteBatch batch) {
-		changeSpriteBatch(batch);
+	public UIRenderer(Batch batch) {
+		changeBatch(batch);
 	}
 
-	public void changeSpriteBatch(SpriteBatch batch) {
-		boolean wasDrawing = this.batch == null ? false : this.batch.isDrawing();
+	public void changeBatch(Batch batch) {
+		boolean wasDrawing = this.batch != null && this.batch.isDrawing();
 		if(wasDrawing) this.batch.end();
 		this.batch = batch;
 		this.renderer = new ShapeDrawer(batch, new TextureRegion(white));

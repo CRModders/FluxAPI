@@ -1,11 +1,11 @@
 package dev.crmodders.flux.ui.shapes;
 
-import dev.crmodders.flux.ui.Batch;
+import dev.crmodders.flux.ui.UIBatch;
 import dev.crmodders.flux.ui.UIRenderer;
 
 import java.util.List;
 
-public class ShapeBatch implements Batch {
+public class ShapeBatch implements UIBatch {
 
 	public List<Shape> shapes;
 

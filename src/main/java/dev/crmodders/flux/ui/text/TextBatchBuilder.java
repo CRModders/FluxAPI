@@ -1,14 +1,14 @@
 package dev.crmodders.flux.ui.text;
 
 import com.badlogic.gdx.graphics.Color;
-import dev.crmodders.flux.ui.BatchBuilder;
+import dev.crmodders.flux.ui.UIBatchBuilder;
 import dev.crmodders.flux.ui.font.Font;
 import dev.crmodders.flux.ui.util.StyleStringParser;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class TextBatchBuilder implements BatchBuilder {
+public class TextBatchBuilder implements UIBatchBuilder {
 
 	public List<TextLine> lines;
 	public TextLine line;

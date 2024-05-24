@@ -1,7 +1,7 @@
 package dev.crmodders.flux.engine.blocks;
 
 import com.badlogic.gdx.utils.Json;
-import dev.crmodders.flux.api.assets.VanillaAssetLocations;
+import dev.crmodders.flux.assets.VanillaAssetLocations;
 import dev.crmodders.flux.engine.blocks.models.json.BlockModelFlux;
 import finalforeach.cosmicreach.blocks.BlockState;
 import finalforeach.cosmicreach.rendering.blockmodels.BlockModel;

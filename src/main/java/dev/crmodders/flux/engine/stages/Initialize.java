@@ -3,8 +3,8 @@ package dev.crmodders.flux.engine.stages;
 import dev.crmodders.flux.engine.GameLoader;
 import dev.crmodders.flux.engine.LoadStage;
 import dev.crmodders.flux.localization.TranslationKey;
-import dev.crmodders.flux.registry.FluxRegistries;
-import dev.crmodders.flux.registry.registries.AccessableRegistry;
+import dev.crmodders.flux.FluxRegistries;
+import dev.crmodders.flux.registries.AccessableRegistry;
 import dev.crmodders.flux.tags.Identifier;
 
 public class Initialize extends LoadStage {

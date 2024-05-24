@@ -1,21 +1,23 @@
 package dev.crmodders.flux.engine.stages;
 
-import dev.crmodders.flux.api.assets.VanillaAssetLocations;
-import dev.crmodders.flux.api.block.IModBlock;
-import dev.crmodders.flux.api.block.impl.DataModBlock;
-import dev.crmodders.flux.api.factories.IFactory;
-import dev.crmodders.flux.engine.blocks.actions.OnBreakTrigger;
-import dev.crmodders.flux.engine.blocks.actions.OnInteractTrigger;
-import dev.crmodders.flux.engine.blocks.actions.OnPlaceTrigger;
-import dev.crmodders.flux.api.resource.ResourceLocation;
+import dev.crmodders.flux.assets.VanillaAssetLocations;
+import dev.crmodders.flux.block.IModBlock;
+import dev.crmodders.flux.block.DataModBlock;
+import dev.crmodders.flux.factories.IFactory;
+import dev.crmodders.flux.events.OnRegisterBlockEvent;
+import dev.crmodders.flux.tags.ResourceLocation;
 import dev.crmodders.flux.engine.GameLoader;
 import dev.crmodders.flux.engine.LoadStage;
 import dev.crmodders.flux.engine.blocks.BlockLoadException;
+import dev.crmodders.flux.engine.blocks.actions.OnBreakTrigger;
+import dev.crmodders.flux.engine.blocks.actions.OnInteractTrigger;
+import dev.crmodders.flux.engine.blocks.actions.OnPlaceTrigger;
 import dev.crmodders.flux.localization.TranslationKey;
-import dev.crmodders.flux.registry.FluxRegistries;
-import dev.crmodders.flux.registry.registries.AccessableRegistry;
+import dev.crmodders.flux.FluxRegistries;
+import dev.crmodders.flux.registries.AccessableRegistry;
 import dev.crmodders.flux.tags.Identifier;
 import finalforeach.cosmicreach.blockevents.BlockEvents;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,38 +26,38 @@ import static dev.crmodders.flux.engine.GameLoader.logger;
 
 public class LoadingCosmicReach extends LoadStage {
 
-
-    private final List<String> blockNames = new ArrayList<>();
-
     @Override
     public void initialize(GameLoader loader) {
         super.initialize(loader);
         title = new TranslationKey("fluxapi:loading_menu.loading_cosmic_reach");
+    }
 
+    @Subscribe
+    public void onEvent(OnRegisterBlockEvent event) {
+        List<String> blockNames = new ArrayList<>();
+        for(ResourceLocation internal : VanillaAssetLocations.getInternalFiles("blocks/", ".json")) {
+            blockNames.add(internal.name.replace("blocks/", "").replace(".json", ""));
+        }
+        for(ResourceLocation internal : VanillaAssetLocations.getVanillaModFiles("blocks/", ".json")) {
+            blockNames.add(internal.name.replace("blocks/", "").replace(".json", ""));
+        }
+        for(String blockName : blockNames) {
+            event.registerBlock(() -> new DataModBlock(blockName));
+        }
     }
 
     @Override
     public void doStage() {
         super.doStage();
-
         BlockEvents.registerBlockEventAction(OnPlaceTrigger.class);
         BlockEvents.registerBlockEventAction(OnBreakTrigger.class);
         BlockEvents.registerBlockEventAction(OnInteractTrigger.class);
 
-        for(ResourceLocation internal : VanillaAssetLocations.getInternalFiles("blocks/", ".json")) {
-            blockNames.add(internal.name.replace("blocks/", "").replace(".json", ""));
-        }
+        List<IFactory<IModBlock>> blockFactories = new ArrayList<>();
+        FluxRegistries.EVENT_BUS.post(new OnRegisterBlockEvent(blockFactories));
 
-        for(ResourceLocation internal : VanillaAssetLocations.getVanillaModFiles("blocks/", ".json")) {
-            blockNames.add(internal.name.replace("blocks/", "").replace(".json", ""));
-        }
-
-        for(String blockName : blockNames) {
-            FluxRegistries.BLOCK_FACTORIES.add(() -> new DataModBlock(blockName));
-        }
-
-        loader.setupProgressBar(loader.progress2, FluxRegistries.BLOCK_FACTORIES.size(), "Creating Blocks");
-        for(IFactory<IModBlock> blockFactory : FluxRegistries.BLOCK_FACTORIES) {
+        loader.setupProgressBar(loader.progress2, blockFactories.size(), "Creating Blocks");
+        for(IFactory<IModBlock> blockFactory : blockFactories) {
             loader.incrementProgress(loader.progress2);
             try {
                 IModBlock block = blockFactory.generate();
@@ -69,7 +71,6 @@ public class LoadingCosmicReach extends LoadStage {
 
         loader.blockLoader.registerFinalizers();
         loader.blockLoader.hookBlockManager();
-
     }
 
     @Override

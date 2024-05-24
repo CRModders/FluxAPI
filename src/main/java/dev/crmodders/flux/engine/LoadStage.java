@@ -1,5 +1,6 @@
 package dev.crmodders.flux.engine;
 
+import dev.crmodders.flux.FluxRegistries;
 import dev.crmodders.flux.localization.TranslationKey;
 
 import java.util.ArrayList;
@@ -13,6 +14,9 @@ public class LoadStage {
 
     public void initialize(GameLoader loader) {
         this.loader = loader;
+        try {
+            FluxRegistries.EVENT_BUS.register(this);
+        } catch (Exception ignored) {}
     }
 
     public void doStage() {

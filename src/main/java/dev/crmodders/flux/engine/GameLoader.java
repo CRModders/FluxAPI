@@ -1,14 +1,23 @@
 package dev.crmodders.flux.engine;
 
 import dev.crmodders.flux.FluxConstants;
-import dev.crmodders.flux.api.gui.ProgressBarElement;
-import dev.crmodders.flux.api.gui.TextElement;
+import dev.crmodders.flux.FluxRegistries;
+import dev.crmodders.flux.gui.ProgressBarElement;
+import dev.crmodders.flux.gui.TextElement;
 import dev.crmodders.flux.engine.blocks.BlockLoader;
-import dev.crmodders.flux.engine.stages.*;
+import dev.crmodders.flux.engine.stages.Initialize;
+import dev.crmodders.flux.engine.stages.LoadingCosmicReach;
+import dev.crmodders.flux.engine.stages.PostInitialize;
+import dev.crmodders.flux.engine.stages.PreInitialize;
+import dev.crmodders.flux.events.OnRegisterLanguageEvent;
+import dev.crmodders.flux.localization.LanguageManager;
 import dev.crmodders.flux.localization.TranslationKey;
+import dev.crmodders.flux.localization.TranslationLocale;
 import dev.crmodders.flux.menus.BasicMenu;
 import finalforeach.cosmicreach.GameSingletons;
 import finalforeach.cosmicreach.gamestates.GameState;
+import finalforeach.cosmicreach.gamestates.PrealphaPreamble;
+import finalforeach.cosmicreach.settings.Preferences;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,14 +39,14 @@ public class GameLoader extends BasicMenu implements Runnable {
     private final Queue<LoadStage> stages = new LinkedList<>();
 
     private Queue<Runnable> glQueue;
-    private CountDownLatch glLock;
-    private Thread loadingThread;
 
     public BlockLoader blockLoader;
 
     @Override
     public void create() {
         super.create();
+
+        registerLanguages();
 
         title = new TextElement(new TranslationKey("fluxapi:loading_menu.waiting_title"));
         title.setPosition(0, -100);
@@ -72,16 +81,22 @@ public class GameLoader extends BasicMenu implements Runnable {
         GameSingletons.blockModelInstantiator = blockLoader.factory;
 
         addStage(new PreInitialize());
-        addStage(new LoadResources());
         addStage(new Initialize());
         addStage(new LoadingCosmicReach());
-        addStage(new Legacy());
         addStage(new PostInitialize());
 
         glQueue = new LinkedList<>();
 
-        loadingThread = new Thread(this, "GameLoader");
+        Thread loadingThread = new Thread(this, "GameLoader");
         loadingThread.start();
+    }
+
+    private void registerLanguages() {
+        // fire lang event, select english, select preferred language if existing
+        FluxRegistries.EVENT_BUS.post(new OnRegisterLanguageEvent());
+        LanguageManager.selectLanguage(TranslationLocale.fromLanguageTag("en-US"));
+        String chosen = Preferences.chosenLang.getValue();
+        if(chosen != null) LanguageManager.selectLanguage(TranslationLocale.fromLanguageTag(chosen));
     }
 
     public void addStage(LoadStage stage) {
@@ -103,8 +118,7 @@ public class GameLoader extends BasicMenu implements Runnable {
             logger.info("Manually Garbage Collecting");
             System.gc();
 
-            glLock = new CountDownLatch(1);
-
+            CountDownLatch glLock = new CountDownLatch(1);
             List<Runnable> glTasks = stage.getGlTasks();
             glQueue.addAll(glTasks);
             glQueue.add( glLock::countDown );
@@ -133,7 +147,7 @@ public class GameLoader extends BasicMenu implements Runnable {
         }
 
         if(FluxConstants.FluxHasLoaded) {
-            GameState.switchToGameState(FluxConstants.MAIN_MENU);
+            GameState.switchToGameState(new PrealphaPreamble());
         }
 
         super.render(partTime);

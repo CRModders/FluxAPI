@@ -3,7 +3,7 @@ package dev.crmodders.flux.mixins.gui;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import dev.crmodders.flux.api.gui.interfaces.GameStateInterface;
+import dev.crmodders.flux.gui.interfaces.GameStateInterface;
 import dev.crmodders.flux.ui.Component;
 import dev.crmodders.flux.ui.UIRenderer;
 import finalforeach.cosmicreach.gamestates.GameState;
@@ -25,6 +25,7 @@ public abstract class GameStateMixin implements GameStateInterface {
 	protected OrthographicCamera uiCamera;
 	@Shadow
 	Vector2 mouse;
+
 	private List<Component> components = new ArrayList<>();
 
 	@Override

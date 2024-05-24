@@ -1,9 +1,8 @@
 package dev.crmodders.flux;
 
-import dev.crmodders.flux.api.events.GameEvents;
-import dev.crmodders.flux.localization.LanguageFile;
-import dev.crmodders.flux.localization.TranslationApi;
+import dev.crmodders.flux.events.OnRegisterLanguageEvent;
 import net.appel.mod.interfaces.ModInitializer;
+import org.greenrobot.eventbus.Subscribe;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,12 +12,13 @@ public class FluxAppel implements ModInitializer {
 
     @Override
     public void onInit() {
-        LOGGER.info("Flux Fabric Initialized");
+        LOGGER.info("Flux Initialized");
+        FluxRegistries.EVENT_BUS.register(this);
+    }
 
-        GameEvents.ON_REGISTER_LANGUAGE.register(() -> {
-            LanguageFile lang = LanguageFile.loadLanguageFile(FluxConstants.LanguageEnUs.load());
-            TranslationApi.registerLanguageFile(lang);
-        });
+    @Subscribe
+    public void onEvent(OnRegisterLanguageEvent event) {
+        event.registerLanguage(FluxConstants.LanguageEnUs.load());
     }
 
     @Override

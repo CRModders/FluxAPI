@@ -22,12 +22,13 @@
         "sources": "https://github.com/CRModders/FluxAPI"
       },
 
+      "license": "MIT",
+
       "icon": "assets/fluxapi/icon.png"
     },
 
     "entrypoints": {
-      "main": "dev.crmodders.flux.FluxAPI",
-      "modmenu": "dev.crmodders.flux.FluxModMenuConfig"
+      "main": "dev.crmodders.flux.FluxAPI"
     },
 
     "depends": [

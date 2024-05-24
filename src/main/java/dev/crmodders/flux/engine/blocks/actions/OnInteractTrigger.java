@@ -1,7 +1,7 @@
 package dev.crmodders.flux.engine.blocks.actions;
 
-import dev.crmodders.flux.api.block.IModBlock;
-import dev.crmodders.flux.registry.FluxRegistries;
+import dev.crmodders.flux.block.IModBlock;
+import dev.crmodders.flux.FluxRegistries;
 import dev.crmodders.flux.tags.Identifier;
 import finalforeach.cosmicreach.blockevents.BlockEventTrigger;
 import finalforeach.cosmicreach.blockevents.actions.ActionId;

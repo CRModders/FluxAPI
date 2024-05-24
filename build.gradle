@@ -109,26 +109,17 @@ dependencies {
     compileOnly("io.github.llamalad7:mixinextras-fabric:0.3.5")
 
     // Modmenu
-    gameMod("dev.crmodders:modmenu:${modmenu_version}")
+    compileOnly("dev.crmodders:modmenu:${modmenu_version}")
 
-    // Json stuff
-    shadowMe("com.google.guava:guava:33.0.0-jre")
-    shadowMe("com.google.code.gson:gson:2.9.1")
-    shadowMe("org.hjson:hjson:${hjson_version}")
-
-
+    // https://mvnrepository.com/artifact/org.greenrobot/eventbus
+    shadowMe('org.greenrobot:eventbus:3.1.1')
     // Logging
     shadowMe("org.slf4j:slf4j-api:2.0.10")
-    shadowMe("ch.qos.logback:logback-core:1.5.5")
 
     // Shape Drawer
     shadowMe("space.earlygrey:shapedrawer:${shape_drawer_version}") { exclude group: "com.badlogicgames.gdx" }
 
-    // GDX stuff not included in Cosmic Reacha
-    shadowMe("com.badlogicgames.gdx:gdx-freetype:${gdx_version}") { exclude group: "com.badlogicgames.gdx" }
-    shadowMe("com.badlogicgames.gdx:gdx-freetype-platform:${gdx_version}:natives-desktop") { exclude group: "com.badlogicgames.gdx" }
-
-    shadowMe fileTree("./lib")
+    compileOnly fileTree("./lib")
 }
 
 processResources {

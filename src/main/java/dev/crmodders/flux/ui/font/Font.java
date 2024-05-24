@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.TextureData;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.math.Vector2;
 
 import java.awt.*;
@@ -23,7 +22,6 @@ public class Font {
     public static Font generate(FileHandle file, int resolution, String characters) {
         return switch (file.extension()) {
             case "fnt" -> generateBitmapFont(file);
-            case "ttf" -> generateTrueTypeFont(file, resolution, characters);
             default -> throw new RuntimeException(file + " is not a Font");
         };
     }
@@ -86,15 +84,6 @@ public class Font {
         }
 
         return new Font(new BitmapFont(data, new TextureRegion(texture), true), 16);
-    }
-
-    public static Font generateTrueTypeFont(FileHandle ttf, int resolution, String characters) {
-        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(ttf);
-        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        parameter.size = resolution;
-        parameter.characters = characters;
-        parameter.flip = true;
-        return new Font(generator.generateFont(parameter), resolution);
     }
 
     public static Font generateBitmapFont(FileHandle fnt) {

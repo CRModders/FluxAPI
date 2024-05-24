@@ -1,12 +1,12 @@
 package dev.crmodders.flux.ui.shapes;
 
 import com.badlogic.gdx.graphics.Color;
-import dev.crmodders.flux.ui.BatchBuilder;
+import dev.crmodders.flux.ui.UIBatchBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ShapeBatchBuilder implements BatchBuilder {
+public class ShapeBatchBuilder implements UIBatchBuilder {
 
 	public List<Shape> shapes;
 	public Color color;

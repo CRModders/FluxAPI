@@ -1,12 +1,12 @@
 package dev.crmodders.flux.ui.image;
 
 import com.badlogic.gdx.graphics.Texture;
-import dev.crmodders.flux.ui.BatchBuilder;
+import dev.crmodders.flux.ui.UIBatchBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ImageBatchBuilder implements BatchBuilder {
+public class ImageBatchBuilder implements UIBatchBuilder {
 
     public List<Image> images = new ArrayList<>();
 

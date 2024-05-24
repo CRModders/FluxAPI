@@ -2,12 +2,12 @@ package dev.crmodders.flux.ui.text;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Matrix4;
-import dev.crmodders.flux.ui.Batch;
+import dev.crmodders.flux.ui.UIBatch;
 import dev.crmodders.flux.ui.UIRenderer;
 
 import java.util.List;
 
-public class TextBatch implements Batch {
+public class TextBatch implements UIBatch {
 
 	private List<TextLine> lines;
 	private float width;

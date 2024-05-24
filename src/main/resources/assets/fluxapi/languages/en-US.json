@@ -48,7 +48,7 @@
                 "config_menu": "Mod Configs"
             },
             "loading_menu": {
-                "waiting_title": "Loading/Building Modded Assets",
+                "waiting_title": "Loading Modded Assets",
                 "ram_usage": "Memory Used/Total: {usage}MB/{total}MB",
                 "loading_cosmic_reach": "Loading Cosmic Reach",
                 "registering_assets": "Registering Assets",

@@ -19,25 +19,30 @@ public class TranslationEntry {
         this.string = Collections.unmodifiableList(string);
         this.parameters = Collections.emptyList();
     }
+    
+    public TranslationEntry(String string) {
+        this.string = List.of(new TranslationString(string));
+        this.parameters = Collections.emptyList();
+    }
 
     public TranslationEntry() {
         this.string = List.of(new TranslationString("undefined"));
         this.parameters = Collections.emptyList();
     }
 
-    public List<TranslationString> getStrings() {
+    public List<TranslationString> strings() {
         return string;
     }
 
-    public TranslationString getString() {
+    public TranslationString string() {
         return string.get(0);
     }
 
-    public TranslationString getString(int i) {
+    public TranslationString string(int i) {
         return string.get(i);
     }
 
-    public List<String> getParameters() {
+    public List<String> parameters() {
         return parameters;
     }
 

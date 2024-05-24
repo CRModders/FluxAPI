@@ -1,12 +1,12 @@
 package dev.crmodders.flux.ui.image;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import dev.crmodders.flux.ui.Batch;
+import dev.crmodders.flux.ui.UIBatch;
 import dev.crmodders.flux.ui.UIRenderer;
 
 import java.util.List;
 
-public class ImageBatch implements Batch {
+public class ImageBatch implements UIBatch {
     public final List<Image> images;
 
     public ImageBatch(List<Image> images) {
