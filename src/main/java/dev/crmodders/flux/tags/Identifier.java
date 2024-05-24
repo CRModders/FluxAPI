@@ -1,6 +1,9 @@
 package dev.crmodders.flux.tags;
 
 import dev.crmodders.flux.annotations.Stable;
+import finalforeach.cosmicreach.io.CosmicReachBinaryDeserializer;
+import finalforeach.cosmicreach.io.CosmicReachBinarySerializer;
+import finalforeach.cosmicreach.io.ICosmicReachBinarySerializable;
 
 import java.util.Objects;
 
@@ -12,7 +15,7 @@ import java.util.Objects;
  * @author Mr-Zombii
  */
 @Stable
-public class Identifier {
+public class Identifier implements ICosmicReachBinarySerializable {
 
     public String namespace;
     public String name;
@@ -46,4 +49,21 @@ public class Identifier {
         return new Identifier(splitId[0], splitId[1]);
     }
 
+    public void readFromString(String id) {
+        if (!id.contains(":")) id = "base:"+id;
+        String[] splitId = id.split(":");
+        this.namespace = splitId[0];
+        this.name = splitId[1];
+    }
+
+
+    @Override
+    public void read(CosmicReachBinaryDeserializer deserializer) {
+        readFromString(deserializer.readString("stringId"));
+    }
+
+    @Override
+    public void write(CosmicReachBinarySerializer serializer) {
+        serializer.writeString("stringId", namespace + ":" + name);
+    }
 }

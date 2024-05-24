@@ -21,7 +21,7 @@ public abstract class OptionsMenuMixin extends GameState {
 	@Inject(method = "<init>", at = @At("TAIL"))
 	private void addUiElements(CallbackInfo ci) {
 		SwitchGameStateButtonElement button = new SwitchGameStateButtonElement(() -> new FluxOptionMenu(this));
-		button.setBounds(-137.0f, 25f, 250f, 50f);
+		button.setBounds(403.0f, 215, 250f, 50f);
 		button.translation = TEXT_FLUX_OPTIONS;
 		button.visible = true;
 		button.updateText();

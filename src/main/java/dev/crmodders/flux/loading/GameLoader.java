@@ -82,6 +82,7 @@ public class GameLoader extends BasicMenu {
         addStage(new RegisterBlocks());
         addStage(new RegisterBlockActions());
         addStage(new RegisterBlockEvents());
+        addStage(new RegisterBlockEntities());
         addStage(new FinalizeBlocks());
         addStage(new PostInitialize());
 

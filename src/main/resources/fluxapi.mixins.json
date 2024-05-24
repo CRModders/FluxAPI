@@ -25,7 +25,8 @@
     "registry.BlockRegisterer",
     "registry.RegistryRegisterer",
     "rendering.shaders.ChunkShaderMixin",
-    "rendering.shaders.GameShaderMixin"
+    "rendering.shaders.GameShaderMixin",
+    "runtime.ZoneTicking"
   ],
   "client": [],
   "server": [],

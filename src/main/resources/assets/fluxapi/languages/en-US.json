@@ -58,6 +58,7 @@
                 "init_phase": "Init",
                 "post_init_phase": "PostInit",
                 "registering_blocks": "Registering Blocks",
+                "registering_block_entities": "Registering Block Entities",
                 "registering_block_event_actions": "Registering Block Actions",
                 "registering_block_events": "Registering Block Events",
                 "finalizing_blocks": "Finalizing Blocks",

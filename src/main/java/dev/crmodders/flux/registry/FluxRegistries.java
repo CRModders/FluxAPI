@@ -4,6 +4,9 @@ import dev.crmodders.flux.annotations.FluxInternal;
 import dev.crmodders.flux.annotations.Stable;
 import dev.crmodders.flux.api.v5.block.IModBlock;
 import dev.crmodders.flux.api.v5.config.BasicConfig;
+import dev.crmodders.flux.api.v5.entities.ZoneBlockEntityPair;
+import dev.crmodders.flux.api.v5.entities.api.IFluxBlockEntity;
+import dev.crmodders.flux.api.v5.entities.suppliers.FluxBlockEntityBuilder;
 import dev.crmodders.flux.api.v5.generators.FactoryFinalizer;
 import dev.crmodders.flux.api.v5.generators.data.blockevent.BlockEventDataExt;
 import dev.crmodders.flux.api.v5.resource.ResourceObject;
@@ -25,6 +28,9 @@ public class FluxRegistries {
      */
     @Stable
     public static DynamicRegistry<ResourceObject> GAME_RESOURCES = DynamicRegistry.create();
+
+    @Stable
+    public static FreezingRegistry<FluxBlockEntityBuilder> BLOCK_ENTITY_BUILDERS = FreezingRegistry.create();
 
     /**
      * Used for Registering Custom {@link IModBlock}
@@ -53,6 +59,9 @@ public class FluxRegistries {
      */
     @Stable
     public static DynamicRegistry<FactoryFinalizer<?>> FACTORY_FINALIZERS = DynamicRegistry.create();
+
+    @FluxInternal
+    public static DynamicRegistry<ZoneBlockEntityPair> BLOCK_ENTITIES = DynamicRegistry.create();
 
     @FluxInternal
     public static DynamicRegistry<LanguageFile> LANGUAGE_FILES = DynamicRegistry.create();

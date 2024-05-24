@@ -21,5 +21,6 @@ public class FluxAPI implements ModInitializer {
             TranslationApi.registerLanguageFile(lang);
         });
 
+
     }
 }
