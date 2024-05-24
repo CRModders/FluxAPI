@@ -2,8 +2,12 @@ package dev.crmodders.flux.util;
 
 import finalforeach.cosmicreach.blockevents.actions.BlockActionPlaySound2D;
 import finalforeach.cosmicreach.blockevents.actions.BlockActionReplaceBlockState;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class BlockEventActionFactory {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger("Block Action Factory");
 
     public static BlockActionReplaceBlockState createReplaceBlockEvent(String blockStateId, int xOff, int yOff, int zOff) {
         BlockActionReplaceBlockState replace = new BlockActionReplaceBlockState();
@@ -13,7 +17,7 @@ public class BlockEventActionFactory {
             PrivUtils.setPrivField(replace, "yOff", yOff);
             PrivUtils.setPrivField(replace, "zOff", zOff);
         } catch (NoSuchFieldException | IllegalAccessException e) {
-            // TODO
+            LOGGER.error("createReplaceBlockEvent failed", e);
         }
         return replace;
     }
@@ -26,7 +30,7 @@ public class BlockEventActionFactory {
             PrivUtils.setPrivField(sound2D, "pitch", pitch);
             PrivUtils.setPrivField(sound2D, "pan", pan);
         } catch (NoSuchFieldException | IllegalAccessException e) {
-            // TODO
+            LOGGER.error("createPlaySound2D failed", e);
         }
         return sound2D;
     }
