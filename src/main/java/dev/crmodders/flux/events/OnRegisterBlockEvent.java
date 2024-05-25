@@ -5,7 +5,7 @@ import dev.crmodders.flux.factories.IFactory;
 
 import java.util.List;
 
-public class OnRegisterBlockEvent {
+public class OnRegisterBlockEvent extends Event {
 
     private final List<IFactory<IModBlock>> blockFactories;
 
