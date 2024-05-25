@@ -23,8 +23,6 @@ To run Cosmic Quilt in the dev env, run `gradle runQuilt`\
 To run Fabric in the dev env, run `gradle runFabric`\
 To build, run `gradlew build` with the jar being in `build/libs/` and ending with `-all.jar`
 
-### Flux-Modules
-The current modules that flux provides are, </br>
-`dev.crmodders:flux-entities:1.0.0` -> [FluxEntities](https://github.com/crmodders/Flux-Entities) </br>
+### [Flux-Modules](./doc/modules.md)
 
-### Docs
+### [Docs](./doc/)
