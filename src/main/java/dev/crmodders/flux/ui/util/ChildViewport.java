@@ -5,7 +5,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 
 public class ChildViewport {
 
-    private static Vector2 tmp = new Vector2();
+    private static final Vector2 tmp = new Vector2();
 
     public Viewport viewport;
 

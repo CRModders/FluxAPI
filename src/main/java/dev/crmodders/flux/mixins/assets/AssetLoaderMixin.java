@@ -7,10 +7,7 @@ import finalforeach.cosmicreach.GameAssetLoader;
 import finalforeach.cosmicreach.io.SaveLocation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.spongepowered.asm.mixin.Final;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Overwrite;
-import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
@@ -18,7 +15,8 @@ import java.util.HashMap;
 
 @Mixin(GameAssetLoader.class)
 public class AssetLoaderMixin {
-    private static Logger logger = LoggerFactory.getLogger("FluxAPI / AssetLoader");
+    @Unique
+    private static final Logger logger = LoggerFactory.getLogger("FluxAPI / AssetLoader");
 
     @Shadow @Final public static HashMap<String, FileHandle> ALL_ASSETS;
 

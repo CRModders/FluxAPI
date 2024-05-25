@@ -13,6 +13,7 @@ import finalforeach.cosmicreach.rendering.shaders.ChunkShader;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class BlockModelFlux extends BlockModel {
 
@@ -51,14 +52,16 @@ public class BlockModelFlux extends BlockModel {
         if (t != null) {
             return t;
         }
-        if (texName.equals("slab_top")) {
-            return getTexture("top");
-        }
-        if (texName.equals("slab_bottom")) {
-            return this.getTexture("bottom");
-        }
-        if (texName.equals("slab_side")) {
-            return getTexture("side");
+        switch (texName) {
+            case "slab_top" -> {
+                return getTexture("top");
+            }
+            case "slab_bottom" -> {
+                return this.getTexture("bottom");
+            }
+            case "slab_side" -> {
+                return getTexture("side");
+            }
         }
         t = textures.get("all");
         if(t != null) {
@@ -94,7 +97,6 @@ public class BlockModelFlux extends BlockModel {
         if (this.textures != null) {
             for (final BlockModelJsonTexture t : this.textures.values()) {
                 if (t.fileName != null) {
-                    // TODO, Problem Source (if textures break)
                     t.uv = ChunkShader.addToAllBlocksTexture(null, t);
                 }
             }
@@ -370,10 +372,7 @@ public class BlockModelFlux extends BlockModel {
     
     @Override
     public boolean canGreedyCombine() {
-        if (this.canGreedyCombine == null) {
-            return this.isGreedyCube();
-        }
-        return this.canGreedyCombine;
+        return Objects.requireNonNullElseGet(this.canGreedyCombine, this::isGreedyCube);
     }
     
     @Override

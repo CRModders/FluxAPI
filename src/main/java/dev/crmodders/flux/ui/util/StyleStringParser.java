@@ -8,7 +8,7 @@ import java.util.Map;
 
 public class StyleStringParser {
 
-	private static Map<Character, Color> colors = new HashMap<>();
+	private static final Map<Character, Color> colors = new HashMap<>();
 	static {
 		colors.put('0', new Color(0.0f, 0.0f, 0.0f, 1.0f));
 		colors.put('1', new Color(0.0f, 0.0f, 0.667f, 1.0f));
@@ -35,13 +35,8 @@ public class StyleStringParser {
 
 				char next = text.charAt(i + 1);
 				if (next == '%') {
-					//batch.append('%');
 					i++;
 					continue;
-				}
-				if(!removeStyleChars) {
-					//batch.append(curr);
-					//batch.append(next);
 				}
 				if (next == 'U') {
 					batch.underline(true);
@@ -86,9 +81,6 @@ public class StyleStringParser {
 				if (next == '#' && i + 8 < text.length()) {
 					try {
 						String hex = text.substring(i + 2, i + 8);
-						if(!removeStyleChars) {
-							//batch.append(hex);
-						}
 						float r = Integer.parseInt(hex.substring(0, 2), 16) / 255f;
 						float g = Integer.parseInt(hex.substring(2, 4), 16) / 255f;
 						float b = Integer.parseInt(hex.substring(4, 6), 16) / 255f;

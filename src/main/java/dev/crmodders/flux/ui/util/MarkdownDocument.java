@@ -53,11 +53,7 @@ public class MarkdownDocument implements Document, InputProcessor {
 		markDirty();
 		if (to < 0) {
 			cursor = 0;
-		} else if (to > editor.length()) {
-			cursor = editor.length();
-		} else {
-			cursor = to;
-		}
+		} else cursor = Math.min(to, editor.length());
 	}
 
 	public void moveCursorBy(int by) {
@@ -97,64 +93,48 @@ public class MarkdownDocument implements Document, InputProcessor {
 
 	@Override
 	public boolean keyUp(int var1) {
-		if (!editable)
-			return false;
-		return false;
+        return false;
 	}
 
 	@Override
 	public boolean keyTyped(char chr) {
 		if (!editable)
 			return false;
-		switch (chr) {
-		case 8:
-			backspace();
-			return true;
-		default:
-			return type(chr);
-		}
-	}
+        if (chr == 8) {
+            backspace();
+            return true;
+        }
+        return type(chr);
+    }
 
 	@Override
 	public boolean touchDown(int var1, int var2, int var3, int var4) {
-		if (!editable)
-			return false;
-		return false;
+        return false;
 	}
 
 	@Override
 	public boolean touchUp(int var1, int var2, int var3, int var4) {
-		if (!editable)
-			return false;
-		return false;
+        return false;
 	}
 
 	@Override
 	public boolean touchCancelled(int var1, int var2, int var3, int var4) {
-		if (!editable)
-			return false;
-		return false;
+        return false;
 	}
 
 	@Override
 	public boolean touchDragged(int var1, int var2, int var3) {
-		if (!editable)
-			return false;
-		return false;
+        return false;
 	}
 
 	@Override
 	public boolean mouseMoved(int var1, int var2) {
-		if (!editable)
-			return false;
-		return false;
+        return false;
 	}
 
 	@Override
 	public boolean scrolled(float var1, float var2) {
-		if (!editable)
-			return false;
-		return false;
+        return false;
 	}
 
 	@Override

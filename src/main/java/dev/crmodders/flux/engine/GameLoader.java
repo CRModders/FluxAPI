@@ -2,14 +2,14 @@ package dev.crmodders.flux.engine;
 
 import dev.crmodders.flux.FluxConstants;
 import dev.crmodders.flux.FluxRegistries;
-import dev.crmodders.flux.gui.ProgressBarElement;
-import dev.crmodders.flux.gui.TextElement;
 import dev.crmodders.flux.engine.blocks.BlockLoader;
 import dev.crmodders.flux.engine.stages.Initialize;
 import dev.crmodders.flux.engine.stages.LoadingCosmicReach;
 import dev.crmodders.flux.engine.stages.PostInitialize;
 import dev.crmodders.flux.engine.stages.PreInitialize;
 import dev.crmodders.flux.events.OnRegisterLanguageEvent;
+import dev.crmodders.flux.gui.ProgressBarElement;
+import dev.crmodders.flux.gui.TextElement;
 import dev.crmodders.flux.localization.LanguageManager;
 import dev.crmodders.flux.localization.TranslationKey;
 import dev.crmodders.flux.localization.TranslationLocale;

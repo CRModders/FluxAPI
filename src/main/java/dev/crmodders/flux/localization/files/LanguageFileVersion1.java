@@ -7,10 +7,12 @@ import dev.crmodders.flux.localization.*;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.Serial;
 import java.util.*;
 
 public class LanguageFileVersion1 extends HashMap<TranslationKey, TranslationEntry> implements ILanguageFile {
 
+	@Serial
 	private static final long serialVersionUID = 6502650265026502L;
 
 	public static LanguageFileVersion1 loadLanguageFile(FileHandle file) throws IOException {
@@ -154,7 +156,7 @@ public class LanguageFileVersion1 extends HashMap<TranslationKey, TranslationEnt
 			builder.append(name).append(".");
 		}
 		builder.deleteCharAt(builder.length() - 1);
-		return new TranslationKey(id.name + ":" + builder.toString());
+		return new TranslationKey(id.name + ":" + builder);
 	}
 
 	private TranslationEntry parseEntry(JsonValue string, JsonValue format_template) {

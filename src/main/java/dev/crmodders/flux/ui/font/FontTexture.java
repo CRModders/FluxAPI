@@ -16,7 +16,7 @@ public class FontTexture {
 
     public FontTexture(Object fontTexture, Class<?> fontTextureClass) {
         try {
-            Field field = null;
+            Field field;
             field = fontTextureClass.getDeclaredField("unicodeStart");
             field.setAccessible(true);
             this.unicodeStart = field.getInt(fontTexture);

@@ -15,7 +15,7 @@ import java.io.PrintStream;
 public class BlockGameMixin {
 
     @Unique
-    private static Logger logger = LoggerFactory.getLogger("CosmicReach / BlockGame");
+    private static final Logger logger = LoggerFactory.getLogger("CosmicReach / BlockGame");
 
     @Redirect(method = "dispose", at = @At(value = "INVOKE", target = "Ljava/io/PrintStream;println(Ljava/lang/String;)V"))
     private void print1(PrintStream instance, String x) {

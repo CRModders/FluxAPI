@@ -3,12 +3,12 @@ package dev.crmodders.flux.generators;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.OrderedMap;
-import dev.crmodders.flux.factories.IGenerator;
-import dev.crmodders.flux.tags.ResourceLocation;
 import dev.crmodders.flux.engine.blocks.BlockLoader;
 import dev.crmodders.flux.engine.blocks.models.json.BlockModelFlux;
 import dev.crmodders.flux.engine.blocks.models.json.BlockModelFluxCuboid;
+import dev.crmodders.flux.factories.IGenerator;
 import dev.crmodders.flux.tags.Identifier;
+import dev.crmodders.flux.tags.ResourceLocation;
 import finalforeach.cosmicreach.constants.Direction;
 import finalforeach.cosmicreach.rendering.blockmodels.BlockModelJsonTexture;
 
@@ -47,8 +47,8 @@ public class BlockModelGenerator implements IGenerator {
 
         }
 
-        public float x1 = 0, y1 = 0, z1 = 0;
-        public float x2 = 16, y2 = 16, z2 = 16;
+        public float x1, y1, z1;
+        public float x2, y2, z2;
         public final Face[] faces = new Face[6];
 
         public Cuboid(float x1, float y1, float z1, float x2, float y2, float z2) {

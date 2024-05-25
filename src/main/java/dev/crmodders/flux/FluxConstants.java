@@ -1,7 +1,7 @@
 package dev.crmodders.flux;
 
-import dev.crmodders.flux.tags.ResourceLocation;
 import dev.crmodders.flux.localization.TranslationKey;
+import dev.crmodders.flux.tags.ResourceLocation;
 
 /**
  * A Class for all Constants and static Variables used by Flux

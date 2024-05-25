@@ -9,7 +9,7 @@ import java.util.List;
 
 public class TextBatch implements UIBatch {
 
-	private List<TextLine> lines;
+	private final List<TextLine> lines;
 	private float width;
 	private float height;
 

@@ -1,21 +1,21 @@
 package dev.crmodders.flux.engine.stages;
 
+import dev.crmodders.flux.FluxRegistries;
 import dev.crmodders.flux.assets.VanillaAssetLocations;
-import dev.crmodders.flux.block.IModBlock;
 import dev.crmodders.flux.block.DataModBlock;
-import dev.crmodders.flux.factories.IFactory;
-import dev.crmodders.flux.events.OnRegisterBlockEvent;
-import dev.crmodders.flux.tags.ResourceLocation;
+import dev.crmodders.flux.block.IModBlock;
 import dev.crmodders.flux.engine.GameLoader;
 import dev.crmodders.flux.engine.LoadStage;
 import dev.crmodders.flux.engine.blocks.BlockLoadException;
 import dev.crmodders.flux.engine.blocks.actions.OnBreakTrigger;
 import dev.crmodders.flux.engine.blocks.actions.OnInteractTrigger;
 import dev.crmodders.flux.engine.blocks.actions.OnPlaceTrigger;
+import dev.crmodders.flux.events.OnRegisterBlockEvent;
+import dev.crmodders.flux.factories.IFactory;
 import dev.crmodders.flux.localization.TranslationKey;
-import dev.crmodders.flux.FluxRegistries;
 import dev.crmodders.flux.registries.AccessableRegistry;
 import dev.crmodders.flux.tags.Identifier;
+import dev.crmodders.flux.tags.ResourceLocation;
 import finalforeach.cosmicreach.blockevents.BlockEvents;
 import org.greenrobot.eventbus.Subscribe;
 

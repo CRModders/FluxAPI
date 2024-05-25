@@ -2,8 +2,8 @@ package dev.crmodders.flux.assets;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
-import dev.crmodders.flux.tags.ResourceLocation;
 import dev.crmodders.flux.tags.Identifier;
+import dev.crmodders.flux.tags.ResourceLocation;
 import finalforeach.cosmicreach.io.SaveLocation;
 
 import java.util.ArrayList;

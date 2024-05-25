@@ -8,6 +8,7 @@ import dev.crmodders.flux.ui.UIRenderer;
 import finalforeach.cosmicreach.ui.HorizontalAnchor;
 import finalforeach.cosmicreach.ui.VerticalAnchor;
 
+@SuppressWarnings("EmptyMethod")
 public abstract class BaseElement implements Component {
 
     public float x, y, width,  height;

@@ -1,8 +1,8 @@
 package dev.crmodders.flux.generators;
 
 import com.badlogic.gdx.graphics.Pixmap;
-import dev.crmodders.flux.tags.ResourceLocation;
 import dev.crmodders.flux.tags.Identifier;
+import dev.crmodders.flux.tags.ResourceLocation;
 
 public class BasicCubeModelGenerator extends BlockModelGenerator {
 

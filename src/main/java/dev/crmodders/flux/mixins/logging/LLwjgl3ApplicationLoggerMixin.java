@@ -14,7 +14,7 @@ import java.util.Map;
 public class LLwjgl3ApplicationLoggerMixin implements ApplicationLogger {
 
     @Unique
-    private static Map<String, Logger> cache = new HashMap<>();
+    private static final Map<String, Logger> cache = new HashMap<>();
 
     @Unique
     private static Logger taggedLogger(String tag) {

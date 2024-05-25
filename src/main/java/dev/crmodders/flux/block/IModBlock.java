@@ -1,9 +1,9 @@
 package dev.crmodders.flux.block;
 
+import dev.crmodders.flux.engine.blocks.BlockLoader;
 import dev.crmodders.flux.generators.BlockEventGenerator;
 import dev.crmodders.flux.generators.BlockGenerator;
 import dev.crmodders.flux.generators.BlockModelGenerator;
-import dev.crmodders.flux.engine.blocks.BlockLoader;
 import dev.crmodders.flux.tags.Identifier;
 import dev.crmodders.flux.util.BlockEventActionFactory;
 import finalforeach.cosmicreach.blockevents.actions.BlockActionPlaySound2D;

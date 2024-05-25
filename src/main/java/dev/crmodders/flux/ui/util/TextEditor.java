@@ -19,11 +19,7 @@ public class TextEditor implements CharSequence {
 	public void setCursor(int cursor) {
 		if (cursor < 0) {
 			this.cursor = 0;
-		} else if (cursor > builder.length()) {
-			this.cursor = builder.length();
-		} else {
-			this.cursor = cursor;
-		}
+		} else this.cursor = Math.min(cursor, builder.length());
 	}
 
 	public void clear() {
@@ -43,12 +39,11 @@ public class TextEditor implements CharSequence {
 		builder.deleteCharAt(index);
 	}
 
-	public boolean backspace() {
+	public void backspace() {
 		if (cursor > 0 && cursor <= builder.length()) {
 			builder.deleteCharAt(cursor - 1);
 			cursor--;
 		}
-		return true;
 	}
 
 	public boolean type(char c) {
@@ -67,7 +62,8 @@ public class TextEditor implements CharSequence {
 
 	public boolean append(char c) {
         if (c == 8) {
-            return backspace();
+            backspace();
+			return true;
         }
         return type(c);
     }

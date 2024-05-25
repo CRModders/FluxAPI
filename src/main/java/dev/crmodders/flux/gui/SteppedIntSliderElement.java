@@ -9,17 +9,17 @@ public class SteppedIntSliderElement extends IntSliderElement {
 
 	private static int min(int[] values) {
 		int min = Integer.MAX_VALUE;
-		for(int i = 0; i < values.length; i++) {
-			min = Math.min(min, values[i]);
-		}
+        for (int j : values) {
+            min = Math.min(min, j);
+        }
 		return min;
 	}
 
 	private static int max(int[] values) {
 		int max = Integer.MIN_VALUE;
-		for(int i = 0; i < values.length; i++) {
-			max = Math.max(max, values[i]);
-		}
+        for (int j : values) {
+            max = Math.max(max, j);
+        }
 		return max;
 	}
 

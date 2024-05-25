@@ -1,8 +1,8 @@
 package dev.crmodders.flux.generators;
 
 import com.badlogic.gdx.utils.Json;
-import dev.crmodders.flux.factories.IGenerator;
 import dev.crmodders.flux.engine.blocks.BlockLoader;
+import dev.crmodders.flux.factories.IGenerator;
 import dev.crmodders.flux.tags.Identifier;
 
 import java.util.LinkedHashMap;

@@ -15,20 +15,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.stream.IntStream;
 
 public class Font {
 
-    public static Font generate(FileHandle file, int resolution, String characters) {
-        return switch (file.extension()) {
-            case "fnt" -> generateBitmapFont(file);
-            default -> throw new RuntimeException(file + " is not a Font");
-        };
-    }
-
     public static Font generateFontTextureFont(List<FontTexture> fontTextures) {
         int totalSizeInSquarePixels = fontTextures.size() * 256 * 256;
-        int width = -1;
+        int width;
         int height = -1;
         for(width = 256; width <= 16384; width += 256) {
             height = totalSizeInSquarePixels / width;
@@ -57,13 +49,9 @@ public class Font {
         Texture texture = new Texture(pixmap);
         BitmapFont.BitmapFontData data = new BitmapFont.BitmapFontData();
         data.flipped = true;
-        StringBuilder characters = new StringBuilder();
         for(FontTexture ft : fontTextures) {
             int xOffset = locations.get(ft).x;
             int yOffset = locations.get(ft).y;
-            String unicodeCharacters = IntStream.range(ft.unicodeStart, ft.unicodeStart + 256)
-                                                .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append).toString();
-            characters.append(unicodeCharacters);
             for(int unicode = ft.unicodeStart; unicode < ft.unicodeStart + 256; unicode++) {
                 Vector2 charStart = ft.fontCharStartPos[unicode - ft.unicodeStart];
                 Vector2 charSize = ft.fontCharSizes[unicode - ft.unicodeStart];

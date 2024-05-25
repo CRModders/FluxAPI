@@ -2,9 +2,9 @@ package dev.crmodders.flux.mixins.blocks;
 
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
+import dev.crmodders.flux.FluxRegistries;
 import dev.crmodders.flux.block.FluxBlockAction;
 import dev.crmodders.flux.factories.IFactory;
-import dev.crmodders.flux.FluxRegistries;
 import dev.crmodders.flux.registries.AccessableRegistry;
 import dev.crmodders.flux.tags.Identifier;
 import finalforeach.cosmicreach.blockevents.BlockEventTrigger;

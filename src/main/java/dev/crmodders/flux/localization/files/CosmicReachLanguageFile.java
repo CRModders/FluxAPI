@@ -10,6 +10,7 @@ import dev.crmodders.flux.localization.TranslationLocale;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -17,6 +18,7 @@ import java.util.Map;
 
 public class CosmicReachLanguageFile extends HashMap<TranslationKey, TranslationEntry> implements ILanguageFile {
 
+	@Serial
 	private static final long serialVersionUID = 5048234800713263956L;
 
 	public static CosmicReachLanguageFile loadLanguageFile(FileHandle file) throws IOException {
@@ -28,7 +30,7 @@ public class CosmicReachLanguageFile extends HashMap<TranslationKey, Translation
 	}
 
 	private TranslationLocale locale;
-	private List<TranslationLocale> fallbacks = new ArrayList<>();
+	private final List<TranslationLocale> fallbacks = new ArrayList<>();
 
 	public CosmicReachLanguageFile(JsonValue json, String languageTag) {
 		parseMetadata(json.get("metadata"), languageTag);

@@ -5,14 +5,16 @@ import dev.crmodders.flux.localization.TranslationEntry;
 import dev.crmodders.flux.localization.TranslationKey;
 import dev.crmodders.flux.localization.TranslationLocale;
 
+import java.io.Serial;
 import java.util.*;
 
 public class MergedLanguageFile extends HashMap<TranslationKey, TranslationEntry> implements ILanguageFile {
 
-	private static final long serialVersionUID = 6502304409622011948L;
+	@Serial
+    private static final long serialVersionUID = 6502304409622011948L;
 
 	private final TranslationLocale locale;
-	private Set<TranslationLocale> fallbacks = new HashSet<>();
+	private final Set<TranslationLocale> fallbacks = new HashSet<>();
 
 	public MergedLanguageFile(TranslationLocale locale) {
 		this.locale = locale;

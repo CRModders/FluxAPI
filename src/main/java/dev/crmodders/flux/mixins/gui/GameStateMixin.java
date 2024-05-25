@@ -9,6 +9,7 @@ import dev.crmodders.flux.ui.UIRenderer;
 import finalforeach.cosmicreach.gamestates.GameState;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -26,7 +27,8 @@ public abstract class GameStateMixin implements GameStateInterface {
 	@Shadow
 	Vector2 mouse;
 
-	private List<Component> components = new ArrayList<>();
+	@Unique
+	private final List<Component> components = new ArrayList<>();
 
 	@Override
 	public Viewport getViewport() {

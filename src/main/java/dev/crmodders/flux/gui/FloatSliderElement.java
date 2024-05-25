@@ -1,8 +1,6 @@
 package dev.crmodders.flux.gui;
 
-import dev.crmodders.flux.FluxSettings;
 import dev.crmodders.flux.gui.base.BaseSlider;
-import dev.crmodders.flux.localization.TranslationKey;
 import finalforeach.cosmicreach.settings.FloatSetting;
 
 public class FloatSliderElement extends BaseSlider {
@@ -22,12 +20,4 @@ public class FloatSliderElement extends BaseSlider {
 		setting.setValue(value);
 	}
 
-	@Override
-	public String updateTranslation(TranslationKey key) {
-		if(key == null) {
-			return String.valueOf(value);
-		} else {
-			return FluxSettings.SelectedLanguage.get(key).format(String.valueOf(value));
-		}
-	}
 }

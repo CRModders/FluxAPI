@@ -92,7 +92,7 @@ public class BlockModelFactory implements IBlockModelInstantiator {
             }
             models.put(key, model);
         } else {
-            logger.error("can't create generated instances for '" + parentModel.getClass().getSimpleName() + "'");
+            logger.error("can't create generated instances for '{}'", parentModel.getClass().getSimpleName());
         }
     }
 

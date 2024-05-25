@@ -14,7 +14,7 @@ import java.io.PrintStream;
 @Mixin(GameState.class)
 public class GameStateMixin {
     @Unique
-    private static Logger logger = LoggerFactory.getLogger("CosmicReach / GameState");
+    private static final Logger logger = LoggerFactory.getLogger("CosmicReach / GameState");
 
     @Redirect(method = "switchToGameState", at = @At(value = "INVOKE", target = "Ljava/io/PrintStream;println(Ljava/lang/String;)V"))
     private static void printCapture(PrintStream instance, String x) {

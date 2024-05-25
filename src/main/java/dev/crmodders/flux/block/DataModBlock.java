@@ -3,8 +3,8 @@ package dev.crmodders.flux.block;
 import com.badlogic.gdx.utils.Json;
 import dev.crmodders.flux.assets.VanillaAssetLocations;
 import dev.crmodders.flux.generators.BlockGenerator;
-import dev.crmodders.flux.tags.ResourceLocation;
 import dev.crmodders.flux.tags.Identifier;
+import dev.crmodders.flux.tags.ResourceLocation;
 
 import java.util.LinkedHashMap;
 

@@ -2,17 +2,17 @@ package dev.crmodders.flux.engine.blocks;
 
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.utils.Json;
+import dev.crmodders.flux.FluxRegistries;
 import dev.crmodders.flux.block.FluxBlockAction;
 import dev.crmodders.flux.block.IModBlock;
+import dev.crmodders.flux.engine.blocks.models.json.BlockModelFlux;
+import dev.crmodders.flux.engine.blocks.models.vertex.BlockModelVertex;
 import dev.crmodders.flux.factories.IFactory;
 import dev.crmodders.flux.generators.BlockEventGenerator;
 import dev.crmodders.flux.generators.BlockGenerator;
 import dev.crmodders.flux.generators.BlockModelGenerator;
-import dev.crmodders.flux.tags.ResourceLocation;
-import dev.crmodders.flux.engine.blocks.models.json.BlockModelFlux;
-import dev.crmodders.flux.engine.blocks.models.vertex.BlockModelVertex;
-import dev.crmodders.flux.FluxRegistries;
 import dev.crmodders.flux.tags.Identifier;
+import dev.crmodders.flux.tags.ResourceLocation;
 import finalforeach.cosmicreach.blockevents.BlockEvents;
 import finalforeach.cosmicreach.blocks.Block;
 import finalforeach.cosmicreach.blocks.BlockState;
@@ -138,7 +138,7 @@ public class BlockLoader {
 
     public void registerFinalizers() {
 
-        // initialize models, less parents first order
+        // initialize models, fewer parents first order
         // it's very critical that registries are run in order here
         for (BlockModel model : factory.sort()) {
             if(model instanceof BlockModelFlux flux) {
