@@ -15,7 +15,7 @@ repositories {
 
 Step 2: Add Flux to your dependencies using the text below
 ```
-implementation "dev.crmodders:fluxapi:0.6.0"
+gameMod "dev.crmodders:fluxapi:0.6.0"
 ```
 
 ### Dev Commands (for contributors)
@@ -23,5 +23,8 @@ To run Cosmic Quilt in the dev env, run `gradle runQuilt`\
 To run Fabric in the dev env, run `gradle runFabric`\
 To build, run `gradlew build` with the jar being in `build/libs/` and ending with `-all.jar`
 
-### Translations
-The translations repo is at https://github.com/CRModders/Flux-Translations
+### Flux-Modules
+The current modules that flux provides are, </br>
+`dev.crmodders:flux-entities:1.0.0` -> [FluxEntities](https://github.com/crmodders/Flux-Entities) </br>
+
+### Docs
