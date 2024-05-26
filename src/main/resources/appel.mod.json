@@ -10,7 +10,7 @@
   ],
   "entrypoints": {
     "main": [
-      "dev.crmodders.flux.FluxAPI"
+      "dev.crmodders.flux.FluxAppel"
     ],
     "fluxInit": [
       "dev.crmodders.flux.ExampleEntrypointUser"
