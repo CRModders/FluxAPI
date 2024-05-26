@@ -8,6 +8,14 @@
     "nanobass",
     "coolGi"
   ],
+  "entrypoints": {
+    "main": [
+      "dev.crmodders.flux.FluxAPI"
+    ],
+    "fluxInit": [
+      "dev.crmodders.flux.ExampleEntrypointUser"
+    ]
+  },
   "mixins": [
     "fluxapi.mixins.json"
   ]
