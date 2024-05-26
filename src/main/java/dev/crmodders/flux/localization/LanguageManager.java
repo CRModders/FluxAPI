@@ -5,12 +5,14 @@ import dev.crmodders.flux.FluxSettings;
 import dev.crmodders.flux.localization.files.MergedLanguageFile;
 import dev.crmodders.flux.registries.AccessableRegistry;
 import dev.crmodders.flux.tags.Identifier;
+import dev.crmodders.flux.logging.LoggingAgent;
+import dev.crmodders.flux.logging.api.MicroLogger;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class LanguageManager {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger("Language Manager");
+	private static final MicroLogger LOGGER = LoggingAgent.getLogger("Language Manager");
 
 	public static void selectLanguage(TranslationLocale locale) {
 		AccessableRegistry<Language> allLanguages = FluxRegistries.LANGUAGES.access();

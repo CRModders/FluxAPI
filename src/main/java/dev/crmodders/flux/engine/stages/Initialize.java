@@ -3,9 +3,11 @@ package dev.crmodders.flux.engine.stages;
 import dev.crmodders.flux.FluxRegistries;
 import dev.crmodders.flux.engine.GameLoader;
 import dev.crmodders.flux.engine.LoadStage;
+import dev.crmodders.flux.entrypoints.FluxModInitializer;
 import dev.crmodders.flux.localization.TranslationKey;
 import dev.crmodders.flux.registries.AccessableRegistry;
 import dev.crmodders.flux.tags.Identifier;
+import dev.crmodders.flux.util.CrossLoaderEntrypointUtil;
 
 public class Initialize extends LoadStage {
     @Override
@@ -17,6 +19,8 @@ public class Initialize extends LoadStage {
     @Override
     public void doStage() {
         super.doStage();
+
+        FluxModInitializer.invokeEntrypoint();
 
         AccessableRegistry<Runnable> mods = FluxRegistries.ON_INITIALIZE.access();
         Identifier[] modIds = mods.getRegisteredNames();

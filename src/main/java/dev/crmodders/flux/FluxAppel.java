@@ -1,6 +1,8 @@
 package dev.crmodders.flux;
 
 import dev.crmodders.flux.events.OnRegisterLanguageEvent;
+import dev.crmodders.flux.logging.LoggingAgent;
+import dev.crmodders.flux.logging.api.MicroLogger;
 import net.appel.mod.interfaces.ModInitializer;
 import org.greenrobot.eventbus.Subscribe;
 import org.slf4j.Logger;
@@ -8,7 +10,7 @@ import org.slf4j.LoggerFactory;
 
 public class FluxAppel implements ModInitializer {
 
-    public static final Logger LOGGER = LoggerFactory.getLogger("FluxAPI");
+    public static final MicroLogger LOGGER = LoggingAgent.getLogger("FluxAPI");
 
     @Override
     public void onInit() {

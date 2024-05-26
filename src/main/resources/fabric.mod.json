@@ -17,6 +17,9 @@
   "entrypoints": {
     "main": [
       "dev.crmodders.flux.FluxAPI"
+    ],
+    "fluxInit": [
+      "dev.crmodders.flux.FluxAPI2"
     ]
   },
   "mixins": [

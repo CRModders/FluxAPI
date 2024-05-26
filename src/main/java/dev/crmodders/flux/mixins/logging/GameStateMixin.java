@@ -1,6 +1,8 @@
 package dev.crmodders.flux.mixins.logging;
 
 
+import dev.crmodders.flux.logging.LoggingAgent;
+import dev.crmodders.flux.logging.api.MicroLogger;
 import finalforeach.cosmicreach.gamestates.GameState;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,7 +16,7 @@ import java.io.PrintStream;
 @Mixin(GameState.class)
 public class GameStateMixin {
     @Unique
-    private static final Logger logger = LoggerFactory.getLogger("CosmicReach / GameState");
+    private static final MicroLogger logger = LoggingAgent.getLogger("CosmicReach / GameState");
 
     @Redirect(method = "switchToGameState", at = @At(value = "INVOKE", target = "Ljava/io/PrintStream;println(Ljava/lang/String;)V"))
     private static void printCapture(PrintStream instance, String x) {

@@ -13,13 +13,13 @@ import dev.crmodders.flux.gui.TextElement;
 import dev.crmodders.flux.localization.LanguageManager;
 import dev.crmodders.flux.localization.TranslationKey;
 import dev.crmodders.flux.localization.TranslationLocale;
+import dev.crmodders.flux.logging.api.MicroLogger;
 import dev.crmodders.flux.menus.BasicMenu;
+import dev.crmodders.flux.logging.LoggingAgent;
 import finalforeach.cosmicreach.GameSingletons;
 import finalforeach.cosmicreach.gamestates.GameState;
 import finalforeach.cosmicreach.gamestates.PrealphaPreamble;
 import finalforeach.cosmicreach.settings.Preferences;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -28,7 +28,7 @@ import java.util.concurrent.CountDownLatch;
 
 public class GameLoader extends BasicMenu implements Runnable {
 
-    public static final Logger logger = LoggerFactory.getLogger("FluxAPI / GameLoader");
+    public static final MicroLogger logger = LoggingAgent.getLogger("FluxAPI / GameLoader");
 
     public TextElement title;
     public ProgressBarElement ram;

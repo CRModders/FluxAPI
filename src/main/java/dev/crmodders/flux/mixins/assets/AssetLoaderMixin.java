@@ -3,6 +3,8 @@ package dev.crmodders.flux.mixins.assets;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import dev.crmodders.flux.tags.Identifier;
+import dev.crmodders.flux.logging.LoggingAgent;
+import dev.crmodders.flux.logging.api.MicroLogger;
 import finalforeach.cosmicreach.GameAssetLoader;
 import finalforeach.cosmicreach.io.SaveLocation;
 import org.slf4j.Logger;
@@ -16,7 +18,7 @@ import java.util.HashMap;
 @Mixin(GameAssetLoader.class)
 public class AssetLoaderMixin {
     @Unique
-    private static final Logger logger = LoggerFactory.getLogger("FluxAPI / AssetLoader");
+    private static final MicroLogger logger = LoggingAgent.getLogger("FluxAPI / AssetLoader");
 
     @Shadow @Final public static HashMap<String, FileHandle> ALL_ASSETS;
 

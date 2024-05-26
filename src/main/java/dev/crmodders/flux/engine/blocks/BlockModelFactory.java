@@ -3,6 +3,8 @@ package dev.crmodders.flux.engine.blocks;
 import com.badlogic.gdx.utils.Json;
 import dev.crmodders.flux.assets.VanillaAssetLocations;
 import dev.crmodders.flux.engine.blocks.models.json.BlockModelFlux;
+import dev.crmodders.flux.logging.LoggingAgent;
+import dev.crmodders.flux.logging.api.MicroLogger;
 import finalforeach.cosmicreach.blocks.BlockState;
 import finalforeach.cosmicreach.rendering.blockmodels.BlockModel;
 import finalforeach.cosmicreach.rendering.blockmodels.IBlockModelInstantiator;
@@ -20,7 +22,7 @@ public class BlockModelFactory implements IBlockModelInstantiator {
 
     public final Map<InstanceKey, BlockModel> models = new LinkedHashMap<>();
 
-    static Logger logger = LoggerFactory.getLogger("FluxAPI / BlockModelFactory");
+    static MicroLogger logger = LoggingAgent.getLogger("FluxAPI / BlockModelFactory");
 
     private static String getNotShitModelName(String modelName){
         if(modelName.startsWith("gen_model::")) {

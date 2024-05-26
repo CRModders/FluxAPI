@@ -4,6 +4,8 @@ import com.badlogic.gdx.files.FileHandle;
 import dev.crmodders.flux.localization.ILanguageFile;
 import dev.crmodders.flux.localization.LanguageManager;
 import dev.crmodders.flux.localization.files.LanguageFileVersion1;
+import dev.crmodders.flux.logging.LoggingAgent;
+import dev.crmodders.flux.logging.api.MicroLogger;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,7 +13,7 @@ import java.io.IOException;
 
 public class OnRegisterLanguageEvent extends Event {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger("Language Registerer");
+    private static final MicroLogger LOGGER = LoggingAgent.getLogger("Language Registerer");
 
     public void registerLanguage(FileHandle file) {
         try {

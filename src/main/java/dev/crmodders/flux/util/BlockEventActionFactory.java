@@ -1,13 +1,13 @@
 package dev.crmodders.flux.util;
 
+import dev.crmodders.flux.logging.LoggingAgent;
+import dev.crmodders.flux.logging.api.MicroLogger;
 import finalforeach.cosmicreach.blockevents.actions.BlockActionPlaySound2D;
 import finalforeach.cosmicreach.blockevents.actions.BlockActionReplaceBlockState;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class BlockEventActionFactory {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger("Block Action Factory");
+    private static final MicroLogger LOGGER = LoggingAgent.getLogger("Block Action Factory");
 
     public static BlockActionReplaceBlockState createReplaceBlockEvent(String blockStateId, int xOff, int yOff, int zOff) {
         BlockActionReplaceBlockState replace = new BlockActionReplaceBlockState();

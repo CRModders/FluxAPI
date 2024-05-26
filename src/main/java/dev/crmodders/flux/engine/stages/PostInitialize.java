@@ -3,6 +3,8 @@ package dev.crmodders.flux.engine.stages;
 import dev.crmodders.flux.FluxRegistries;
 import dev.crmodders.flux.engine.GameLoader;
 import dev.crmodders.flux.engine.LoadStage;
+import dev.crmodders.flux.entrypoints.FluxModInitializer;
+import dev.crmodders.flux.entrypoints.FluxPostModInitializer;
 import dev.crmodders.flux.localization.TranslationKey;
 import dev.crmodders.flux.registries.AccessableRegistry;
 import dev.crmodders.flux.tags.Identifier;
@@ -17,6 +19,8 @@ public class PostInitialize extends LoadStage {
     @Override
     public void doStage() {
         super.doStage();
+
+        FluxPostModInitializer.invokeEntrypoint();
 
         AccessableRegistry<Runnable> mods = FluxRegistries.ON_POST_INITIALIZE.access();
         Identifier[] modIds = mods.getRegisteredNames();
