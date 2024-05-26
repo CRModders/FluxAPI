@@ -19,7 +19,7 @@
       "dev.crmodders.flux.FluxAPI"
     ],
     "fluxInit": [
-      "dev.crmodders.flux.FluxAPI2"
+      "dev.crmodders.flux.ExampleEntrypointUser"
     ]
   },
   "mixins": [
