@@ -12,12 +12,12 @@ import java.util.HashMap;
 @Mixin(ChunkShader.class)
 public interface ChunkShaderAccessor {
 
-    @Accessor static int getTerrainPixCurX() { throw new IllegalStateException(); }
-    @Accessor static void setTerrainPixCurX(int x) { throw new IllegalStateException(); }
-    @Accessor static int getTerrainPixCurY() { throw new IllegalStateException(); }
-    @Accessor static void setTerrainPixCurY(int y) { throw new IllegalStateException(); }
-    @Accessor static Pixmap getAllBlocksPix() { throw new IllegalStateException(); }
-    @Accessor static Texture getChunkTerrainTex() { throw new IllegalStateException(); }
-    @Accessor static void setChunkTerrainTex(Texture tex) { throw new IllegalStateException(); }
-    @Accessor static HashMap<String, BlockModelJsonTexture> getStoredTexs() { throw new IllegalStateException(); }
+    @Accessor static int getTerrainPixCurX() { return 0; }
+    @Accessor static void setTerrainPixCurX(int x) { }
+    @Accessor static int getTerrainPixCurY() { return 0; }
+    @Accessor static void setTerrainPixCurY(int y) { }
+    @Accessor static Pixmap getAllBlocksPix() { return null; }
+    @Accessor static Texture getChunkTerrainTex() { return null; }
+    @Accessor static void setChunkTerrainTex(Texture tex) { }
+    @Accessor static HashMap<String, BlockModelJsonTexture> getStoredTexs() { return null; }
 }

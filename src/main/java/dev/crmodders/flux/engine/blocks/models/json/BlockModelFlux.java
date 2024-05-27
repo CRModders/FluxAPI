@@ -325,8 +325,7 @@ public class BlockModelFlux extends BlockModel {
     
     public int addVert(final IMeshData meshData, final float x, final float y, final float z, final float u, final float v, final int aoId, final short blockLight, int skyLight, final int uvIdx) {
         FloatArray vertices = meshData.getVertices();
-        int numComponents = RuntimeInfo.isMac ? 6 : 5;
-        final int currentVertexIndex = vertices.size / numComponents;
+        final int currentVertexIndex = vertices.size / 5;
 
         final float subAO = aoId / 4.0f + 0.25f;
         int r = (int) (17f * ((blockLight & 0xF00) >> 8) * subAO);
@@ -338,13 +337,8 @@ public class BlockModelFlux extends BlockModel {
         vertices.items[vertices.size + 1] = y;
         vertices.items[vertices.size + 2] = z;
         vertices.items[vertices.size + 3] = Color.toFloatBits(r, g, b, skyLight);
-        if (RuntimeInfo.isMac) {
-            vertices.items[vertices.size + 4] = u;
-            vertices.items[vertices.size + 5] = v;
-        } else {
-            vertices.items[vertices.size + 4] = Float.intBitsToFloat(uvIdx);
-        }
-        vertices.size += numComponents;
+        vertices.items[vertices.size + 4] = (float) uvIdx;
+        vertices.size += 5;
 
         return currentVertexIndex;
     }

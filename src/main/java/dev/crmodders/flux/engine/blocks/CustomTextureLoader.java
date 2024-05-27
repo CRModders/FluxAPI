@@ -16,11 +16,11 @@ public class CustomTextureLoader {
      * the texture
      * @param textureName name of the texture, these are global be warned
 *    *                    about name collision
-     * @param blockTex a pixmap representing your texture, this has to follow the guidelines
+     * @param blockPix a pixmap representing your texture, this has to follow the guidelines
      *                 from data modding, width and height have to be equal
      */
-    public static void registerTexture(String textureName, Pixmap blockTex) {
-        if (blockTex.getWidth() != blockTex.getHeight()) {
+    public static void registerTexture(String textureName, Pixmap blockPix) {
+        if (blockPix.getWidth() != blockPix.getHeight()) {
             throw new RuntimeException("Width and height of " + textureName + " must be the same!");
         } else {
             int terrainPixCurX = ChunkShaderAccessor.getTerrainPixCurX();
@@ -29,12 +29,12 @@ public class CustomTextureLoader {
             Texture chunkTerrainTex = ChunkShaderAccessor.getChunkTerrainTex();
             HashMap<String, BlockModelJsonTexture> storedTexs = ChunkShaderAccessor.getStoredTexs();
 
-            float[] uv = new float[]{(float)(terrainPixCurX / blockTex.getWidth()), (float)(terrainPixCurY / blockTex.getHeight())};
-            allBlocksPix.drawPixmap(blockTex, terrainPixCurX, terrainPixCurY);
-            terrainPixCurX += blockTex.getWidth();
+            float[] uv = new float[]{(float)(terrainPixCurX / allBlocksPix.getWidth()), (float)(terrainPixCurY / allBlocksPix.getHeight())};
+            allBlocksPix.drawPixmap(blockPix, terrainPixCurX, terrainPixCurY);
+            terrainPixCurX += blockPix.getWidth();
             if ((float)terrainPixCurX > (float)(allBlocksPix.getWidth() * 15) / 16.0F) {
                 terrainPixCurX = 0;
-                terrainPixCurY += blockTex.getHeight();
+                terrainPixCurY += blockPix.getHeight();
             }
 
             if (chunkTerrainTex != null) {
