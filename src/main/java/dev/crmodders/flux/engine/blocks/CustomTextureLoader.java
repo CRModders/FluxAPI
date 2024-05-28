@@ -29,7 +29,7 @@ public class CustomTextureLoader {
             Texture chunkTerrainTex = ChunkShaderAccessor.getChunkTerrainTex();
             HashMap<String, BlockModelJsonTexture> storedTexs = ChunkShaderAccessor.getStoredTexs();
 
-            float[] uv = new float[]{(float)(terrainPixCurX / allBlocksPix.getWidth()), (float)(terrainPixCurY / allBlocksPix.getHeight())};
+            float[] uv = new float[]{(float)(terrainPixCurX / blockPix.getWidth()), (float)(terrainPixCurY / blockPix.getHeight())};
             allBlocksPix.drawPixmap(blockPix, terrainPixCurX, terrainPixCurY);
             terrainPixCurX += blockPix.getWidth();
             if ((float)terrainPixCurX > (float)(allBlocksPix.getWidth() * 15) / 16.0F) {
