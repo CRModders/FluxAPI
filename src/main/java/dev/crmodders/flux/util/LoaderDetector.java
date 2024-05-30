@@ -1,7 +1,5 @@
 package dev.crmodders.flux.util;
 
-import java.util.function.Consumer;
-
 public interface LoaderDetector {
 
     static boolean isOnFabricBasedLoader() {
@@ -22,6 +20,15 @@ public interface LoaderDetector {
         return true;
     }
 
+    static boolean isOnPuzzleLoader() {
+        try {
+            LoaderDetector.class.getClassLoader().loadClass("dev.crmodders.puzzle.launch.Piece");
+        } catch (ClassNotFoundException e) {
+            return false;
+        }
+        return true;
+    }
+
     static boolean isOnNonFabricOrQuiltBasedLoader() {
         return !(isOnFabricBasedLoader() || isOnQuiltBasedLoader());
     }
@@ -29,12 +36,14 @@ public interface LoaderDetector {
     static KnownLoader getLoaderKind() {
         if (isOnFabricBasedLoader()) return KnownLoader.FABRIC;
         if (isOnQuiltBasedLoader()) return KnownLoader.QUILT;
+        if (isOnPuzzleLoader()) return KnownLoader.PUZZLE;
         return KnownLoader.UNKNOWN;
     }
 
     enum KnownLoader {
         FABRIC,
         QUILT,
+        PUZZLE,
         UNKNOWN
     }
 

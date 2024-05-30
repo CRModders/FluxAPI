@@ -21,7 +21,7 @@ public class SimpleLogger implements MicroLogger {
     public SimpleLogger(String tag) {
         this.tag = tag;
 
-        if (LoaderDetector.isOnQuiltBasedLoader()) {
+        if (LoaderDetector.isOnQuiltBasedLoader() || LoaderDetector.isOnPuzzleLoader()) {
             sl4jLogger = LoggerFactory.getLogger(tag);
             useSl4j = true;
         }

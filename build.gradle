@@ -126,7 +126,7 @@ processResources {
     def resourceTargets = [ // Locations of where to inject the properties
                             "fabric.mod.json",
                             "quilt.mod.json",
-                            "appel.mod.json"
+                            "puzzle.mod.json"
     ]
 
     // Left item is the name in the target, right is the variable name

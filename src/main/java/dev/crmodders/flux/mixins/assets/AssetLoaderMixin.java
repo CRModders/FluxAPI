@@ -7,11 +7,11 @@ import dev.crmodders.flux.logging.LoggingAgent;
 import dev.crmodders.flux.logging.api.MicroLogger;
 import finalforeach.cosmicreach.GameAssetLoader;
 import finalforeach.cosmicreach.io.SaveLocation;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.HashMap;
 
@@ -26,12 +26,13 @@ public class AssetLoaderMixin {
      * @author written by replet, rewritten by Mr Zombii
      * @reason Improves asset loading
      **/
-    @Overwrite
-    public static FileHandle loadAsset(String fileName, boolean forceReload) {
-        Identifier location = Identifier.fromString(fileName);
-        if (!forceReload && ALL_ASSETS.containsKey(location.toString()))
-            return ALL_ASSETS.get(location.toString());
-
+    @Inject(method = "loadAsset(Ljava/lang/String;Z)Lcom/badlogic/gdx/files/FileHandle;", at = @At("HEAD"), cancellable = true)
+    private static void loadAsset(String fileName, boolean forceReload, CallbackInfoReturnable<FileHandle> cir) {
+        dev.crmodders.puzzle.game.tags.Identifier location = dev.crmodders.puzzle.game.tags.Identifier.fromString(fileName);
+        if (!forceReload && ALL_ASSETS.containsKey(location.toString())) {
+            cir.setReturnValue(ALL_ASSETS.get(location.toString()));
+            return;
+        }
         if("base".equals(location.namespace)) {
             fileName = location.name;
         }
@@ -40,25 +41,28 @@ public class AssetLoaderMixin {
         if (classpathLocationFile.exists()) {
             logger.info("Loading {} from the Classpath", fileName);
             ALL_ASSETS.put(fileName, classpathLocationFile);
-            return classpathLocationFile;
+            cir.setReturnValue(classpathLocationFile);
+            return;
         }
 
         FileHandle modLocationFile = Gdx.files.absolute(SaveLocation.getSaveFolderLocation() + "/mods/assets/" + fileName);
         if (modLocationFile.exists()) {
             logger.info("Loading {} from DataMods", fileName);
             ALL_ASSETS.put(fileName, modLocationFile);
-            return modLocationFile;
+            cir.setReturnValue(modLocationFile);
+            return;
         }
 
         FileHandle vanillaLocationFile = Gdx.files.internal(location.name);
         if (vanillaLocationFile.exists()) {
             logger.info("Loading {} from Cosmic Reach Jar", fileName);
             ALL_ASSETS.put(fileName, vanillaLocationFile);
-            return vanillaLocationFile;
+            cir.setReturnValue(vanillaLocationFile);
+            return;
         }
 
         logger.error("Cannot find the resource {}, ResourceId: {}", fileName, location);
-        return null;
+        cir.setReturnValue(null);
     }
 
     @Redirect(method = "getSound", at = @At(value = "INVOKE", target = "Lfinalforeach/cosmicreach/GameAssetLoader;loadAsset(Ljava/lang/String;)Lcom/badlogic/gdx/files/FileHandle;"))
