@@ -10,7 +10,7 @@
   ],
   "entrypoints": {
     "preInit": [
-      "dev.crmodders.flux.FluxAppel"
+      "dev.crmodders.flux.FluxPuzzle"
     ],
     "fluxInit": [
       "dev.crmodders.flux.ExampleEntrypointUser"
