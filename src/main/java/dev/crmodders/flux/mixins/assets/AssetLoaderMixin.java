@@ -28,7 +28,7 @@ public class AssetLoaderMixin {
      **/
     @Inject(method = "loadAsset(Ljava/lang/String;Z)Lcom/badlogic/gdx/files/FileHandle;", at = @At("HEAD"), cancellable = true)
     private static void loadAsset(String fileName, boolean forceReload, CallbackInfoReturnable<FileHandle> cir) {
-        dev.crmodders.puzzle.game.tags.Identifier location = dev.crmodders.puzzle.game.tags.Identifier.fromString(fileName);
+        Identifier location = Identifier.fromString(fileName);
         if (!forceReload && ALL_ASSETS.containsKey(location.toString())) {
             cir.setReturnValue(ALL_ASSETS.get(location.toString()));
             return;

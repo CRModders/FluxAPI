@@ -22,7 +22,7 @@ public interface LoaderDetector {
 
     static boolean isOnPuzzleLoader() {
         try {
-            LoaderDetector.class.getClassLoader().loadClass("dev.crmodders.puzzle.launch.Piece");
+            LoaderDetector.class.getClassLoader().loadClass("dev.crmodders.puzzle.core.launch.Piece");
         } catch (ClassNotFoundException e) {
             return false;
         }
