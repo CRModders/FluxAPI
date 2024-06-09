@@ -1,28 +1,30 @@
 package dev.crmodders.flux;
 
-import dev.crmodders.flux.events.OnRegisterLanguageEvent;
-import dev.crmodders.flux.logging.LoggingAgent;
-import dev.crmodders.flux.logging.impl.CustomizableLogger;
-import dev.crmodders.flux.logging.impl.SimpleColouredLogger;
+import dev.crmodders.flux.events.OnPreLoadAssetsEvent;
+import dev.crmodders.flux.localization.ILanguageFile;
+import dev.crmodders.flux.localization.LanguageManager;
+import dev.crmodders.flux.localization.files.LanguageFileVersion1;
 import net.fabricmc.api.ModInitializer;
 import org.greenrobot.eventbus.Subscribe;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import static dev.crmodders.flux.assets.FluxGameAssetLoader.LOADER;
 
 public class FluxAPI implements ModInitializer {
 
-    public static final CustomizableLogger LOGGER = LoggingAgent.getLogger("FluxAPI", CustomizableLogger.class);
+    public static final Logger LOGGER = LoggerFactory.getLogger("FluxAPI");
 
     @Override
     public void onInitialize() {
-        LOGGER.setMessageColorizer((level, string) -> string);
-        LoggingAgent.setDefaultLoggingClass(SimpleColouredLogger.class);
-
         LOGGER.info("Flux Initialized");
         FluxRegistries.EVENT_BUS.register(this);
     }
 
     @Subscribe
-    public void onEvent(OnRegisterLanguageEvent event) {
-        event.registerLanguage(FluxConstants.LanguageEnUs.load());
+    public void onEvent(OnPreLoadAssetsEvent event) {
+        ILanguageFile lang = LOADER.loadResourceSync(FluxConstants.LanguageEnUs, LanguageFileVersion1.class);
+        LanguageManager.registerLanguageFile(lang);
     }
 
 }

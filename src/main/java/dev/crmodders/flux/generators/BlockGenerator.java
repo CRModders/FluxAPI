@@ -44,6 +44,8 @@ public class BlockGenerator implements IGenerator {
         public boolean canRaycastForReplace = false;
         public boolean isFluid = false;
 
+        public String swapGroupId;
+
     }
 
     public Identifier blockId;

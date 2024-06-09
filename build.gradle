@@ -112,14 +112,10 @@ dependencies {
     compileOnly("dev.crmodders:modmenu:${modmenu_version}")
 
     // https://mvnrepository.com/artifact/org.greenrobot/eventbus
-    shadowMe('org.greenrobot:eventbus:3.1.1')
+    shadowMe("org.greenrobot:eventbus:${eventbus_version}")
     // Logging
-    shadowMe("org.slf4j:slf4j-api:2.0.10")
+    shadowMe("org.slf4j:slf4j-api:${slf4j_version}")
 
-    // Shape Drawer
-    shadowMe("space.earlygrey:shapedrawer:${shape_drawer_version}") { exclude group: "com.badlogicgames.gdx" }
-
-    compileOnly fileTree("./lib")
 }
 
 processResources {
@@ -169,6 +165,8 @@ tasks.register("runQuilt", JavaExec) {
     group = "runs" // Sets the task's group
     dependsOn "shadowJar" // To run this project in the game, depend on the creation of jar task
 
+    ignoreExitValue = true
+
     dependencies {
         // Cosmic Quilt
         implementation("dev.crmodders:cosmicquilt:${cosmic_quilt_version}")
@@ -207,6 +205,10 @@ tasks.register("runFabric", JavaExec) {
         implementation("org.ow2.asm:asm-analysis:9.6")
         implementation("org.ow2.asm:asm-commons:9.6")
         implementation("io.github.llamalad7:mixinextras-fabric:0.3.5")
+
+        // https://mvnrepository.com/artifact/ch.qos.logback/logback-classic
+        // galacticloader doesn't provide and slf4j implementation, so we substitute one
+        shadowMe 'ch.qos.logback:logback-classic:1.5.6'
     }
 
 

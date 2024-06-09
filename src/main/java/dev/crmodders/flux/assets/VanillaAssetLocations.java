@@ -11,9 +11,11 @@ import java.util.List;
 
 public class VanillaAssetLocations {
 
+    private static String[] internalFilesList = null;
+
     public static List<ResourceLocation> getInternalFiles(String folder, String extension) {
         List<ResourceLocation> files = new ArrayList<>();
-        String[] internalFilesList = Gdx.files.internal("assets.txt").readString().split("\n");
+        if(internalFilesList == null) internalFilesList = Gdx.files.internal("assets.txt").readString().split("\n");
         for(String internalFileName : internalFilesList) {
             if (internalFileName.startsWith(folder) && internalFileName.endsWith(extension) && Gdx.files.internal(internalFileName).exists()) {
                 files.add(new ResourceLocation("base", internalFileName));

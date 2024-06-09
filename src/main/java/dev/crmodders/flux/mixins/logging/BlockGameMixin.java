@@ -1,8 +1,7 @@
 package dev.crmodders.flux.mixins.logging;
 
-
-import dev.crmodders.flux.logging.LoggingAgent;
-import dev.crmodders.flux.logging.api.MicroLogger;
+import com.badlogic.gdx.assets.AssetManager;
+import dev.crmodders.flux.FluxAPI;
 import finalforeach.cosmicreach.BlockGame;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,26 +13,34 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.io.PrintStream;
+import java.util.List;
+
+import static dev.crmodders.flux.assets.FluxGameAssetLoader.LOADER;
 
 @Mixin(BlockGame.class)
 public class BlockGameMixin {
 
     @Unique
-    private static final MicroLogger logger = LoggingAgent.getLogger("CosmicReach / BlockGame");
+    private static final Logger logger = LoggerFactory.getLogger("CosmicReach / BlockGame");
 
     @Redirect(method = "dispose", at = @At(value = "INVOKE", target = "Ljava/io/PrintStream;println(Ljava/lang/String;)V"))
     private void print1(PrintStream instance, String x) {
-        logger.info(x);
+        logger.info("\u001B[36m{}\u001B[37m", x);
     }
 
     @Redirect(method = "create", at = @At(value = "INVOKE", target = "Ljava/io/PrintStream;println(Ljava/lang/String;)V"))
     private void print2(PrintStream instance, String x) {
-        logger.info(x);
+        List<String> lines = x.lines().toList();
+        for(String line : lines) {
+            logger.info("\u001B[36m{}\u001B[37m", line);
+        }
     }
 
     @Inject(method = "dispose", at = @At(value = "INVOKE", target = "Ljava/lang/System;exit(I)V", shift = At.Shift.BEFORE))
     public void dispose(CallbackInfo ci) {
-        LoggingAgent.clearCache();
+        AssetManager manager = LOADER.getAssetManager();
+        manager.dispose();
+        FluxAPI.LOGGER.info("Flux Destroyed");
     }
 
 }

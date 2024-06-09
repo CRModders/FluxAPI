@@ -9,7 +9,6 @@ import java.util.List;
 public class LoadStage {
 
     public GameLoader loader;
-
     public TranslationKey title;
 
     public void initialize(GameLoader loader) {
@@ -20,8 +19,8 @@ public class LoadStage {
     }
 
     public void doStage() {
-        loader.setupProgressBar(loader.progress2, 0);
-        loader.setupProgressBar(loader.progress3, 0);
+        loader.setupProgressBar(loader.progressBar2, 0);
+        loader.setupProgressBar(loader.progressBar3, 0);
     }
 
     public List<Runnable> getGlTasks() {

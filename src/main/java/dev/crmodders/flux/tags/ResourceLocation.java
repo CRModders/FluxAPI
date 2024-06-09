@@ -1,7 +1,7 @@
 package dev.crmodders.flux.tags;
 
 import com.badlogic.gdx.files.FileHandle;
-import finalforeach.cosmicreach.GameAssetLoader;
+import dev.crmodders.flux.assets.FluxGameAssetLoader;
 
 /**
  * A Class that stores information about Resources
@@ -19,19 +19,8 @@ public class ResourceLocation extends Identifier {
         return new ResourceLocation(splitId[0], splitId[1]);
     }
 
-    /**
-     * A method to load the resource mentioned in the constructor.
-     * @param forceReload it replaces the currently loaded resource with a reload of it.
-     */
-    public FileHandle load(boolean forceReload) {
-        return GameAssetLoader.loadAsset(toString(), forceReload);
-    }
-
-    /**
-     * A method to load the current resource mentioned in the creation construction.
-     */
-    public FileHandle load() {
-        return load(false);
+    public FileHandle locate() {
+        return FluxGameAssetLoader.locateAsset(this);
     }
 
 }

@@ -12,7 +12,9 @@
                 "ram_usage": [
                     "usage",
                     "total"
-                ]
+                ],
+                "loading_assets": ["n", "total"],
+                "creating_blocks": ["n", "total"]
             }
         },
         "strings": {
@@ -28,9 +30,10 @@
                 "return_to_game": "Return to Game"
             },
             "loading_menu": {
-                "waiting_title": "Loading Modded Assets",
                 "ram_usage": "Memory Used/Total: {usage}MB/{total}MB",
+                "loading_assets": "Loading Assets: {n}/{total}",
                 "loading_cosmic_reach": "Loading Cosmic Reach",
+                "creating_blocks": "Creating Blocks: {n}/{total}",
                 "registering_assets": "Registering Assets",
                 "initializing": "Initializing Flux Mods"
             }

@@ -20,9 +20,9 @@ public class PreInitialize extends LoadStage {
 
         AccessableRegistry<Runnable> mods = FluxRegistries.ON_PRE_INITIALIZE.access();
         Identifier[] modIds = mods.getRegisteredNames();
-        loader.setupProgressBar(loader.progress2, modIds.length, "Initializing Mods: PreInit");
+        loader.setupProgressBar(loader.progressBar2, modIds.length, "Initializing Mods: PreInit");
         for(Identifier modId : modIds) {
-            loader.incrementProgress(loader.progress2, modId.name);
+            loader.incrementProgress(loader.progressBar2, modId.name);
             Runnable runnable = mods.get(modId);
             runnable.run();
         }

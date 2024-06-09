@@ -30,7 +30,7 @@ public class DataModBlock implements IModBlock {
     }
 
     public DataModBlock(String blockName, ResourceLocation json) {
-        this(blockName, json.load().readString());
+        this(blockName, json.locate().readString());
     }
 
     public DataModBlock(String blockName, String blockJson) {

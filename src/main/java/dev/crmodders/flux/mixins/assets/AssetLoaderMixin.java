@@ -1,79 +1,57 @@
 package dev.crmodders.flux.mixins.assets;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
-import dev.crmodders.flux.tags.Identifier;
-import dev.crmodders.flux.logging.LoggingAgent;
-import dev.crmodders.flux.logging.api.MicroLogger;
+import com.badlogic.gdx.graphics.Texture;
+import de.pottgames.tuningfork.SoundBuffer;
+import dev.crmodders.flux.assets.FluxGameAssetLoader;
+import dev.crmodders.flux.tags.ResourceLocation;
 import finalforeach.cosmicreach.GameAssetLoader;
-import finalforeach.cosmicreach.io.SaveLocation;
-import org.spongepowered.asm.mixin.*;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.Redirect;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import org.spongepowered.asm.mixin.Final;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Overwrite;
+import org.spongepowered.asm.mixin.Shadow;
 
 import java.util.HashMap;
 
 @Mixin(GameAssetLoader.class)
 public class AssetLoaderMixin {
-    @Unique
-    private static final MicroLogger logger = LoggingAgent.getLogger("FluxAPI / AssetLoader");
 
     @Shadow @Final public static HashMap<String, FileHandle> ALL_ASSETS;
 
     /**
-     * @author written by replet, rewritten by Mr Zombii
+     * @author written by replet, rewritten by Mr Zombii, edited by nanobass
      * @reason Improves asset loading
      **/
-    @Inject(method = "loadAsset(Ljava/lang/String;Z)Lcom/badlogic/gdx/files/FileHandle;", at = @At("HEAD"), cancellable = true)
-    private static void loadAsset(String fileName, boolean forceReload, CallbackInfoReturnable<FileHandle> cir) {
-        Identifier location = Identifier.fromString(fileName);
+    @Overwrite
+    public static FileHandle loadAsset(String fileName, boolean forceReload) {
+        ResourceLocation location = ResourceLocation.fromString(fileName);
         if (!forceReload && ALL_ASSETS.containsKey(location.toString())) {
-            cir.setReturnValue(ALL_ASSETS.get(location.toString()));
-            return;
+            return ALL_ASSETS.get(location.toString());
         }
         if("base".equals(location.namespace)) {
             fileName = location.name;
         }
-
-        FileHandle classpathLocationFile = Gdx.files.classpath("assets/%s/%s".formatted(location.namespace, location.name));
-        if (classpathLocationFile.exists()) {
-            logger.info("Loading {} from the Classpath", fileName);
-            ALL_ASSETS.put(fileName, classpathLocationFile);
-            cir.setReturnValue(classpathLocationFile);
-            return;
-        }
-
-        FileHandle modLocationFile = Gdx.files.absolute(SaveLocation.getSaveFolderLocation() + "/mods/assets/" + fileName);
-        if (modLocationFile.exists()) {
-            logger.info("Loading {} from DataMods", fileName);
-            ALL_ASSETS.put(fileName, modLocationFile);
-            cir.setReturnValue(modLocationFile);
-            return;
-        }
-
-        FileHandle vanillaLocationFile = Gdx.files.internal(location.name);
-        if (vanillaLocationFile.exists()) {
-            logger.info("Loading {} from Cosmic Reach Jar", fileName);
-            ALL_ASSETS.put(fileName, vanillaLocationFile);
-            cir.setReturnValue(vanillaLocationFile);
-            return;
-        }
-
-        logger.error("Cannot find the resource {}, ResourceId: {}", fileName, location);
-        cir.setReturnValue(null);
+        FileHandle handle = FluxGameAssetLoader.locateAsset(fileName);
+        ALL_ASSETS.put(location.toString(), handle);
+        return handle;
     }
 
-    @Redirect(method = "getSound", at = @At(value = "INVOKE", target = "Lfinalforeach/cosmicreach/GameAssetLoader;loadAsset(Ljava/lang/String;)Lcom/badlogic/gdx/files/FileHandle;"))
-    private static FileHandle getSound(String fileName) {
-        String noFolder = fileName.replace("sounds/blocks/","");
-        if (noFolder.contains(":")) {
-            Identifier id = Identifier.fromString(noFolder);
-            id.name = "sounds/blocks/" + id.name;
-            return GameAssetLoader.loadAsset(id.toString());
-        }
-        return GameAssetLoader.loadAsset(fileName);
+    /**
+     * @author nanobass
+     * @reason uses libgdx asset manager, which can load assets better
+     */
+    @Overwrite
+    public static SoundBuffer getSound(String fileName) {
+        return FluxGameAssetLoader.LOADER.loadSync(fileName, SoundBuffer.class);
+    }
+
+    /**
+     * @author nanobass
+     * @reason uses libgdx asset manager, which can load assets better
+     */
+    @Overwrite
+    public static Texture getTexture(String fileName) {
+        return FluxGameAssetLoader.LOADER.loadSync(fileName, Texture.class);
     }
 
 }

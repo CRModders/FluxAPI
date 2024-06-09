@@ -10,7 +10,6 @@ import dev.crmodders.flux.tags.ResourceLocation;
  */
 public class FluxConstants {
 
-    public static boolean GameHasLoaded;
     public static boolean FluxHasLoaded;
 
     public static final String MOD_ID = "fluxapi";

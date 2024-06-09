@@ -5,8 +5,7 @@ import com.badlogic.gdx.utils.Json;
 import dev.crmodders.flux.FluxRegistries;
 import dev.crmodders.flux.block.FluxBlockAction;
 import dev.crmodders.flux.block.IModBlock;
-import dev.crmodders.flux.engine.blocks.models.json.BlockModelFlux;
-import dev.crmodders.flux.engine.blocks.models.vertex.BlockModelVertex;
+import dev.crmodders.flux.engine.blocks.models.BlockModelFlux;
 import dev.crmodders.flux.factories.IFactory;
 import dev.crmodders.flux.generators.BlockEventGenerator;
 import dev.crmodders.flux.generators.BlockGenerator;
@@ -23,6 +22,8 @@ import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Map;
 import java.util.function.BiConsumer;
+
+import static dev.crmodders.flux.assets.FluxGameAssetLoader.LOADER;
 
 public class BlockLoader {
 
@@ -50,13 +51,16 @@ public class BlockLoader {
      *                    use a combination of model and texture names here
      * @param texture a pixmap representing your texture, this has to follow the guidelines
      *                from data modding, width and height have to be equal
+     *                Note: this method does not take ownership of the Pixmap
      */
     public void registerTexture(String textureName, Pixmap texture) {
         CustomTextureLoader.registerTexture(textureName, texture);
     }
 
     public void registerTexture(ResourceLocation texture) {
-        CustomTextureLoader.registerTexture(texture.toString(), new Pixmap(texture.load()));
+        Pixmap pixmap = LOADER.loadResourceSync(texture, Pixmap.class);
+        CustomTextureLoader.registerTexture(texture.toString(), pixmap);
+        LOADER.unloadResource(texture);
     }
 
     /**
@@ -143,8 +147,6 @@ public class BlockLoader {
         for (BlockModel model : factory.sort()) {
             if(model instanceof BlockModelFlux flux) {
                 FluxRegistries.BLOCK_MODEL_FINALIZERS.register(Identifier.fromString(flux.modelName + "_" + flux.rotXZ), flux::initialize);
-            } else if (model instanceof  BlockModelVertex vertex) {
-                FluxRegistries.BLOCK_MODEL_FINALIZERS.register(Identifier.fromString(vertex.modelName), vertex::initialize);
             }
         }
         FluxRegistries.BLOCK_MODEL_FINALIZERS.freeze();
@@ -172,7 +174,6 @@ public class BlockLoader {
     public void hookBlockManager() {
         BiConsumer<String, Block> setBlockStaticFinalField = (name, block) -> {
             try {
-
                 Field unsafeField = Unsafe.class.getDeclaredField("theUnsafe");
                 unsafeField.setAccessible(true);
                 Unsafe verySafeClassThatIsVeryUseful = (Unsafe) unsafeField.get(null);
@@ -181,7 +182,6 @@ public class BlockLoader {
                 Object fieldBase = verySafeClassThatIsVeryUseful.staticFieldBase(field);
                 long fieldOffset = verySafeClassThatIsVeryUseful.staticFieldOffset(field);
                 verySafeClassThatIsVeryUseful.putObject(fieldBase, fieldOffset, block);
-
             } catch (IllegalAccessException | NoSuchFieldException e) {
                 throw new RuntimeException(e);
             }

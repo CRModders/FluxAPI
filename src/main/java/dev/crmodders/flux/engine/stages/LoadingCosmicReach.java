@@ -22,7 +22,7 @@ import org.greenrobot.eventbus.Subscribe;
 import java.util.ArrayList;
 import java.util.List;
 
-import static dev.crmodders.flux.engine.GameLoader.logger;
+import static dev.crmodders.flux.engine.GameLoader.LOGGER;
 
 public class LoadingCosmicReach extends LoadStage {
 
@@ -56,15 +56,15 @@ public class LoadingCosmicReach extends LoadStage {
         List<IFactory<IModBlock>> blockFactories = new ArrayList<>();
         FluxRegistries.EVENT_BUS.post(new OnRegisterBlockEvent(blockFactories));
 
-        loader.setupProgressBar(loader.progress2, blockFactories.size(), "Creating Blocks");
+        loader.setupProgressBar(loader.progressBar2, blockFactories.size(), new TranslationKey("fluxapi:loading_menu.creating_blocks"));
         for(IFactory<IModBlock> blockFactory : blockFactories) {
-            loader.incrementProgress(loader.progress2);
+            loader.incrementProgress(loader.progressBar2);
             try {
                 IModBlock block = blockFactory.generate();
                 Identifier blockId = loader.blockLoader.loadBlock(block);
                 FluxRegistries.BLOCKS.register(blockId, block);
             } catch (BlockLoadException e) {
-                logger.warn("Cannot load block: \"{}\"", e.blockName, e.getCause());
+                LOGGER.warn("Cannot load block: \"{}\"", e.blockName, e.getCause());
             }
         }
         FluxRegistries.BLOCKS.freeze();
@@ -82,16 +82,16 @@ public class LoadingCosmicReach extends LoadStage {
         AccessableRegistry<Runnable> blockFinalizers = FluxRegistries.BLOCK_FINALIZERS.access();
         Identifier[] blockStateIds = blockFinalizers.getRegisteredNames();
 
-        tasks.add( () -> loader.setupProgressBar(loader.progress2, modelIds.length, "Creating Models") );
+        tasks.add( () -> loader.setupProgressBar(loader.progressBar2, modelIds.length, "Creating Models") );
         for(Identifier modelId : modelIds) {
-            tasks.add( () -> loader.incrementProgress(loader.progress2, modelId.toString()) );
+            tasks.add( () -> loader.incrementProgress(loader.progressBar2, modelId.toString()) );
             tasks.add( modelFinalizers.get(modelId) );
         }
 
 
-        tasks.add( () -> loader.setupProgressBar(loader.progress2, blockStateIds.length, "Finalizing Blocks") );
+        tasks.add( () -> loader.setupProgressBar(loader.progressBar2, blockStateIds.length, "Finalizing Blocks") );
         for(Identifier blockStateId : blockStateIds) {
-            tasks.add( () -> loader.incrementProgress(loader.progress2, blockStateId.toString()) );
+            tasks.add( () -> loader.incrementProgress(loader.progressBar2, blockStateId.toString()) );
             tasks.add( blockFinalizers.get(blockStateId) );
         }
 

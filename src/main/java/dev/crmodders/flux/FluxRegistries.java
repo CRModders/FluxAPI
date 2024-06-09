@@ -11,6 +11,10 @@ import dev.crmodders.flux.localization.Language;
 import dev.crmodders.flux.registries.DynamicRegistry;
 import dev.crmodders.flux.registries.FreezingRegistry;
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.logging.Level;
 
 /**
  * Common Class for Flux Registries
@@ -19,7 +23,7 @@ import org.greenrobot.eventbus.EventBus;
 public class FluxRegistries {
 
     @Stable
-    public static final EventBus EVENT_BUS = EventBus.builder().build();
+    public static final EventBus EVENT_BUS = EventBus.builder().sendNoSubscriberEvent(false).logNoSubscriberMessages(false).logger(new SLF4JEventBusLogger()).build();
 
     @Stable
     public static FreezingRegistry<Runnable> ON_PRE_INITIALIZE = FreezingRegistry.create();
@@ -54,5 +58,32 @@ public class FluxRegistries {
 
     @FluxInternal
     public static DynamicRegistry<Language> LANGUAGES = DynamicRegistry.create();
+
+    @FluxInternal
+    private static class SLF4JEventBusLogger implements Logger {
+        private static final org.slf4j.Logger LOGGER = LoggerFactory.getLogger("FluxAPI / EventBus");
+
+        @Override
+        public void log(Level level, String s) {
+            if(level == Level.INFO) {
+                LOGGER.info(s);
+            } else if(level == Level.WARNING) {
+                LOGGER.warn(s);
+            } else if(level == Level.SEVERE) {
+                LOGGER.error(s);
+            }
+        }
+
+        @Override
+        public void log(Level level, String s, Throwable t) {
+            if(level == Level.INFO) {
+                LOGGER.info(s, t);
+            } else if(level == Level.WARNING) {
+                LOGGER.warn(s, t);
+            } else if(level == Level.SEVERE) {
+                LOGGER.error(s, t);
+            }
+        }
+    }
 
 }
