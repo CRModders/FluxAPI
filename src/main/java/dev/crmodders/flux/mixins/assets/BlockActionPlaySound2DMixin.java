@@ -16,7 +16,7 @@ public class BlockActionPlaySound2DMixin {
         String noFolder = fileName.replace("sounds/blocks/","");
         if (noFolder.contains(":")) {
             Identifier id = Identifier.fromString(noFolder);
-            id.name = "block_events/" + id.name;
+            id.name = "sounds/blocks/" + id.name;
             return GameAssetLoader.getSound(id.toString());
         }
         return GameAssetLoader.getSound(fileName);
