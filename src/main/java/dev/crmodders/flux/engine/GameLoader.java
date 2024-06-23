@@ -78,7 +78,6 @@ public class GameLoader extends GameState {
         hp9Patch = new NinePatch(LOADER.loadSync("base:textures/ui/healthbar.png", Texture.class), 4, 4, 6, 6);
     }
 
-    @Override
     public void create() {
         super.create();
 
@@ -178,8 +177,7 @@ public class GameLoader extends GameState {
         loadingThread.start();
     }
 
-    @Override
-    public void render(float partTime) {
+    public void render() {
         Runtime runtime = Runtime.getRuntime();
         int ramValue = (int) ((runtime.totalMemory() - runtime.freeMemory()) / (1024 * 1024));
         int ramRange = (int) (runtime.maxMemory() / (1024 * 1024));
@@ -199,8 +197,7 @@ public class GameLoader extends GameState {
         if(FluxConstants.FluxHasLoaded) {
             GameState.switchToGameState(new PrealphaPreamble());
         }
-
-        super.render(partTime);
+        super.render();
         Gdx.gl.glClearColor(background.r, background.g, background.b, background.a);
         Gdx.gl.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
         gdxStageViewport.apply(false);
