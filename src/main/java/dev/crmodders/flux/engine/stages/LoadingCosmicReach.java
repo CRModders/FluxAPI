@@ -1,6 +1,7 @@
 package dev.crmodders.flux.engine.stages;
 
 import dev.crmodders.flux.FluxRegistries;
+import dev.crmodders.flux.FluxSettings;
 import dev.crmodders.flux.assets.VanillaAssetLocations;
 import dev.crmodders.flux.block.DataModBlock;
 import dev.crmodders.flux.block.IModBlock;
@@ -38,9 +39,12 @@ public class LoadingCosmicReach extends LoadStage {
         for(ResourceLocation internal : VanillaAssetLocations.getInternalFiles("blocks/", ".json")) {
             blockNames.add(internal.name.replace("blocks/", "").replace(".json", ""));
         }
-        for(ResourceLocation internal : VanillaAssetLocations.getVanillaModFiles("blocks/", ".json")) {
-            blockNames.add(internal.name.replace("blocks/", "").replace(".json", ""));
+        if(FluxSettings.EnabledVanillaMods.getValue()) {
+            for(ResourceLocation internal : VanillaAssetLocations.getVanillaModFiles("blocks/", ".json")) {
+                blockNames.add(internal.name.replace("blocks/", "").replace(".json", ""));
+            }
         }
+
         for(String blockName : blockNames) {
             event.registerBlock(() -> new DataModBlock(blockName));
         }
@@ -70,7 +74,7 @@ public class LoadingCosmicReach extends LoadStage {
         FluxRegistries.BLOCKS.freeze();
 
         loader.blockLoader.registerFinalizers();
-        loader.blockLoader.hookBlockManager();
+        loader.blockLoader.hookOriginalBlockConstants();
     }
 
     @Override

@@ -18,7 +18,7 @@ public class GameStateMixin {
     @Shadow public static GameState currentGameState;
     @Unique private static final Logger LOGGER = LoggerFactory.getLogger("CosmicReach / GameState");
 
-    @Redirect(method = "switchToGameState", at = @At(value = "INVOKE", target = "Ljava/io/PrintStream;println(Ljava/lang/String;)V"))
+    @Redirect(method = "lambda$switchToGameState$0", at = @At(value = "INVOKE", target = "Ljava/io/PrintStream;println(Ljava/lang/String;)V"), require = 0)
     private static void printCapture(PrintStream instance, String x, GameState gameState) {
         if(currentGameState == null) {
             LOGGER.info("Switched to GameState: \u001B[31m{}\u001B[37m", gameState.getClass().getSimpleName());

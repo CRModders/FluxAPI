@@ -1,6 +1,7 @@
 package dev.crmodders.flux;
 
 import dev.crmodders.flux.localization.Language;
+import finalforeach.cosmicreach.settings.BooleanSetting;
 import finalforeach.cosmicreach.settings.IntSetting;
 
 /**
@@ -10,6 +11,7 @@ import finalforeach.cosmicreach.settings.IntSetting;
 public class FluxSettings {
 
     public static final IntSetting AntiAliasing = new IntSetting("msaa", 4);
+    public static final BooleanSetting EnabledVanillaMods = new BooleanSetting("enableVanillaMods", true);
     public static Language SelectedLanguage;
 
 }

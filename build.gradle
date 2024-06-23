@@ -109,7 +109,7 @@ dependencies {
     compileOnly("io.github.llamalad7:mixinextras-fabric:0.3.5")
 
     // Modmenu
-    compileOnly("dev.crmodders:modmenu:${modmenu_version}")
+    gameMod("dev.crmodders:modmenu:${modmenu_version}")
 
     // https://mvnrepository.com/artifact/org.greenrobot/eventbus
     shadowMe("org.greenrobot:eventbus:${eventbus_version}")

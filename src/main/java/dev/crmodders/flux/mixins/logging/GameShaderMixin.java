@@ -17,12 +17,12 @@ public class GameShaderMixin {
     @Unique
     private static final Logger LOGGER = LoggerFactory.getLogger("CosmicReach / Shaders");
 
-    @Redirect(method = "reload", at = @At(value = "INVOKE", target = "Ljava/io/PrintStream;println(Ljava/lang/String;)V"))
+    @Redirect(method = "reload", at = @At(value = "INVOKE", target = "Ljava/io/PrintStream;println(Ljava/lang/String;)V"), require = 0)
     private void print1(PrintStream instance, String x) {
         if(!x.isBlank()) LOGGER.info(x);
     }
 
-    @Redirect(method = "reloadAllShaders", at = @At(value = "INVOKE", target = "Ljava/io/PrintStream;println(Ljava/lang/String;)V"))
+    @Redirect(method = "reloadAllShaders", at = @At(value = "INVOKE", target = "Ljava/io/PrintStream;println(Ljava/lang/String;)V"), require = 0)
     private static void print2(PrintStream instance, String x) {
         LOGGER.info(x);
     }

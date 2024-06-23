@@ -169,9 +169,8 @@ public class BlockLoader {
     /**
      * This hooks the original block constants as those are not loaded statically
      * anymore, this has to be called after all blocks from the vanilla game are loaded
-     * else it will try to load them here, crashing the game
      */
-    public void hookBlockManager() {
+    public void hookOriginalBlockConstants() {
         BiConsumer<String, Block> setBlockStaticFinalField = (name, block) -> {
             try {
                 Field unsafeField = Unsafe.class.getDeclaredField("theUnsafe");

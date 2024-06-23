@@ -64,7 +64,8 @@ public class FluxGameAssetLoader {
 
     public <T> T get(String fileName, Class<T> assetClass) {
         if(!assetManager.isLoaded(fileName)) {
-            LOGGER.error("Asset not loaded {} ({})", fileName, assetClass.getSimpleName());
+            LOGGER.error("Asset not loaded {} ({}) loading now", fileName, assetClass.getSimpleName());
+            return loadSync(fileName, assetClass);
         }
         return assetManager.get(fileName);
     }
@@ -84,7 +85,8 @@ public class FluxGameAssetLoader {
 
     public <T> T getResource(ResourceLocation location, Class<T> assetClass) {
         if(!assetManager.isLoaded(location.toString())) {
-            LOGGER.error("Asset not loaded {} ({})", location, assetClass.getSimpleName());
+            LOGGER.error("Asset not loaded {} ({}) loading now", location, assetClass.getSimpleName());
+            return loadResourceSync(location, assetClass);
         }
         return assetManager.get(location.toString(), assetClass);
     }

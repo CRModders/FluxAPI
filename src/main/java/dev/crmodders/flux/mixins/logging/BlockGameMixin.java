@@ -23,12 +23,12 @@ public class BlockGameMixin {
     @Unique
     private static final Logger logger = LoggerFactory.getLogger("CosmicReach / BlockGame");
 
-    @Redirect(method = "dispose", at = @At(value = "INVOKE", target = "Ljava/io/PrintStream;println(Ljava/lang/String;)V"))
+    @Redirect(method = "dispose", at = @At(value = "INVOKE", target = "Ljava/io/PrintStream;println(Ljava/lang/String;)V"), require = 0)
     private void print1(PrintStream instance, String x) {
         logger.info("\u001B[36m{}\u001B[37m", x);
     }
 
-    @Redirect(method = "create", at = @At(value = "INVOKE", target = "Ljava/io/PrintStream;println(Ljava/lang/String;)V"))
+    @Redirect(method = "create", at = @At(value = "INVOKE", target = "Ljava/io/PrintStream;println(Ljava/lang/String;)V"), require = 0)
     private void print2(PrintStream instance, String x) {
         List<String> lines = x.lines().toList();
         for(String line : lines) {
@@ -36,7 +36,7 @@ public class BlockGameMixin {
         }
     }
 
-    @Inject(method = "dispose", at = @At(value = "INVOKE", target = "Ljava/lang/System;exit(I)V", shift = At.Shift.BEFORE))
+    @Inject(method = "dispose", at = @At(value = "INVOKE", target = "Ljava/lang/System;exit(I)V", shift = At.Shift.BEFORE), require = 0)
     public void dispose(CallbackInfo ci) {
         AssetManager manager = LOADER.getAssetManager();
         manager.dispose();

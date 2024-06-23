@@ -24,6 +24,10 @@ public class VanillaAssetLocations {
         return files;
     }
 
+    public static FileHandle getModsFolder() {
+        return Gdx.files.absolute(SaveLocation.getSaveFolderLocation() + "/mods");
+    }
+
     public static List<ResourceLocation> getVanillaModFiles(String folder, String extension) {
         List<ResourceLocation> files = new ArrayList<>();
         for(FileHandle f : Gdx.files.absolute(SaveLocation.getSaveFolderLocation() + "/mods/assets/" + folder).list()) {

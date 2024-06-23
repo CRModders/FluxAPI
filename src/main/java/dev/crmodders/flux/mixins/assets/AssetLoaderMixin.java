@@ -19,7 +19,7 @@ public class AssetLoaderMixin {
     @Shadow @Final public static HashMap<String, FileHandle> ALL_ASSETS;
 
     /**
-     * @author written by replet, rewritten by Mr Zombii, edited by nanobass
+     * @author written by replet, rewritten by Mr Zombii, replaced by nanobass
      * @reason Improves asset loading
      **/
     @Overwrite

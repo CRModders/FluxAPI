@@ -97,7 +97,7 @@ public class BlockModelFlux extends BlockModel {
         if (this.textures != null) {
             for (final BlockModelJsonTexture t : this.textures.values()) {
                 if (t.fileName != null) {
-                    t.uv = ChunkShader.addToAllBlocksTexture(null, t);
+                    t.uv = ChunkShader.addToAllBlocksTexture(t);
                 }
             }
         }

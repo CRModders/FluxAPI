@@ -45,7 +45,6 @@ public class GameLoader extends GameState {
     public static final Logger LOGGER = LoggerFactory.getLogger("FluxAPI / GameLoader");
 
     private static final TranslationKey TEXT_RAM_USAGE = new TranslationKey("fluxapi:loading_menu.ram_usage");
-    private static final TranslationKey TEXT_TITLE = new TranslationKey("fluxapi:loading_menu.waiting_title");
 
     public Stage gdxStage;
     public OrthographicCamera gdxStageCamera;
@@ -179,13 +178,17 @@ public class GameLoader extends GameState {
     }
 
     @Override
-    public void render(float partTime) {
+    public void render() {
         Runtime runtime = Runtime.getRuntime();
         int ramValue = (int) ((runtime.totalMemory() - runtime.freeMemory()) / (1024 * 1024));
         int ramRange = (int) (runtime.maxMemory() / (1024 * 1024));
-        ramUsageBar.setRange(0, ramRange);
-        ramUsageBar.setStepSize(1);
-        ramUsageBar.setValue(ramValue);
+        try {
+            ramUsageBar.setRange(0, ramRange);
+            ramUsageBar.setStepSize(1);
+            ramUsageBar.setValue(ramValue);
+        } catch (Exception e) {
+            LOGGER.warn("got ya you little bug", e);
+        }
         LanguageManager.updateLabel(ramUsageText, (TranslationParameters) ramUsageText.getUserObject());
 
         long endTime = System.currentTimeMillis() + 50;
@@ -200,10 +203,11 @@ public class GameLoader extends GameState {
             GameState.switchToGameState(new PrealphaPreamble());
         }
 
-        super.render(partTime);
+        super.render();
         Gdx.gl.glClearColor(background.r, background.g, background.b, background.a);
         Gdx.gl.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
         gdxStageViewport.apply(false);
+        gdxStage.act();
         gdxStage.draw();
     }
 
