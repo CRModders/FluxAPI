@@ -18,6 +18,11 @@ import java.util.Map;
 public class CosmicReachFont {
 
     public static final BitmapFont FONT = createCosmicReachFont();
+    public static final BitmapFont FONT_BIG = createCosmicReachFont();
+
+    static {
+        FONT_BIG.getData().setScale(2.5F);
+    }
 
     public static BitmapFont createCosmicReachFont() {
         List<FontTexture> fontTextures = new ArrayList<>();
@@ -71,20 +76,21 @@ public class CosmicReachFont {
             for(int unicode = ft.unicodeStart; unicode < ft.unicodeStart + 256; unicode++) {
                 Vector2 charStart = ft.fontCharStartPos[unicode - ft.unicodeStart];
                 Vector2 charSize = ft.fontCharSizes[unicode - ft.unicodeStart];
+                TextureRegion textureRegion = ft.fontTextureRegions[unicode - ft.unicodeStart];
                 BitmapFont.Glyph glyph = new BitmapFont.Glyph();
                 glyph.id = unicode;
-                glyph.srcX = xOffset + (int)charStart.x;
-                glyph.srcY = yOffset + (int)charStart.y;
-                glyph.width = (int)charSize.x;
-                if(unicode == ' ')
-                    glyph.width /= 4;
-                glyph.height = (int)charSize.y;
+                glyph.srcX = xOffset + (int) charStart.x;
+                glyph.srcY = yOffset + textureRegion.getRegionY() - textureRegion.getRegionHeight();
+                glyph.width = (int) charSize.x;
+                glyph.height = textureRegion.getRegionHeight();
                 glyph.xadvance = glyph.width + 2;
-                glyph.yoffset = 0;
                 data.setGlyph(unicode, glyph);
             }
         }
-
+        data.down = -data.getGlyph('\n').height;
+        BitmapFont.Glyph space = data.getGlyph(' ');
+        space.width /= 4;
+        space.xadvance = space.width;
         return new BitmapFont(data, new TextureRegion(texture), true);
     }
 

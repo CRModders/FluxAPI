@@ -22,6 +22,7 @@ public class DataModBlock implements IModBlock {
         public LinkedHashMap<String, ?> blockEntityParams;
     }
 
+    public ResourceLocation debugResourceLocation;
     public String blockJson;
     public String blockName;
 
@@ -31,6 +32,7 @@ public class DataModBlock implements IModBlock {
 
     public DataModBlock(String blockName, ResourceLocation json) {
         this(blockName, json.locate().readString());
+        this.debugResourceLocation = json;
     }
 
     public DataModBlock(String blockName, String blockJson) {

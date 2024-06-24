@@ -200,7 +200,10 @@ public class GameLoader extends GameState {
         }
 
         if(FluxConstants.FluxHasLoaded) {
-            GameState.switchToGameState(new PrealphaPreamble());
+            if(blockLoader.errors.isEmpty())
+                switchToGameState(new PrealphaPreamble());
+            else
+                switchToGameState(new BlockErrorScreen(blockLoader, new PrealphaPreamble()));
         }
 
         super.render();

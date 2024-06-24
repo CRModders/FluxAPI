@@ -19,6 +19,7 @@ import finalforeach.cosmicreach.rendering.blockmodels.BlockModel;
 import sun.misc.Unsafe;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.function.BiConsumer;
@@ -28,6 +29,8 @@ import static dev.crmodders.flux.assets.FluxGameAssetLoader.LOADER;
 public class BlockLoader {
 
     public BlockModelFactory factory = new BlockModelFactory();
+    public Json json = new Json();
+    public List<BlockLoadException> errors = new ArrayList<>();
 
     /**
      * Call this method to register custom json models, this has to be called
@@ -91,37 +94,52 @@ public class BlockLoader {
      * @return the block id extracted from the generated json
      */
     public Identifier loadBlock(IModBlock modBlock) {
-        Json json = new Json();
-
-        BlockGenerator blockGenerator = modBlock.getBlockGenerator();
-        blockGenerator.register(this);
-        String blockJson = blockGenerator.generateJson();
-        Block block = json.fromJson(Block.class, blockJson);
-
-        for(BlockModelGenerator modelGenerator : modBlock.getBlockModelGenerators(blockGenerator.blockId)) {
-            modelGenerator.register(this);
-            String modelName = modelGenerator.getModelName();
-            int rotXZ = 0;
-            String modelJson = modelGenerator.generateJson();
-            registerBlockModel(modelName, rotXZ, modelJson);
+        BlockGenerator blockGenerator;
+        try {
+            blockGenerator = modBlock.getBlockGenerator();
+        } catch (Exception e) {
+            throw new BlockLoadException(modBlock, null, null, null, null, e);
         }
 
-        List<BlockEventGenerator> eventGenerators = modBlock.getBlockEventGenerators(blockGenerator.blockId);
-        if(eventGenerators.isEmpty()) {
-            BlockEventGenerator eventGenerator = new BlockEventGenerator(blockGenerator.blockId, "flux_default");
-            eventGenerators = List.of(eventGenerator);
+        String blockJson;
+        try {
+            blockGenerator.register(this);
+            blockJson = blockGenerator.generateJson();
+        } catch (Exception e) {
+            throw new BlockLoadException(modBlock, blockGenerator.blockName, blockGenerator.blockId, null, null, e);
         }
-        for(BlockEventGenerator eventGenerator : eventGenerators) {
-            eventGenerator.createTrigger("onInteract", Identifier.fromString("fluxapi:mod_block_interact"), Map.of("blockId", blockGenerator.blockId));
-            eventGenerator.createTrigger("onPlace", Identifier.fromString("fluxapi:mod_block_place"), Map.of("blockId", blockGenerator.blockId));
-            eventGenerator.createTrigger("onBreak", Identifier.fromString("fluxapi:mod_block_break"), Map.of("blockId", blockGenerator.blockId));
-            eventGenerator.register(this);
-            String eventName = eventGenerator.getEventName();
-            String eventJson = eventGenerator.generateJson();
-            registerEvent(eventName, eventJson);
+
+        Block block;
+        try {
+            block = json.fromJson(Block.class, blockJson);
+        } catch (Exception e) {
+            throw new BlockLoadException(modBlock, blockGenerator.blockName, blockGenerator.blockId, blockJson, null, e);
         }
 
         try {
+            for(BlockModelGenerator modelGenerator : modBlock.getBlockModelGenerators(blockGenerator.blockId)) {
+                modelGenerator.register(this);
+                String modelName = modelGenerator.getModelName();
+                int rotXZ = 0;
+                String modelJson = modelGenerator.generateJson();
+                registerBlockModel(modelName, rotXZ, modelJson);
+            }
+
+            List<BlockEventGenerator> eventGenerators = modBlock.getBlockEventGenerators(blockGenerator.blockId);
+            if(eventGenerators.isEmpty()) {
+                BlockEventGenerator eventGenerator = new BlockEventGenerator(blockGenerator.blockId, "flux_default");
+                eventGenerators = List.of(eventGenerator);
+            }
+            for(BlockEventGenerator eventGenerator : eventGenerators) {
+                eventGenerator.createTrigger("onInteract", Identifier.fromString("fluxapi:mod_block_interact"), Map.of("blockId", blockGenerator.blockId));
+                eventGenerator.createTrigger("onPlace", Identifier.fromString("fluxapi:mod_block_place"), Map.of("blockId", blockGenerator.blockId));
+                eventGenerator.createTrigger("onBreak", Identifier.fromString("fluxapi:mod_block_break"), Map.of("blockId", blockGenerator.blockId));
+                eventGenerator.register(this);
+                String eventName = eventGenerator.getEventName();
+                String eventJson = eventGenerator.generateJson();
+                registerEvent(eventName, eventJson);
+            }
+
             for (String stateKey : block.blockStates.keys().toArray()) {
                 BlockState blockState = block.blockStates.get(stateKey);
                 blockState.stringId = stateKey;
@@ -135,7 +153,9 @@ public class BlockLoader {
                 Block.allBlockStates.remove(blockState.stringId);
             }
             Block.allBlocks.removeValue(block, true);
-            throw new BlockLoadException(blockGenerator.blockName, e);
+            Block.blocksByStringId.remove(blockGenerator.blockId.toString());
+            Block.blocksByName.remove(blockGenerator.blockName);
+            throw new BlockLoadException(modBlock, blockGenerator.blockName, blockGenerator.blockId, blockJson, block, e);
         }
         return blockGenerator.blockId;
     }
