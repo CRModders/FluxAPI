@@ -72,7 +72,7 @@ public class BlockErrorScreen extends GameState {
             errorText
                     .append("Error while loading Block (Class: ").append(className)
                     .append(", File: \"").append(fileName)
-                    .append(", Name: \"").append(blockName)
+                    .append("\", Name: \"").append(blockName)
                     .append("\", Id: \"").append(blockId)
                     .append("\")\n")
                     .append("\nError Stacktrace:\n");

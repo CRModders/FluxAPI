@@ -45,6 +45,7 @@ public class BlockGenerator implements IGenerator {
         public boolean isFluid = false;
 
         public String swapGroupId;
+        public String dropId;
 
     }
 

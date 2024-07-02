@@ -17,7 +17,9 @@ import dev.crmodders.flux.localization.TranslationKey;
 import dev.crmodders.flux.registries.AccessableRegistry;
 import dev.crmodders.flux.tags.Identifier;
 import dev.crmodders.flux.tags.ResourceLocation;
+import finalforeach.cosmicreach.blockentities.BlockEntityCreator;
 import finalforeach.cosmicreach.blockevents.BlockEvents;
+import finalforeach.cosmicreach.items.loot.Loot;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
@@ -53,6 +55,10 @@ public class LoadingCosmicReach extends LoadStage {
     @Override
     public void doStage() {
         super.doStage();
+
+        BlockEvents.initBlockEvents();
+        BlockEntityCreator.registerBlockEntityCreators();
+
         BlockEvents.registerBlockEventAction(OnPlaceTrigger.class);
         BlockEvents.registerBlockEventAction(OnBreakTrigger.class);
         BlockEvents.registerBlockEventAction(OnInteractTrigger.class);
@@ -99,6 +105,8 @@ public class LoadingCosmicReach extends LoadStage {
             tasks.add( () -> loader.incrementProgress(loader.progressBar2, blockStateId.toString()) );
             tasks.add( blockFinalizers.get(blockStateId) );
         }
+
+        tasks.add(Loot::loadLoot);
 
         return tasks;
     }

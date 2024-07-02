@@ -17,6 +17,10 @@ public class BlockRegisterer {
 
     @Shadow @Final public static Block AIR;
 
+    @Shadow @Final public static Block WATER;
+
+    @Shadow @Final public static Block DIRT;
+
     /**
      * @author nanobass
      * @reason is replaced by flux, allows for much more advanced features
@@ -25,8 +29,8 @@ public class BlockRegisterer {
     @Overwrite
     public static Block getInstance(String blockName) {
         Block block = blocksByName.get(blockName);
-        if(block == null && AIR != null) {
-            LOGGER.warn("null-block returned by Block.getInstance, please report", new Exception());
+        if(block == null && AIR != null && WATER != null && DIRT != null) {
+            LOGGER.warn("null-block returned by Block.getInstance, please report \"{}\"", blockName, new Exception());
         }
         return block;
     }
