@@ -29,7 +29,7 @@ public class BlockGameMixin {
     }
 
     @Redirect(method = "printGLInfo", at = @At(value = "INVOKE", target = "Ljava/io/PrintStream;println(Ljava/lang/String;)V"), require = 0)
-    private void print2(PrintStream instance, String x) {
+    private static void print2(PrintStream instance, String x) {
         List<String> lines = x.lines().toList();
         for(String line : lines) {
             logger.info("\u001B[36m{}\u001B[37m", line);

@@ -116,6 +116,8 @@ dependencies {
     // Logging
     shadowMe("org.slf4j:slf4j-api:${slf4j_version}")
 
+    gameMod(files("./run/PopStructures-1.4.3.jar"))
+
 }
 
 processResources {

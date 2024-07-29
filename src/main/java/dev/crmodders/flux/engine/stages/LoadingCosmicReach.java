@@ -72,6 +72,7 @@ public class LoadingCosmicReach extends LoadStage {
             try {
                 IModBlock block = blockFactory.generate();
                 Identifier blockId = loader.blockLoader.loadBlock(block);
+                System.out.println(blockId);
                 FluxRegistries.BLOCKS.register(blockId, block);
             } catch (BlockLoadException e) {
                 LOGGER.error("Cannot load block: \"{}\"", e.blockName, e);
