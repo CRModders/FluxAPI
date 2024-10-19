@@ -10,9 +10,9 @@ repositories {
     gradlePluginPortal()
     ivy {
         name "Cosmic Reach"
-        url "https://cosmic-archive.netlify.app/"
+        url "https://github.com/CRModders/CosmicArchive/raw/main/versions"
         patternLayout {
-            artifact "/Cosmic Reach-[revision].jar"
+            artifact "[classifier]/[revision]/client/Cosmic Reach-[revision].jar"
         }
         // This is required in Gradle 6.0+ as metadata file (ivy.xml) is mandatory
         metadataSources {
@@ -20,7 +20,7 @@ repositories {
         }
 
         content {
-            includeGroup "finalforeach"
+            includeModule "finalforeach", "cosmicreach"
         }
     }
     ivy {
