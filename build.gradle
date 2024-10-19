@@ -9,7 +9,7 @@ plugins {
 repositories {
     gradlePluginPortal()
     ivy {
-        name "Cosmic Reach"
+        name "Cosmic Reach Client"
         url "https://github.com/CRModders/CosmicArchive/raw/main/versions"
         patternLayout {
             artifact "[classifier]/[revision]/client/Cosmic Reach-[revision].jar"
@@ -21,6 +21,22 @@ repositories {
 
         content {
             includeModule "finalforeach", "cosmicreach"
+        }
+    }
+    ivy {
+        name "Cosmic Reach Server"
+        url "https://github.com/CRModders/CosmicArchive/raw/main/versions"
+        patternLayout {
+            artifact "[classifier]/[revision]/server/Cosmic Reach-Server-[revision].jar"
+            artifact "[classifier]/[revision]/server/Cosmic-Reach-Server-[revision].jar"
+        }
+        // This is required in Gradle 6.0+ as metadata file (ivy.xml) is mandatory
+        metadataSources {
+            artifact()
+        }
+
+        content {
+            includeModule "finalforeach", "cosmicreach-server"
         }
     }
     ivy {
