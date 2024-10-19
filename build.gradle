@@ -117,7 +117,7 @@ shadowJar {
 
 dependencies {
     // Cosmic Reach jar
-    cosmicreach("finalforeach:cosmicreach:${cosmic_reach_version}")
+    cosmicreach("finalforeach:cosmicreach:${cosmic_reach_version}:${cosmic_reach_version_type}")
 
     // Fabric Loader (for accessing its stuff in the code)
     compileOnly("net.fabricmc:fabric-loader:${fabric_loader_version}") // Include the base Fabric Loader so we can only use classes from that
