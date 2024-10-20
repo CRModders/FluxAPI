@@ -57,6 +57,7 @@ jobs:
       # The USERNAME and TOKEN need to correspond to the credentials environment variables used in
       # the publishing section of your build.gradle
       - name: Publish to GitHub Packages
+        continue-on-error: true
         run: ./gradlew publishAllPublicationsToCRMReleasesRepository
         env:
           CRMReleasesUsername: ${{ secrets.CRM_GITHUB_USER }}
