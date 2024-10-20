@@ -8,6 +8,7 @@ plugins {
 
 base {
     archivesName = project.id
+    version = "${project.base_version}+${project.cosmic_reach_version}"
 }
 
 java {
