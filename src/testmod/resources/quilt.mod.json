@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+
+  "quilt_loader": {
+    "group": "dev.crmodders.fluxapi",
+    "id": "testmod",
+    "version": "0.0.0",
+
+    "intermediate_mappings": "net.fabricmc:intermediary",
+
+    "entrypoints": {
+    }
+  }
+}

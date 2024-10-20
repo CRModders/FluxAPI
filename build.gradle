@@ -15,6 +15,13 @@ java {
     targetCompatibility = JavaVersion.VERSION_17
 }
 
+sourceSets {
+    testmod {
+        compileClasspath += main.compileClasspath
+        runtimeClasspath += main.runtimeClasspath
+    }
+}
+
 repositories {
     gradlePluginPortal()
 
@@ -102,6 +109,16 @@ configurations {
     // Allows cosmic reach to be used in the codebase
     compileOnly.extendsFrom(cosmicreach)
 
+    galactic
+    galacticClasspath
+    compileOnly.extendsFrom galactic
+    galacticClasspath.extendsFrom galactic
+
+    quilt
+    quiltClasspath
+    compileOnly.extendsFrom quilt
+    quiltClasspath.extendsFrom quilt
+
     // Use this instead of `shadow` since it also includes the runtime
     // dependencies, which we do not need
     bundle
@@ -125,6 +142,21 @@ configurations {
 
 dependencies {
     cosmicreach("finalforeach:cosmicreach:${cosmic_reach_version}:${cosmic_reach_version_type}")
+
+    galactic("galacticloader:galacticloader:${fabric_loader_version}")
+    galacticClasspath("net.fabricmc:fabric-loader:${fabric_loader_version}")
+    galacticClasspath("net.fabricmc:tiny-mappings-parser:0.2.2.14")
+    galacticClasspath("net.fabricmc:access-widener:2.1.0")
+    galacticClasspath("net.fabricmc:sponge-mixin:0.12.5+mixin.0.8.5")
+    galacticClasspath("org.ow2.asm:asm:9.6")
+    galacticClasspath("org.ow2.asm:asm-util:9.6")
+    galacticClasspath("org.ow2.asm:asm-tree:9.6")
+    galacticClasspath("org.ow2.asm:asm-analysis:9.6")
+    galacticClasspath("org.ow2.asm:asm-commons:9.6")
+    galacticClasspath("io.github.llamalad7:mixinextras-fabric:0.3.5")
+    // bundle 'ch.qos.logback:logback-classic:1.5.6'
+
+    quilt("org.codeberg.CRModders:cosmic-quilt:${cosmic_quilt_version}")
 
     bundle("org.greenrobot:eventbus:${eventbus_version}")
     bundle("org.slf4j:slf4j-api:${slf4j_version}")
@@ -193,66 +225,20 @@ processResources {
     }
 }
 
-tasks.register("runQuilt", JavaExec) {
-    group = "runs"
-    dependsOn "shadowJar"
-
-    mainClass = "org.quiltmc.loader.impl.launch.knot.KnotClient"
-    configureWorkingDir(it)
-    ignoreExitValue = true
-
-    dependencies {
-        implementation("org.codeberg.CRModders:cosmic-quilt:${cosmic_quilt_version}")
-    }
-
+tasks.register("runGalacticClient", RunGalacticClient) {
     classpath sourceSets.main.runtimeClasspath
-
-    jvmArgs = [
-        // Allows stuff to be found through the classpath
-        "-Dloader.development=true",
-        // Defines path to Cosmic Reach
-        "-Dloader.gameJarPath=" + configurations.cosmicreach.asPath,
-    ]
 }
 
-tasks.register("runFabric", JavaExec) {
-    group = "runs"
-    dependsOn "shadowJar"
+tasks.register("runGalacticTestmod", RunGalacticClient) {
+    classpath sourceSets.testmod.runtimeClasspath
+}
 
-    mainClass = "net.fabricmc.loader.impl.launch.knot.KnotClient"
-    configureWorkingDir(it)
+tasks.register("runQuiltClient", RunQuiltClient) {
+    classpath sourceSets.main.runtimeClasspath
+}
 
-    dependencies {
-        implementation("galacticloader:galacticloader:${fabric_loader_version}")
-
-        // Loader Dependencies
-        implementation("net.fabricmc:fabric-loader:${fabric_loader_version}")
-        implementation("net.fabricmc:tiny-mappings-parser:0.2.2.14")
-        implementation("net.fabricmc:access-widener:2.1.0")
-        implementation("net.fabricmc:sponge-mixin:0.12.5+mixin.0.8.5")
-        implementation("org.ow2.asm:asm:9.6")
-        implementation("org.ow2.asm:asm-util:9.6")
-        implementation("org.ow2.asm:asm-tree:9.6")
-        implementation("org.ow2.asm:asm-analysis:9.6")
-        implementation("org.ow2.asm:asm-commons:9.6")
-        implementation("io.github.llamalad7:mixinextras-fabric:0.3.5")
-
-        // Loader does not provide slf4j implementation, substitute one
-        bundle 'ch.qos.logback:logback-classic:1.5.6'
-    }
-
-    classpath = sourceSets.main.runtimeClasspath
-
-    jvmArgs = [
-        // Stops Fabric from attempting to find mappings, and all the other Minecraft stuff
-        "-Dfabric.skipMcProvider=true",
-        // Defines path to Cosmic Reach
-        "-Dfabric.gameJarPath=" + configurations.cosmicreach.asPath,
-        // Let Fabric know to include our build and the other mods
-        "-Dfabric.addMods=" + [ shadowJar.archiveFile.get().asFile ].tap {
-            addAll(configurations.gameMod)
-        }.join(File.pathSeparator)
-    ]
+tasks.register("runQuiltTestmod", RunQuiltClient) {
+    classpath sourceSets.testmod.runtimeClasspath
 }
 
 publishing {
@@ -299,11 +285,61 @@ publishing {
 
 /******* Utilities ********/
 
-static def configureWorkingDir(Task it) {
-    it.workingDir = it.project.file("run")
+abstract class AbstractRunTask extends JavaExec {
+    AbstractRunTask() {
+        group = "runs"
+        dependsOn "shadowJar"
 
-    it.doFirst {
-        if (!workingDir.exists())
-            workingDir.mkDirs()
+        workingDir = project.file("run")
+        ignoreExitValue = true
+
+        doFirst {
+            if (!workingDir.exists())
+                workingDir.mkDirs()
+        }
+    }
+}
+
+abstract class RunGalacticTask extends AbstractRunTask {
+    RunGalacticTask() {
+        classpath project.configurations.galacticClasspath
+
+        jvmArgs = [
+            // Stops Fabric from attempting to find mappings, and all the other Minecraft stuff
+            "-Dfabric.skipMcProvider=true",
+            // Defines path to Cosmic Reach
+            "-Dfabric.gameJarPath=" + project.configurations.cosmicreach.asPath,
+            // Let Fabric know to include our build and the other mods
+            "-Dfabric.addMods=" + [ project.shadowJar.archiveFile.get().asFile ].tap {
+                addAll(project.configurations.gameMod)
+            }.join(File.pathSeparator)
+        ]
+    }
+}
+
+abstract class RunGalacticClient extends RunGalacticTask {
+    RunGalacticClient() {
+        mainClass = "net.fabricmc.loader.impl.launch.knot.KnotClient"
+    }
+}
+
+abstract class RunQuiltTask extends AbstractRunTask {
+    RunQuiltTask() {
+        classpath project.configurations.quiltClasspath
+
+        jvmArgs = [
+            // Disable Minecraft game provider
+            "-Dloader.skipMcProvider",
+            // Allows stuff to be found through the classpath
+            "-Dloader.development=true",
+            // Defines path to Cosmic Reach
+            "-Dloader.gameJarPath=" + project.configurations.cosmicreach.asPath,
+        ]
+    }
+}
+
+abstract class RunQuiltClient extends RunQuiltTask {
+    RunQuiltClient() {
+        mainClass = "dev.crmodders.cosmicquilt.loader.knot.KnotClient"
     }
 }

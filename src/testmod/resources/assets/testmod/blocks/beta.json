@@ -1,0 +1,14 @@
+{
+  "stringId": "testmod:beta",
+  "blockStates":
+  {
+    "default":
+    {
+      "modelName": "base:models/blocks/model_c4.json",
+      "blockEventsId": "base:block_events_c4",
+      "tags": [
+        "tool_pickaxe_effective", "explodes_furnace"
+      ]
+    }
+  }
+}
