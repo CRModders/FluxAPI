@@ -47,6 +47,13 @@ jobs:
           name: FluxApi-artifacts-${{ steps.ref.outputs.branch }}
           path: build/libs/*.jar
 
+      - name: Upload Binaries to GitHub Release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: build/libs/*.jar
+          file_glob: true
+
       # The USERNAME and TOKEN need to correspond to the credentials environment variables used in
       # the publishing section of your build.gradle
       - name: Publish to GitHub Packages
