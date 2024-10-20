@@ -11,7 +11,6 @@
         "assets.ChunkShaderMixin",
         "assets.GameShaderMixin",
         "blocks.BlockEventTriggerMixin",
-        "blocks.BlockStateGeneratorMixin",
         "blocks.ChunkShaderAccessor",
         "logging.BlockGameMixin",
         "logging.GameShaderMixin",
