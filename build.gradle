@@ -148,6 +148,17 @@ jar {
     archiveClassifier = "slim"
 }
 
+javadoc {
+    options {
+        tags(
+            "apiNote:a:API Note:",
+            "implSpec:a:Implementation Requirements:",
+            "implNote:a:Implementation Note:",
+            "reason:a:Reason:",
+        )
+    }
+}
+
 shadowJar {
     configurations = [ project.configurations.bundle ]
     archiveClassifier = ""
