@@ -147,14 +147,12 @@ public class BlockLoader {
                 Block.allBlockStates.put(blockState.stringId, blockState);
             }
             Block.blocksByStringId.put(blockGenerator.blockId.toString(), block);
-            Block.blocksByName.put(blockGenerator.blockName, block);
         } catch (Exception e) {
             for(BlockState blockState : block.blockStates.values()) {
                 Block.allBlockStates.remove(blockState.stringId);
             }
             Block.allBlocks.removeValue(block, true);
             Block.blocksByStringId.remove(blockGenerator.blockId.toString());
-            Block.blocksByName.remove(blockGenerator.blockName);
             throw new BlockLoadException(modBlock, blockGenerator.blockName, blockGenerator.blockId, blockJson, block, e);
         }
         return blockGenerator.blockId;
