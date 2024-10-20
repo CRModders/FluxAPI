@@ -241,13 +241,6 @@ tasks.register("runFabric", JavaExec) {
     ]
 }
 
-tasks.register("buildJars") {
-    group = "compile"
-    dependsOn("buildFatJar")
-    dependsOn("buildSlimJar")
-    dependsOn("buildSourcesJar")
-}
-
 tasks.register("buildFatJar", ShadowJar) {
     group = "compile"
 
