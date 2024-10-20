@@ -209,13 +209,9 @@ tasks.register("runQuilt", JavaExec) {
 
     jvmArgs = [
         // Allows stuff to be found through the classpath
-        "-Dloader.development=false",
+        "-Dloader.development=true",
         // Defines path to Cosmic Reach
         "-Dloader.gameJarPath=" + configurations.cosmicreach.asPath,
-        // Let Quilt know to include our build and the other mods
-        "-Dloader.addMods=" + [ shadowJar.archiveFile.get().asFile ].tap {
-            addAll(configurations.gameMod)
-        }.join(File.pathSeparator)
     ]
 }
 
