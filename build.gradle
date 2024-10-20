@@ -1,9 +1,7 @@
-import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
-
 plugins {
     id "maven-publish"
     id "java-library"
-    id "com.github.johnrengelman.shadow" version "8.1.1"
+    id "com.gradleup.shadow" version "8.3.3"
 }
 
 base {
@@ -104,9 +102,10 @@ configurations {
     // Allows cosmic reach to be used in the codebase
     compileOnly.extendsFrom(cosmicreach)
 
-    // Allows specifying which stuff gets shadowed
-    shadowMe
-    api.extendsFrom(shadowMe)
+    // Use this instead of `shadow` since it also includes the runtime
+    // dependencies, which we do not need
+    bundle
+    api.extendsFrom(bundle)
 
     // Allows to include something without it being in the maven
     internal {
@@ -127,8 +126,8 @@ configurations {
 dependencies {
     cosmicreach("finalforeach:cosmicreach:${cosmic_reach_version}:${cosmic_reach_version_type}")
 
-    shadowMe("org.greenrobot:eventbus:${eventbus_version}")
-    shadowMe("org.slf4j:slf4j-api:${slf4j_version}")
+    bundle("org.greenrobot:eventbus:${eventbus_version}")
+    bundle("org.slf4j:slf4j-api:${slf4j_version}")
 
     // Common with Galactic and Quilt Loader
     compileOnly("net.fabricmc:fabric-loader:${fabric_loader_version}") // Include the base Fabric Loader so we can only use classes from that
@@ -142,10 +141,19 @@ dependencies {
 
 /****** TASKS ********/
 
-shadowJar {
-    archiveFileName = "${id}-${version}.jar"
-    configurations = [ project.configurations.shadowMe ]
+java.withSourcesJar()
+java.withJavadocJar()
+
+jar {
+    archiveClassifier = "slim"
 }
+
+shadowJar {
+    configurations = [ project.configurations.bundle ]
+    archiveClassifier = ""
+}
+
+assemble.dependsOn shadowJar
 
 processResources {
     def templates = [
@@ -173,8 +181,6 @@ processResources {
         expand templateProperties
     }
 }
-
-jar.enabled = false
 
 tasks.register("runQuilt", JavaExec) {
     group = "runs"
@@ -225,7 +231,7 @@ tasks.register("runFabric", JavaExec) {
         implementation("io.github.llamalad7:mixinextras-fabric:0.3.5")
 
         // Loader does not provide slf4j implementation, substitute one
-        shadowMe 'ch.qos.logback:logback-classic:1.5.6'
+        bundle 'ch.qos.logback:logback-classic:1.5.6'
     }
 
     classpath = sourceSets.main.runtimeClasspath
@@ -241,43 +247,6 @@ tasks.register("runFabric", JavaExec) {
         }.join(File.pathSeparator)
     ]
 }
-
-tasks.register("buildFatJar", ShadowJar) {
-    group = "compile"
-
-    configurations = [ project.configurations.shadowMe ]
-
-    dependsOn("compileJava")
-    dependsOn("processResources")
-
-    from(processResources.destinationDir)
-    from(sourceSets.main.java.classesDirectory)
-
-    archiveClassifier = "fat"
-}
-
-tasks.register("buildSlimJar", Jar) {
-    group = "compile"
-
-    dependsOn("compileJava")
-    dependsOn("processResources")
-
-    from(sourceSets.main.java.classesDirectory)
-
-    archiveClassifier = "slim"
-}
-
-tasks.register("buildSourcesJar", Jar) {
-    group = "compile"
-    from(sourceSets.main.allSource)
-    archiveClassifier = "sources"
-}
-
-//tasks.register("buildDocsJar", ) {
-//    group = "compile"
-//
-//    archiveClassifier = "docs"
-//}
 
 publishing {
     repositories {
@@ -306,8 +275,6 @@ publishing {
         }
     }
 
-    assemble.dependsOn buildSourcesJar, buildFatJar, buildSlimJar
-
     publications {
         maven(MavenPublication) {
             groupId = group
@@ -318,9 +285,7 @@ publishing {
                 artifactId = id
             }
 
-            artifact buildFatJar
-            artifact source: buildSlimJar, classifier: 'slim', extension: 'jar'
-            artifact source: buildSourcesJar, classifier: 'source', extension: 'jar'
+            from components.java
         }
     }
 }
