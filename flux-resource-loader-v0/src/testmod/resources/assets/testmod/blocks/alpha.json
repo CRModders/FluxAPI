@@ -1,0 +1,15 @@
+{
+    "stringId": "testmod:alpha",
+    "blockStates": {
+        "default": {
+            "modelName": "testmod:models/blocks/model_alpha.json",
+            "stateGenerators": [
+                "base:slabs_all",
+                "base:stairs_seamless_all"
+            ],
+            "tags": [
+                "tool_pickaxe_effective"
+            ]
+        }
+    }
+}

@@ -3,14 +3,14 @@
 
     "quilt_loader": {
         "group": "${mod_group}",
-        "id": "flux-api",
+        "id": "flux-resource-loader-v0",
         "version": "${mod_version}",
 
         "intermediate_mappings": "net.fabricmc:intermediary",
 
         "metadata": {
-            "name": "Flux API",
-            "description": "Community focused API for Cosmic Reach Quilt.",
+            "name": "Flux Resource Loader (v0)",
+            "description": "Asset and data resource loader.",
             "contributors": {
                 "Zombii": "Owner",
                 "nanobass": "Developer",
@@ -25,7 +25,7 @@
 
             "license": "MIT",
 
-            "icon": "assets/flux-api/icon.png"
+            "icon": "assets/flux-resource-loader-v0/icon.png"
         },
 
         "depends": [
@@ -38,5 +38,7 @@
                 "versions": ">=${cosmic_reach_version}"
             }
         ]
-    }
+    },
+
+    "mixin": "flux-resource-loader-v0.mixins.json"
 }

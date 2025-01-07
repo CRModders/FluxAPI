@@ -1,0 +1,14 @@
+{
+    "required": true,
+    "minVersion": "0.8",
+    "package": "dev.crmodders.flux.mixin.resource.loader",
+    "compatibilityLevel": "JAVA_17",
+    "mixins": [
+        "GameAssetLoaderMixin"
+    ],
+    "client": [],
+    "server": [],
+    "injectors": {
+        "defaultRequire": 1
+    }
+}

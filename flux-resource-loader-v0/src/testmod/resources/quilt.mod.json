@@ -1,0 +1,26 @@
+{
+    "schema_version": 1,
+
+    "quilt_loader": {
+        "group": "example",
+        "id": "testmod",
+        "version": "0.0.0",
+
+        "intermediate_mappings": "net.fabricmc:intermediary",
+
+        "depends": [
+            {
+                "id": "cosmicquilt",
+                "versions": "*"
+            },
+            {
+                "id": "cosmicreach",
+                "versions": ">=${cosmic_reach_version}"
+            },
+            {
+                "id": "flux-resource-loader-v0",
+                "versions": "*"
+            }
+        ]
+    }
+}

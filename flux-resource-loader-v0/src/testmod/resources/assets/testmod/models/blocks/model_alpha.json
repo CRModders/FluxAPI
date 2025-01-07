@@ -1,0 +1,12 @@
+{
+    "parent": "base:models/blocks/cube.json",
+
+    "textures":
+    {
+        "all":
+        {
+            "fileName": "testmod:textures/blocks/alpha.png"
+        }
+    }
+    
+}

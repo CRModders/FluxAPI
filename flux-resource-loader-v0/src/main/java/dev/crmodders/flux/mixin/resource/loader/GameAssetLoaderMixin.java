@@ -1,20 +1,19 @@
 package dev.crmodders.flux.mixin.resource.loader;
 
 import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.utils.ObjectSet;
 import com.llamalad7.mixinextras.sugar.Local;
 import dev.crmodders.flux.impl.resource.loader.FluxAssetLoading;
 import finalforeach.cosmicreach.GameAssetLoader;
 import finalforeach.cosmicreach.util.Identifier;
+import java.util.HashMap;
+import java.util.function.BiConsumer;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.function.BiConsumer;
 
 @Mixin(GameAssetLoader.class)
 public class GameAssetLoaderMixin {
@@ -32,7 +31,7 @@ public class GameAssetLoaderMixin {
         final BiConsumer<String, FileHandle> assetConsumer,
         final boolean includeDirectories,
         final CallbackInfo callback,
-        final @Local(ordinal = 0) HashSet<Identifier> allPaths
+        final @Local(ordinal = 0) ObjectSet<Identifier> allPaths
     ) {
         FluxAssetLoading.loadJarModAssets(
             prefixString,
