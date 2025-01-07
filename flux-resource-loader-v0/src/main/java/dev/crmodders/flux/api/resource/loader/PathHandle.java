@@ -35,28 +35,28 @@ import java.util.Objects;
  * specialized to use a {@code Path} instead of a {@code File}.
  */
 @ApiStatus.Experimental
-public class FluxFileHandle extends FileHandle {
+public class PathHandle extends FileHandle {
     protected Path path;
 
-    protected FluxFileHandle() {
+    protected PathHandle() {
     }
 
-    public FluxFileHandle(final String fileName) {
+    public PathHandle(final String fileName) {
         this.path = Path.of(fileName);
         this.type = FileType.Absolute;
     }
 
-    public FluxFileHandle(final Path path) {
+    public PathHandle(final Path path) {
         this.path = path;
         this.type = FileType.Absolute;
     }
 
-    public FluxFileHandle(final String fileName, final FileType type) {
+    public PathHandle(final String fileName, final FileType type) {
         this.path = Path.of(fileName);
         this.type = type;
     }
 
-    public FluxFileHandle(final Path path, final FileType type) {
+    public PathHandle(final Path path, final FileType type) {
         this.path = path;
         this.type = type;
     }
@@ -395,7 +395,7 @@ public class FluxFileHandle extends FileHandle {
     public FileHandle child(final String name) {
         final var path = this.path;
         final var type = this.type;
-        return new FluxFileHandle(path.resolve(name), type);
+        return new PathHandle(path.resolve(name), type);
     }
 
     @Override
@@ -406,7 +406,7 @@ public class FluxFileHandle extends FileHandle {
         if (path.toString().isEmpty()) {
             throw new GdxRuntimeException("Cannot get the sibling of the root.");
         } else {
-            return new FluxFileHandle(path.getParent().resolve(name), type);
+            return new PathHandle(path.getParent().resolve(name), type);
         }
     }
 
@@ -424,7 +424,7 @@ public class FluxFileHandle extends FileHandle {
             }
         }
 
-        return new FluxFileHandle(parent, type);
+        return new PathHandle(parent, type);
     }
 
     @Override
@@ -606,7 +606,7 @@ public class FluxFileHandle extends FileHandle {
 
     public static FileHandle tempFile(final String prefix) {
         try {
-            return new FluxFileHandle(Files.createTempFile(prefix, null));
+            return new PathHandle(Files.createTempFile(prefix, null));
         } catch (final IOException cause) {
             throw new GdxRuntimeException("Unable to create temp file.", cause);
         }
@@ -628,7 +628,7 @@ public class FluxFileHandle extends FileHandle {
                 throw new IOException("Unable to create temp directory: " + path);
             }
 
-            return new FluxFileHandle(path);
+            return new PathHandle(path);
         } catch (final IOException cause) {
             throw new GdxRuntimeException("Unable to create temp file.", cause);
         }
@@ -686,7 +686,7 @@ public class FluxFileHandle extends FileHandle {
     }
 
     private static Object getPathOrFileString(final FileHandle handle) {
-        return handle instanceof final FluxFileHandle flux ? flux.path : handle.file();
+        return handle instanceof final PathHandle flux ? flux.path : handle.file();
     }
 
     private static sealed class PreserveTreeDeleteVisitor<T extends Path>

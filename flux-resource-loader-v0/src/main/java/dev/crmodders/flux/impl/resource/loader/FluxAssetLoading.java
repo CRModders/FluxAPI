@@ -1,7 +1,7 @@
 package dev.crmodders.flux.impl.resource.loader;
 
 import com.badlogic.gdx.files.FileHandle;
-import dev.crmodders.flux.api.resource.loader.FluxFileHandle;
+import dev.crmodders.flux.api.resource.loader.PathHandle;
 import org.jetbrains.annotations.Nullable;
 import org.quiltmc.loader.api.ModContainer;
 import org.quiltmc.loader.api.QuiltLoader;
@@ -86,7 +86,7 @@ public class FluxAssetLoading {
         }
 
         return new AssetFinder(namespace, prefix, extension, (identifier, path) -> {
-            final var handle = new FluxFileHandle(path);
+            final var handle = new PathHandle(path);
             final var id = identifier.toString();
             allAssets.put(id, handle);
             assetConsumer.accept(id, handle);
