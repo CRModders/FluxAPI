@@ -1,3 +1,5 @@
+@file:Suppress("NAME_SHADOWING")
+
 import dev.crmodders.cosmicloom.CosmicLoomPlugin
 import dev.crmodders.cosmicloom.task.tasks.RunClientTask
 import dev.crmodders.cosmicloom.task.tasks.RunServerTask
@@ -6,6 +8,8 @@ object Constants {
     const val GROUP = "dev.crmodders"
     const val MODID = "flux-api"
     const val VERSION = "0.8.0-alpha.3"
+
+    const val SUBGROUP = "${GROUP}.${MODID}"
 
     const val VERSION_COSMIC_REACH = "0.3.14"
     const val VERSION_COSMIC_QUILT = "2.3.2"
@@ -34,12 +38,21 @@ java {
 }
 
 subprojects {
+    apply<JavaLibraryPlugin>()
     apply<CosmicLoomPlugin>()
+    apply<MavenPublishPlugin>()
 
     base {
-        group = Constants.GROUP
+        group = Constants.SUBGROUP
         archivesName = name
         version = Constants.VERSION
+    }
+}
+
+dependencies {
+    subprojects {
+        api(project)
+        include(project)
     }
 }
 
@@ -136,19 +149,15 @@ allprojects {
             }
         }
     }
-}
 
-dependencies {
-    subprojects { include(project) }
-}
+    publishing {
+        publications {
+            create<MavenPublication>("maven") {
+                groupId = project.group as String
+                artifactId = project.base.archivesName.get()
 
-publishing {
-    publications {
-        create<MavenPublication>("maven") {
-            groupId = Constants.GROUP
-            artifactId = Constants.MODID
-
-            from(components["java"])
+                from(components["java"])
+            }
         }
     }
 }

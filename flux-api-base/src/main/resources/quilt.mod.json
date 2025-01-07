@@ -3,14 +3,14 @@
 
     "quilt_loader": {
         "group": "${mod_group}",
-        "id": "flux-api",
+        "id": "flux-api-base",
         "version": "${mod_version}",
 
         "intermediate_mappings": "net.fabricmc:intermediary",
 
         "metadata": {
-            "name": "Flux API",
-            "description": "Community focused API for Cosmic Reach Quilt.",
+            "name": "Flux API Base",
+            "description": "Flux common module.",
             "contributors": {
                 "CRModders": "Owner"
             },
@@ -22,7 +22,7 @@
 
             "license": "MIT",
 
-            "icon": "assets/flux-api/icon.png"
+            "icon": "assets/flux-api-base/icon.png"
         },
 
         "depends": [
