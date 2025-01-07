@@ -28,7 +28,13 @@ public class FluxAssetLoading {
         final boolean includeDirectories,
         final HashMap<? super String, ? super FileHandle> allAssets
     ) {
-        final var finder = createAssetFinder(prefixString, extension, assetConsumer, allAssets);
+        final var finder = createAssetFinder(
+            prefixString,
+            extension,
+            assetConsumer,
+            includeDirectories,
+            allAssets
+        );
         if (finder == null) {
             return;
         }
@@ -59,6 +65,7 @@ public class FluxAssetLoading {
         final String prefixNotation,
         final String extension,
         final BiConsumer<String, FileHandle> assetConsumer,
+        final boolean includeDirectories,
         final HashMap<? super String, ? super FileHandle> allAssets
     ) {
         final String namespace;
@@ -83,11 +90,17 @@ public class FluxAssetLoading {
             }
         }
 
-        return new AssetFinder(namespace, prefix, extension, (identifier, path) -> {
-            final var handle = new PathHandle(path);
-            final var id = identifier.toString();
-            allAssets.put(id, handle);
-            assetConsumer.accept(id, handle);
-        });
+        return new AssetFinder(
+            namespace,
+            prefix,
+            extension,
+            includeDirectories ? path -> true : Files::isDirectory,
+            (identifier, path) -> {
+                final var handle = new PathHandle(path);
+                final var id = identifier.toString();
+                allAssets.put(id, handle);
+                assetConsumer.accept(id, handle);
+            }
+        );
     }
 }
