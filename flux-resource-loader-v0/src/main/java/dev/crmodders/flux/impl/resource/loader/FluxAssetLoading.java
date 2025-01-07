@@ -7,7 +7,6 @@ import org.quiltmc.loader.api.ModContainer;
 import org.quiltmc.loader.api.QuiltLoader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.spongepowered.asm.mixin.Unique;
 
 import java.io.IOException;
 import java.nio.file.FileSystems;
@@ -56,7 +55,6 @@ public class FluxAssetLoading {
             });
     }
 
-    @Unique
     private static @Nullable AssetFinder createAssetFinder(
         final String prefixNotation,
         final String extension,
