@@ -33,20 +33,22 @@ public record AssetFinder(
         final Path root,
         final BiConsumer<? super Identifier, ? super Path> action
     ) {
-        final var rootAssets = root.normalize().resolve("assets");
+        final var rootAssets = root.normalize();
 
         try (final var namespacedPaths = Files.list(rootAssets)) {
-            namespacedPaths.forEach((final var namespacedPath) -> {
-                final var namespace = rootAssets.relativize(namespacedPath).toString();
+            namespacedPaths
+                .filter(Files::isDirectory)
+                .forEach((final var namespacedPath) -> {
+                    final var namespace = rootAssets.relativize(namespacedPath).toString();
 
-                AssetFinder.findNamespaced(
-                    namespace,
-                    namespacedPath,
-                    prefix,
-                    extension,
-                    action
-                );
-            });
+                    AssetFinder.findNamespaced(
+                        namespace,
+                        namespacedPath,
+                        prefix,
+                        extension,
+                        action
+                    );
+                });
         } catch (final NoSuchFileException | NotDirectoryException ignored) {
 
         } catch (final IOException cause) {
@@ -98,8 +100,16 @@ public record AssetFinder(
                 this.extension,
                 this.action
             );
+//            AssetFinder.findNamespaced(
+//                this.namespace,
+//                root.resolve("assets").resolve(this.namespace),
+//                this.prefix,
+//                this.extension,
+//                this.action
+//            );
         } else {
             AssetFinder.findAll(this.prefix, this.extension, root, this.action);
+//            AssetFinder.findAll(this.prefix, this.extension, root.resolve("assets"), this.action);
         }
     }
 }
