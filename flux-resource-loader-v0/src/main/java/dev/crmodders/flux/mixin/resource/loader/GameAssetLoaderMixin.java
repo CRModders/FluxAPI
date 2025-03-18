@@ -14,6 +14,7 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(GameAssetLoader.class)
 public class GameAssetLoaderMixin {
@@ -40,5 +41,13 @@ public class GameAssetLoaderMixin {
             includeDirectories,
             ALL_ASSETS
         );
+    }
+
+    @Inject(
+        method = "getAllNamespaces",
+        at = @At("RETURN")
+    )
+    private static void getJarModNamespaces(final CallbackInfoReturnable<ObjectSet<String>> callback) {
+        FluxAssetLoading.findJarModNamespaces(callback.getReturnValue());
     }
 }
