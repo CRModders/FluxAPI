@@ -36,29 +36,80 @@ import java.util.Objects;
  */
 @ApiStatus.Experimental
 public class PathHandle extends FileHandle {
+    /**
+     * The file path object.
+     */
     protected Path path;
 
+    /**
+     * Creates a new uninitialized path handle.
+     * <p>
+     * This constructor is better applicable for subclasses.
+     */
     protected PathHandle() {
     }
 
+    /**
+     * Creates a new path handle given the file name.
+     *
+     * @param fileName  The path file name.
+     * @see Path#of(String, String[])
+     */
     public PathHandle(final String fileName) {
         this.path = Path.of(fileName);
         this.type = FileType.Absolute;
     }
 
+    /**
+     * Creates a new path handle given the path.
+     *
+     * @param path  The file path.
+     */
     public PathHandle(final Path path) {
         this.path = path;
         this.type = FileType.Absolute;
     }
 
+    /**
+     * Creates a new path handle given the file name and the handle file type.
+     *
+     * @param fileName  The path file name.
+     * @param type  The file type.
+     * @see Path#of(String, String[])
+     */
     public PathHandle(final String fileName, final FileType type) {
         this.path = Path.of(fileName);
         this.type = type;
     }
 
+    /**
+     * Creates a new path handle given the file name and the handle file type.
+     *
+     * @param path  The file path.
+     * @param type  The file type.
+     */
     public PathHandle(final Path path, final FileType type) {
         this.path = path;
         this.type = type;
+    }
+
+    /**
+     * The file path object.
+     *
+     * @return The file NIO path.
+     */
+    public Path nioPath() {
+        return this.path;
+    }
+
+    /**
+     * The path file system.
+     *
+     * @return The path NIO file system.
+     * @see Path#getFileSystem
+     */
+    public FileSystem nioFileSystem() {
+        return this.path.getFileSystem();
     }
 
     @Override
@@ -310,7 +361,7 @@ public class PathHandle extends FileHandle {
     }
 
     @Override
-    public FileHandle[] list() {
+    public PathHandle[] list() {
         final var path = this.path;
 
         if (this.type == FileType.Classpath) {
@@ -320,14 +371,14 @@ public class PathHandle extends FileHandle {
         try (final var children = Files.list(path)) {
             return children
                 .map(child -> this.child(child.getFileName().toString()))
-                .toArray(FileHandle[]::new);
+                .toArray(PathHandle[]::new);
         } catch (final IOException cause) {
-            return new FileHandle[0];
+            return new PathHandle[0];
         }
     }
 
     @Override
-    public FileHandle[] list(final FileFilter filter) {
+    public PathHandle[] list(final FileFilter filter) {
         final var path = this.path;
 
         if (this.type == FileType.Classpath) {
@@ -339,14 +390,14 @@ public class PathHandle extends FileHandle {
                 // NOTE: Path::toFile is not used here
                 .filter(child -> filter.accept(new File(child.toString())))
                 .map(child -> this.child(child.getFileName().toString()))
-                .toArray(FileHandle[]::new);
+                .toArray(PathHandle[]::new);
         } catch (final IOException cause) {
-            return new FileHandle[0];
+            return new PathHandle[0];
         }
     }
 
     @Override
-    public FileHandle[] list(final FilenameFilter filter) {
+    public PathHandle[] list(final FilenameFilter filter) {
         final var path = this.path;
 
         if (this.type == FileType.Classpath) {
@@ -359,14 +410,14 @@ public class PathHandle extends FileHandle {
                 // NOTE: Path::toFile is not used here
                 .filter(name -> filter.accept(new File(path.toString()), name))
                 .map(this::child)
-                .toArray(FileHandle[]::new);
+                .toArray(PathHandle[]::new);
         } catch (final IOException cause) {
-            return new FileHandle[0];
+            return new PathHandle[0];
         }
     }
 
     @Override
-    public FileHandle[] list(final String suffix) {
+    public PathHandle[] list(final String suffix) {
         final var path = this.path;
 
         if (this.type == FileType.Classpath) {
@@ -378,9 +429,9 @@ public class PathHandle extends FileHandle {
                 .map(child -> child.getFileName().toString())
                 .filter(name -> name.endsWith(suffix))
                 .map(this::child)
-                .toArray(FileHandle[]::new);
+                .toArray(PathHandle[]::new);
         } catch (final IOException cause) {
-            return new FileHandle[0];
+            return new PathHandle[0];
         }
     }
 
@@ -392,14 +443,14 @@ public class PathHandle extends FileHandle {
     }
 
     @Override
-    public FileHandle child(final String name) {
+    public PathHandle child(final String name) {
         final var path = this.path;
         final var type = this.type;
         return new PathHandle(path.resolve(name), type);
     }
 
     @Override
-    public FileHandle sibling(final String name) {
+    public PathHandle sibling(final String name) {
         final var path = this.path;
         final var type = this.type;
 
@@ -411,7 +462,7 @@ public class PathHandle extends FileHandle {
     }
 
     @Override
-    public FileHandle parent() {
+    public PathHandle parent() {
         final var path = this.path;
         final var type = this.type;
 
@@ -604,7 +655,14 @@ public class PathHandle extends FileHandle {
         return this.path.toString().replace('\\', '/');
     }
 
-    public static FileHandle tempFile(final String prefix) {
+    /**
+     * Creates handle to a new temporary file.
+     * 
+     * @param prefix  The prefix to use; may be {@code null}.
+     * @return A path handle to a temporary file.
+     * @see Files#createTempFile
+     */
+    public static PathHandle tempFile(final String prefix) {
         try {
             return new PathHandle(Files.createTempFile(prefix, null));
         } catch (final IOException cause) {
@@ -612,7 +670,14 @@ public class PathHandle extends FileHandle {
         }
     }
 
-    public static FileHandle tempDirectory(String prefix) {
+    /**
+     * Creates handle to a new temporary directory.
+     * 
+     * @param prefix  The prefix to use; may be {@code null}.
+     * @return A path handle to a temporary directory.
+     * @see Files#createTempDirectory 
+     */
+    public static PathHandle tempDirectory(final String prefix) {
         try {
             final var path = Files.createTempDirectory(prefix);
 
