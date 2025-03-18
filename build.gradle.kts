@@ -11,7 +11,7 @@ object Constants {
 
     const val SUBGROUP = "${GROUP}.${MODID}"
 
-    const val VERSION_COSMIC_REACH = "0.3.14"
+    const val VERSION_COSMIC_REACH = "0.4.4"
     const val VERSION_COSMIC_QUILT = "2.3.2"
 }
 
@@ -94,8 +94,8 @@ allprojects {
     }
 
     dependencies {
-        cosmicReach(loom.cosmicReachClient("pre-alpha", Constants.VERSION_COSMIC_REACH))
-        cosmicReachServer(loom.cosmicReachServer("pre-alpha", Constants.VERSION_COSMIC_REACH))
+        cosmicReach(loom.cosmicReachClient("alpha", Constants.VERSION_COSMIC_REACH))
+        cosmicReachServer(loom.cosmicReachServer("alpha", Constants.VERSION_COSMIC_REACH))
         modImplementation(loom.cosmicQuilt(Constants.VERSION_COSMIC_QUILT))
     }
 
