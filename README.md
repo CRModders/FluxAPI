@@ -1,3 +1,8 @@
+> [!IMPORTANT]
+> FluxAPI has been discontinued.
+>
+> It is still avaliable for legacy mods.
+
 # Flux API
 
 ## Usage
